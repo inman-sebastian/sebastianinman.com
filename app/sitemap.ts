@@ -1,0 +1,19 @@
+import type { MetadataRoute } from "next";
+import { site } from "@/content/site";
+import { getLandingPages } from "@/lib/content";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const staticPages = ["", "/services", "/about", "/contact"].map((path) => ({
+    url: `${site.url}${path}`,
+    changeFrequency: "monthly" as const,
+    priority: path === "" ? 1 : 0.8,
+  }));
+
+  const landingPages = getLandingPages().map((page) => ({
+    url: `${site.url}/${page.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...landingPages];
+}

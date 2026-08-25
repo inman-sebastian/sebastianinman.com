@@ -1,69 +1,189 @@
-import Image from "next/image";
+import Link from "next/link";
+import { site } from "@/content/site";
+import { getServices } from "@/lib/content";
+import { SiteImage } from "@/components/SiteImage";
+import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
+import { CTABand } from "@/components/CTABand";
 
-export default function Home() {
+const steps = [
+  {
+    title: "We talk — for free",
+    text: "Tell me what's eating your time or falling through the cracks. Thirty minutes, plain English, no obligation.",
+  },
+  {
+    title: "You get an honest plan",
+    text: "I tell you what's worth fixing, what I'd build, what it costs, and what it saves you. If it's not worth doing, I'll say so.",
+  },
+  {
+    title: "I build it, you get your time back",
+    text: "Most projects are done in days or weeks — not months. And I stick around to make sure it keeps working.",
+  },
+];
+
+export default function HomePage() {
+  const services = getServices();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+    <>
+      {/* Hero */}
+      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-terracotta">
+            {site.serviceAreaLine}
+          </p>
+          <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
+            Your business runs better when the busywork runs itself.
+          </h1>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+            I&rsquo;m Sebastian. I help small businesses save hours every week with
+            practical automation, helpful AI tools, and websites that bring in
+            customers — explained in plain English, priced for a small business
+            budget.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <ConsultButton />
+            <ButtonLink href="/services" variant="secondary">
+              See what I do
+            </ButtonLink>
+          </div>
+        </div>
+        <SiteImage
+          src="/images/home-hero.jpg"
+          alt="Illustration of a relaxed small business owner whose paperwork handles itself"
+          prompt="Warm, friendly flat illustration of a small business owner standing relaxed in front of their shop at golden hour while helpful automated elements (envelopes sending themselves, a calendar checking itself off, a chat bubble greeting a customer) float gently around the storefront. Earthy cream background, deep pine green and terracotta accents, southern Oregon mountains in the distance."
+          width={1080}
+          height={900}
           priority
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+      </section>
+
+      {/* Who I help */}
+      <section className="border-y border-line bg-surface">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 className="text-3xl font-semibold text-pine-dark">
+            Sound like your week?
+          </h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                title: "The busywork never ends",
+                text: "You're doing paperwork at 10pm — retyping orders, chasing invoices, sending the same emails — instead of running your business.",
+              },
+              {
+                title: "Customers slip away",
+                text: "Calls go unanswered while you work, leads go cold overnight, and your website isn't pulling its weight — if you have one at all.",
+              },
+              {
+                title: "Everyone says “use AI”",
+                text: "You suspect there's something to it, but you don't have time to sort real help from hype — and no one explains it in plain English.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-line bg-background p-6"
+              >
+                <h3 className="text-lg font-semibold text-pine-dark">
+                  {item.title}
+                </h3>
+                <p className="mt-2 leading-relaxed text-muted">{item.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed">
+            If any of that sounds familiar, you&rsquo;re exactly who I work with:
+            growing small businesses that need technology to help — not to become
+            one more thing to manage.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      {/* Services */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="text-3xl font-semibold text-pine-dark">How I help</h2>
+          <Link
+            href="/services"
+            className="text-sm font-semibold text-terracotta hover:text-terracotta-dark"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            See all services →
+          </Link>
         </div>
-      </main>
-    </div>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <Link
+              key={service.slug}
+              href={`/services#${service.slug}`}
+              className="group flex flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
+            >
+              <SiteImage
+                src={service.image}
+                alt={service.imageAlt}
+                prompt={service.imagePrompt}
+                width={800}
+                height={500}
+              />
+              <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
+                {service.title}
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                {service.summary}
+              </p>
+              <p className="mt-4 text-sm font-semibold text-terracotta">
+                Starting at ${service.startingPrice.toLocaleString()}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="border-y border-line bg-pine-tint/50">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+          <h2 className="text-3xl font-semibold text-pine-dark">
+            How it works
+          </h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-3">
+            {steps.map((step, i) => (
+              <div key={step.title}>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white">
+                  {i + 1}
+                </div>
+                <h3 className="mt-4 text-lg font-semibold text-pine-dark">
+                  {step.title}
+                </h3>
+                <p className="mt-2 leading-relaxed text-muted">{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About blurb */}
+      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1fr_2fr]">
+        <SiteImage
+          src="/images/headshot.jpg"
+          alt={`Professional headshot of ${site.name}`}
+          prompt="Sebastian's professional headshot (real photo — drop in the existing headshot file)"
+          width={600}
+          height={700}
+        />
+        <div>
+          <h2 className="text-3xl font-semibold text-pine-dark">
+            A neighbor who happens to be a developer
+          </h2>
+          <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
+            I live and work in Jackson County, Oregon, and I&rsquo;d rather help
+            the businesses in my own community than build software for companies
+            I&rsquo;ll never meet. Big companies have IT departments — you get me,
+            and I answer my phone.
+          </p>
+          <ButtonLink href="/about" variant="secondary" className="mt-6">
+            More about me
+          </ButtonLink>
+        </div>
+      </section>
+
+      <CTABand />
+    </>
   );
 }
