@@ -15,7 +15,7 @@ export function CTABand({
     <section className="bg-pine text-white">
       <div className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
         <h2 className="mx-auto max-w-2xl text-3xl font-semibold">{heading}</h2>
-        <p className="mx-auto mt-4 max-w-xl leading-relaxed text-white/85">
+        <p className="mx-auto mt-4 max-w-xl text-balance leading-relaxed text-white/85">
           {subline}
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -25,7 +25,13 @@ export function CTABand({
           </ButtonLink>
         </div>
         <p className="mt-6 text-sm text-white/70">
-          Or just call: <a href={site.phoneHref} className="underline underline-offset-2 hover:text-white">{site.phone}</a>
+          Or just call:{" "}
+          <a
+            href={site.phoneHref}
+            className="whitespace-nowrap underline underline-offset-2 hover:text-white"
+          >
+            {site.phone}
+          </a>
         </p>
       </div>
     </section>

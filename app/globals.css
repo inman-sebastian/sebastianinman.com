@@ -29,6 +29,15 @@ h2,
 h3,
 h4 {
   font-family: var(--font-serif);
+  /* Even out ragged line breaks in headings */
+  text-wrap: balance;
+}
+
+/* Avoid single-word widows/orphans in running text */
+p,
+li,
+blockquote {
+  text-wrap: pretty;
 }
 
 /* Long-form MDX content (about page, service details, landing pages) */

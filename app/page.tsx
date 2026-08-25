@@ -28,7 +28,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-terracotta">
+          <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-terracotta">
             {site.serviceAreaLine}
           </p>
           <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
