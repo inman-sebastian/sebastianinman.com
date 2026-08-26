@@ -108,8 +108,12 @@ tied any card to its actual town.)
   - **Prompt:** "Friendly modern flat illustration of Central Point, Oregon: a cozy small creamery storefront with big cheese wheels stacked in the window, and two distinctive flat-topped mesa buttes (the Table Rocks) on the horizon behind open farmland, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; storefront sign left blank."
   - **Notes:** Rogue Creamery + the Table Rocks, both genuinely Central Point-adjacent.
 - [ ] `public/images/areas/jacksonville.jpg` (4:3)
-  - **Prompt:** "Friendly modern flat illustration of Jacksonville, Oregon: a historic 1880s brick main street with striped awnings, hanging flower baskets, and old-fashioned lamp posts, wooded hills rising close behind the rooftops, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
-  - **Notes:** the California Street historic district look.
+  - **Prompt:** "Friendly modern flat illustration of a present-day summer evening concert at a hillside outdoor amphitheater in Jacksonville, Oregon: people relaxing on blankets and low lawn chairs on a terraced lawn beneath tall ponderosa pines, a small warmly lit wooden stage pavilion below, soft string lights between the trees, and the rooftops of a charming historic downtown just visible beyond, earthy cream dusk sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
+  - **Notes:** the Britt Festival hillside. v1 prompted "historic 1880s
+    main street" and the generator produced literal period scenes; when a
+    town's charm is historic, anchor the prompt in a PRESENT-DAY activity
+    (concerts, people, string lights) and use era words only for
+    architecture, never for the scene.
 - [ ] `public/images/areas/talent.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a small cozy storefront row with rows of vineyard vines rolling up the hillside behind it and a little creek with a footbridge in front, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
   - **Notes:** Bear Creek corridor + wine trail vineyards.
