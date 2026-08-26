@@ -115,8 +115,13 @@ tied any card to its actual town.)
     (concerts, people, string lights) and use era words only for
     architecture, never for the scene.
 - [ ] `public/images/areas/talent.jpg` (4:3)
-  - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a small cozy storefront row with rows of vineyard vines rolling up the hillside behind it and a little creek with a footbridge in front, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
-  - **Notes:** Bear Creek corridor + wine trail vineyards.
+  - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a small beloved community theater on a quiet main street at dusk, its blank marquee glowing warmly, neighbors chatting out front, a colorful painted mural on the little building beside it, and vineyard-covered hills rising behind the rooftops, earthy cream dusk sky, deep pine green and terracotta accents. No text or lettering anywhere; marquee and all signs left blank."
+  - **Notes:** the Camelot Theatre and downtown murals: Talent's artsy
+    identity (and the town named Talent anchored by its theater is a
+    quiet pun locals will appreciate). Vineyards demoted to backdrop.
+    (v1 was generic storefronts + vineyards; retired as placeless.)
+    Watch the marquee: generators love writing on marquees, and it must
+    stay blank.
 - [ ] `public/images/areas/phoenix.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Phoenix, Oregon: a tall graceful heron standing in a shallow tree-lined creek beside a paved greenway path, a cyclist pedaling past, and pear orchards with a few small rooftops stretching toward valley hills in the distance, warm morning light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
   - **Notes:** Blue Heron Park and the Bear Creek Greenway are Phoenix's
