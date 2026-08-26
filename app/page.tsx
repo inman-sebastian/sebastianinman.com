@@ -33,8 +33,8 @@ export default function HomePage() {
           fill
           priority
           src="/images/home-hero.jpg"
-          alt="Wide illustration of a Southern Oregon valley at golden hour, with a relaxed small business owner outside their shop while envelopes drift off on their own"
-          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley at golden hour with pine-covered hills and soft mountain silhouettes. The LEFT HALF is calm open sky and gentle fields with almost no detail (text will sit there). On the RIGHT, one relaxed person sits in a wooden chair on a grassy rise overlooking the valley, coffee in hand, while three or four paper envelopes drift gently upward into the sky on their own. ABSOLUTELY NO buildings, storefronts, signs, words, or lettering anywhere in the image. One clear focal point, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents."
+          alt="Wide illustration of a peaceful Southern Oregon valley at golden hour, with pine-covered hills and soft mountains"
+          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley landscape at golden hour. The LEFT HALF is calm open sky and gentle golden fields with almost no detail (text will sit there). Visual interest builds toward the RIGHT: layered pine-covered hills, soft mountain silhouettes, and a winding dirt road drifting into the valley. No people, no animals, no buildings, no signs, no words or lettering anywhere. Serene, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents, a few soft wildflowers in the foreground corner."
         />
         <div
           aria-hidden="true"
