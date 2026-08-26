@@ -108,17 +108,29 @@ Use them to break up prose (nobody wants a wall of text). Any numbers in a
 ### Add an SEO landing page (e.g. "Grants Pass automation")
 Create `content/landing/<url-slug>.mdx`. The filename becomes the URL
 (`grants-pass-small-business-automation.mdx` → `/grants-pass-small-business-automation`).
-Frontmatter: `title` (short label for footer links), `metaTitle` (full SEO
-title), `metaDescription`, `heroHeadline`, `heroSubline`, `city`, plus
-optional `heroCardsTop` / `heroCardsBottom` (rotating hero example cards,
-same format as services; write them for the city's business mix, e.g.
-lodging and restaurants for Ashland). Body = markdown sections following
-the pattern in the existing files: local pain points → concrete examples →
-why local. It's automatically added to the sitemap and to the About page's
-"Areas I serve" link list (the ONLY on-site navigation to landing pages;
-they're entry points for search and ad campaigns, so keep them out of the
-footer and header). Keep each page's copy genuinely specific to the
-place/service. No find-and-replace city swaps.
+Frontmatter: `title` (short label for the About page's area links),
+`metaTitle` (full SEO title), `metaDescription`, `heroHeadline`,
+`heroSubline`, `city`, `kind` ("location" or "campaign"; defaults to
+location), plus optional `heroCardsTop` / `heroCardsBottom` (rotating hero
+example cards, same format as services; write them for the city's business
+mix, e.g. lodging and restaurants for Ashland). Body = markdown sections
+following the pattern in the existing files: local pain points → concrete
+examples → why local.
+
+**Landing page taxonomy (keep it consistent):**
+- `kind: "location"`: a literal place (Medford, Ashland, Grants Pass…),
+  covering the WHOLE service offering angled at that place's business mix.
+  Automatically listed in the About page's "Areas I serve" links (the only
+  on-site navigation to landing pages) and the sitemap.
+- `kind: "campaign"`: everything else, including service+geo hybrids like
+  southern-oregon-website-design. Sitemap only; never linked in-site.
+  These exist for targeted ads and search campaigns.
+- NEVER generate a service×city matrix of pages. Google treats templated
+  keyword+city pages as doorway pages and demotes them. Few location
+  pages, each genuinely local and worth reading, beats many thin ones.
+
+Keep each page's copy genuinely specific to the place/service. No
+find-and-replace city swaps.
 
 ### Change contact info, tagline, or booking link
 Edit `content/site.ts`. Setting `bookingUrl` makes every "Book a free

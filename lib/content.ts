@@ -42,6 +42,10 @@ export type LandingPage = {
   heroHeadline: string;
   heroSubline: string;
   city: string;
+  /** "location" pages are literal places listed under Areas I serve;
+   *  "campaign" pages (e.g. service+geo hybrids) are ad/search entry
+   *  points that never appear in on-site navigation */
+  kind: "location" | "campaign";
   /** Raw frontmatter arrays for the rotating hero cards; parse with
    *  parseHeroCards() from lib/heroCards.ts */
   heroCardsTop?: unknown[];
@@ -98,6 +102,7 @@ export function getLandingPages(): LandingPage[] {
     heroHeadline: data.heroHeadline ?? data.title ?? slug,
     heroSubline: data.heroSubline ?? "",
     city: data.city ?? "",
+    kind: data.kind === "campaign" ? "campaign" : "location",
     heroCardsTop: data.heroCardsTop,
     heroCardsBottom: data.heroCardsBottom,
     body,

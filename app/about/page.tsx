@@ -21,7 +21,8 @@ export function generateMetadata(): Metadata {
 export default function AboutPage() {
   const page = getPage("about");
   if (!page) notFound();
-  const landingPages = getLandingPages();
+  // Only literal location pages; campaign pages stay unlisted
+  const areaPages = getLandingPages().filter((p) => p.kind === "location");
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function AboutPage() {
 
       {/* Internal links to the SEO landing pages; deliberately the only
           on-site navigation to them (they're campaign entry points) */}
-      {landingPages.length > 0 && (
+      {areaPages.length > 0 && (
         <section className="border-t border-line bg-surface">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <Reveal>
@@ -59,12 +60,12 @@ export default function AboutPage() {
               <p className="mt-3 max-w-2xl leading-relaxed text-muted">
                 Home base is Southern Oregon, and I work with small businesses
                 across the region and anywhere in the US. A few of the places
-                and services I know best:
+                I know best:
               </p>
             </Reveal>
             <Reveal delay={150}>
               <ul className="mt-6 flex flex-wrap gap-2">
-                {landingPages.map((p) => (
+                {areaPages.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/${p.slug}`}
