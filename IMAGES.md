@@ -95,26 +95,26 @@ every prompt demands blank signs and no lettering. (History: v1 was
 abstract topographic contour art; retired because it was busy and nothing
 tied any card to its actual town.)
 
-- [ ] `public/images/areas/medford.jpg` (4:3)
+- [x] `public/images/areas/medford.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Medford, Oregon: rows of pear orchard trees in bloom in the foreground, a small warm downtown cluster behind them, and the rounded ridge of Roxy Ann Peak rising in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
   - **Notes:** pears = Harry & David / Pear Blossom heritage; Roxy Ann is the town's backdrop peak.
-- [ ] `public/images/areas/ashland.jpg` (4:3)
+- [x] `public/images/areas/ashland.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Ashland, Oregon: an outdoor Elizabethan-style theater with timber balconies beside a leafy park with a small creek, a deer grazing calmly at the park's edge, forested hills rising behind, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
   - **Notes:** the Elizabethan theater (Shakespeare Festival) + Lithia Park; the deer is a local in-joke every Ashlander will get.
-- [ ] `public/images/areas/grants-pass.jpg` (4:3)
+- [x] `public/images/areas/grants-pass.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Grants Pass, Oregon: a cheerful raft with paddlers riding gentle whitewater on a wide green river, pine-covered banks on both sides and a small bridge in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
   - **Notes:** Rogue River rafting is the town's identity. Skipped the "It's the Climate" arch because it requires legible text.
-- [ ] `public/images/areas/central-point.jpg` (4:3)
+- [x] `public/images/areas/central-point.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Central Point, Oregon: a cozy small creamery storefront with big cheese wheels stacked in the window, and two distinctive flat-topped mesa buttes (the Table Rocks) on the horizon behind open farmland, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; storefront sign left blank."
   - **Notes:** Rogue Creamery + the Table Rocks, both genuinely Central Point-adjacent.
-- [ ] `public/images/areas/jacksonville.jpg` (4:3)
+- [x] `public/images/areas/jacksonville.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of a present-day summer evening concert at a hillside outdoor amphitheater in Jacksonville, Oregon: people relaxing on blankets and low lawn chairs on a terraced lawn beneath tall ponderosa pines, a small warmly lit wooden stage pavilion below, soft string lights between the trees, and the rooftops of a charming historic downtown just visible beyond, earthy cream dusk sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
   - **Notes:** the Britt Festival hillside. v1 prompted "historic 1880s
     main street" and the generator produced literal period scenes; when a
     town's charm is historic, anchor the prompt in a PRESENT-DAY activity
     (concerts, people, string lights) and use era words only for
     architecture, never for the scene.
-- [ ] `public/images/areas/talent.jpg` (4:3)
+- [x] `public/images/areas/talent.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a cozy little depot-style restaurant sitting right beside old railroad tracks, with picnic tables, potted plants, and string lights out front, a server carrying plates to a table of happy locals, vineyard-covered hills rising behind, warm late afternoon light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs and chalkboards left blank."
   - **Notes:** an homage to Sweet Beet Station, the trackside restaurant
     in downtown Talent (a personal favorite of Sebastian's; keep this
@@ -122,7 +122,7 @@ tied any card to its actual town.)
     recognizable elements; the name never appears (no-lettering rule
     keeps signs blank anyway). v1 was generic storefronts + vineyards;
     v2 was the Camelot Theatre, replaced by this homage.
-- [ ] `public/images/areas/phoenix.jpg` (4:3)
+- [x] `public/images/areas/phoenix.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of Phoenix, Oregon: a tall graceful heron standing in a shallow tree-lined creek beside a paved greenway path, a cyclist pedaling past, and pear orchards with a few small rooftops stretching toward valley hills in the distance, warm morning light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
   - **Notes:** Blue Heron Park and the Bear Creek Greenway are Phoenix's
     real anchors; the heron is the park's namesake. (v1 was a generic

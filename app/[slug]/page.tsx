@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { getLandingPage, getLandingPages } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
 import { HeroSplash } from "@/components/HeroSplash";
+import { SiteImage } from "@/components/SiteImage";
+import { Reveal } from "@/components/Reveal";
 import { MdxBody } from "@/components/mdx";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
@@ -56,8 +58,27 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
       </HeroSplash>
 
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="prose-site">
-          <MdxBody source={page.body} />
+        <div
+          className={
+            page.imagePrompt
+              ? "grid items-start gap-10 md:grid-cols-2"
+              : undefined
+          }
+        >
+          <div className="prose-site">
+            <MdxBody source={page.body} />
+          </div>
+          {page.imagePrompt && (
+            <Reveal delay={150} className="md:sticky md:top-24">
+              <SiteImage
+                src={page.image}
+                alt={page.imageAlt}
+                prompt={page.imagePrompt}
+                width={900}
+                height={675}
+              />
+            </Reveal>
+          )}
         </div>
       </section>
 
