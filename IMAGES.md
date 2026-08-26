@@ -48,7 +48,7 @@ owners rather than a tech crowd.
     envelopes felt postal and ungrounded; v3 is pure landscape, the headline
     carries the message. Check results for sneaky lettering before uploading.
 
-- [ ] `public/images/cta-treetops.jpg` (**16:9**, e.g. 2560×1440)
+- [x] `public/images/cta-treetops.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."
   - **Notes:** background of the "Not sure where to start?" CTA band that
     appears at the bottom of most pages. Bottom-anchored (`object-bottom`)

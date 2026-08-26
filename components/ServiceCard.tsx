@@ -18,7 +18,7 @@ export function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,transform] duration-500 ease-out hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0"
+      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:shadow-xl motion-reduce:hover:translate-y-0"
     >
       <SiteImage
         src={service.image}
@@ -26,7 +26,6 @@ export function ServiceCard({
         prompt={service.imagePrompt}
         width={800}
         height={600}
-        className="transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
       />
       <Heading className="mt-4 text-xl font-semibold text-pine-dark transition-colors duration-500 group-hover:text-pine">
         {service.title}
