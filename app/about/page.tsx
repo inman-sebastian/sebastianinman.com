@@ -5,6 +5,7 @@ import { site } from "@/content/site";
 import { getPage } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { CTABand } from "@/components/CTABand";
+import { mdxComponents } from "@/components/mdx";
 
 export function generateMetadata(): Metadata {
   const page = getPage("about");
@@ -38,7 +39,7 @@ export default function AboutPage() {
             {(page.frontmatter.title as string) ?? "About"}
           </h1>
           <div className="mt-8">
-            <MDXRemote source={page.body} />
+            <MDXRemote source={page.body} components={mdxComponents} />
           </div>
         </div>
       </section>

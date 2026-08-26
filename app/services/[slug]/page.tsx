@@ -5,13 +5,16 @@ import { getService, getServices } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
 import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
+import { Reveal } from "@/components/Reveal";
+import { mdxComponents } from "@/components/mdx";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
 /**
  * Dedicated landing page per service. One MDX file in content/services/
- * = one page here; the rotating hero examples come from the file's
- * heroCardsTop / heroCardsBottom frontmatter.
+ * = one page here. The body holds only the short intro prose; pain
+ * points, deliverables, and the good-fit line come from frontmatter and
+ * render as designed sections (no walls of text).
  */
 
 export const dynamicParams = false;
@@ -54,20 +57,114 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </ButtonLink>
       </HeroSplash>
 
-      <section className="mx-auto grid max-w-6xl items-start gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
-        <div className="prose-site">
-          <MDXRemote source={service.body} />
-          <ConsultButton className="mt-6" />
-        </div>
-        <SiteImage
-          src={service.image}
-          alt={service.imageAlt}
-          prompt={service.imagePrompt}
-          width={900}
-          height={675}
-          className="md:sticky md:top-24"
-        />
+      {/* Short intro beside the service illustration */}
+      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
+        <Reveal>
+          <div className="prose-site">
+            <MDXRemote source={service.body} components={mdxComponents} />
+          </div>
+        </Reveal>
+        <Reveal delay={150}>
+          <SiteImage
+            src={service.image}
+            alt={service.imageAlt}
+            prompt={service.imagePrompt}
+            width={900}
+            height={675}
+          />
+        </Reveal>
       </section>
+
+      {/* Pain points as chat-style bubbles (echoes the hero cards) */}
+      {service.painPoints.length > 0 && (
+        <section className="border-y border-line bg-surface">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+            <Reveal>
+              <h2 className="text-3xl font-semibold text-pine-dark">
+                Sound familiar?
+              </h2>
+            </Reveal>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {service.painPoints.map((point, i) => (
+                <Reveal key={point} delay={i * 120} className="h-full">
+                  <div
+                    className={`h-full max-w-xl rounded-2xl border border-line bg-pine-tint/60 px-5 py-4 ${
+                      i % 2 === 0 ? "rounded-bl-sm" : "rounded-br-sm sm:ml-auto"
+                    }`}
+                  >
+                    <p className="leading-relaxed text-pine-dark">
+                      &ldquo;{point}&rdquo;
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            <Reveal delay={service.painPoints.length * 120}>
+              <p className="mt-8 max-w-xl text-lg text-muted">
+                If any of these sound like your week, you&rsquo;re exactly who
+                this is for.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
+      {/* Deliverables as a checklist grid */}
+      {service.deliverables.length > 0 && (
+        <section className="bg-pine-tint/50">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+            <Reveal>
+              <h2 className="text-3xl font-semibold text-pine-dark">
+                What you get
+              </h2>
+            </Reveal>
+            <div className="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
+              {service.deliverables.map((item, i) => (
+                <Reveal key={item} delay={i * 120}>
+                  <div className="flex items-start gap-4">
+                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pine text-white">
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                    </span>
+                    <p className="leading-relaxed text-ink">{item}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Good-fit callout with the CTA */}
+      {service.goodFit && (
+        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <Reveal>
+            <div className="items-center justify-between gap-8 rounded-2xl bg-terracotta-tint p-8 sm:flex">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-terracotta-dark">
+                  A good fit if…
+                </p>
+                <p className="mt-2 max-w-2xl text-lg leading-relaxed text-ink">
+                  {service.goodFit}
+                </p>
+              </div>
+              <ConsultButton className="mt-6 shrink-0 sm:mt-0" />
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       <CTABand />
     </>

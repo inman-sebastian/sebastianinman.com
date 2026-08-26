@@ -4,6 +4,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getLandingPage, getLandingPages } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
 import { HeroSplash } from "@/components/HeroSplash";
+import { mdxComponents } from "@/components/mdx";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 import { site } from "@/content/site";
@@ -57,7 +58,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
 
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="prose-site">
-          <MDXRemote source={page.body} />
+          <MDXRemote source={page.body} components={mdxComponents} />
         </div>
       </section>
 

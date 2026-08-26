@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import { getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
+import { Reveal } from "@/components/Reveal";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -57,16 +58,15 @@ export default function HomePage() {
                 title: "Everyone says “use AI”",
                 text: "You suspect there's something to it, but you don't have time to sort real help from hype, and no one explains it in plain English.",
               },
-            ].map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-line bg-background p-6"
-              >
-                <h3 className="text-lg font-semibold text-pine-dark">
-                  {item.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-muted">{item.text}</p>
-              </div>
+            ].map((item, i) => (
+              <Reveal key={item.title} delay={i * 120} className="h-full">
+                <div className="h-full rounded-xl border border-line bg-background p-6">
+                  <h3 className="text-lg font-semibold text-pine-dark">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 leading-relaxed text-muted">{item.text}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed">
@@ -89,29 +89,30 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <Link
-              key={service.slug}
-              href={`/services/${service.slug}`}
-              className="group flex flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
-            >
-              <SiteImage
-                src={service.image}
-                alt={service.imageAlt}
-                prompt={service.imagePrompt}
-                width={800}
-                height={600}
-              />
-              <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
-                {service.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                {service.summary}
-              </p>
-              <p className="mt-4 text-sm font-semibold text-terracotta">
-                Starting at ${service.startingPrice.toLocaleString()}
-              </p>
-            </Link>
+          {services.map((service, i) => (
+            <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
+              <Link
+                href={`/services/${service.slug}`}
+                className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
+              >
+                <SiteImage
+                  src={service.image}
+                  alt={service.imageAlt}
+                  prompt={service.imagePrompt}
+                  width={800}
+                  height={600}
+                />
+                <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
+                  {service.title}
+                </h3>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                  {service.summary}
+                </p>
+                <p className="mt-4 text-sm font-semibold text-terracotta">
+                  Starting at ${service.startingPrice.toLocaleString()}
+                </p>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -124,7 +125,7 @@ export default function HomePage() {
           </h2>
           <div className="mt-8 grid gap-8 md:grid-cols-3">
             {steps.map((step, i) => (
-              <div key={step.title}>
+              <Reveal key={step.title} delay={i * 150}>
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white">
                   {i + 1}
                 </div>
@@ -132,7 +133,7 @@ export default function HomePage() {
                   {step.title}
                 </h3>
                 <p className="mt-2 leading-relaxed text-muted">{step.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

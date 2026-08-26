@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
+import { Reveal } from "@/components/Reveal";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
@@ -28,11 +29,11 @@ export default function ServicesPage() {
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
+          {services.map((service, i) => (
+            <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
             <Link
-              key={service.slug}
               href={`/services/${service.slug}`}
-              className="group flex flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
+              className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
             >
               <SiteImage
                 src={service.image}
@@ -56,6 +57,7 @@ export default function ServicesPage() {
                 </span>
               </p>
             </Link>
+            </Reveal>
           ))}
         </div>
       </section>

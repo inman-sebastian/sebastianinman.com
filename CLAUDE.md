@@ -64,10 +64,26 @@ landing page at `/services/<slug>`. Frontmatter: `title`, `summary`, `order`
 lists of rotating hero example cards. Each card is either a notification
 (`icon` of check/calendar/star/sync/chart/mail/clock/globe, `title`, `sub`)
 or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
-and service-specific. Body = the full service section (follow the existing
-"Sound familiar? / What you get / A good fit if…" shape). The service
-appears automatically on the homepage cards, the /services overview, the
-footer, and the sitemap.
+and service-specific.
+
+The page's designed sections come from frontmatter, NOT prose: `painPoints`
+(list of first-person owner quotes, rendered as chat bubbles under "Sound
+familiar?"), `deliverables` (list, rendered as a checklist grid under "What
+you get"), and `goodFit` (one sentence, rendered as a callout with the CTA).
+Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
+put walls of text or the lists back into the body. The service appears
+automatically on the homepage cards, the /services overview, the footer,
+and the sitemap.
+
+### Use design components inside MDX bodies
+Every MDX body (services, landing pages, about) can embed these components,
+defined in `components/mdx.tsx` (add new ones there and document them here):
+- `<Callout title="...">text</Callout>`: terracotta-tinted aside
+- `<CheckList items={["...", "..."]} />`: green checkmark list
+- `<ChatBubble question="..." answer="..." caption="..." />`: chat exchange
+- `<StatRow stats={[{ value: "3 hrs", label: "saved weekly" }]} />`: stat tiles
+Use them to break up prose (nobody wants a wall of text). Any numbers in a
+`StatRow` must be real or clearly illustrative; no invented claims.
 
 ### Add an SEO landing page (e.g. "Grants Pass automation")
 Create `content/landing/<url-slug>.mdx`. The filename becomes the URL
