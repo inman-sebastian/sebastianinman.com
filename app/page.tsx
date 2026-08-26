@@ -34,11 +34,11 @@ export default function HomePage() {
           priority
           src="/images/home-hero.jpg"
           alt="Wide illustration of a Southern Oregon valley at golden hour, with a relaxed small business owner outside their shop while envelopes drift off on their own"
-          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley at golden hour with pine-covered hills and soft mountain silhouettes. The LEFT HALF is calm open sky and gentle fields with almost no detail (text will sit there). On the RIGHT, one small business owner stands relaxed in front of a modest storefront, coffee in hand, while three or four paper envelopes drift gently upward on their own. One clear focal point, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents."
+          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley at golden hour with pine-covered hills and soft mountain silhouettes. The LEFT HALF is calm open sky and gentle fields with almost no detail (text will sit there). On the RIGHT, one relaxed person sits in a wooden chair on a grassy rise overlooking the valley, coffee in hand, while three or four paper envelopes drift gently upward into the sky on their own. ABSOLUTELY NO buildings, storefronts, signs, words, or lettering anywhere in the image. One clear focal point, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents."
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-background/75 md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent"
+          className="absolute inset-0 bg-background/55 md:bg-gradient-to-r md:from-background/70 md:via-background/20 md:to-transparent"
         />
         <div className="relative mx-auto flex max-w-6xl items-center px-4 py-20 sm:px-6 md:min-h-[560px] md:py-24 lg:min-h-[640px]">
           <div className="max-w-xl">
@@ -48,7 +48,7 @@ export default function HomePage() {
             <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
               Your business runs better when the busywork runs itself.
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-muted">
+            <p className="mt-5 text-lg leading-relaxed text-ink/80">
               I&rsquo;m Sebastian. I help small businesses save hours every week
               with practical automation, helpful AI tools, and websites that
               bring in customers. Everything explained in plain English, priced
