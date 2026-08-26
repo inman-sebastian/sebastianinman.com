@@ -6,10 +6,17 @@ description: Add a named tool/software (with its brand favicon) to a service pag
 # Add a tool chip (name + brand favicon)
 
 Adds a tool to a service's `tools:` frontmatter list and fetches its brand
-favicon so the chip renders with the icon. The chip grid lives on the
-service page under "Use any of these?" (see
-`app/services/[slug]/page.tsx`); chips fall back to text-only when no
-icon file exists, so the favicon is an upgrade, never a blocker.
+favicon so the chip renders with the icon. The chips render as two
+counter-scrolling marquee rows under "Use any of these?"
+(`components/ToolMarquee.tsx`, wired in `app/services/[slug]/page.tsx`);
+the frontmatter list's first half is the top row, second half the bottom
+row, so insert the tool into whichever half fits it thematically (top:
+money/commerce/operations; bottom: marketing/communication/productivity)
+and keep the halves roughly equal in length. Chips fall back to
+text-only when no icon file exists, so the favicon is an upgrade, never
+a blocker. Only list tools with a real integration path; walled-garden
+platforms with closed APIs (DoorDash, most salon-booking apps, Airbnb)
+stay off the list no matter how recognizable they are.
 
 ## Inputs
 

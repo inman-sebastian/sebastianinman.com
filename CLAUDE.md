@@ -89,9 +89,11 @@ service). The page's designed sections come from frontmatter, NOT prose: `busywo
 (5-8 SHORT phrases, 2-4 words each, rendered as poppable floating chips
 under "Sound familiar?"; keep them concrete time-eaters, not sentences),
 `deliverables` (list, rendered as a checklist grid under "What you get"),
-optional `tools` (named tools/systems, rendered as a chip grid under
-"Use any of these?", placed FIRST among the designed sections because
-tool recognition is the fastest hook; real product names small
+optional `tools` (named tools/systems, rendered as two counter-scrolling
+marquee rows of chips under "Use any of these?" via `ToolMarquee`; the
+list's FIRST HALF is the top row and SECOND HALF the bottom row, so keep
+each half thematically grouped; the section is placed first among the
+designed sections because tool recognition is the fastest hook; real product names small
 businesses recognize, customer-court framing ("I can make them talk to
 each other"), never partnerships or certifications; each chip shows the brand's favicon from
 `public/images/tools/<slugified-name>.png` when that file exists, e.g.
