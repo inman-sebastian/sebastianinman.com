@@ -107,7 +107,9 @@ export function StatRow({
           className="flex items-center gap-4 rounded-xl border border-line bg-surface px-5 py-4"
         >
           {stat.icon && (
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pine/10 text-pine-dark">
+            // Solid saturated light green, not a low-opacity pine: thin
+            // washes of the muted dark green read as gray
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#d9ecdc] text-pine-dark">
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -124,12 +126,14 @@ export function StatRow({
               </svg>
             </span>
           )}
+          {/* !my-0: neutralize .prose-site's paragraph margins, which
+              otherwise force a full 1rem gap between title and detail */}
           <div>
-            <p className="font-serif text-lg font-semibold leading-snug text-pine-dark">
+            <p className="!my-0 font-serif text-lg font-semibold leading-snug text-pine-dark">
               {stat.title}
             </p>
             {stat.detail && (
-              <p className="mt-0.5 text-sm leading-relaxed text-muted">
+              <p className="!mb-0 !mt-0.5 text-sm leading-relaxed text-muted">
                 {stat.detail}
               </p>
             )}
