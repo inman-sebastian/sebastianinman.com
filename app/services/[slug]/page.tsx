@@ -97,7 +97,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           stuff") is the fastest hook. Customer-court framing, and no
           partnership claims. */}
       {service.tools.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <section className="border-y border-line bg-surface">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <Reveal>
             <h2 className="text-3xl font-semibold text-pine-dark">
               Use any of these?
@@ -114,7 +115,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 return (
                   <li
                     key={tool}
-                    className="flex items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-pine-dark"
+                    className="flex items-center gap-2 rounded-lg border border-line bg-background px-4 py-2 text-sm font-medium text-pine-dark"
                   >
                     {icon && (
                       <Image
@@ -136,12 +137,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               consult.
             </p>
           </Reveal>
+          </div>
         </section>
       )}
 
-      {/* The busywork this service clears, as poppable floating chips */}
+      {/* The busywork this service clears, as poppable floating chips.
+          Plain cream: the surface band above it carries the separation. */}
       {service.busywork.length > 0 && (
-        <section className="border-y border-line bg-surface">
+        <section>
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <Reveal>
               <h2 className="text-3xl font-semibold text-pine-dark">

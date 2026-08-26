@@ -224,12 +224,14 @@ img.hero-kenburns {
 .prose-site {
   max-width: 65ch;
 }
+/* Same size as the designed sections' h2s (text-3xl) so body headings
+   don't read as subordinate to the sections around them */
 .prose-site h2 {
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   font-weight: 600;
   color: var(--color-pine-dark);
   margin-top: 2.25rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 .prose-site h3 {
   font-size: 1.2rem;
