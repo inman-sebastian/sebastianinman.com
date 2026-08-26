@@ -39,7 +39,7 @@ export default function HomePage() {
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-background/55 md:bg-gradient-to-r md:from-background/70 md:via-background/20 md:to-transparent"
+          className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/45 md:bg-gradient-to-r md:from-background/95 md:via-background/40 md:via-40% md:to-transparent md:to-75%"
         />
         <HeroCards />
         <div className="relative mx-auto flex max-w-6xl items-center px-4 py-20 sm:px-6 md:min-h-[560px] md:py-24 lg:min-h-[640px]">
