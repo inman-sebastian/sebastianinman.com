@@ -11,6 +11,7 @@ type SiteImageProps = {
    * until the real file exists at `src`. Also log it in IMAGES.md.
    */
   prompt: string;
+  /** Box size; defaults to 4:3, the site-wide standard for generated images */
   width?: number;
   height?: number;
   priority?: boolean;
@@ -28,7 +29,7 @@ export function SiteImage({
   alt,
   prompt,
   width = 1200,
-  height = 800,
+  height = 900,
   priority = false,
   className = "",
 }: SiteImageProps) {
@@ -42,7 +43,8 @@ export function SiteImage({
         width={width}
         height={height}
         priority={priority}
-        className={`rounded-xl object-cover ${className}`}
+        style={{ aspectRatio: `${width} / ${height}` }}
+        className={`w-full rounded-xl object-cover ${className}`}
       />
     );
   }

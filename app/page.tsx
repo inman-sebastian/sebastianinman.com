@@ -51,7 +51,7 @@ export default function HomePage() {
           src="/images/home-hero.jpg"
           alt="Illustration of a relaxed small business owner whose paperwork handles itself"
           prompt="Warm, friendly flat illustration of a small business owner standing relaxed in front of their shop at golden hour while helpful automated elements (envelopes sending themselves, a calendar checking itself off, a chat bubble greeting a customer) float gently around the storefront. Earthy cream background, deep pine green and terracotta accents, southern Oregon mountains in the distance."
-          width={1080}
+          width={1200}
           height={900}
           priority
         />
@@ -120,7 +120,7 @@ export default function HomePage() {
                 alt={service.imageAlt}
                 prompt={service.imagePrompt}
                 width={800}
-                height={500}
+                height={600}
               />
               <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
                 {service.title}

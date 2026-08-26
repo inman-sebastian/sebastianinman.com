@@ -82,6 +82,10 @@ Use `<SiteImage src="/images/..." alt="..." prompt="..." />`. It renders a
 placeholder showing the prompt until the file exists in `public/`. Add every
 new image to `IMAGES.md` with its path, size, and prompt. Sebastian generates
 the images and drops them in; never commit AI-generated images yourself.
+**All image slots are 4:3** (Sebastian's generator outputs 4:3); keep any new
+`SiteImage` width/height props at a 4:3 ratio (the component defaults to
+1200×900) and note 4:3 in the IMAGES.md entry. The headshot (real portrait
+photo) is the only exception.
 
 ### Add a static page
 Create `app/<name>/page.tsx` (copy the shape of `app/about/page.tsx`), put

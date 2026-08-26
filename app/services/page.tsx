@@ -42,7 +42,7 @@ export default function ServicesPage() {
                 alt={service.imageAlt}
                 prompt={service.imagePrompt}
                 width={900}
-                height={650}
+                height={675}
                 className="md:sticky md:top-24"
               />
             </div>
