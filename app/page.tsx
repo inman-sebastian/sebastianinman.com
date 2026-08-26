@@ -5,6 +5,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
 import { ServiceCard } from "@/components/ServiceCard";
+import { ChatThread } from "@/components/ChatThread";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -41,47 +42,29 @@ export default function HomePage() {
 
       {/* Who I help */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 md:grid-cols-2">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <Reveal>
-            <h2 className="text-3xl font-semibold text-pine-dark">
+            <h2 className="max-w-2xl text-3xl font-semibold text-pine-dark">
               Running a business shouldn&rsquo;t mean drowning in it.
             </h2>
-            <p className="mt-4 leading-relaxed text-muted">
+            <p className="mt-4 max-w-2xl leading-relaxed text-muted">
               Most of the owners I talk to aren&rsquo;t looking for &ldquo;digital
               transformation.&rdquo; They just want the paperwork to stop eating
               their evenings, the phone to stop going to voicemail, and a website
-              they aren&rsquo;t embarrassed by.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted">
-              That&rsquo;s the work I do: find the hours your business is losing
-              to busywork, and quietly hand them back.
+              they aren&rsquo;t embarrassed by. That&rsquo;s the work I do: find
+              the hours your business is losing to busywork, and quietly hand
+              them back.
             </p>
           </Reveal>
-          <div className="flex flex-col gap-4">
-            {[
-              "I was answering emails at my kid's soccer game.",
-              "We missed three calls today because we were slammed.",
-              "I know there's a better way. I just don't have time to find it.",
-            ].map((quote, i) => (
-              <Reveal
-                key={quote}
-                delay={i * 150}
-                className={i % 2 === 0 ? "self-start" : "self-end"}
-              >
-                <p
-                  className={`max-w-sm rounded-2xl border border-line bg-pine-tint/60 px-5 py-3.5 leading-relaxed text-pine-dark ${
-                    i % 2 === 0 ? "rounded-bl-sm" : "rounded-br-sm"
-                  }`}
-                >
-                  &ldquo;{quote}&rdquo;
-                </p>
-              </Reveal>
-            ))}
-            <Reveal delay={500} className="self-end">
-              <p className="max-w-sm rounded-2xl rounded-br-sm bg-pine px-5 py-3.5 leading-relaxed text-white">
-                Sound familiar? Let&rsquo;s fix that.
-              </p>
-            </Reveal>
+          <div className="mt-10 flex md:justify-end">
+            <ChatThread
+              messages={[
+                "I was answering emails at my kid's soccer game.",
+                "We missed three calls today because we were slammed.",
+                "I know there's a better way. I just don't have time to find it.",
+              ]}
+              reply="Sound familiar? Let's fix that."
+            />
           </div>
         </div>
       </section>
