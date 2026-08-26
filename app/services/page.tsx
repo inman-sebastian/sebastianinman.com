@@ -28,7 +28,7 @@ export default function ServicesPage() {
         <div className="max-w-2xl">
           <Callout title="Need more than one?">
             Most of my clients do. Combined projects get scoped together with
-            one flat quote, and it always costs less than doing them
+            one flat quote, and it usually costs less than doing them
             separately.
           </Callout>
         </div>
