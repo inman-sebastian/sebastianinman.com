@@ -65,16 +65,16 @@ function playPop() {
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    const f0 = 170 + Math.random() * 130;
+    const f0 = 340 + Math.random() * 220;
     osc.type = "sine";
     osc.frequency.setValueAtTime(f0, t);
-    osc.frequency.exponentialRampToValueAtTime(f0 * 3, t + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(f0 * 3.2, t + 0.07);
     gain.gain.setValueAtTime(0.0001, t);
-    gain.gain.exponentialRampToValueAtTime(0.25, t + 0.008);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+    gain.gain.exponentialRampToValueAtTime(0.22, t + 0.007);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.1);
     osc.connect(gain).connect(ctx.destination);
     osc.start(t);
-    osc.stop(t + 0.13);
+    osc.stop(t + 0.11);
   } catch {
     // no audio support; popping stays silent
   }
