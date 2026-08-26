@@ -2,17 +2,20 @@
 
 Researched August 26, 2026 (web sources; see links). Purpose: ground the
 site's starting prices and "Best for" targeting in real market data.
-Prices still need Sebastian's final sign-off; this is the evidence base.
+DECISION (Aug 2026): based on this research, Sebastian raised website
+design to $2,000 and AI insights to $1,200; other prices held. Strategy:
+slightly undercut the competition while maintaining quality service.
+Revisit when real client data comes in.
 
 ## Pricing benchmarks vs. our starting prices
 
 | Service | Our price | Market range found | Read |
 |---|---|---|---|
-| Website design & dev | $1,500 | Freelancers $1,500-8,000 (sweet spot $2,000-5,000); Medford agencies ~$5,000-12,000; template/basic work $500-2,000 | At the very bottom of the credible freelancer range. Dramatically undercuts local agencies. Room to raise to ~$2,000 without losing the affordability pitch. |
+| Website design & dev | $2,000 (raised from $1,500) | Freelancers $1,500-8,000 (sweet spot $2,000-5,000); Medford agencies ~$5,000-12,000; template/basic work $500-2,000 | At the very bottom of the credible freelancer range. Dramatically undercuts local agencies. Room to raise to ~$2,000 without losing the affordability pitch. |
 | Workflow automation | $750 | Simple automations $300-1,000; custom integrations $1,000-3,000; per-workflow builds $400-5,000; consultants $75-200/hr | Squarely in-market for a first simple automation. Solid anchor. |
 | Tool integration | $500 | Custom API integrations $1,000-3,000; simple native-connector work lands lower | Slightly below market; fine as an entry-point loss leader, or justifiable at $600-750. |
 | AI assistants | $1,000 | Professional platform setup $500-3,000; developer-built $1,000-5,000; SaaS platform fees $30-200/mo on top | Well placed for a platform-based setup trained on the client's business. |
-| AI insights | $750 | Automated KPI dashboards $3,500-7,000; analytics consultants $75-150/hr | Most underpriced vs. market. A basic single-source dashboard at $750 is defensible, but $1,000-1,500 would still massively undercut the norm. |
+| AI insights | $1,200 (raised from $750) | Automated KPI dashboards $3,500-7,000; analytics consultants $75-150/hr | Most underpriced vs. market. A basic single-source dashboard at $750 is defensible, but $1,000-1,500 would still massively undercut the norm. |
 
 Overall: the pricing posture is "ultra-accessible vs. market," which fits
 the brand. Website design and AI insights have the most headroom to raise.

@@ -135,11 +135,11 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
       verified domain sender
 - [ ] **Booking URL**: `bookingUrl` in `content/site.ts` is empty (buttons
       fall back to /contact) until Sebastian sets up Cal.com/Calendly
-- [ ] **Starting prices need Sebastian's sign-off**: website $1,500 /
+- [x] **Starting prices confirmed by Sebastian** (Aug 2026): website $2,000 /
       workflow automation $750 / tool integration $500 / AI assistants
-      $1,000 / AI insights $750. Market research (`docs/market-research.md`)
-      found all are in or below market range; website and AI insights have
-      the most headroom to raise.
+      $1,000 / AI insights $1,200. Pricing strategy: slightly undercut the
+      competition while maintaining quality (see `docs/market-research.md`
+      for benchmarks). Revisit as real client data comes in.
 - [ ] **"Best for" business types are educated guesses**, sanity-checked
       against local competitor research (`docs/market-research.md`): local
       AI/automation competitors target professional services, so our
