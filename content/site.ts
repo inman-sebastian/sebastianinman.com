@@ -25,9 +25,9 @@ export const site = {
   // service page. The prompt must stay identical to the one in IMAGES.md.
   heroImage: {
     src: "/images/home-hero.jpg",
-    alt: "Wide illustration of layered pine forest ridges in deep greens under a calm dusk sky",
+    alt: "Wide illustration of a calm river at dusk in deep pine greens, with a soft warm glow on the horizon",
     prompt:
-      "Wide 16:9 flat illustration in deep pine greens: layered ridgelines of silhouetted pine forest rising from the bottom of the frame, each ridge a step darker toward the foreground, from #234f3e in the far ridges down to #132c1f in the nearest trees, with soft mist drifting between the layers. Above the ridges, a calm dusk sky in muted deep greens fading from #2a5a47 near the horizon upward into #18382c fills most of the frame with almost no detail. The composition is asymmetrical: the tallest trees and richest ridge detail gather along the right side, while the left and upper areas stay smooth and calm. A few tiny warm firefly glints in soft terracotta float near the right treeline. No people, no animals, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture.",
+      "Wide 16:9 flat illustration in deep pine greens: a calm, wide river at dusk, its surface filling the lower half of the frame with smooth horizontal ripple lines stepping through deep greens from #234f3e down to #132c1f in the foreground. Above it, a quiet dusk sky in muted deep greens fading upward from #2a5a47 into #18382c, nearly empty of detail. Low on the right side of the horizon, a soft warm terracotta glow of last light melts into the water and draws a gentle shimmering reflection down the right side of the river. The left and upper areas stay smooth and calm. A few smooth dark river stones break the surface in the lower right corner. No people, no animals, no boats, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture.",
   },
 
   location: "Southern Oregon",

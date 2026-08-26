@@ -36,9 +36,11 @@ owners rather than a tech crowd.
 ## Illustrations
 
 - [ ] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
-  - **Prompt:** "Wide 16:9 flat illustration in deep pine greens: layered ridgelines of silhouetted pine forest rising from the bottom of the frame, each ridge a step darker toward the foreground, from #234f3e in the far ridges down to #132c1f in the nearest trees, with soft mist drifting between the layers. Above the ridges, a calm dusk sky in muted deep greens fading from #2a5a47 near the horizon upward into #18382c fills most of the frame with almost no detail. The composition is asymmetrical: the tallest trees and richest ridge detail gather along the right side, while the left and upper areas stay smooth and calm. A few tiny warm firefly glints in soft terracotta float near the right treeline. No people, no animals, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture."
-  - **Notes:** v4 direction: dark pine forest matching the CTA band and
-    footer greens, so pages bookend in the same palette. IMPORTANT: the
+  - **Prompt:** "Wide 16:9 flat illustration in deep pine greens: a calm, wide river at dusk, its surface filling the lower half of the frame with smooth horizontal ripple lines stepping through deep greens from #234f3e down to #132c1f in the foreground. Above it, a quiet dusk sky in muted deep greens fading upward from #2a5a47 into #18382c, nearly empty of detail. Low on the right side of the horizon, a soft warm terracotta glow of last light melts into the water and draws a gentle shimmering reflection down the right side of the river. The left and upper areas stay smooth and calm. A few smooth dark river stones break the surface in the lower right corner. No people, no animals, no boats, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture."
+  - **Notes:** v4 direction: a dusk river (nod to the Rogue) in the same
+    deep greens as the CTA band and footer, deliberately a DIFFERENT
+    subject than the footer's treeline so the two don't feel repetitive;
+    only the palette repeats. IMPORTANT: the
     hero currently styles its overlay and text for the light golden-valley
     image (v3, currently uploaded); when this dark version is dropped in,
     Claude must flip the hero overlay/text to a light-on-dark scheme, so
