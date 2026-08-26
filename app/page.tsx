@@ -34,7 +34,7 @@ export default function HomePage() {
           priority
           src="/images/home-hero.jpg"
           alt="Wide illustration of a peaceful Southern Oregon valley at golden hour, with pine-covered hills and soft mountains"
-          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley landscape at golden hour. The LEFT HALF is calm open sky and gentle golden fields with almost no detail (text will sit there). Visual interest builds toward the RIGHT: layered pine-covered hills, soft mountain silhouettes, and a winding dirt road drifting into the valley. No people, no animals, no buildings, no signs, no words or lettering anywhere. Serene, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents, a few soft wildflowers in the foreground corner."
+          prompt="Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents."
         />
         <div
           aria-hidden="true"
