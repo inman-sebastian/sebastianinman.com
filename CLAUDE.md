@@ -138,6 +138,10 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 - [ ] **Starting prices are unconfirmed placeholders**, set by Claude and
       needing Sebastian's sign-off: website $1,500 / workflow automation $750 /
       tool integration $500 / AI assistants $1,000 / AI insights $750
+- [ ] **"Best for" business types are Claude's educated guesses**, based on
+      service-to-pain reasoning and the general Southern Oregon business
+      mix, not real lead data. Revisit the `bestFor` frontmatter lists once
+      actual inquiries show which niches respond.
 - [ ] **About page bio facts are drafted, not verified**: `{/* VERIFY */}`
       comments in `content/pages/about.mdx` mark invented claims ("over a
       decade", personal story) awaiting Sebastian's corrections
