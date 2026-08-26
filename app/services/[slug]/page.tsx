@@ -85,6 +85,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             src={service.image}
             alt={service.imageAlt}
             prompt={service.imagePrompt}
+            caption={service.imageCaption || undefined}
             width={900}
             height={675}
             className="!rounded-2xl border-[6px] border-background md:shadow-lg"

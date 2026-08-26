@@ -77,7 +77,9 @@ don't hand-tune line breaks.
 Create/edit `content/services/<slug>.mdx`; each file becomes a dedicated
 landing page at `/services/<slug>`. Frontmatter: `title`, `summary`, `order`
 (sort position), `startingPrice` (number, whole dollars), `image`,
-`imagePrompt`, `imageAlt`, plus optional `heroCardsTop` / `heroCardsBottom`:
+`imagePrompt`, `imageAlt`, `imageCaption` (short editorial figcaption
+shown under the intro illustration; a warm one-liner that complements
+the alt text, never repeats it), plus optional `heroCardsTop` / `heroCardsBottom`:
 lists of rotating hero example cards. Each card is either a notification
 (`icon` of check/calendar/star/sync/chart/mail/clock/globe, `title`, `sub`)
 or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
@@ -146,10 +148,12 @@ examples → why local.
   "Areas I serve" grid, a city link in the footer's "Areas" column, a
   pill in the homepage areas strip, and the sitemap (all filter on
   `kind === "location"`; a new location page shows up everywhere with no
-  code edits). Location pages also need `image`, `imagePrompt`, `imageAlt`
-  (abstract topographic map art; see the Area cards section of IMAGES.md
-  for the series style; NEVER street maps or literal geography) and
-  `areaBlurb` (one short local phrase for the card). Never list a
+  code edits). Location pages also need `image`, `imagePrompt`, `imageAlt`,
+  `imageCaption` (editorial figcaption under the illustration; warm
+  one-liner, complements the alt text rather than repeating it), and
+  `areaBlurb` (one short local phrase for the card). The art is a
+  landmark scene in the friendly flat series (see the Area cards section
+  of IMAGES.md); NEVER street maps or literal geography. Never list a
   county/region beside cities it contains; locals read that as redundant
   and auto-generated.
 - `kind: "campaign"`: everything else: service+geo hybrids

@@ -78,6 +78,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
                 src={page.image}
                 alt={page.imageAlt}
                 prompt={page.imagePrompt}
+                caption={page.imageCaption || undefined}
                 width={900}
                 height={675}
                 className="!rounded-2xl border-[6px] border-background md:shadow-lg"

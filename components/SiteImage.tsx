@@ -21,6 +21,12 @@ type SiteImageProps = {
    * ancestor (used by the home hero). Ignores width/height.
    */
   fill?: boolean;
+  /**
+   * Visible editorial caption rendered in a figcaption under the image.
+   * Write it as a companion to the alt text, not a duplicate (screen
+   * readers get both). Ignored in fill mode.
+   */
+  caption?: string;
 };
 
 /**
@@ -38,6 +44,7 @@ export function SiteImage({
   priority = false,
   className = "",
   fill = false,
+  caption,
 }: SiteImageProps) {
   const exists = fs.existsSync(path.join(process.cwd(), "public", src));
 
@@ -73,7 +80,7 @@ export function SiteImage({
   }
 
   if (exists) {
-    return (
+    const img = (
       <Image
         src={src}
         alt={alt}
@@ -84,6 +91,17 @@ export function SiteImage({
         className={`w-full rounded-xl object-cover ${className}`}
       />
     );
+    if (caption) {
+      return (
+        <figure className="w-full">
+          {img}
+          <figcaption className="mx-auto mt-3 max-w-md text-center text-sm italic leading-snug text-muted">
+            {caption}
+          </figcaption>
+        </figure>
+      );
+    }
+    return img;
   }
 
   return (

@@ -38,15 +38,17 @@ export default function AboutPage() {
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
         {/* Headshot pulls up over the hero green, matching the
             overlapping-image treatment on the other inner pages */}
-        <div className="md:-mt-28">
+        {/* Sticky lives on the wrapper so the figcaption rides along */}
+        <div className="md:sticky md:top-24 md:-mt-28 md:self-start">
           <SiteImage
             src="/images/headshot.jpg"
             alt={`Professional headshot of ${site.name}`}
             prompt="Sebastian's professional headshot (real photo; drop in the existing headshot file)"
+            caption="Hi. I answer my own phone."
             width={600}
             height={700}
             priority
-            className="md:sticky md:top-24 !rounded-2xl border-[6px] border-background md:shadow-lg"
+            className="!rounded-2xl border-[6px] border-background md:shadow-lg"
           />
         </div>
         <div className="prose-site">

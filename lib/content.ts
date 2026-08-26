@@ -19,6 +19,8 @@ export type Service = {
   image: string;
   imagePrompt: string;
   imageAlt: string;
+  /** Visible editorial figcaption under the intro illustration */
+  imageCaption: string;
   /** Raw frontmatter arrays for the rotating hero cards; parse with
    *  parseHeroCards() from lib/heroCards.ts */
   heroCardsTop?: unknown[];
@@ -53,6 +55,8 @@ export type LandingPage = {
   image: string;
   imagePrompt: string;
   imageAlt: string;
+  /** Visible editorial figcaption under the landing-page illustration */
+  imageCaption: string;
   /** One short local phrase shown on the area card */
   areaBlurb: string;
   /** Raw frontmatter arrays for the rotating hero cards; parse with
@@ -87,6 +91,7 @@ export function getServices(): Service[] {
       image: data.image ?? `/images/services/${slug}.jpg`,
       imagePrompt: data.imagePrompt ?? "",
       imageAlt: data.imageAlt ?? data.title ?? slug,
+      imageCaption: data.imageCaption ?? "",
       heroCardsTop: data.heroCardsTop,
       heroCardsBottom: data.heroCardsBottom,
       busywork: Array.isArray(data.busywork) ? data.busywork.map(String) : [],
@@ -116,6 +121,7 @@ export function getLandingPages(): LandingPage[] {
     image: data.image ?? `/images/areas/${slug}.jpg`,
     imagePrompt: data.imagePrompt ?? "",
     imageAlt: data.imageAlt ?? data.title ?? slug,
+    imageCaption: data.imageCaption ?? "",
     areaBlurb: data.areaBlurb ?? "",
     heroCardsTop: data.heroCardsTop,
     heroCardsBottom: data.heroCardsBottom,
