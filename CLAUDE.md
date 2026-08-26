@@ -114,7 +114,10 @@ defined in `components/mdx.tsx` (add new ones there and document them here):
 - `<Callout title="...">text</Callout>`: terracotta-tinted aside
 - `<CheckList items={["...", "..."]} />`: green checkmark list
 - `<ChatBubble question="..." answer="..." caption="..." />`: chat exchange
-- `<StatRow stats={[{ value: "3 hrs", label: "saved weekly" }]} />`: stat tiles
+- `<StatRow stats={[{ icon: "clock", value: "3 hrs", label: "saved weekly" }]} />`:
+  stat tiles; optional `icon` from the hero-card icon set (check, calendar,
+  star, sync, chart, mail, clock, globe, users, tag). Convention: users for
+  populations, tag for prices, clock for the free consult
 Use them to break up prose (nobody wants a wall of text). Any numbers in a
 `StatRow` must be real or clearly illustrative; no invented claims.
 

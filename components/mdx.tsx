@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Reveal } from "@/components/Reveal";
+import { heroCardIcons } from "@/lib/heroCards";
 
 /**
  * Design components available inside MDX content bodies (services,
@@ -11,7 +12,7 @@ import { Reveal } from "@/components/Reveal";
  *   <Callout title="Worth knowing">Plain text here.</Callout>
  *   <CheckList items={["First thing", "Second thing"]} />
  *   <ChatBubble question="..." answer="..." caption="..." />
- *   <StatRow stats={[{ value: "3 hrs", label: "saved weekly" }]} />
+ *   <StatRow stats={[{ icon: "clock", value: "3 hrs", label: "saved weekly" }]} />
  */
 
 export function Callout({
@@ -90,19 +91,39 @@ export function ChatBubble({
 export function StatRow({
   stats,
 }: {
-  stats: { value: string; label: string }[];
+  stats: { value: string; label: string; icon?: keyof typeof heroCardIcons }[];
 }) {
+  // Fixed anatomy (icon circle, value, label) and a stretch grid keep
+  // every tile in a row the same height regardless of label length
   return (
-    <div className="my-6 flex flex-wrap gap-4">
+    <div className="my-6 grid gap-3 sm:grid-cols-3">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="min-w-36 flex-1 rounded-xl border border-line bg-surface px-5 py-4 text-center"
+          className="flex flex-col items-center rounded-xl border border-line bg-surface px-4 py-5 text-center"
         >
-          <p className="font-serif text-3xl font-semibold text-pine-dark">
+          {stat.icon && (
+            <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-pine-tint text-pine">
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.8}
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d={heroCardIcons[stat.icon]}
+                />
+              </svg>
+            </span>
+          )}
+          <p className="font-serif text-2xl font-semibold leading-tight text-pine-dark">
             {stat.value}
           </p>
-          <p className="mt-1 text-sm text-muted">{stat.label}</p>
+          <p className="mt-1 text-sm leading-snug text-muted">{stat.label}</p>
         </div>
       ))}
     </div>
