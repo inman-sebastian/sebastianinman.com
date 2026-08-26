@@ -66,7 +66,9 @@ lists of rotating hero example cards. Each card is either a notification
 or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
 and service-specific.
 
-The page's designed sections come from frontmatter, NOT prose: `busywork`
+Cards also show a "Best for" line from `bestFor` (3-4 short business
+types, e.g. "Contractors & trades"; pick types that genuinely fit the
+service). The page's designed sections come from frontmatter, NOT prose: `busywork`
 (5-8 SHORT phrases, 2-4 words each, rendered as poppable floating chips
 under "Sound familiar?"; keep them concrete time-eaters, not sentences),
 `deliverables` (list, rendered as a checklist grid under "What you get"),

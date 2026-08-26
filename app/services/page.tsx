@@ -27,9 +27,9 @@ export default function ServicesPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2">
           {services.map((service, i) => (
-            <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
+            <Reveal key={service.slug} delay={(i % 2) * 120} className="h-full">
               <ServiceCard service={service} headingLevel="h2" />
             </Reveal>
           ))}

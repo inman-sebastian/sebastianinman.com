@@ -25,6 +25,8 @@ export type Service = {
   heroCardsBottom?: unknown[];
   /** Short busywork phrases rendered as poppable chips ("Sound familiar?") */
   busywork: string[];
+  /** Business types this service suits; shown as "Best for" on cards */
+  bestFor: string[];
   /** "What you get" items, rendered as a checklist grid */
   deliverables: string[];
   /** "A good fit if…" sentence, rendered as a callout with the CTA */
@@ -75,6 +77,7 @@ export function getServices(): Service[] {
       heroCardsTop: data.heroCardsTop,
       heroCardsBottom: data.heroCardsBottom,
       busywork: Array.isArray(data.busywork) ? data.busywork.map(String) : [],
+      bestFor: Array.isArray(data.bestFor) ? data.bestFor.map(String) : [],
       deliverables: Array.isArray(data.deliverables) ? data.deliverables.map(String) : [],
       goodFit: data.goodFit ?? "",
       body,

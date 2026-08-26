@@ -33,7 +33,17 @@ export function ServiceCard({
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
         {service.summary}
       </p>
-      <p className="mt-4 flex items-center justify-between text-sm font-semibold">
+      {service.bestFor.length > 0 && (
+        <p className="mt-4">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Best for
+          </span>
+          <span className="mt-1 block text-sm leading-relaxed text-pine-dark">
+            {service.bestFor.join(" · ")}
+          </span>
+        </p>
+      )}
+      <p className="mt-4 flex items-center justify-between border-t border-line pt-4 text-sm font-semibold">
         <span className="text-terracotta">
           Starting at ${service.startingPrice.toLocaleString()}
         </span>
