@@ -44,14 +44,21 @@ export function ServiceCard({
         {service.summary}
       </p>
       {service.bestFor.length > 0 && (
-        <p className="mt-4">
-          <span className="text-xs font-semibold uppercase tracking-wide text-muted">
+        <div className="mt-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
             Best for
-          </span>
-          <span className="mt-1 block text-sm leading-relaxed text-pine-dark">
-            {service.bestFor.join(" · ")}
-          </span>
-        </p>
+          </p>
+          <ul className="mt-1.5 flex flex-wrap gap-1.5">
+            {service.bestFor.map((type) => (
+              <li
+                key={type}
+                className="whitespace-nowrap rounded-md bg-pine-tint/60 px-2 py-1 text-xs font-medium text-pine-dark"
+              >
+                {type}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       <p className="mt-4 border-t border-line pt-4 text-sm font-semibold text-pine group-hover:underline">
         See what&rsquo;s included →
