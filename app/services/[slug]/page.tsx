@@ -7,7 +7,7 @@ import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
 import { mdxComponents } from "@/components/mdx";
-import { ChatThread } from "@/components/ChatThread";
+import { BusyworkSwarm } from "@/components/BusyworkSwarm";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -76,8 +76,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </Reveal>
       </section>
 
-      {/* Pain points as a chat thread, matching the homepage section */}
-      {service.painPoints.length > 0 && (
+      {/* The busywork this service clears, as poppable floating chips */}
+      {service.busywork.length > 0 && (
         <section className="border-y border-line bg-surface">
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <Reveal>
@@ -85,14 +85,18 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 Sound familiar?
               </h2>
               <p className="mt-4 max-w-2xl leading-relaxed text-muted">
-                These are the things I hear from business owners before we
-                start working together. If any of them sound like your week,
-                you&rsquo;re exactly who this service is for.
+                A few of the time-eaters this service clears off your plate.
               </p>
             </Reveal>
-            <div className="mt-10 flex md:justify-end">
-              <ChatThread messages={service.painPoints} reply="Let's fix that." />
-            </div>
+            <Reveal delay={150}>
+              <div className="mt-10 max-w-4xl">
+                <BusyworkSwarm chips={service.busywork} />
+              </div>
+              <p className="mt-6 text-sm text-muted">
+                Go ahead, pop a few. They&rsquo;ll be back. That&rsquo;s the
+                point.
+              </p>
+            </Reveal>
           </div>
         </section>
       )}

@@ -23,8 +23,8 @@ export type Service = {
    *  parseHeroCards() from lib/heroCards.ts */
   heroCardsTop?: unknown[];
   heroCardsBottom?: unknown[];
-  /** "Sound familiar?" pain points, rendered as chat-style bubbles */
-  painPoints: string[];
+  /** Short busywork phrases rendered as poppable chips ("Sound familiar?") */
+  busywork: string[];
   /** "What you get" items, rendered as a checklist grid */
   deliverables: string[];
   /** "A good fit if…" sentence, rendered as a callout with the CTA */
@@ -74,7 +74,7 @@ export function getServices(): Service[] {
       imageAlt: data.imageAlt ?? data.title ?? slug,
       heroCardsTop: data.heroCardsTop,
       heroCardsBottom: data.heroCardsBottom,
-      painPoints: Array.isArray(data.painPoints) ? data.painPoints.map(String) : [],
+      busywork: Array.isArray(data.busywork) ? data.busywork.map(String) : [],
       deliverables: Array.isArray(data.deliverables) ? data.deliverables.map(String) : [],
       goodFit: data.goodFit ?? "",
       body,

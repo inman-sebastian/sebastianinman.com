@@ -66,10 +66,11 @@ lists of rotating hero example cards. Each card is either a notification
 or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
 and service-specific.
 
-The page's designed sections come from frontmatter, NOT prose: `painPoints`
-(list of first-person owner quotes, rendered as chat bubbles under "Sound
-familiar?"), `deliverables` (list, rendered as a checklist grid under "What
-you get"), and `goodFit` (one sentence, rendered as a callout with the CTA).
+The page's designed sections come from frontmatter, NOT prose: `busywork`
+(5-8 SHORT phrases, 2-4 words each, rendered as poppable floating chips
+under "Sound familiar?"; keep them concrete time-eaters, not sentences),
+`deliverables` (list, rendered as a checklist grid under "What you get"),
+and `goodFit` (one sentence, rendered as a callout with the CTA).
 Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
 put walls of text or the lists back into the body. The service appears
 automatically on the homepage cards, the /services overview, the footer,

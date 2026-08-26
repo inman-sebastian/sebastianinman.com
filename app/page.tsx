@@ -5,7 +5,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
 import { ServiceCard } from "@/components/ServiceCard";
-import { ChatThread } from "@/components/ChatThread";
+import { BusyworkSwarm } from "@/components/BusyworkSwarm";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -56,16 +56,32 @@ export default function HomePage() {
               them back.
             </p>
           </Reveal>
-          <div className="mt-10 flex md:justify-end">
-            <ChatThread
-              messages={[
-                "I was answering emails at my kid's soccer game.",
-                "We missed three calls today because we were slammed.",
-                "I know there's a better way. I just don't have time to find it.",
-              ]}
-              reply="Sound familiar? Let's fix that."
-            />
-          </div>
+          <Reveal delay={150}>
+            <div className="mt-10 max-w-4xl">
+              <BusyworkSwarm
+                chips={[
+                  "Chasing late invoices",
+                  "Retyping customer info",
+                  "Missed calls",
+                  "After-hours questions",
+                  "No-show appointments",
+                  "Inbox overload",
+                  "Copy-paste bookkeeping",
+                  "Overdue follow-ups",
+                  "Review replies",
+                  "Month-end reports",
+                  "Website updates",
+                  "Double bookings",
+                  "Reminder texts",
+                  "Quote follow-ups",
+                ]}
+              />
+            </div>
+            <p className="mt-6 text-sm text-muted">
+              Go ahead, pop a few. They&rsquo;ll be back. Making them disappear
+              for good is my job.
+            </p>
+          </Reveal>
         </div>
       </section>
 

@@ -121,6 +121,10 @@ img.hero-kenburns {
   will-change: transform;
 }
 
+.swarm-float {
+  animation: float-slow var(--f-dur, 8s) ease-in-out var(--f-del, 0s) infinite;
+}
+
 .draw-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -131,7 +135,8 @@ img.hero-kenburns {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  img.hero-kenburns {
+  img.hero-kenburns,
+  .swarm-float {
     animation: none;
   }
   .draw-check {
