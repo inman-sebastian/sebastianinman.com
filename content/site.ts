@@ -25,9 +25,9 @@ export const site = {
   // service page. The prompt must stay identical to the one in IMAGES.md.
   heroImage: {
     src: "/images/home-hero.jpg",
-    alt: "Wide illustration of a peaceful Southern Oregon valley at golden hour, with pine-covered hills and soft mountains",
+    alt: "Wide illustration of layered pine forest ridges in deep greens under a calm dusk sky",
     prompt:
-      "Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents.",
+      "Wide 16:9 flat illustration in deep pine greens: layered ridgelines of silhouetted pine forest rising from the bottom of the frame, each ridge a step darker toward the foreground, from #234f3e in the far ridges down to #132c1f in the nearest trees, with soft mist drifting between the layers. Above the ridges, a calm dusk sky in muted deep greens fading from #2a5a47 near the horizon upward into #18382c fills most of the frame with almost no detail. The composition is asymmetrical: the tallest trees and richest ridge detail gather along the right side, while the left and upper areas stay smooth and calm. A few tiny warm firefly glints in soft terracotta float near the right treeline. No people, no animals, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture.",
   },
 
   location: "Southern Oregon",

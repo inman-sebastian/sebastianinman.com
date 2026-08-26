@@ -35,18 +35,24 @@ owners rather than a tech crowd.
 
 ## Illustrations
 
-- [x] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
-  - **Prompt:** "Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents."
-  - **Notes:** renders full-width behind the hero text on the homepage AND
-    every /services/<slug> page (the prompt also lives in `content/site.ts`
-    as `heroImage.prompt`; keep the two identical). The text overlays the
-    open-sky side, so that area must stay calm. Do NOT phrase that as "left
-    half empty" in a prompt: explicit half-by-half instructions make
-    generators draw a literal seam down the middle; describe one scene with
-    asymmetric weight instead. Concept history: v1 had a signed storefront
-    ("The Valley Post") that read like the business name; v2's floating
-    envelopes felt postal and ungrounded; v3 is pure landscape, the headline
-    carries the message. Check results for sneaky lettering before uploading.
+- [ ] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
+  - **Prompt:** "Wide 16:9 flat illustration in deep pine greens: layered ridgelines of silhouetted pine forest rising from the bottom of the frame, each ridge a step darker toward the foreground, from #234f3e in the far ridges down to #132c1f in the nearest trees, with soft mist drifting between the layers. Above the ridges, a calm dusk sky in muted deep greens fading from #2a5a47 near the horizon upward into #18382c fills most of the frame with almost no detail. The composition is asymmetrical: the tallest trees and richest ridge detail gather along the right side, while the left and upper areas stay smooth and calm. A few tiny warm firefly glints in soft terracotta float near the right treeline. No people, no animals, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture."
+  - **Notes:** v4 direction: dark pine forest matching the CTA band and
+    footer greens, so pages bookend in the same palette. IMPORTANT: the
+    hero currently styles its overlay and text for the light golden-valley
+    image (v3, currently uploaded); when this dark version is dropped in,
+    Claude must flip the hero overlay/text to a light-on-dark scheme, so
+    upload and restyle together. Renders full-width behind the hero text
+    on the homepage AND every /services/<slug> page (the prompt also lives
+    in `content/site.ts` as `heroImage.prompt`; keep the two identical).
+    The text overlays the calm upper-left, so that area must stay smooth.
+    Do NOT phrase that as "left half empty" in prompts: explicit
+    half-by-half instructions make generators draw a literal seam;
+    describe one scene with asymmetric weight instead. Concept history:
+    v1 had a signed storefront ("The Valley Post") that read like the
+    business name; v2's floating envelopes felt postal; v3 golden valley
+    was liked but is being replaced for palette cohesion. Check results
+    for sneaky lettering before uploading.
 
 - [x] `public/images/cta-treetops.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."
