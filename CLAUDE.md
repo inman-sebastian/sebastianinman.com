@@ -73,9 +73,12 @@ footer, and the sitemap.
 Create `content/landing/<url-slug>.mdx`. The filename becomes the URL
 (`grants-pass-small-business-automation.mdx` → `/grants-pass-small-business-automation`).
 Frontmatter: `title` (short label for footer links), `metaTitle` (full SEO
-title), `metaDescription`, `heroHeadline`, `heroSubline`, `city`. Body =
-markdown sections following the pattern in the existing files: local pain
-points → concrete examples → why local. It's automatically added to the
+title), `metaDescription`, `heroHeadline`, `heroSubline`, `city`, plus
+optional `heroCardsTop` / `heroCardsBottom` (rotating hero example cards,
+same format as services; write them for the city's business mix, e.g.
+lodging and restaurants for Ashland). Body = markdown sections following
+the pattern in the existing files: local pain points → concrete examples →
+why local. It's automatically added to the
 sitemap and the footer "Areas we serve" list. Keep each page's copy genuinely
 specific to the place/service. No find-and-replace city swaps.
 

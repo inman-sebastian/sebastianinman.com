@@ -34,6 +34,10 @@ export type LandingPage = {
   heroHeadline: string;
   heroSubline: string;
   city: string;
+  /** Raw frontmatter arrays for the rotating hero cards; parse with
+   *  parseHeroCards() from lib/heroCards.ts */
+  heroCardsTop?: unknown[];
+  heroCardsBottom?: unknown[];
   body: string;
 };
 
@@ -82,6 +86,8 @@ export function getLandingPages(): LandingPage[] {
     heroHeadline: data.heroHeadline ?? data.title ?? slug,
     heroSubline: data.heroSubline ?? "",
     city: data.city ?? "",
+    heroCardsTop: data.heroCardsTop,
+    heroCardsBottom: data.heroCardsBottom,
     body,
   }));
 }
