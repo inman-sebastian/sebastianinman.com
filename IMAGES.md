@@ -16,11 +16,11 @@ earthy cream background (#faf6ef), deep pine green (#234f3e) and terracotta
 (#c05f33) accents. Warm and approachable, for small-business owners rather
 than a tech crowd.
 
-**Aspect ratio: generate ALL illustrations at 4:3.** Sebastian's generator
-outputs 4:3 or 16:9, and every illustration slot on the site is a 4:3 box.
-The site crops anything else to fit (`object-cover`), so non-4:3 uploads
-lose their edges. The headshot is the one exception (it's a real portrait
-photo).
+**Aspect ratio: generate illustrations at 4:3**, with two exceptions: the
+home hero splash is **16:9** (it renders as a full-width background), and
+the headshot is a real portrait photo. Every other illustration slot is a
+4:3 box. The site crops anything else to fit (`object-cover`), so off-ratio
+uploads lose their edges.
 
 ## Photos
 
@@ -28,7 +28,7 @@ photo).
 
 ## Illustrations
 
-- [ ] `public/images/home-hero.jpg` (4:3, e.g. 1600×1200): Small business owner standing relaxed in front of their shop at golden hour while helpful automated elements (envelopes sending themselves, a calendar checking itself off, a chat bubble greeting a customer) float gently around the storefront. Southern Oregon mountains in the distance.
+- [ ] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440): Full-width splash. A peaceful Southern Oregon valley at golden hour with pine-covered hills and soft mountain silhouettes. The LEFT HALF must be calm open sky and gentle fields with almost no detail (hero text sits there). On the RIGHT, one small business owner stands relaxed in front of a modest storefront, coffee in hand, while three or four paper envelopes drift gently upward on their own. One clear focal point, uncluttered, generous negative space. (Keep it simple: earlier busier versions with calendars and chat bubbles were overwhelming at display size.)
 - [x] `public/images/services/website-design.jpg` (4:3, e.g. 1200×900): A small storefront business (like a local bakery or hardware store) with its website shown on a laptop beside it.
 - [x] `public/images/services/workflow-automation.jpg` (4:3, e.g. 1200×900): A relaxed small business owner having coffee while paperwork flows neatly by itself between an inbox, a calendar, and a filing cabinet.
 - [x] `public/images/services/tool-integration.jpg` (4:3, e.g. 1200×900): Everyday business tools (calculator/accounting book, calendar, envelope, cash register) connected by warm glowing lines into one tidy network.

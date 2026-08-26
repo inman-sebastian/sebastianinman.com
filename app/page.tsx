@@ -25,36 +25,43 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24">
-        <div>
-          <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-terracotta">
-            {site.serviceAreaLine}
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
-            Your business runs better when the busywork runs itself.
-          </h1>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-            I&rsquo;m Sebastian. I help small businesses save hours every week with
-            practical automation, helpful AI tools, and websites that bring in
-            customers. Everything explained in plain English, priced for a
-            small business budget.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <ConsultButton />
-            <ButtonLink href="/services" variant="secondary">
-              See what I do
-            </ButtonLink>
+      {/* Hero: full-width splash with the image as background. The image is
+          generated 16:9 with a calm left half so the text stays readable;
+          the gradient overlay below guarantees it. */}
+      <section className="relative overflow-hidden border-b border-line">
+        <SiteImage
+          fill
+          priority
+          src="/images/home-hero.jpg"
+          alt="Wide illustration of a Southern Oregon valley at golden hour, with a relaxed small business owner outside their shop while envelopes drift off on their own"
+          prompt="Wide 16:9 splash illustration, warm friendly flat style: a peaceful Southern Oregon valley at golden hour with pine-covered hills and soft mountain silhouettes. The LEFT HALF is calm open sky and gentle fields with almost no detail (text will sit there). On the RIGHT, one small business owner stands relaxed in front of a modest storefront, coffee in hand, while three or four paper envelopes drift gently upward on their own. One clear focal point, uncluttered, generous negative space. Earthy cream sky, deep pine green and terracotta accents."
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-background/75 md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent"
+        />
+        <div className="relative mx-auto flex max-w-6xl items-center px-4 py-20 sm:px-6 md:min-h-[560px] md:py-24 lg:min-h-[640px]">
+          <div className="max-w-xl">
+            <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-terracotta">
+              {site.serviceAreaLine}
+            </p>
+            <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
+              Your business runs better when the busywork runs itself.
+            </h1>
+            <p className="mt-5 text-lg leading-relaxed text-muted">
+              I&rsquo;m Sebastian. I help small businesses save hours every week
+              with practical automation, helpful AI tools, and websites that
+              bring in customers. Everything explained in plain English, priced
+              for a small business budget.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <ConsultButton />
+              <ButtonLink href="/services" variant="secondary">
+                See what I do
+              </ButtonLink>
+            </div>
           </div>
         </div>
-        <SiteImage
-          src="/images/home-hero.jpg"
-          alt="Illustration of a relaxed small business owner whose paperwork handles itself"
-          prompt="Warm, friendly flat illustration of a small business owner standing relaxed in front of their shop at golden hour while helpful automated elements (envelopes sending themselves, a calendar checking itself off, a chat bubble greeting a customer) float gently around the storefront. Earthy cream background, deep pine green and terracotta accents, southern Oregon mountains in the distance."
-          width={1200}
-          height={900}
-          priority
-        />
       </section>
 
       {/* Who I help */}

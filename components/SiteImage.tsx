@@ -16,6 +16,11 @@ type SiteImageProps = {
   height?: number;
   priority?: boolean;
   className?: string;
+  /**
+   * Render as a full-bleed background that covers its nearest relative
+   * ancestor (used by the home hero). Ignores width/height.
+   */
+  fill?: boolean;
 };
 
 /**
@@ -32,8 +37,40 @@ export function SiteImage({
   height = 900,
   priority = false,
   className = "",
+  fill = false,
 }: SiteImageProps) {
   const exists = fs.existsSync(path.join(process.cwd(), "public", src));
+
+  if (fill) {
+    if (exists) {
+      return (
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes="100vw"
+          className={`object-cover ${className}`}
+        />
+      );
+    }
+    return (
+      <div
+        role="img"
+        aria-label={alt}
+        className={`absolute inset-0 flex items-center justify-center bg-pine-tint/60 md:justify-end ${className}`}
+      >
+        <div className="relative z-10 hidden max-w-sm rounded-xl border-2 border-dashed border-line bg-surface/90 p-6 text-center sm:block md:mr-12">
+          <p className="text-sm italic leading-relaxed text-pine-dark/70">
+            {prompt}
+          </p>
+          <code className="mt-3 inline-block rounded bg-surface px-2 py-0.5 text-xs text-muted">
+            {src}
+          </code>
+        </div>
+      </div>
+    );
+  }
 
   if (exists) {
     return (
