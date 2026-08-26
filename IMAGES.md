@@ -77,6 +77,14 @@ owners rather than a tech crowd.
   - **Prompt:** "Flat illustration of a small business owner looking at a simple, friendly dashboard with a gently rising chart and plain sticky-note style callouts, warm morning light, earthy cream, pine green, terracotta palette"
   - **Notes:** done.
 
+- [ ] `public/images/services/mix-and-match.jpg` (4:3, e.g. 1200×900)
+  - **Prompt:** "Flat illustration of two friendly hands assembling four large rounded puzzle pieces on a warm wooden workshop table so they click together into one neat square, each piece decorated with a simple picture: a laptop showing a small storefront website, a chat bubble, two connected gears, and a little rising chart, earthy cream, pine green, and terracotta palette. No text or lettering anywhere."
+  - **Notes:** the "Need more than one?" bundle card on /services (the
+    sixth card in the grid, terracotta-tinted). The four puzzle-piece
+    pictures stand for the services: website, AI assistant, integration/
+    automation, insights. Same friendly flat series as the other service
+    illustrations; watch for lettering sneaking onto the laptop screen.
+
 ## Area cards (About page "Areas I serve")
 
 A matched series in the SAME friendly flat style as the service
