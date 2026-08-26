@@ -21,6 +21,9 @@ export async function submitContact(
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const business = String(formData.get("business") ?? "").trim();
+  // Optional and deliberately unvalidated; rejecting a real customer over
+  // phone formatting is worse than an occasional typo
+  const phone = String(formData.get("phone") ?? "").trim();
   const message = String(formData.get("message") ?? "").trim();
 
   // Checked service cards arrive as slugs; map them back to titles and
@@ -47,6 +50,7 @@ export async function submitContact(
     `New inquiry from ${site.url}`,
     `Name: ${name}`,
     `Email: ${email}`,
+    phone ? `Phone: ${phone}` : null,
     business ? `Business: ${business}` : null,
     services.length > 0 ? `Interested in: ${services.join(", ")}` : null,
     ``,

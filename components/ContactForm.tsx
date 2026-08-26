@@ -156,6 +156,16 @@ function FormInner({
         <input type="email" name="email" required autoComplete="email" className={inputClasses} />
       </Field>
 
+      <Field label="Phone (optional)">
+        <input
+          type="tel"
+          name="phone"
+          autoComplete="tel"
+          placeholder="If you'd rather I call you back"
+          className={inputClasses}
+        />
+      </Field>
+
       <Field label="Business name (optional)">
         <input type="text" name="business" autoComplete="organization" className={inputClasses} />
       </Field>
