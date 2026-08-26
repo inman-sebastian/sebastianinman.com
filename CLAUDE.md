@@ -135,13 +135,17 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
       verified domain sender
 - [ ] **Booking URL**: `bookingUrl` in `content/site.ts` is empty (buttons
       fall back to /contact) until Sebastian sets up Cal.com/Calendly
-- [ ] **Starting prices are unconfirmed placeholders**, set by Claude and
-      needing Sebastian's sign-off: website $1,500 / workflow automation $750 /
-      tool integration $500 / AI assistants $1,000 / AI insights $750
-- [ ] **"Best for" business types are Claude's educated guesses**, based on
-      service-to-pain reasoning and the general Southern Oregon business
-      mix, not real lead data. Revisit the `bestFor` frontmatter lists once
-      actual inquiries show which niches respond.
+- [ ] **Starting prices need Sebastian's sign-off**: website $1,500 /
+      workflow automation $750 / tool integration $500 / AI assistants
+      $1,000 / AI insights $750. Market research (`docs/market-research.md`)
+      found all are in or below market range; website and AI insights have
+      the most headroom to raise.
+- [ ] **"Best for" business types are educated guesses**, sanity-checked
+      against local competitor research (`docs/market-research.md`): local
+      AI/automation competitors target professional services, so our
+      consumer-facing niches (restaurants, lodging, salons, retail) are an
+      uncontested differentiator. Revisit the `bestFor` frontmatter lists
+      once actual inquiries show which niches respond.
 - [ ] **About page bio facts are drafted, not verified**: `{/* VERIFY */}`
       comments in `content/pages/about.mdx` mark invented claims ("over a
       decade", personal story) awaiting Sebastian's corrections
