@@ -138,19 +138,19 @@ img.hero-kenburns {
     opacity: 1;
   }
   62% {
-    transform: scale(1.26);
+    transform: scale(1.1);
     opacity: 1;
   }
   70% {
-    transform: scale(1.32);
+    transform: scale(1.14);
     opacity: 1;
   }
   76% {
-    transform: scale(1.45);
+    transform: scale(1.2);
     opacity: 0;
   }
   100% {
-    transform: scale(1.45);
+    transform: scale(1.2);
     opacity: 0;
   }
 }
