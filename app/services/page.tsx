@@ -75,9 +75,9 @@ export default function ServicesPage() {
                   </p>
                   <ul className="mt-1.5 flex flex-wrap gap-1.5">
                     {[
-                      "New website + AI assistant",
-                      "Automation + tool integration",
-                      "AI insights + automation",
+                      "New Website + AI Assistant",
+                      "Automation + Tool Integration",
+                      "AI Insights + Automation",
                     ].map((combo) => (
                       <li
                         key={combo}
