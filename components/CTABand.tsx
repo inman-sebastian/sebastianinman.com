@@ -9,7 +9,7 @@ type CTABandProps = {
 
 /** Full-width call-to-action band used at the bottom of most pages */
 export function CTABand({
-  heading = "Not sure where to start? That's what the free consult is for.",
+  heading = "Not sure where to start? Let's figure that out together.",
   subline = `Tell me what's eating up your time, and I'll tell you, in plain English, what's worth automating and what it would cost. No pressure, no jargon.`,
 }: CTABandProps) {
   return (
