@@ -65,7 +65,9 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
               : undefined
           }
         >
-          <div className="prose-site">
+          {/* Campaign pages have no image column; center the prose so the
+              page doesn't sit lopsided in the wide container */}
+          <div className={page.imagePrompt ? "prose-site" : "prose-site mx-auto"}>
             <MdxBody source={page.body} />
           </div>
           {page.imagePrompt && (

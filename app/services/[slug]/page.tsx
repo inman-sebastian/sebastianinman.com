@@ -128,9 +128,15 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
       )}
 
       {/* The busywork this service clears, as poppable floating chips.
-          Plain cream: the surface band above it carries the separation. */}
+          Cream when the tools band above carries the separation; surface
+          band itself when there's no tools section (else it bleeds into
+          the cream intro). */}
       {service.busywork.length > 0 && (
-        <section>
+        <section
+          className={
+            service.tools.length > 0 ? undefined : "border-y border-line bg-surface"
+          }
+        >
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
             <Reveal>
               <h2 className="text-3xl font-semibold text-pine-dark">
