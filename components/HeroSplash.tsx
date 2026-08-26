@@ -39,6 +39,7 @@ export function HeroSplash({
         src={site.heroImage.src}
         alt={site.heroImage.alt}
         prompt={site.heroImage.prompt}
+        className="hero-kenburns"
       />
       <div
         aria-hidden="true"

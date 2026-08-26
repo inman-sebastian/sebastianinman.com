@@ -29,7 +29,7 @@ owners rather than a tech crowd.
 
 ## Photos
 
-- [ ] `public/images/headshot.jpg` (~600×700, portrait)
+- [x] `public/images/headshot.jpg` (~600×700, portrait)
   - **Prompt:** none. Real photo of Sebastian; already exists, just drop it in.
   - **Notes:** used on Home + About.
 

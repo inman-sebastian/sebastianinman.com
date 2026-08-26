@@ -128,6 +128,8 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                         aria-hidden="true"
                       >
                         <path
+                          className="draw-check"
+                          pathLength={1}
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           d="m4.5 12.75 6 6 9-13.5"

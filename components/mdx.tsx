@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import { Reveal } from "@/components/Reveal";
 
 /**
  * Design components available inside MDX content bodies (services,
@@ -34,21 +35,29 @@ export function Callout({
 export function CheckList({ items }: { items: string[] }) {
   return (
     <ul className="my-6 flex list-none flex-col gap-3 !p-0">
-      {items.map((item) => (
-        <li key={item} className="flex items-start gap-3 !p-0">
-          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pine text-white">
-            <svg
-              className="h-3 w-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={3}
-              aria-hidden="true"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-            </svg>
-          </span>
-          <span className="leading-relaxed">{item}</span>
+      {items.map((item, i) => (
+        <li key={item} className="!p-0">
+          <Reveal delay={i * 120} className="flex items-start gap-3">
+            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pine text-white">
+              <svg
+                className="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={3}
+                aria-hidden="true"
+              >
+                <path
+                  className="draw-check"
+                  pathLength={1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m4.5 12.75 6 6 9-13.5"
+                />
+              </svg>
+            </span>
+            <span className="leading-relaxed">{item}</span>
+          </Reveal>
         </li>
       ))}
     </ul>

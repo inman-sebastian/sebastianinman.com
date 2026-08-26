@@ -93,7 +93,7 @@ export default function HomePage() {
             <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
               <Link
                 href={`/services/${service.slug}`}
-                className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
+                className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0"
               >
                 <SiteImage
                   src={service.image}
@@ -101,6 +101,7 @@ export default function HomePage() {
                   prompt={service.imagePrompt}
                   width={800}
                   height={600}
+                  className="transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
                 />
                 <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
                   {service.title}
