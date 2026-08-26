@@ -52,8 +52,9 @@ function Burst({ seed }: { seed: number }) {
   );
 }
 
-/** Synthesized pop: a tiny noise burst plus a falling blip, slightly
- *  pitch-randomized. Created lazily inside the click gesture. */
+/** Synthesized cartoon-bubble pop: a quick sine "bloop" that chirps
+ *  upward and dies fast, pitch-randomized per pop. Created lazily
+ *  inside the click gesture. */
 let audioCtx: AudioContext | null = null;
 function playPop() {
   try {
@@ -63,31 +64,17 @@ function playPop() {
     const t = ctx.currentTime;
 
     const osc = ctx.createOscillator();
-    const oscGain = ctx.createGain();
-    const freq = 340 + Math.random() * 180;
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(freq, t);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.35, t + 0.09);
-    oscGain.gain.setValueAtTime(0.0001, t);
-    oscGain.gain.exponentialRampToValueAtTime(0.18, t + 0.006);
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
-    osc.connect(oscGain).connect(ctx.destination);
+    const gain = ctx.createGain();
+    const f0 = 170 + Math.random() * 130;
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(f0, t);
+    osc.frequency.exponentialRampToValueAtTime(f0 * 3, t + 0.08);
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.25, t + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.12);
+    osc.connect(gain).connect(ctx.destination);
     osc.start(t);
-    osc.stop(t + 0.12);
-
-    const noiseLength = Math.floor(ctx.sampleRate * 0.03);
-    const buffer = ctx.createBuffer(1, noiseLength, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < noiseLength; i++) {
-      data[i] = (Math.random() * 2 - 1) * (1 - i / noiseLength);
-    }
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.12, t);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
-    noise.connect(noiseGain).connect(ctx.destination);
-    noise.start(t);
+    osc.stop(t + 0.13);
   } catch {
     // no audio support; popping stays silent
   }
