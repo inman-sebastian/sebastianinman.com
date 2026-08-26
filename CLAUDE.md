@@ -118,13 +118,17 @@ following the pattern in the existing files: local pain points → concrete
 examples → why local.
 
 **Landing page taxonomy (keep it consistent):**
-- `kind: "location"`: a literal place (Medford, Ashland, Grants Pass…),
-  covering the WHOLE service offering angled at that place's business mix.
-  Automatically listed in the About page's "Areas I serve" links (the only
-  on-site navigation to landing pages) and the sitemap.
-- `kind: "campaign"`: everything else, including service+geo hybrids like
-  southern-oregon-website-design. Sitemap only; never linked in-site.
-  These exist for targeted ads and search campaigns.
+- `kind: "location"`: a literal CITY-level place (Medford, Ashland, Grants
+  Pass…), covering the WHOLE service offering angled at that place's
+  business mix. Automatically listed in the About page's "Areas I serve"
+  pills (the only navigational links to landing pages) and the sitemap.
+  Never list a county/region beside cities it contains; locals read that
+  as redundant and auto-generated.
+- `kind: "campaign"`: everything else: service+geo hybrids
+  (southern-oregon-website-design) and county/region pages
+  (jackson-county-ai-integration). Sitemap always; may be linked
+  contextually in prose where it reads naturally (the About intro links
+  the Jackson County page), but never in nav, footer, or the pill list.
 - NEVER generate a service×city matrix of pages. Google treats templated
   keyword+city pages as doorway pages and demotes them. Few location
   pages, each genuinely local and worth reading, beats many thin ones.

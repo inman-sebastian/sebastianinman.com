@@ -59,8 +59,15 @@ export default function AboutPage() {
               </h2>
               <p className="mt-3 max-w-2xl leading-relaxed text-muted">
                 Home base is Southern Oregon, and I work with small businesses
-                across the region and anywhere in the US. A few of the places
-                I know best:
+                across{" "}
+                <Link
+                  href="/jackson-county-ai-integration"
+                  className="text-pine underline underline-offset-2 hover:text-pine-dark"
+                >
+                  Jackson
+                </Link>{" "}
+                and Josephine counties, and anywhere in the US. A few of the
+                places I know best:
               </p>
             </Reveal>
             <Reveal delay={150}>
