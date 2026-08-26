@@ -159,7 +159,10 @@ Keep each page's copy genuinely specific to the place/service: anchor it
 in real, verifiable local identity (Rogue Creamery for Central Point, the
 Britt Festival for Jacksonville, the Almeda Fire rebuild for Talent and
 Phoenix, rafting for Grants Pass). Population figures in StatRows must be
-real census-based numbers with "~". Use the MDX design components
+real census-based numbers in "N+" format (e.g. "21,000+"), ALWAYS rounded
+DOWN so the "+" stays literally true (Jacksonville's 2,899 renders as
+"2,800+", never "3,000+"). Not "~": most readers don't know it means
+"about". Use the MDX design components
 (StatRow, CheckList, Callout, ChatBubble) to keep bodies visual, not
 walls of text. No find-and-replace city swaps. Slugs must include
 "oregon" when the city name is ambiguous nationally (phoenix,
