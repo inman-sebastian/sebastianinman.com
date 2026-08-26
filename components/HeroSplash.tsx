@@ -52,7 +52,7 @@ export function HeroSplash({
               {eyebrow}
             </p>
           )}
-          <h1 className="mt-3 text-4xl font-semibold leading-tight text-background sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-semibold leading-none text-background sm:text-5xl">
             {heading}
           </h1>
           {text && (
