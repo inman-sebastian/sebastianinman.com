@@ -30,9 +30,9 @@ export function ServiceCard({
           prompt={service.imagePrompt}
           width={800}
           height={600}
-          className="!rounded-[11px]"
+          className="!rounded-t-[11px] !rounded-b-none"
         />
-        <span className="absolute bottom-3 left-3 rounded-full bg-surface/95 px-3 py-1 text-xs font-semibold text-terracotta shadow-sm">
+        <span className="absolute bottom-3 left-3 rounded-full bg-surface px-3.5 py-1.5 text-sm font-semibold text-terracotta shadow-sm">
           From ${service.startingPrice.toLocaleString()}
         </span>
       </div>
