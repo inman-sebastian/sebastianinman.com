@@ -11,6 +11,8 @@ type HeroSplashProps = {
   poolB?: HeroCard[];
   /** Shorter hero for inner pages */
   compact?: boolean;
+  /** Set false on pages that don't need the rotating example cards */
+  cards?: boolean;
   /** CTA buttons */
   children?: ReactNode;
 };
@@ -27,11 +29,12 @@ export function HeroSplash({
   poolA,
   poolB,
   compact = false,
+  cards = true,
   children,
 }: HeroSplashProps) {
   return (
     <section className="relative overflow-hidden bg-pine-dark">
-      <HeroCards poolA={poolA} poolB={poolB} />
+      {cards && <HeroCards poolA={poolA} poolB={poolB} />}
       <div
         className={`relative mx-auto flex max-w-6xl items-center px-4 sm:px-6 ${
           compact

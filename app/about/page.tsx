@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { site } from "@/content/site";
 import { getLandingPages, getPage } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
+import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
 import { CTABand } from "@/components/CTABand";
 import { MdxBody } from "@/components/mdx";
@@ -26,8 +27,18 @@ export default function AboutPage() {
 
   return (
     <>
-      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1fr_2fr]">
-        <div>
+      <HeroSplash
+        compact
+        cards={false}
+        eyebrow="About"
+        heading={(page.frontmatter.title as string) ?? "About"}
+        text={site.serviceAreaLine}
+      />
+
+      <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
+        {/* Headshot pulls up over the hero green, matching the
+            overlapping-image treatment on the other inner pages */}
+        <div className="md:-mt-28">
           <SiteImage
             src="/images/headshot.jpg"
             alt={`Professional headshot of ${site.name}`}
@@ -35,16 +46,11 @@ export default function AboutPage() {
             width={600}
             height={700}
             priority
-            className="md:sticky md:top-24"
+            className="md:sticky md:top-24 !rounded-2xl border-[6px] border-background md:shadow-lg"
           />
         </div>
         <div className="prose-site">
-          <h1 className="text-4xl font-semibold text-pine-dark sm:text-5xl">
-            {(page.frontmatter.title as string) ?? "About"}
-          </h1>
-          <div className="mt-8">
-            <MdxBody source={page.body} />
-          </div>
+          <MdxBody source={page.body} />
         </div>
       </section>
 
