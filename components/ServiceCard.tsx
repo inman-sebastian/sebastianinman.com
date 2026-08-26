@@ -18,7 +18,7 @@ export function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,transform] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:shadow-xl motion-reduce:hover:translate-y-0"
+      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[translate,box-shadow] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2 hover:shadow-xl motion-reduce:hover:translate-y-0"
     >
       <SiteImage
         src={service.image}

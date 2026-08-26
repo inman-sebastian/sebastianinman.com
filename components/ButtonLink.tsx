@@ -24,7 +24,7 @@ export function ButtonLink({
   children,
 }: ButtonLinkProps) {
   const external = href.startsWith("http");
-  const classes = `inline-block rounded-lg px-6 py-3 text-sm font-semibold transition-[color,background-color,transform] duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 ${variants[variant]} ${className}`;
+  const classes = `inline-block rounded-lg px-6 py-3 text-sm font-semibold transition-[color,background-color,translate] duration-200 ease-out hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 ${variants[variant]} ${className}`;
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
