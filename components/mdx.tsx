@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import { Reveal } from "@/components/Reveal";
 
 /**
@@ -34,9 +35,9 @@ export function Callout({
 
 export function CheckList({ items }: { items: string[] }) {
   return (
-    <ul className="my-6 flex list-none flex-col gap-3 !p-0">
+    <ul className="my-6 flex !list-none flex-col gap-3 !p-0">
       {items.map((item, i) => (
-        <li key={item} className="!p-0">
+        <li key={item} className="list-none !p-0">
           <Reveal delay={i * 120} className="flex items-start gap-3">
             <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pine text-white">
               <svg
@@ -115,3 +116,21 @@ export const mdxComponents: MDXComponents = {
   ChatBubble,
   StatRow,
 };
+
+/**
+ * Render an MDX content body with the site's component kit. Always use
+ * this instead of MDXRemote directly: next-mdx-remote v6 strips JSX
+ * expression attributes (like `stats={[...]}`) by default as a security
+ * measure for untrusted content. Our MDX is repo-authored and trusted,
+ * so we disable that (blockJS: false) while leaving the dangerous-call
+ * blocker at its default.
+ */
+export function MdxBody({ source }: { source: string }) {
+  return (
+    <MDXRemote
+      source={source}
+      components={mdxComponents}
+      options={{ blockJS: false }}
+    />
+  );
+}

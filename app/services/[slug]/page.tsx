@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { getService, getServices } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
 import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
-import { mdxComponents } from "@/components/mdx";
+import { MdxBody } from "@/components/mdx";
 import { BusyworkSwarm } from "@/components/BusyworkSwarm";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
@@ -62,7 +61,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
         <Reveal>
           <div className="prose-site">
-            <MDXRemote source={service.body} components={mdxComponents} />
+            <MdxBody source={service.body} />
           </div>
         </Reveal>
         <Reveal delay={150}>

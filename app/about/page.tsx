@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { site } from "@/content/site";
 import { getLandingPages, getPage } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
 import { CTABand } from "@/components/CTABand";
-import { mdxComponents } from "@/components/mdx";
+import { MdxBody } from "@/components/mdx";
 
 export function generateMetadata(): Metadata {
   const page = getPage("about");
@@ -43,7 +42,7 @@ export default function AboutPage() {
             {(page.frontmatter.title as string) ?? "About"}
           </h1>
           <div className="mt-8">
-            <MDXRemote source={page.body} components={mdxComponents} />
+            <MdxBody source={page.body} />
           </div>
         </div>
       </section>
@@ -66,8 +65,15 @@ export default function AboutPage() {
                 >
                   Jackson
                 </Link>{" "}
-                and Josephine counties, and anywhere in the US. A few of the
-                places I know best:
+                and{" "}
+                <Link
+                  href="/josephine-county-small-business-automation"
+                  className="text-pine underline underline-offset-2 hover:text-pine-dark"
+                >
+                  Josephine
+                </Link>{" "}
+                counties, and anywhere in the US. A few of the places I know
+                best:
               </p>
             </Reveal>
             <Reveal delay={150}>

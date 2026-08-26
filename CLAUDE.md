@@ -133,8 +133,16 @@ examples → why local.
   keyword+city pages as doorway pages and demotes them. Few location
   pages, each genuinely local and worth reading, beats many thin ones.
 
-Keep each page's copy genuinely specific to the place/service. No
-find-and-replace city swaps.
+Keep each page's copy genuinely specific to the place/service: anchor it
+in real, verifiable local identity (Rogue Creamery for Central Point, the
+Britt Festival for Jacksonville, the Almeda Fire rebuild for Talent and
+Phoenix, rafting for Grants Pass). Population figures in StatRows must be
+real census-based numbers with "~". Use the MDX design components
+(StatRow, CheckList, Callout, ChatBubble) to keep bodies visual, not
+walls of text. No find-and-replace city swaps. Slugs must include
+"oregon" when the city name is ambiguous nationally (phoenix,
+jacksonville, talent, central-point); unambiguous names (grants-pass,
+medford, ashland) can omit it.
 
 ### Change contact info, tagline, or booking link
 Edit `content/site.ts`. Setting `bookingUrl` makes every "Book a free
