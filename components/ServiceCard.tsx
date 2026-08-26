@@ -18,16 +18,23 @@ export function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[translate,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1.5 hover:shadow-lg motion-reduce:hover:translate-y-0"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-line bg-surface transition-[translate,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1.5 hover:shadow-lg motion-reduce:hover:translate-y-0"
     >
-      <SiteImage
-        src={service.image}
-        alt={service.imageAlt}
-        prompt={service.imagePrompt}
-        width={800}
-        height={600}
-      />
-      <Heading className="mt-4 text-xl font-semibold text-pine-dark transition-colors duration-500 group-hover:text-pine">
+      {/* Image sits flush against the card's top/left/right with a 1px
+          surface gap as a hairline outline; inner radius = outer 12px
+          minus the 1px inset so the curves nest cleanly. */}
+      <div className="p-px">
+        <SiteImage
+          src={service.image}
+          alt={service.imageAlt}
+          prompt={service.imagePrompt}
+          width={800}
+          height={600}
+          className="!rounded-[11px]"
+        />
+      </div>
+      <div className="flex flex-1 flex-col p-5 pt-4">
+      <Heading className="text-xl font-semibold text-pine-dark transition-colors duration-500 group-hover:text-pine">
         {service.title}
       </Heading>
       <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
@@ -49,6 +56,7 @@ export function ServiceCard({
         </span>
         <span className="text-pine group-hover:underline">Learn more →</span>
       </p>
+      </div>
     </Link>
   );
 }
