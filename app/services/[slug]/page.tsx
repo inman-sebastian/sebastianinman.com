@@ -92,42 +92,19 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </Reveal>
       </section>
 
-      {/* The busywork this service clears, as poppable floating chips */}
-      {service.busywork.length > 0 && (
-        <section className="border-y border-line bg-surface">
-          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-            <Reveal>
-              <h2 className="text-3xl font-semibold text-pine-dark">
-                Sound familiar?
-              </h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-muted">
-                A few of the time-eaters this service clears off your plate.
-              </p>
-            </Reveal>
-            <Reveal delay={150}>
-              <div className="mt-10 max-w-4xl">
-                <BusyworkSwarm chips={service.busywork} />
-              </div>
-              <p className="mt-6 text-sm text-muted">
-                Go ahead, pop a few. They&rsquo;ll be back. That&rsquo;s the
-                point.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-      )}
-
       {/* Named tools as a chip grid; renders only when the MDX lists any.
-          "Commonly connect" framing on purpose: no partnership claims. */}
+          First designed section on purpose: recognition ("that's MY
+          stuff") is the fastest hook. Customer-court framing, and no
+          partnership claims. */}
       {service.tools.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
           <Reveal>
             <h2 className="text-3xl font-semibold text-pine-dark">
-              Tools I connect all the time
+              Use any of these?
             </h2>
             <p className="mt-3 max-w-2xl leading-relaxed text-muted">
-              A few of the programs small businesses run on, and I regularly
-              wire together.
+              Then I can make them talk to each other, so the things you type
+              once show up everywhere they should.
             </p>
           </Reveal>
           <Reveal delay={150}>
@@ -159,6 +136,31 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               consult.
             </p>
           </Reveal>
+        </section>
+      )}
+
+      {/* The busywork this service clears, as poppable floating chips */}
+      {service.busywork.length > 0 && (
+        <section className="border-y border-line bg-surface">
+          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+            <Reveal>
+              <h2 className="text-3xl font-semibold text-pine-dark">
+                Sound familiar?
+              </h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-muted">
+                A few of the time-eaters this service clears off your plate.
+              </p>
+            </Reveal>
+            <Reveal delay={150}>
+              <div className="mt-10 max-w-4xl">
+                <BusyworkSwarm chips={service.busywork} />
+              </div>
+              <p className="mt-6 text-sm text-muted">
+                Go ahead, pop a few. They&rsquo;ll be back. That&rsquo;s the
+                point.
+              </p>
+            </Reveal>
+          </div>
         </section>
       )}
 

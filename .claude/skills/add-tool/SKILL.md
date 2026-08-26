@@ -1,13 +1,13 @@
 ---
 name: add-tool
-description: Add a named tool/software (with its brand favicon) to a service page's "Tools I connect all the time" chip grid. Use when Sebastian wants to list a new tool, program, or platform on the tool-integration service page (or add a tools list to another service). Handles the frontmatter entry, favicon download, and the eyeball check for wrong marks.
+description: Add a named tool/software (with its brand favicon) to a service page's "Use any of these?" chip grid. Use when Sebastian wants to list a new tool, program, or platform on the tool-integration service page (or add a tools list to another service). Handles the frontmatter entry, favicon download, and the eyeball check for wrong marks.
 ---
 
 # Add a tool chip (name + brand favicon)
 
 Adds a tool to a service's `tools:` frontmatter list and fetches its brand
 favicon so the chip renders with the icon. The chip grid lives on the
-service page under "Tools I connect all the time" (see
+service page under "Use any of these?" (see
 `app/services/[slug]/page.tsx`); chips fall back to text-only when no
 icon file exists, so the favicon is an upgrade, never a blocker.
 

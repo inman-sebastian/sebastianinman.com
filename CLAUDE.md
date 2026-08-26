@@ -90,9 +90,10 @@ service). The page's designed sections come from frontmatter, NOT prose: `busywo
 under "Sound familiar?"; keep them concrete time-eaters, not sentences),
 `deliverables` (list, rendered as a checklist grid under "What you get"),
 optional `tools` (named tools/systems, rendered as a chip grid under
-"Tools I connect all the time"; real product names small businesses
-recognize, framed as tools commonly connected, never partnerships or
-certifications; each chip shows the brand's favicon from
+"Use any of these?", placed FIRST among the designed sections because
+tool recognition is the fastest hook; real product names small
+businesses recognize, customer-court framing ("I can make them talk to
+each other"), never partnerships or certifications; each chip shows the brand's favicon from
 `public/images/tools/<slugified-name>.png` when that file exists, e.g.
 "Microsoft 365" → `microsoft-365.png`, text-only otherwise — to add one,
 use the `add-tool` skill in `.claude/skills/`, which covers the favicon
