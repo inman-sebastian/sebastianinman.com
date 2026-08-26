@@ -155,7 +155,7 @@ export default function HomePage() {
             A neighbor who happens to be a developer
           </h2>
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
-            I live and work in Jackson County, Oregon, and I&rsquo;d rather help
+            I live and work in Southern Oregon, and I&rsquo;d rather help
             the businesses in my own community than build software for companies
             I&rsquo;ll never meet. Big companies have IT departments. You get me,
             and I answer my phone.

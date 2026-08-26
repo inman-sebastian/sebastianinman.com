@@ -1,8 +1,8 @@
 # sebastianinman.com
 
 Portfolio/services site for **Sebastian Inman**: automation & AI integration
-for small businesses. Primary market: Southern Oregon (Jackson County), but
-serving small businesses anywhere in the US.
+for small businesses. Primary market: Southern Oregon, but serving small
+businesses anywhere in the US.
 
 **This project is content-first by design.** Nearly every task (new pages,
 new copy, price changes, new marketing pages) is a content-file edit, not a
@@ -46,8 +46,11 @@ The reader is a busy small-business owner, **not** a technical person.
 - **Warm and neighborly, not corporate.** First person ("I", not "we").
   Contractions are good. Local trust signals are good ("Based in Jackson
   County, Oregon, working with small businesses everywhere").
-- Prefer "Southern Oregon" phrasing in customer-facing descriptions; "Jackson
-  County" for the specific home-base detail.
+- **Location: always "Southern Oregon," never a specific county** for where
+  Sebastian is based (it covers Jackson and Josephine counties without
+  saying where he lives). County or city names are fine ONLY as the
+  geographic target of an SEO landing page (e.g. "AI for Jackson County
+  small businesses" describes who is served, not where Sebastian lives).
 
 ## Where everything lives
 
