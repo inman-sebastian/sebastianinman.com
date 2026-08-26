@@ -23,7 +23,7 @@ export function ServiceCard({
       {/* Image sits flush against the card's top/left/right with a 1px
           surface gap as a hairline outline; inner radius = outer 12px
           minus the 1px inset so the curves nest cleanly. */}
-      <div className="p-px">
+      <div className="relative p-px">
         <SiteImage
           src={service.image}
           alt={service.imageAlt}
@@ -32,6 +32,9 @@ export function ServiceCard({
           height={600}
           className="!rounded-[11px]"
         />
+        <span className="absolute bottom-3 left-3 rounded-full bg-surface/95 px-3 py-1 text-xs font-semibold text-terracotta shadow-sm">
+          From ${service.startingPrice.toLocaleString()}
+        </span>
       </div>
       <div className="flex flex-1 flex-col p-5 pt-4">
       <Heading className="text-xl font-semibold text-pine-dark transition-colors duration-500 group-hover:text-pine">
@@ -50,11 +53,8 @@ export function ServiceCard({
           </span>
         </p>
       )}
-      <p className="mt-4 flex items-center justify-between border-t border-line pt-4 text-sm font-semibold">
-        <span className="text-terracotta">
-          Starting at ${service.startingPrice.toLocaleString()}
-        </span>
-        <span className="text-pine group-hover:underline">Learn more →</span>
+      <p className="mt-4 border-t border-line pt-4 text-sm font-semibold text-pine group-hover:underline">
+        See what&rsquo;s included →
       </p>
       </div>
     </Link>
