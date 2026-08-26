@@ -87,11 +87,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {service.painPoints.map((point, i) => (
                 <Reveal key={point} delay={i * 120} className="h-full">
-                  <div
-                    className={`h-full max-w-xl rounded-2xl border border-line bg-pine-tint/60 px-5 py-4 ${
-                      i % 2 === 0 ? "rounded-bl-sm" : "rounded-br-sm sm:ml-auto"
-                    }`}
-                  >
+                  <div className="h-full rounded-2xl border border-line bg-pine-tint/60 px-5 py-4">
                     <p className="leading-relaxed text-pine-dark">
                       &ldquo;{point}&rdquo;
                     </p>
