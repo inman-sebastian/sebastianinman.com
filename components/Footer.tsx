@@ -7,7 +7,11 @@ export function Footer() {
   const services = getServices();
 
   return (
-    <footer className="bg-pine-dark text-white/80">
+    // Background matches the treetop silhouettes in the CTA band image
+    // above it, so the treeline reads as the footer's forest rising up.
+    // If cta-treetops.jpg is ever regenerated, re-sample the silhouette
+    // color and update this hex.
+    <footer className="bg-[#132c1f] text-white/80">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
