@@ -40,6 +40,17 @@ blockquote {
   text-wrap: pretty;
 }
 
+/* Gentle bob for the hero notification cards */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 /* Long-form MDX content (about page, service details, landing pages) */
 .prose-site {
   max-width: 65ch;

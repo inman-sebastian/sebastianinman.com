@@ -2,6 +2,7 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import { getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
+import { HeroCards } from "@/components/HeroCards";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -40,6 +41,7 @@ export default function HomePage() {
           aria-hidden="true"
           className="absolute inset-0 bg-background/55 md:bg-gradient-to-r md:from-background/70 md:via-background/20 md:to-transparent"
         />
+        <HeroCards />
         <div className="relative mx-auto flex max-w-6xl items-center px-4 py-20 sm:px-6 md:min-h-[560px] md:py-24 lg:min-h-[640px]">
           <div className="max-w-xl">
             <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-terracotta">
