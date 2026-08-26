@@ -35,7 +35,7 @@ export default function HomePage() {
         text="I'm Sebastian. I help small businesses save hours every week with practical automation, helpful AI tools, and websites that bring in customers. Everything explained in plain English, priced for a small business budget."
       >
         <ConsultButton />
-        <ButtonLink href="/services" variant="secondary">
+        <ButtonLink href="/services" variant="light">
           See what I do
         </ButtonLink>
       </HeroSplash>

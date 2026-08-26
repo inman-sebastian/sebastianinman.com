@@ -51,7 +51,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
         poolB={parseHeroCards(page.heroCardsBottom)}
       >
         <ConsultButton />
-        <ButtonLink href="/services" variant="secondary">
+        <ButtonLink href="/services" variant="light">
           See services & prices
         </ButtonLink>
       </HeroSplash>

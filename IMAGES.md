@@ -35,16 +35,15 @@ owners rather than a tech crowd.
 
 ## Illustrations
 
-- [ ] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
+- [x] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 flat illustration in deep pine greens: a calm, wide river at dusk, its surface filling the lower half of the frame with smooth horizontal ripple lines stepping through deep greens from #234f3e down to #132c1f in the foreground. Above it, a quiet dusk sky in muted deep greens fading upward from #2a5a47 into #18382c, nearly empty of detail. Low on the right side of the horizon, a soft warm terracotta glow of last light melts into the water and draws a gentle shimmering reflection down the right side of the river. The left and upper areas stay smooth and calm. A few smooth dark river stones break the surface in the lower right corner. No people, no animals, no boats, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture."
-  - **Notes:** v4 direction: a dusk river (nod to the Rogue) in the same
+  - **Notes:** v4 (current): a dusk river (nod to the Rogue) in the same
     deep greens as the CTA band and footer, deliberately a DIFFERENT
     subject than the footer's treeline so the two don't feel repetitive;
-    only the palette repeats. IMPORTANT: the
-    hero currently styles its overlay and text for the light golden-valley
-    image (v3, currently uploaded); when this dark version is dropped in,
-    Claude must flip the hero overlay/text to a light-on-dark scheme, so
-    upload and restyle together. Renders full-width behind the hero text
+    only the palette repeats. The hero is styled light-on-dark for this
+    image (dark scrim, cream text, light CTA variant); if the hero ever
+    goes back to a light image, that styling must flip with it.
+    Renders full-width behind the hero text
     on the homepage AND every /services/<slug> page (the prompt also lives
     in `content/site.ts` as `heroImage.prompt`; keep the two identical).
     The text overlays the calm upper-left, so that area must stay smooth.

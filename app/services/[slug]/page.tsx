@@ -53,7 +53,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         poolB={parseHeroCards(service.heroCardsBottom)}
       >
         <ConsultButton />
-        <ButtonLink href="/services" variant="secondary">
+        <ButtonLink href="/services" variant="light">
           All services
         </ButtonLink>
       </HeroSplash>

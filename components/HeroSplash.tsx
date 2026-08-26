@@ -41,9 +41,11 @@ export function HeroSplash({
         prompt={site.heroImage.prompt}
         className="hero-kenburns"
       />
+      {/* Dark scrim tuned to the dusk-river hero image; keeps the cream
+          text readable while the terracotta glow stays clear on the right */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-background/90 to-background/50 md:bg-gradient-to-r md:from-background md:via-background/65 md:via-45% md:to-transparent md:to-80%"
+        className="absolute inset-0 bg-gradient-to-b from-[#132c1f]/85 to-[#132c1f]/45 md:bg-gradient-to-r md:from-[#132c1f]/90 md:via-[#18382c]/45 md:via-45% md:to-transparent md:to-80%"
       />
       <HeroCards poolA={poolA} poolB={poolB} />
       <div
@@ -55,14 +57,17 @@ export function HeroSplash({
       >
         <div className="max-w-xl">
           {eyebrow && (
-            <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-terracotta">
+            // Lightened terracotta for contrast on the dark water
+            <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-[#e09468]">
               {eyebrow}
             </p>
           )}
-          <h1 className="mt-3 text-4xl font-semibold leading-tight text-pine-dark sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-semibold leading-tight text-background sm:text-5xl">
             {heading}
           </h1>
-          {text && <p className="mt-5 text-lg leading-relaxed text-ink/80">{text}</p>}
+          {text && (
+            <p className="mt-5 text-lg leading-relaxed text-background/80">{text}</p>
+          )}
           {children && <div className="mt-8 flex flex-wrap gap-4">{children}</div>}
         </div>
       </div>
