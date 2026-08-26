@@ -22,6 +22,76 @@ import {
 type Slot = { text: string; phase: "in" | "out" | "hidden"; gen: number };
 
 const chipTints = ["bg-pine-tint/80", "bg-terracotta-tint/80", "bg-surface"];
+const dotColors = ["bg-terracotta", "bg-pine", "bg-terracotta/70", "bg-pine/70"];
+
+/** Scattering dots + expanding ring shown while a chip pops */
+function Burst({ seed }: { seed: number }) {
+  return (
+    <span aria-hidden="true" className="pointer-events-none absolute inset-0">
+      <span className="burst-ring absolute left-1/2 top-1/2 h-10 w-10 rounded-full border-2 border-terracotta/60" />
+      {Array.from({ length: 8 }, (_, k) => {
+        const angle =
+          (k / 8) * Math.PI * 2 + ((seed * 53 + k * 19) % 10) * 0.06;
+        const dist = 26 + ((seed * 31 + k * 7) % 14);
+        return (
+          <span
+            key={k}
+            className={`burst-dot absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full ${
+              dotColors[k % dotColors.length]
+            }`}
+            style={
+              {
+                "--dx": `${Math.cos(angle) * dist}px`,
+                "--dy": `${Math.sin(angle) * dist}px`,
+              } as React.CSSProperties
+            }
+          />
+        );
+      })}
+    </span>
+  );
+}
+
+/** Synthesized pop: a tiny noise burst plus a falling blip, slightly
+ *  pitch-randomized. Created lazily inside the click gesture. */
+let audioCtx: AudioContext | null = null;
+function playPop() {
+  try {
+    audioCtx ??= new AudioContext();
+    const ctx = audioCtx;
+    if (ctx.state === "suspended") void ctx.resume();
+    const t = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    const freq = 340 + Math.random() * 180;
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(freq, t);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.35, t + 0.09);
+    oscGain.gain.setValueAtTime(0.0001, t);
+    oscGain.gain.exponentialRampToValueAtTime(0.18, t + 0.006);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.11);
+    osc.connect(oscGain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + 0.12);
+
+    const noiseLength = Math.floor(ctx.sampleRate * 0.03);
+    const buffer = ctx.createBuffer(1, noiseLength, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < noiseLength; i++) {
+      data[i] = (Math.random() * 2 - 1) * (1 - i / noiseLength);
+    }
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+    const noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.12, t);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+    noise.connect(noiseGain).connect(ctx.destination);
+    noise.start(t);
+  } catch {
+    // no audio support; popping stays silent
+  }
+}
 
 // useLayoutEffect warns during SSR; fall back harmlessly on the server
 const useIsoLayoutEffect =
@@ -79,6 +149,8 @@ export function BusyworkSwarm({
   }, []);
 
   const pop = (i: number) => {
+    if (slots[i].phase !== "in") return;
+    playPop();
     setSlots((s) => {
       if (s[i].phase !== "in") return s;
       const copy = [...s];
@@ -112,7 +184,7 @@ export function BusyworkSwarm({
             });
           }, 900 + Math.random() * 800)
         );
-      }, 300)
+      }, 400)
     );
   };
 
@@ -133,7 +205,7 @@ export function BusyworkSwarm({
           }}
         >
           <span
-            className="swarm-float inline-block"
+            className="swarm-float relative inline-block"
             style={
               {
                 "--f-dur": `${6 + (i % 5)}s`,
@@ -141,6 +213,7 @@ export function BusyworkSwarm({
               } as React.CSSProperties
             }
           >
+            {slot.phase === "out" && <Burst seed={i * 13 + slot.gen * 7} />}
             <button
               key={`${i}:${slot.gen}`}
               type="button"
