@@ -80,8 +80,12 @@ consult" button link there (empty string = buttons go to /contact).
 ### Request a new image
 Use `<SiteImage src="/images/..." alt="..." prompt="..." />`. It renders a
 placeholder showing the prompt until the file exists in `public/`. Add every
-new image to `IMAGES.md` with its path, size, and prompt. Sebastian generates
-the images and drops them in; never commit AI-generated images yourself.
+new image to `IMAGES.md` as a checklist entry with separate **Prompt** and
+**Notes** lines. The Prompt is copy-pasted verbatim into the image generator,
+so it must contain ONLY generator instructions (scene, style, palette), never
+reasoning, history, or advice; that context goes in Notes. Keep the `prompt`
+prop in code identical to the IMAGES.md Prompt. Sebastian generates the
+images and drops them in; never commit AI-generated images yourself.
 **All image slots are 4:3** (Sebastian's generator outputs 4:3); keep any new
 `SiteImage` width/height props at a 4:3 ratio (the component defaults to
 1200×900) and note 4:3 in the IMAGES.md entry. Exceptions: the home hero is a
