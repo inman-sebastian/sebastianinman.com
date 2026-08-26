@@ -128,3 +128,27 @@ tied any card to its actual town.)
     real anchors; the heron is the park's namesake. (v1 was a generic
     "rebuilt storefronts" scene: on-narrative but placeless, so it was
     retired. The rebuild story lives in the page copy instead.)
+
+## Campaign page art
+
+Same friendly flat series, but these render ONLY beside the body of
+their campaign landing page (campaign pages get no About-page card).
+Concepts deliberately avoid landmarks already claimed by a city card
+(Table Rocks → Central Point, Rogue rafting → Grants Pass). All 4:3.
+
+- [ ] `public/images/areas/jackson-county.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of the Rogue Valley in Jackson County, Oregon: a wide valley floor quilted with pear orchard rows and vineyard blocks, a river winding through, a few small clusters of rooftops, and the tall snow-capped cone of Mount McLoughlin rising on the horizon, warm afternoon light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** Mt. McLoughlin is the county-wide landmark no city card
+    uses; the valley quilt reads "whole county" rather than any one town.
+- [ ] `public/images/areas/josephine-county.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of the Oregon Caves area in Josephine County: a cozy rustic timber lodge with warm glowing windows nestled deep in a forested mountain canyon, tall firs all around, a winding footpath leading to a dark marble cave entrance in the hillside, soft evening light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** the Oregon Caves National Monument (and its historic
+    chateau) is Josephine County's landmark beyond Grants Pass, whose
+    card already owns the rafting scene.
+- [ ] `public/images/areas/southern-oregon.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration: an open laptop on a wooden cafe table on an outdoor patio, the screen showing a simple cheerful website layout made of plain colored blocks, and beyond the railing a sweeping Southern Oregon valley view with a small town, vineyard hills, and pine ridgelines at golden hour, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; website shown as abstract blocks only."
+  - **Notes:** for the websites campaign page, so it blends service +
+    region (laptop in a Southern Oregon setting) instead of a pure
+    landmark. Distinct from the website-design service card (bakery
+    storefront scene). Watch the laptop screen for sneaky lettering;
+    the prompt demands abstract blocks only.
