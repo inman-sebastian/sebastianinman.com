@@ -121,8 +121,10 @@ examples → why local.
 - `kind: "location"`: a literal CITY-level place (Medford, Ashland, Grants
   Pass…), covering the WHOLE service offering angled at that place's
   business mix. Automatically rendered as a card in the About page's
-  "Areas I serve" grid (the only navigational links to landing pages) and
-  the sitemap. Location pages also need `image`, `imagePrompt`, `imageAlt`
+  "Areas I serve" grid, a city link in the footer's "Areas" column, a
+  pill in the homepage areas strip, and the sitemap (all filter on
+  `kind === "location"`; a new location page shows up everywhere with no
+  code edits). Location pages also need `image`, `imagePrompt`, `imageAlt`
   (abstract topographic map art; see the Area cards section of IMAGES.md
   for the series style; NEVER street maps or literal geography) and
   `areaBlurb` (one short local phrase for the card). Never list a

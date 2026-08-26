@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { getServices } from "@/lib/content";
+import { getLandingPages, getServices } from "@/lib/content";
 
 export function Footer() {
   const services = getServices();
+  // City-level location pages only; campaign pages stay out of navigation
+  const areas = getLandingPages().filter((p) => p.kind === "location");
 
   return (
     // Background matches the treetop silhouettes in the CTA band image
@@ -11,7 +13,7 @@ export function Footer() {
     // If cta-treetops.jpg is ever regenerated, re-sample the silhouette
     // color and update this hex.
     <footer className="border-t border-white/10 bg-[#132c1f] text-white/80">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-5">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
           <p className="mt-2 max-w-sm text-sm leading-relaxed">
@@ -36,6 +38,21 @@ export function Footer() {
               <li key={s.slug}>
                 <Link href={`/services/${s.slug}`} className="hover:text-white">
                   {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">
+            Areas
+          </p>
+          <ul className="mt-3 flex flex-col gap-2 text-sm">
+            {areas.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/${a.slug}`} className="hover:text-white">
+                  {a.city}
                 </Link>
               </li>
             ))}

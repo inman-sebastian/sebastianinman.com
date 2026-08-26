@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { getServices } from "@/lib/content";
+import { getLandingPages, getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
@@ -26,6 +26,8 @@ const steps = [
 
 export default function HomePage() {
   const services = getServices();
+  // City-level location pages for the areas strip (campaign pages excluded)
+  const areas = getLandingPages().filter((p) => p.kind === "location");
 
   return (
     <>
@@ -163,6 +165,31 @@ export default function HomePage() {
           <ButtonLink href="/about" variant="secondary" className="mt-6">
             More about me
           </ButtonLink>
+        </div>
+      </section>
+
+      {/* Areas strip: a quiet local-trust moment + links to the location pages */}
+      <section className="border-t border-line bg-surface">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <Reveal>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="font-semibold text-pine-dark">
+                Working with small businesses all over Southern Oregon:
+              </p>
+              <ul className="flex flex-wrap gap-2">
+                {areas.map((area) => (
+                  <li key={area.slug}>
+                    <Link
+                      href={`/${area.slug}`}
+                      className="inline-block rounded-full bg-pine-tint/60 px-3.5 py-1.5 text-sm font-medium text-pine-dark transition-colors hover:bg-pine hover:text-white"
+                    >
+                      {area.city}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
         </div>
       </section>
 
