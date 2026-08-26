@@ -154,7 +154,11 @@ medford, ashland) can omit it.
 
 ### Change contact info, tagline, or booking link
 Edit `content/site.ts`. Setting `bookingUrl` makes every "Book a free
-consult" button link there (empty string = buttons go to /contact).
+consult" button link there (empty string = buttons go to /contact) and
+reveals the contact page's "Prefer to grab a time?" block, whose button
+deliberately says "Pick a time on my calendar", not "Book a free
+consult": every consult CTA lands on /contact, so a same-named button
+there would link the page to itself.
 
 ### Request a new image
 Use `<SiteImage src="/images/..." alt="..." prompt="..." />`. It renders a
