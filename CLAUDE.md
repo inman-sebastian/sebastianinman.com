@@ -94,10 +94,10 @@ optional `tools` (named tools/systems, rendered as a chip grid under
 recognize, framed as tools commonly connected, never partnerships or
 certifications; each chip shows the brand's favicon from
 `public/images/tools/<slugified-name>.png` when that file exists, e.g.
-"Microsoft 365" → `microsoft-365.png`, text-only otherwise — fetch new
-ones via `https://www.google.com/s2/favicons?domain=<domain>&sz=64` and
-eyeball the result, some domains return a generic parent-company mark),
-and `goodFit` (one sentence, rendered as a callout with the CTA).
+"Microsoft 365" → `microsoft-365.png`, text-only otherwise — to add one,
+use the `add-tool` skill in `.claude/skills/`, which covers the favicon
+fetch and its pitfalls), and `goodFit` (one sentence, rendered as a
+callout with the CTA).
 Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
 put walls of text or the lists back into the body. The service appears
 automatically on the homepage cards, the /services overview, the footer,
