@@ -104,12 +104,14 @@ export function StatRow({
       {stats.map((stat) => (
         <div
           key={stat.title}
-          className="flex items-center gap-4 rounded-xl border border-line bg-surface px-5 py-4"
+          className="flex items-start gap-4 rounded-xl border border-line bg-surface px-5 py-4"
         >
           {stat.icon && (
             // Solid saturated light green, not a low-opacity pine: thin
-            // washes of the muted dark green read as gray
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#d9ecdc] text-pine-dark">
+            // washes of the muted dark green read as gray. mt-1 pins the
+            // disc's center to the title/detail boundary (one-line title)
+            // so a wrapping detail paragraph can't drag it downward.
+            <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#d9ecdc] text-pine-dark">
               <svg
                 className="h-5 w-5"
                 fill="none"
