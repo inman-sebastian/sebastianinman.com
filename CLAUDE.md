@@ -23,11 +23,18 @@ The reader is a busy small-business owner, **not** a technical person.
   in one everyday sentence. BUT never use the literal phrase "plain English"
   in customer-facing copy; it can read as English-speakers-only. Say "no
   jargon," "clear plan," or "a straight answer" instead.
-- **Never condescend.** Frame clarity as the tech industry's jargon problem,
-  not the reader's comprehension problem. Banned patterns: "you'll actually
-  understand," "reports you'll actually read," "explained in everyday
-  words," or anything implying the reader is usually confused. "No jargon"
-  blames the jargon; that's the right direction.
+- **Never condescend, infantilize, or assume.** Talk like one normal person
+  to another. Some customers are tech literate, most probably aren't, and
+  the copy must respect both without betting on either. The right mental
+  model: the reader is smart and busy. They run a business well; they've
+  heard of AI but may not know what it is, how to use it, or how it helps
+  them, and that's not a deficiency, it just isn't their domain. Frame
+  clarity as the tech industry's jargon problem, never the reader's
+  comprehension problem. Banned patterns: "you'll actually understand,"
+  "reports you'll actually read," "explained in everyday words," or
+  anything implying the reader is usually confused. "No jargon" blames the
+  jargon; that's the right direction. In short: layman's terms, without
+  ever calling the customer a layman to their face.
 - **Lead with the problem solved, never the technology.**
   - ✅ "Stop retyping the same customer info into three different programs."
   - ❌ "Leveraging API-driven integrations for seamless data synchronization."
