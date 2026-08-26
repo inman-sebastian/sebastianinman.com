@@ -4,6 +4,7 @@ import { getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
+import { ServiceCard } from "@/components/ServiceCard";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -91,28 +92,7 @@ export default function HomePage() {
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
-              <Link
-                href={`/services/${service.slug}`}
-                className="group flex h-full flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0"
-              >
-                <SiteImage
-                  src={service.image}
-                  alt={service.imageAlt}
-                  prompt={service.imagePrompt}
-                  width={800}
-                  height={600}
-                  className="transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:group-hover:scale-100"
-                />
-                <h3 className="mt-4 text-lg font-semibold text-pine-dark group-hover:text-pine">
-                  {service.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
-                  {service.summary}
-                </p>
-                <p className="mt-4 text-sm font-semibold text-terracotta">
-                  Starting at ${service.startingPrice.toLocaleString()}
-                </p>
-              </Link>
+              <ServiceCard service={service} />
             </Reveal>
           ))}
         </div>

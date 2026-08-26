@@ -15,11 +15,11 @@ even after restarts and hard refreshes. If a replaced image won't update,
 stop the dev server and run `npm run dev:fresh` (it clears `.next` before
 starting). Then hard-refresh the browser (Cmd+Shift+R).
 
-**Aspect ratio: generate illustrations at 4:3**, with two exceptions: the
-home hero splash is **16:9** (it renders as a full-width background), and
-the headshot is a real portrait photo. Every other illustration slot is a
-4:3 box. The site crops anything else to fit (`object-cover`), so off-ratio
-uploads lose their edges.
+**Aspect ratio: generate illustrations at 4:3**, with three exceptions: the
+home hero splash and the CTA band treetops are **16:9** (they render as
+full-width backgrounds), and the headshot is a real portrait photo. Every
+other illustration slot is a 4:3 box. The site crops anything else to fit
+(`object-cover`), so off-ratio uploads lose their edges.
 
 **Style baseline for all illustration prompts** (already baked into each
 prompt below; keep it in any new ones): friendly modern flat illustration
@@ -47,6 +47,15 @@ owners rather than a tech crowd.
     ("The Valley Post") that read like the business name; v2's floating
     envelopes felt postal and ungrounded; v3 is pure landscape, the headline
     carries the message. Check results for sneaky lettering before uploading.
+
+- [ ] `public/images/cta-treetops.jpg` (**16:9**, e.g. 2560×1440)
+  - **Prompt:** "Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."
+  - **Notes:** background of the "Not sure where to start?" CTA band that
+    appears at the bottom of most pages. Bottom-anchored (`object-bottom`)
+    and cropped to a short wide strip, so only the treetop skyline shows;
+    the CTA text sits over the plain upper area. Keep the tones close to
+    the band's pine green so the white text stays readable. Replaced an
+    earlier attempt at programmatic SVG leaves that didn't read as leaves.
 
 - [x] `public/images/services/website-design.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Warm, inviting illustration of a small storefront business (like a local bakery or hardware store) with its website shown on a laptop beside it, matching earthy cream, pine green, and terracotta color palette, friendly modern flat illustration style"

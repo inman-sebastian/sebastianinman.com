@@ -121,20 +121,6 @@ img.hero-kenburns {
   will-change: transform;
 }
 
-@keyframes leaf-drift {
-  0%,
-  100% {
-    transform: translateY(0) rotate(var(--leaf-tilt, 0deg));
-  }
-  50% {
-    transform: translateY(-14px) rotate(calc(var(--leaf-tilt, 0deg) + 8deg));
-  }
-}
-.leaf-drift {
-  animation: leaf-drift var(--leaf-duration, 11s) ease-in-out
-    var(--leaf-delay, 0s) infinite;
-}
-
 .draw-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -145,8 +131,7 @@ img.hero-kenburns {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  img.hero-kenburns,
-  .leaf-drift {
+  img.hero-kenburns {
     animation: none;
   }
   .draw-check {
