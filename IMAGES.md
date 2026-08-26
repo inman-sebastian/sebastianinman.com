@@ -35,7 +35,7 @@ owners rather than a tech crowd.
 
 ## Illustrations
 
-- [ ] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
+- [x] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents."
   - **Notes:** renders full-width behind the hero text, which overlays the
     open-sky side, so that area must stay calm. Do NOT phrase that as "left
@@ -58,7 +58,7 @@ owners rather than a tech crowd.
   - **Prompt:** "Flat illustration of several everyday business tools (calculator/accounting book, calendar, envelope, storefront cash register) connected by warm glowing lines into one tidy network, earthy cream, pine green, and terracotta palette"
   - **Notes:** done.
 
-- [ ] `public/images/services/ai-assistants.jpg` (4:3, e.g. 1200×900)
+- [x] `public/images/services/ai-assistants.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Warm flat illustration of a cozy small shop interior at night, closed sign on the door and moonlight in the window, with a laptop glowing softly on the counter showing a simple friendly chat conversation where a customer's question is getting a helpful reply, earthy cream, pine green, terracotta palette"
   - **Notes:** no mascot characters or thought bubbles; v1's chat-bubble
     character read strangely.
