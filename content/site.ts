@@ -21,6 +21,15 @@ export const site = {
   // Empty string = buttons fall back to the contact page.
   bookingUrl: "",
 
+  // Shared 16:9 splash used behind the hero on the homepage and every
+  // service page. The prompt must stay identical to the one in IMAGES.md.
+  heroImage: {
+    src: "/images/home-hero.jpg",
+    alt: "Wide illustration of a peaceful Southern Oregon valley at golden hour, with pine-covered hills and soft mountains",
+    prompt:
+      "Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents.",
+  },
+
   location: "Southern Oregon",
   serviceAreaLine: "Based in Southern Oregon, working with small businesses everywhere.",
 } as const;

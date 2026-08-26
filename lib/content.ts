@@ -19,6 +19,10 @@ export type Service = {
   image: string;
   imagePrompt: string;
   imageAlt: string;
+  /** Raw frontmatter arrays for the rotating hero cards; parse with
+   *  parseHeroCards() from lib/heroCards.ts */
+  heroCardsTop?: unknown[];
+  heroCardsBottom?: unknown[];
   body: string;
 };
 
@@ -58,9 +62,15 @@ export function getServices(): Service[] {
       image: data.image ?? `/images/services/${slug}.jpg`,
       imagePrompt: data.imagePrompt ?? "",
       imageAlt: data.imageAlt ?? data.title ?? slug,
+      heroCardsTop: data.heroCardsTop,
+      heroCardsBottom: data.heroCardsBottom,
       body,
     }))
     .sort((a, b) => a.order - b.order);
+}
+
+export function getService(slug: string): Service | undefined {
+  return getServices().find((s) => s.slug === slug);
 }
 
 export function getLandingPages(): LandingPage[] {

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import Link from "next/link";
 import { getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
-import { ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
@@ -27,40 +26,39 @@ export default function ServicesPage() {
         </p>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        {services.map((service, i) => (
-          <section
-            key={service.slug}
-            id={service.slug}
-            className={`grid scroll-mt-24 items-start gap-10 py-14 md:grid-cols-2 ${
-              i > 0 ? "border-t border-line" : ""
-            }`}
-          >
-            <div className={i % 2 === 1 ? "md:order-2" : ""}>
+      <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <Link
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className="group flex flex-col rounded-xl border border-line bg-surface p-5 transition-shadow hover:shadow-md"
+            >
               <SiteImage
                 src={service.image}
                 alt={service.imageAlt}
                 prompt={service.imagePrompt}
-                width={900}
-                height={675}
-                className="md:sticky md:top-24"
+                width={800}
+                height={600}
               />
-            </div>
-            <div>
-              <h2 className="text-3xl font-semibold text-pine-dark">
+              <h2 className="mt-4 text-xl font-semibold text-pine-dark group-hover:text-pine">
                 {service.title}
               </h2>
-              <p className="mt-2 font-semibold text-terracotta">
-                Starting at ${service.startingPrice.toLocaleString()}
+              <p className="mt-2 flex-1 leading-relaxed text-muted">
+                {service.summary}
               </p>
-              <div className="prose-site mt-6">
-                <MDXRemote source={service.body} />
-              </div>
-              <ConsultButton className="mt-6" />
-            </div>
-          </section>
-        ))}
-      </div>
+              <p className="mt-4 flex items-center justify-between text-sm font-semibold">
+                <span className="text-terracotta">
+                  Starting at ${service.startingPrice.toLocaleString()}
+                </span>
+                <span className="text-pine group-hover:underline">
+                  Learn more →
+                </span>
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <CTABand />
     </>

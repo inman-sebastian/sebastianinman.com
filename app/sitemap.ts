@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
-import { getLandingPages } from "@/lib/content";
+import { getLandingPages, getServices } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = ["", "/services", "/about", "/contact"].map((path) => ({
@@ -9,11 +9,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.8,
   }));
 
+  const servicePages = getServices().map((service) => ({
+    url: `${site.url}/services/${service.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   const landingPages = getLandingPages().map((page) => ({
     url: `${site.url}/${page.slug}`,
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
-  return [...staticPages, ...landingPages];
+  return [...staticPages, ...servicePages, ...landingPages];
 }

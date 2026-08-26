@@ -46,7 +46,7 @@ The reader is a busy small-business owner, **not** a technical person.
 | Image checklist / prompts | `IMAGES.md` |
 | Content loaders | `lib/content.ts` |
 | Components (header, footer, CTA band, form, SiteImage) | `components/` |
-| Routes | `app/` (landing pages render via `app/[slug]/page.tsx`) |
+| Routes | `app/` (landing pages via `app/[slug]/page.tsx`, service pages via `app/services/[slug]/page.tsx`) |
 
 Design tokens (colors, fonts) are CSS variables in `app/globals.css`
 (`@theme` block). Palette: cream background, pine green primary, terracotta
@@ -57,11 +57,17 @@ don't hand-tune line breaks.
 ## Recipes
 
 ### Add or edit a service
-Create/edit `content/services/<slug>.mdx`. Frontmatter: `title`, `summary`,
-`order` (sort position), `startingPrice` (number, whole dollars), `image`,
-`imagePrompt`, `imageAlt`. Body = the full service section (follow the
-existing "Sound familiar? / What you get / A good fit if…" shape). It appears
-automatically on the homepage cards, /services, and the footer.
+Create/edit `content/services/<slug>.mdx`; each file becomes a dedicated
+landing page at `/services/<slug>`. Frontmatter: `title`, `summary`, `order`
+(sort position), `startingPrice` (number, whole dollars), `image`,
+`imagePrompt`, `imageAlt`, plus optional `heroCardsTop` / `heroCardsBottom`:
+lists of rotating hero example cards. Each card is either a notification
+(`icon` of check/calendar/star/sync/chart/mail/clock/globe, `title`, `sub`)
+or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
+and service-specific. Body = the full service section (follow the existing
+"Sound familiar? / What you get / A good fit if…" shape). The service
+appears automatically on the homepage cards, the /services overview, the
+footer, and the sitemap.
 
 ### Add an SEO landing page (e.g. "Grants Pass automation")
 Create `content/landing/<url-slug>.mdx`. The filename becomes the URL

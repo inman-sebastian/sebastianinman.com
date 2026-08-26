@@ -37,7 +37,9 @@ owners rather than a tech crowd.
 
 - [x] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 splash illustration, warm friendly flat style: one continuous, peaceful Southern Oregon valley landscape at golden hour with an asymmetrical composition. A big calm cream sky and gently rolling golden fields fill most of the frame, and layered pine-covered hills with soft mountain silhouettes rise gradually along the right side, where a winding dirt road drifts into the distance and a few soft wildflowers sit in the lower corner. A low horizon and generous open sky keep the scene serene and uncluttered. No people, no animals, no buildings, no signs, no words or lettering anywhere. Earthy cream sky, deep pine green and terracotta accents."
-  - **Notes:** renders full-width behind the hero text, which overlays the
+  - **Notes:** renders full-width behind the hero text on the homepage AND
+    every /services/<slug> page (the prompt also lives in `content/site.ts`
+    as `heroImage.prompt`; keep the two identical). The text overlays the
     open-sky side, so that area must stay calm. Do NOT phrase that as "left
     half empty" in a prompt: explicit half-by-half instructions make
     generators draw a literal seam down the middle; describe one scene with
