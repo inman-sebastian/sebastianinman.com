@@ -7,7 +7,7 @@ import { CTABand } from "@/components/CTABand";
 
 const steps = [
   {
-    title: "We talk — for free",
+    title: "We talk, for free",
     text: "Tell me what's eating your time or falling through the cracks. Thirty minutes, plain English, no obligation.",
   },
   {
@@ -16,7 +16,7 @@ const steps = [
   },
   {
     title: "I build it, you get your time back",
-    text: "Most projects are done in days or weeks — not months. And I stick around to make sure it keeps working.",
+    text: "Most projects are done in days or weeks, not months. And I stick around to make sure it keeps working.",
   },
 ];
 
@@ -37,8 +37,8 @@ export default function HomePage() {
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
             I&rsquo;m Sebastian. I help small businesses save hours every week with
             practical automation, helpful AI tools, and websites that bring in
-            customers — explained in plain English, priced for a small business
-            budget.
+            customers. Everything explained in plain English, priced for a
+            small business budget.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <ConsultButton />
@@ -67,15 +67,15 @@ export default function HomePage() {
             {[
               {
                 title: "The busywork never ends",
-                text: "You're doing paperwork at 10pm — retyping orders, chasing invoices, sending the same emails — instead of running your business.",
+                text: "You're doing paperwork at 10pm (retyping orders, chasing invoices, sending the same emails) instead of running your business.",
               },
               {
                 title: "Customers slip away",
-                text: "Calls go unanswered while you work, leads go cold overnight, and your website isn't pulling its weight — if you have one at all.",
+                text: "Calls go unanswered while you work, leads go cold overnight, and your website isn't pulling its weight, if you have one at all.",
               },
               {
                 title: "Everyone says “use AI”",
-                text: "You suspect there's something to it, but you don't have time to sort real help from hype — and no one explains it in plain English.",
+                text: "You suspect there's something to it, but you don't have time to sort real help from hype, and no one explains it in plain English.",
               },
             ].map((item) => (
               <div
@@ -91,7 +91,7 @@ export default function HomePage() {
           </div>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed">
             If any of that sounds familiar, you&rsquo;re exactly who I work with:
-            growing small businesses that need technology to help — not to become
+            growing small businesses that need technology to help, not to become
             one more thing to manage.
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function HomePage() {
         <SiteImage
           src="/images/headshot.jpg"
           alt={`Professional headshot of ${site.name}`}
-          prompt="Sebastian's professional headshot (real photo — drop in the existing headshot file)"
+          prompt="Sebastian's professional headshot (real photo; drop in the existing headshot file)"
           width={600}
           height={700}
         />
@@ -174,7 +174,7 @@ export default function HomePage() {
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
             I live and work in Jackson County, Oregon, and I&rsquo;d rather help
             the businesses in my own community than build software for companies
-            I&rsquo;ll never meet. Big companies have IT departments — you get me,
+            I&rsquo;ll never meet. Big companies have IT departments. You get me,
             and I answer my phone.
           </p>
           <ButtonLink href="/about" variant="secondary" className="mt-6">

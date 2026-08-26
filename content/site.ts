@@ -1,6 +1,6 @@
 /**
  * Single source of truth for site-wide info.
- * Edit values here — every page pulls from this file.
+ * Edit values here; every page pulls from this file.
  */
 export const site = {
   name: "Sebastian Inman",
@@ -11,9 +11,9 @@ export const site = {
 
   // Default meta description (used when a page doesn't set its own)
   description:
-    "I help small businesses save hours every week with practical automation, AI tools, and websites that actually bring in customers. Based in Southern Oregon — working with businesses everywhere.",
+    "I help small businesses save hours every week with practical automation, AI tools, and websites that actually bring in customers. Based in Southern Oregon, working with businesses everywhere.",
 
-  email: "hello@sebastianinman.com", // TODO: inbox not set up yet — see CLAUDE.md deferred tasks
+  email: "hello@sebastianinman.com", // TODO: inbox not set up yet; see CLAUDE.md deferred tasks
   phone: "(541) 592-9047",
   phoneHref: "tel:+15415929047",
 
@@ -22,5 +22,5 @@ export const site = {
   bookingUrl: "",
 
   location: "Southern Oregon",
-  serviceAreaLine: "Based in Southern Oregon — working with small businesses everywhere.",
+  serviceAreaLine: "Based in Southern Oregon, working with small businesses everywhere.",
 } as const;

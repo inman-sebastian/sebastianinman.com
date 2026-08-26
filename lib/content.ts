@@ -4,7 +4,7 @@ import matter from "gray-matter";
 
 /**
  * Content loaders. All site copy lives in `content/` as MDX files with
- * frontmatter — see CLAUDE.md for the recipes to add or edit content.
+ * frontmatter; see CLAUDE.md for the recipes to add or edit content.
  */
 
 const CONTENT_DIR = path.join(process.cwd(), "content");

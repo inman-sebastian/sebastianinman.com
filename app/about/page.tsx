@@ -26,7 +26,7 @@ export default function AboutPage() {
           <SiteImage
             src="/images/headshot.jpg"
             alt={`Professional headshot of ${site.name}`}
-            prompt="Sebastian's professional headshot (real photo — drop in the existing headshot file)"
+            prompt="Sebastian's professional headshot (real photo; drop in the existing headshot file)"
             width={600}
             height={700}
             priority

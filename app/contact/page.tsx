@@ -5,7 +5,7 @@ import { ConsultButton } from "@/components/ButtonLink";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Get in touch with ${site.name} — free consult for small businesses that want help with automation, AI, or a better website. ${site.location}.`,
+  description: `Get in touch with ${site.name}. Free consult for small businesses that want help with automation, AI, or a better website. ${site.location}.`,
 };
 
 export default function ContactPage() {
@@ -17,7 +17,7 @@ export default function ContactPage() {
         </h1>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
           The first conversation is always free. Tell me what&rsquo;s eating your
-          time or what you wish just worked — I&rsquo;ll tell you honestly
+          time or what you wish just worked, and I&rsquo;ll tell you honestly
           whether I can help.
         </p>
 
@@ -53,8 +53,8 @@ export default function ContactPage() {
         </div>
 
         <p className="mt-8 max-w-md text-sm leading-relaxed text-muted">
-          {site.serviceAreaLine} Local businesses: happy to meet in person —
-          coffee&rsquo;s on me.
+          {site.serviceAreaLine} Local businesses: happy to meet in person.
+          Coffee&rsquo;s on me.
         </p>
       </div>
 

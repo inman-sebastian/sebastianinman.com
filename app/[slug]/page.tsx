@@ -8,7 +8,7 @@ import { site } from "@/content/site";
 
 /**
  * SEO landing pages. Every MDX file in content/landing/ becomes a page at
- * the site root — the filename is the URL slug. See CLAUDE.md for the
+ * the site root; the filename is the URL slug. See CLAUDE.md for the
  * "add a landing page" recipe.
  */
 

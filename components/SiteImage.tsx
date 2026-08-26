@@ -20,7 +20,7 @@ type SiteImageProps = {
 /**
  * Renders the real image if the file exists in /public, otherwise a
  * placeholder box showing the generation prompt and target filename.
- * To replace: generate the image and save it to /public at `src` — no
+ * To replace: generate the image and save it to /public at `src`. No
  * code changes needed.
  */
 export function SiteImage({

@@ -12,7 +12,7 @@ export async function submitContact(
   _prev: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
-  // Honeypot — real users never fill this hidden field
+  // Honeypot: real users never fill this hidden field
   if (formData.get("company_website")) {
     return { status: "success" };
   }
@@ -25,9 +25,9 @@ export async function submitContact(
   const errors: ContactFormState["errors"] = {};
   if (!name) errors.name = "Please tell me your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-    errors.email = "That email doesn't look right — mind double-checking?";
+    errors.email = "That email doesn't look right. Mind double-checking?";
   if (message.length < 10)
-    errors.message = "Tell me a little about what you need — a sentence or two is plenty.";
+    errors.message = "Tell me a little about what you need. A sentence or two is plenty.";
 
   if (Object.keys(errors).length > 0) {
     return { status: "error", errors };
@@ -65,7 +65,7 @@ export async function submitContact(
       };
     }
   } else {
-    // No email service configured yet (local dev) — log the submission
+    // No email service configured yet (local dev), so log the submission
     console.log("\n--- Contact form submission (no RESEND_API_KEY set) ---");
     console.log(summary);
     console.log("-------------------------------------------------------\n");

@@ -39,7 +39,7 @@ export function ButtonLink({
   );
 }
 
-/** "Book a free consult" CTA — uses the booking link when set, contact page otherwise */
+/** "Book a free consult" CTA; uses the booking link when set, contact page otherwise */
 export function ConsultButton({
   variant = "primary",
   className = "",
