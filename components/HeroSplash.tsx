@@ -13,6 +13,12 @@ type HeroSplashProps = {
   compact?: boolean;
   /** Set false on pages that don't need the rotating example cards */
   cards?: boolean;
+  /**
+   * Color of the zigzag teeth along the hero's bottom edge; must match
+   * the background of the section that follows ("background" cream by
+   * default, "surface" when the next section is a surface band)
+   */
+  edge?: "background" | "surface";
   /** CTA buttons */
   children?: ReactNode;
 };
@@ -30,11 +36,31 @@ export function HeroSplash({
   poolB,
   compact = false,
   cards = true,
+  edge = "background",
   children,
 }: HeroSplashProps) {
   return (
     <section className="relative overflow-hidden bg-pine-dark">
       {cards && <HeroCards poolA={poolA} poolB={poolB} />}
+      {/* Sawtooth bottom edge: cream teeth biting into the green */}
+      <svg
+        aria-hidden="true"
+        className={`absolute inset-x-0 bottom-0 h-2.5 w-full ${
+          edge === "surface" ? "text-surface" : "text-background"
+        }`}
+      >
+        <defs>
+          <pattern
+            id="hero-zigzag"
+            width="20"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M0 10 L10 0 L20 10 Z" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#hero-zigzag)" />
+      </svg>
       <div
         className={`relative mx-auto flex max-w-6xl items-center px-4 sm:px-6 ${
           compact
