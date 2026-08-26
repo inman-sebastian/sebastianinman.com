@@ -165,9 +165,11 @@ prop in code identical to the IMAGES.md Prompt. Sebastian generates the
 images and drops them in; never commit AI-generated images yourself.
 **All image slots are 4:3** (Sebastian's generator outputs 4:3); keep any new
 `SiteImage` width/height props at a 4:3 ratio (the component defaults to
-1200×900) and note 4:3 in the IMAGES.md entry. Exceptions: the home hero is a
-16:9 full-width background (`SiteImage` with `fill`, left half of the image
-kept calm for text overlay) and the headshot is a real portrait photo.
+1200×900) and note 4:3 in the IMAGES.md entry. Exceptions: the CTA band
+treetops are a 16:9 full-width background (`SiteImage` with `fill`) and the
+headshot is a real portrait photo. The hero (`HeroSplash`) is deliberately a
+flat `pine-dark` background with NO image; don't add one back without
+Sebastian asking.
 
 ### Add a static page
 Create `app/<name>/page.tsx` (copy the shape of `app/about/page.tsx`), put

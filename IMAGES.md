@@ -15,11 +15,11 @@ even after restarts and hard refreshes. If a replaced image won't update,
 stop the dev server and run `npm run dev:fresh` (it clears `.next` before
 starting). Then hard-refresh the browser (Cmd+Shift+R).
 
-**Aspect ratio: generate illustrations at 4:3**, with three exceptions: the
-home hero splash and the CTA band treetops are **16:9** (they render as
-full-width backgrounds), and the headshot is a real portrait photo. Every
-other illustration slot is a 4:3 box. The site crops anything else to fit
-(`object-cover`), so off-ratio uploads lose their edges.
+**Aspect ratio: generate illustrations at 4:3**, with two exceptions: the
+CTA band treetops are **16:9** (rendered as a full-width background), and
+the headshot is a real portrait photo. Every other illustration slot is a
+4:3 box. The site crops anything else to fit (`object-cover`), so
+off-ratio uploads lose their edges.
 
 **Style baseline for all illustration prompts** (already baked into each
 prompt below; keep it in any new ones): friendly modern flat illustration
@@ -35,25 +35,17 @@ owners rather than a tech crowd.
 
 ## Illustrations
 
-- [x] `public/images/home-hero.jpg` (**16:9**, e.g. 2560×1440)
-  - **Prompt:** "Wide 16:9 flat illustration in deep pine greens: a calm, wide river at dusk, its surface filling the lower half of the frame with smooth horizontal ripple lines stepping through deep greens from #234f3e down to #132c1f in the foreground. Above it, a quiet dusk sky in muted deep greens fading upward from #2a5a47 into #18382c, nearly empty of detail. Low on the right side of the horizon, a soft warm terracotta glow of last light melts into the water and draws a gentle shimmering reflection down the right side of the river. The left and upper areas stay smooth and calm. A few smooth dark river stones break the surface in the lower right corner. No people, no animals, no boats, no buildings, no signs, no words or lettering anywhere. Flat vector style, no texture."
-  - **Notes:** v4 (current): a dusk river (nod to the Rogue) in the same
-    deep greens as the CTA band and footer, deliberately a DIFFERENT
-    subject than the footer's treeline so the two don't feel repetitive;
-    only the palette repeats. The hero is styled light-on-dark for this
-    image (dark scrim, cream text, light CTA variant); if the hero ever
-    goes back to a light image, that styling must flip with it.
-    Renders full-width behind the hero text
-    on the homepage AND every /services/<slug> page (the prompt also lives
-    in `content/site.ts` as `heroImage.prompt`; keep the two identical).
-    The text overlays the calm upper-left, so that area must stay smooth.
-    Do NOT phrase that as "left half empty" in prompts: explicit
-    half-by-half instructions make generators draw a literal seam;
-    describe one scene with asymmetric weight instead. Concept history:
-    v1 had a signed storefront ("The Valley Post") that read like the
-    business name; v2's floating envelopes felt postal; v3 golden valley
-    was liked but is being replaced for palette cohesion. Check results
-    for sneaky lettering before uploading.
+- ~~`public/images/home-hero.jpg`~~ **RETIRED (Aug 2026): the hero is now
+  a flat deep-pine background with no image.**
+  - **Notes:** Sebastian dropped the hero image entirely: the dusk-river
+    art no longer matched, and the site was already image-heavy. The
+    hero keeps its light-on-dark styling (cream text, light CTA variant)
+    over flat `pine-dark`; if a hero image ever returns, revive the
+    lessons that lived here: no explicit "left half empty" phrasing
+    (generators draw a literal seam; describe one scene with asymmetric
+    weight instead), no storefronts with signs (v1's "The Valley Post"
+    read as the business name), and always check results for sneaky
+    lettering before uploading.
 
 - [x] `public/images/cta-treetops.jpg` (**16:9**, e.g. 2560×1440)
   - **Prompt:** "Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."

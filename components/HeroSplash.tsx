@@ -1,6 +1,4 @@
 import type { ReactNode } from "react";
-import { site } from "@/content/site";
-import { SiteImage } from "@/components/SiteImage";
 import { HeroCards } from "@/components/HeroCards";
 import type { HeroCard } from "@/lib/heroCards";
 
@@ -18,9 +16,9 @@ type HeroSplashProps = {
 };
 
 /**
- * Full-width hero: the shared 16:9 landscape as background, a gradient
- * that keeps the text side readable while leaving the artwork (and the
- * floating example cards) clear on the right, and left-aligned content.
+ * Full-width hero: flat deep-pine background with light-on-dark text and
+ * the floating example cards on the right. The site is image-heavy
+ * elsewhere, so the hero stays a plain color on purpose.
  */
 export function HeroSplash({
   eyebrow,
@@ -32,21 +30,7 @@ export function HeroSplash({
   children,
 }: HeroSplashProps) {
   return (
-    <section className="relative overflow-hidden border-b border-line">
-      <SiteImage
-        fill
-        priority
-        src={site.heroImage.src}
-        alt={site.heroImage.alt}
-        prompt={site.heroImage.prompt}
-        className="hero-kenburns"
-      />
-      {/* Dark scrim tuned to the dusk-river hero image; keeps the cream
-          text readable while the terracotta glow stays clear on the right */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-[#132c1f]/85 to-[#132c1f]/45 md:bg-gradient-to-r md:from-[#132c1f]/90 md:via-[#18382c]/45 md:via-45% md:to-transparent md:to-80%"
-      />
+    <section className="relative overflow-hidden bg-pine-dark">
       <HeroCards poolA={poolA} poolB={poolB} />
       <div
         className={`relative mx-auto flex max-w-6xl items-center px-4 sm:px-6 ${
@@ -57,7 +41,7 @@ export function HeroSplash({
       >
         <div className="max-w-xl">
           {eyebrow && (
-            // Lightened terracotta for contrast on the dark water
+            // Lightened terracotta for contrast on the dark green
             <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-[#e09468]">
               {eyebrow}
             </p>
