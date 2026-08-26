@@ -12,7 +12,7 @@ import { CTABand } from "@/components/CTABand";
 const steps = [
   {
     title: "We talk, for free",
-    text: "Tell me what's eating your time or falling through the cracks. Thirty minutes, plain English, no obligation.",
+    text: "Tell me what's eating your time or falling through the cracks. Thirty minutes, no jargon, no obligation.",
   },
   {
     title: "You get an honest plan",
@@ -32,7 +32,7 @@ export default function HomePage() {
       <HeroSplash
         eyebrow={site.serviceAreaLine}
         heading="Your business runs better when the busywork runs itself."
-        text="I'm Sebastian. I help small businesses save hours every week with practical automation, helpful AI tools, and websites that bring in customers. Everything explained in plain English, priced for a small business budget."
+        text="I'm Sebastian. I help small businesses save hours every week with practical automation, helpful AI tools, and websites that bring in customers. Everything explained in everyday words, priced for a small business budget."
       >
         <ConsultButton />
         <ButtonLink href="/services" variant="light">

@@ -19,8 +19,10 @@ npm run build      # production build (also the best "did I break it?" check)
 
 The reader is a busy small-business owner, **not** a technical person.
 
-- **Plain English, always.** If a technical term is unavoidable, explain it in
-  one everyday sentence.
+- **Plain language, always.** If a technical term is unavoidable, explain it
+  in one everyday sentence. BUT never use the literal phrase "plain English"
+  in customer-facing copy; it can read as English-speakers-only. Say "no
+  jargon," "simple terms," "everyday words," or "a straight answer" instead.
 - **Lead with the problem solved, never the technology.**
   - ✅ "Stop retyping the same customer info into three different programs."
   - ❌ "Leveraging API-driven integrations for seamless data synchronization."

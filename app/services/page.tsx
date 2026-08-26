@@ -8,7 +8,7 @@ import { CTABand } from "@/components/CTABand";
 export const metadata: Metadata = {
   title: "Services: Automation, AI & Websites for Small Businesses",
   description:
-    "Website design, workflow automation, tool integration, AI assistants, and AI-powered insights for small businesses. Plain-English help with clear starting prices.",
+    "Website design, workflow automation, tool integration, AI assistants, and AI-powered insights for small businesses. Jargon-free help with clear starting prices.",
 };
 
 export default function ServicesPage() {
@@ -21,7 +21,8 @@ export default function ServicesPage() {
           What I can take off your plate
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-          Every project starts with a free consult and a plain-English plan.
+          Every project starts with a free consult and a plan you&rsquo;ll
+          actually understand.
           Prices below are honest starting points. Most projects are quoted
           flat, so you know the cost before we begin.
         </p>
