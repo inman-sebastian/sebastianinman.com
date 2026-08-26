@@ -92,8 +92,8 @@ export function StatRow({
   stats,
 }: {
   stats: {
-    value: string;
-    label: string;
+    /** A short natural sentence, e.g. "Projects start at $500" */
+    title: string;
     icon?: keyof typeof heroCardIcons;
     /** One supporting sentence; keeps the card from being a bare number */
     detail?: string;
@@ -103,11 +103,11 @@ export function StatRow({
     <div className="my-6 flex flex-col gap-3">
       {stats.map((stat) => (
         <div
-          key={stat.label}
-          className="flex items-start gap-4 rounded-xl border border-line bg-surface p-5"
+          key={stat.title}
+          className="flex items-center gap-4 rounded-xl border border-line bg-surface px-5 py-4"
         >
           {stat.icon && (
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pine-tint text-pine">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pine/10 text-pine-dark">
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -125,14 +125,11 @@ export function StatRow({
             </span>
           )}
           <div>
-            <p className="font-serif text-xl font-semibold leading-tight text-pine-dark">
-              {stat.value}
-              <span className="ml-2 font-sans text-sm font-semibold text-pine">
-                {stat.label}
-              </span>
+            <p className="font-serif text-lg font-semibold leading-snug text-pine-dark">
+              {stat.title}
             </p>
             {stat.detail && (
-              <p className="mt-1 text-sm leading-relaxed text-muted">
+              <p className="mt-0.5 text-sm leading-relaxed text-muted">
                 {stat.detail}
               </p>
             )}
@@ -154,22 +151,19 @@ export function PromiseRow() {
       stats={[
         {
           icon: "tag",
-          value: "From $500",
-          label: "projects start",
+          title: "Projects start at $500",
           detail:
             "Quoted flat before we begin, so there are no surprise invoices.",
         },
         {
           icon: "clock",
-          value: "30 min",
-          label: "free consult, no obligation",
+          title: "The first 30 minutes are free",
           detail:
-            "Tell me what's eating your time. If it isn't worth fixing, I'll say so.",
+            "Tell me what's eating your time, no obligation. If it isn't worth fixing, I'll say so.",
         },
         {
           icon: "mail",
-          value: "1 business day",
-          label: "the longest you'll wait to hear back",
+          title: "Replies within 1 business day",
           detail: "Usually much sooner. You get me, not a ticket queue.",
         },
       ]}

@@ -114,11 +114,13 @@ defined in `components/mdx.tsx` (add new ones there and document them here):
 - `<Callout title="...">text</Callout>`: terracotta-tinted aside
 - `<CheckList items={["...", "..."]} />`: green checkmark list
 - `<ChatBubble question="..." answer="..." caption="..." />`: chat exchange
-- `<StatRow stats={[{ icon: "clock", value: "3 hrs", label: "saved weekly", detail: "One supporting sentence." }]} />`:
-  stacked stat cards; optional `icon` from the hero-card icon set (check,
-  calendar, star, sync, chart, mail, clock, globe, users, tag) and optional
-  `detail` sentence. Every stat must answer a question the visitor actually
-  has (cost, commitment, speed); no decorative factoids (population tiles
+- `<StatRow stats={[{ icon: "clock", title: "3 hours back every week", detail: "One supporting sentence." }]} />`:
+  stacked promise cards; `title` is a short NATURAL SENTENCE ("Projects
+  start at $500", never "From $500 / projects start" value-label
+  mashups), optional `icon` from the hero-card icon set (check, calendar,
+  star, sync, chart, mail, clock, globe, users, tag), optional `detail`
+  sentence. Every card must answer a question the visitor actually has
+  (cost, commitment, speed); no decorative factoids (population tiles
   were removed as meaningless) and no hyperbole ("N potential customers")
 - `<PromiseRow />`: the standard price/consult/reply-time StatRow used on
   the automation landing pages; promises live once in `components/mdx.tsx`
