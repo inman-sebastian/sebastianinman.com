@@ -35,7 +35,7 @@ export function HeroSplash({
       <div
         className={`relative mx-auto flex max-w-6xl items-center px-4 sm:px-6 ${
           compact
-            ? "py-16 md:min-h-[440px] md:py-20"
+            ? "py-16 md:min-h-[460px] md:py-20 md:pb-24"
             : "py-20 md:min-h-[560px] md:py-24 lg:min-h-[640px]"
         }`}
       >

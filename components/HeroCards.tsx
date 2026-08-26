@@ -153,7 +153,9 @@ export function HeroCards({
           </div>
         </div>
       </div>
-      <div className="absolute bottom-[16%] right-[16%] -rotate-1">
+      {/* Kept clear of the hero's bottom edge: inner pages overlap an
+          image into that area (see the service page intro section) */}
+      <div className="absolute bottom-[24%] right-[16%] -rotate-1">
         <div className="hero-card-float-b">
           <div
             key={slotB.index}
