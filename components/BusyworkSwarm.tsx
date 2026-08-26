@@ -61,7 +61,8 @@ function playPop() {
     audioCtx ??= new AudioContext();
     const ctx = audioCtx;
     if (ctx.state === "suspended") void ctx.resume();
-    const t = ctx.currentTime;
+    // Small delay so the sound lands on the rupture, not the inflate
+    const t = ctx.currentTime + 0.09;
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -171,7 +172,7 @@ export function BusyworkSwarm({
             });
           }, 900 + Math.random() * 800)
         );
-      }, 400)
+      }, 520)
     );
   };
 
@@ -209,7 +210,7 @@ export function BusyworkSwarm({
               style={{ rotate: `${((i * 37) % 7) - 3}deg` }}
               className={`cursor-pointer rounded-full border border-line px-4 py-2 text-sm text-pine-dark shadow-sm transition-[scale] duration-200 hover:scale-105 motion-reduce:hover:scale-100 ${
                 chipTints[i % chipTints.length]
-              } ${slot.phase === "out" ? "hero-card-exit" : "hero-card-enter"}`}
+              } ${slot.phase === "out" ? "chip-pop" : "hero-card-enter"}`}
             >
               {slot.text}
             </button>
