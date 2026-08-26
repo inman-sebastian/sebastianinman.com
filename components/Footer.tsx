@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { getLandingPages, getServices } from "@/lib/content";
+import { getServices } from "@/lib/content";
 
 export function Footer() {
-  const landingPages = getLandingPages();
   const services = getServices();
 
   return (
@@ -12,7 +11,7 @@ export function Footer() {
     // If cta-treetops.jpg is ever regenerated, re-sample the silhouette
     // color and update this hex.
     <footer className="border-t border-white/10 bg-[#132c1f] text-white/80">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
           <p className="mt-2 max-w-sm text-sm leading-relaxed">
@@ -53,20 +52,6 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">
-            Areas we serve
-          </p>
-          <ul className="mt-3 flex flex-col gap-2 text-sm">
-            {landingPages.map((p) => (
-              <li key={p.slug}>
-                <Link href={`/${p.slug}`} className="hover:text-white">
-                  {p.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
         © {new Date().getFullYear()} {site.name}. All rights reserved.
