@@ -87,31 +87,34 @@ owners rather than a tech crowd.
 
 ## Area cards (About page "Areas I serve")
 
-A matched series: abstract topographic contour art, one per town, each
-encoding the town's REAL geographic setting (river bend, foothills, valley
-corridor) without streets or literal maps, so nothing can be geographically
-"wrong." Deliberately abstract; never let the generator draw street grids
-or lettering. All 4:3 (e.g. 1200×900). Keep the series visually consistent:
-generate them in one session if possible.
+A matched series in the SAME friendly flat style as the service
+illustrations: one recognizable landmark scene per town, real landmarks
+only. All 4:3 (e.g. 1200×900). Generate in one session if possible so the
+series stays consistent. Watch for the generator adding readable signage;
+every prompt demands blank signs and no lettering. (History: v1 was
+abstract topographic contour art; retired because it was busy and nothing
+tied any card to its actual town.)
 
 - [ ] `public/images/areas/medford.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A broad, open valley floor of widely spaced contours with a single meandering creek line crossing the frame. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** wide-open valley = Medford as the broad valley floor.
+  - **Prompt:** "Friendly modern flat illustration of Medford, Oregon: rows of pear orchard trees in bloom in the foreground, a small warm downtown cluster behind them, and the rounded ridge of Roxy Ann Peak rising in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** pears = Harry & David / Pear Blossom heritage; Roxy Ann is the town's backdrop peak.
 - [ ] `public/images/areas/ashland.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Contours tightening and rising into steep foothills across one corner, with a small creek line emerging from them into open valley. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** steep corner = Siskiyou foothills above Ashland.
+  - **Prompt:** "Friendly modern flat illustration of Ashland, Oregon: an outdoor Elizabethan-style theater with timber balconies beside a leafy park with a small creek, a deer grazing calmly at the park's edge, forested hills rising behind, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** the Elizabethan theater (Shakespeare Festival) + Lithia Park; the deer is a local in-joke every Ashlander will get.
 - [ ] `public/images/areas/grants-pass.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A wide river line making one strong sweeping bend through the middle of the contours. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** the river bend = the Rogue through Grants Pass.
+  - **Prompt:** "Friendly modern flat illustration of Grants Pass, Oregon: a cheerful raft with paddlers riding gentle whitewater on a wide green river, pine-covered banks on both sides and a small bridge in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** Rogue River rafting is the town's identity. Skipped the "It's the Climate" arch because it requires legible text.
 - [ ] `public/images/areas/central-point.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Gentle, widely spaced valley contours with one straight creek line and generous open space. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** the flattest, most open of the series.
+  - **Prompt:** "Friendly modern flat illustration of Central Point, Oregon: a cozy small creamery storefront with big cheese wheels stacked in the window, and two distinctive flat-topped mesa buttes (the Table Rocks) on the horizon behind open farmland, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; storefront sign left blank."
+  - **Notes:** Rogue Creamery + the Table Rocks, both genuinely Central Point-adjacent.
 - [ ] `public/images/areas/jacksonville.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Tight clusters of rolling-hill contours filling one side of the frame, easing into open valley on the other. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** rolling hills = Jacksonville's historic hillside setting.
+  - **Prompt:** "Friendly modern flat illustration of Jacksonville, Oregon: a historic 1880s brick main street with striped awnings, hanging flower baskets, and old-fashioned lamp posts, wooded hills rising close behind the rooftops, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
+  - **Notes:** the California Street historic district look.
 - [ ] `public/images/areas/talent.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A narrow valley corridor of parallel contours with a creek line running diagonally corner to corner. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** the Bear Creek corridor; diagonal creek distinguishes it from Phoenix.
+  - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a small cozy storefront row with rows of vineyard vines rolling up the hillside behind it and a little creek with a footbridge in front, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
+  - **Notes:** Bear Creek corridor + wine trail vineyards.
 - [ ] `public/images/areas/phoenix.jpg` (4:3)
-  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A slim corridor of parallel contours with a gentle creek line and open flats spreading to both sides. No streets, no roads, no buildings, no text or lettering anywhere."
-  - **Notes:** corridor with flats; straighter and more open than Talent's.
+  - **Prompt:** "Friendly modern flat illustration of Phoenix, Oregon: a freshly rebuilt small-town street with brand-new timber storefronts, young staked saplings along the sidewalk, and a songbird taking flight in warm morning light, valley hills in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
+  - **Notes:** the rebuild-after-Almeda story told gently: new construction,
+    young trees, a bird rising (a nod to the name without a literal
+    phoenix). Keep it hopeful, never somber.
