@@ -42,7 +42,10 @@ export function HeroSplash({
             : "py-20 md:min-h-[560px] md:py-24 lg:min-h-[640px]"
         }`}
       >
-        <div className="max-w-xl">
+        {/* Capped at the width of the section grids' left column below, so
+            the text always clears the rotating cards and any element that
+            overlaps up into the hero (images, form card, headshot) */}
+        <div className="max-w-xl md:max-w-[calc(50%-1.25rem)]">
           {eyebrow && (
             // Lightened terracotta for contrast on the dark green
             <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-[#e09468]">
