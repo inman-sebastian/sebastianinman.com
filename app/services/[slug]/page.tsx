@@ -75,32 +75,46 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </Reveal>
       </section>
 
-      {/* Pain points as chat-style bubbles (echoes the hero cards) */}
+      {/* Pain points as a chat conversation, matching the homepage's
+          "Running a business shouldn't mean drowning in it" section */}
       {service.painPoints.length > 0 && (
         <section className="border-y border-line bg-surface">
-          <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-14 sm:px-6 md:grid-cols-2">
             <Reveal>
               <h2 className="text-3xl font-semibold text-pine-dark">
                 Sound familiar?
               </h2>
-            </Reveal>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {service.painPoints.map((point, i) => (
-                <Reveal key={point} delay={i * 120} className="h-full">
-                  <div className="h-full rounded-2xl border border-line bg-pine-tint/60 px-5 py-4">
-                    <p className="leading-relaxed text-pine-dark">
-                      &ldquo;{point}&rdquo;
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal delay={service.painPoints.length * 120}>
-              <p className="mt-8 max-w-xl text-lg text-muted">
-                If any of these sound like your week, you&rsquo;re exactly who
-                this is for.
+              <p className="mt-4 leading-relaxed text-muted">
+                These are the things I hear from business owners before we
+                start working together. If any of them sound like your week,
+                you&rsquo;re exactly who this service is for.
               </p>
             </Reveal>
+            <div className="flex flex-col gap-4">
+              {service.painPoints.map((point, i) => (
+                <Reveal
+                  key={point}
+                  delay={i * 150}
+                  className={i % 2 === 0 ? "self-start" : "self-end"}
+                >
+                  <p
+                    className={`max-w-sm rounded-2xl border border-line bg-pine-tint/60 px-5 py-3.5 leading-relaxed text-pine-dark ${
+                      i % 2 === 0 ? "rounded-bl-sm" : "rounded-br-sm"
+                    }`}
+                  >
+                    &ldquo;{point}&rdquo;
+                  </p>
+                </Reveal>
+              ))}
+              <Reveal
+                delay={service.painPoints.length * 150}
+                className="self-end"
+              >
+                <p className="max-w-sm rounded-2xl rounded-br-sm bg-pine px-5 py-3.5 leading-relaxed text-white">
+                  Let&rsquo;s fix that.
+                </p>
+              </Reveal>
+            </div>
           </div>
         </section>
       )}
@@ -113,6 +127,9 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
               <h2 className="text-3xl font-semibold text-pine-dark">
                 What you get
               </h2>
+              <p className="mt-3 max-w-xl leading-relaxed text-muted">
+                Plain talk about what you&rsquo;re actually paying for.
+              </p>
             </Reveal>
             <div className="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
               {service.deliverables.map((item, i) => (
