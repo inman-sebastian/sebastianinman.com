@@ -69,13 +69,16 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
             <MdxBody source={page.body} />
           </div>
           {page.imagePrompt && (
-            <Reveal delay={150} className="md:sticky md:top-24">
+            // Pulled up over the hero's flat green with a border matching
+            // this section's cream background (see the service pages)
+            <Reveal delay={150} className="md:sticky md:top-24 md:-mt-28">
               <SiteImage
                 src={page.image}
                 alt={page.imageAlt}
                 prompt={page.imagePrompt}
                 width={900}
                 height={675}
+                className="!rounded-2xl border-[6px] border-background md:shadow-lg"
               />
             </Reveal>
           )}

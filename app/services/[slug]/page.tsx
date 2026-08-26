@@ -57,20 +57,23 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </ButtonLink>
       </HeroSplash>
 
-      {/* Short intro beside the service illustration */}
+      {/* Short intro beside the service illustration. The image pulls up
+          over the hero's flat green, with a border matching this section's
+          cream background so the overlap reads as a deliberate layer. */}
       <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 md:grid-cols-2">
         <Reveal>
           <div className="prose-site">
             <MdxBody source={service.body} />
           </div>
         </Reveal>
-        <Reveal delay={150}>
+        <Reveal delay={150} className="md:-mt-28 md:self-start">
           <SiteImage
             src={service.image}
             alt={service.imageAlt}
             prompt={service.imagePrompt}
             width={900}
             height={675}
+            className="!rounded-2xl border-[6px] border-background md:shadow-lg"
           />
         </Reveal>
       </section>
