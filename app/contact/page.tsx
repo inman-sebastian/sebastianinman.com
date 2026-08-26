@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
+import { getServices } from "@/lib/content";
 import { ContactForm } from "@/components/ContactForm";
 import { HeroSplash } from "@/components/HeroSplash";
 import { ConsultButton } from "@/components/ButtonLink";
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  // Slug + title only; the checkbox cards need nothing heavier
+  const services = getServices().map(({ slug, title }) => ({ slug, title }));
   return (
     <>
       <HeroSplash
@@ -63,7 +66,7 @@ export default function ContactPage() {
             overlapping-image treatment on the other inner pages. Needs
             `relative` to paint above the hero (a positioned section). */}
         <div className="relative rounded-2xl border border-line bg-surface p-6 ring-[6px] ring-background sm:p-8 md:-mt-28 md:shadow-lg">
-          <ContactForm />
+          <ContactForm services={services} />
         </div>
       </section>
     </>

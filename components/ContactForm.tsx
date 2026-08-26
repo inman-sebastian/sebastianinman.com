@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 import { submitContact, type ContactFormState } from "@/app/contact/actions";
 
@@ -7,6 +9,12 @@ const initialState: ContactFormState = { status: "idle" };
 
 const inputClasses =
   "w-full rounded-lg border border-line bg-surface px-4 py-3 text-ink placeholder:text-muted/60 focus:border-pine focus:outline-none focus:ring-2 focus:ring-pine/20";
+
+/** Slug + title pairs for the service checkboxes; passed in by the page */
+export type ServiceOption = { slug: string; title: string };
+
+/** Extra always-present option so nobody feels quizzed */
+const NOT_SURE: ServiceOption = { slug: "not-sure", title: "Not sure yet" };
 
 function Field({
   label,
@@ -28,8 +36,93 @@ function Field({
   );
 }
 
-export function ContactForm() {
+function ServiceCheckboxes({
+  services,
+  selected,
+  onToggle,
+}: {
+  services: ServiceOption[];
+  selected: Set<string>;
+  onToggle: (slug: string) => void;
+}) {
+  return (
+    <fieldset>
+      <legend className="mb-1.5 text-sm font-semibold text-pine-dark">
+        What do you need help with?{" "}
+        <span className="font-normal text-muted">(check any that apply)</span>
+      </legend>
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        {[...services, NOT_SURE].map((s) => {
+          const checked = selected.has(s.slug);
+          return (
+            <label
+              key={s.slug}
+              className={`flex cursor-pointer items-center gap-2.5 rounded-lg border px-3.5 py-2.5 text-sm font-medium transition-colors ${
+                checked
+                  ? "border-pine bg-pine-tint/60 text-pine-dark"
+                  : "border-line bg-surface text-ink hover:border-pine/40"
+              }`}
+            >
+              <input
+                type="checkbox"
+                name="services"
+                value={s.slug}
+                checked={checked}
+                onChange={() => onToggle(s.slug)}
+                className="sr-only"
+              />
+              <span
+                aria-hidden="true"
+                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
+                  checked
+                    ? "border-pine bg-pine text-white"
+                    : "border-line bg-background"
+                }`}
+              >
+                {checked && (
+                  <svg
+                    className="h-3 w-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={3}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 12.75 6 6 9-13.5"
+                    />
+                  </svg>
+                )}
+              </span>
+              {s.title}
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
+function FormInner({
+  services,
+  initialSelected,
+}: {
+  services: ServiceOption[];
+  initialSelected: string[];
+}) {
   const [state, formAction, pending] = useActionState(submitContact, initialState);
+  const [selected, setSelected] = useState<Set<string>>(
+    () => new Set(initialSelected)
+  );
+
+  const toggle = (slug: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) next.delete(slug);
+      else next.add(slug);
+      return next;
+    });
 
   if (state.status === "success") {
     return (
@@ -67,6 +160,12 @@ export function ContactForm() {
         <input type="text" name="business" autoComplete="organization" className={inputClasses} />
       </Field>
 
+      <ServiceCheckboxes
+        services={services}
+        selected={selected}
+        onToggle={toggle}
+      />
+
       <Field label="What can I help with?" error={state.errors?.message}>
         <textarea
           name="message"
@@ -91,5 +190,25 @@ export function ContactForm() {
         {pending ? "Sending…" : "Send message"}
       </button>
     </form>
+  );
+}
+
+/** Reads ?service=<slug>(,<slug>) to pre-check the matching cards */
+function FormWithParams({ services }: { services: ServiceOption[] }) {
+  const params = useSearchParams();
+  const valid = new Set([...services.map((s) => s.slug), NOT_SURE.slug]);
+  const initialSelected = (params.get("service") ?? "")
+    .split(",")
+    .filter((slug) => valid.has(slug));
+  return <FormInner services={services} initialSelected={initialSelected} />;
+}
+
+export function ContactForm({ services }: { services: ServiceOption[] }) {
+  // useSearchParams needs a Suspense boundary so /contact stays static;
+  // the fallback is the same form with nothing pre-checked
+  return (
+    <Suspense fallback={<FormInner services={services} initialSelected={[]} />}>
+      <FormWithParams services={services} />
+    </Suspense>
   );
 }

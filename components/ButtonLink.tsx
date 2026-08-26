@@ -39,16 +39,23 @@ export function ButtonLink({
   );
 }
 
-/** "Book a free consult" CTA; uses the booking link when set, contact page otherwise */
+/**
+ * "Book a free consult" CTA; uses the booking link when set, contact page
+ * otherwise. Pass `service` (a service slug) to pre-check that service's
+ * card on the contact form; ignored once a booking link exists.
+ */
 export function ConsultButton({
   variant = "primary",
   className = "",
+  service,
 }: {
   variant?: ButtonLinkProps["variant"];
   className?: string;
+  service?: string;
 }) {
+  const contactHref = service ? `/contact?service=${service}` : "/contact";
   return (
-    <ButtonLink href={site.bookingUrl || "/contact"} variant={variant} className={className}>
+    <ButtonLink href={site.bookingUrl || contactHref} variant={variant} className={className}>
       Book a free consult
     </ButtonLink>
   );

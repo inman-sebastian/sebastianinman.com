@@ -93,7 +93,9 @@ and `goodFit` (one sentence, rendered as a callout with the CTA).
 Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
 put walls of text or the lists back into the body. The service appears
 automatically on the homepage cards, the /services overview, the footer,
-and the sitemap.
+the sitemap, and the contact form's service checkboxes. Service-page CTAs
+link to `/contact?service=<slug>`, which pre-checks that service's box on
+the form (`ConsultButton`/`CTABand` take a `service` prop for this).
 
 ### Use design components inside MDX bodies
 Every MDX body (services, landing pages, about) can embed these components,

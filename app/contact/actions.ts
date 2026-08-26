@@ -1,6 +1,7 @@
 "use server";
 
 import { site } from "@/content/site";
+import { getServices } from "@/lib/content";
 
 export type ContactFormState = {
   status: "idle" | "success" | "error";
@@ -22,6 +23,15 @@ export async function submitContact(
   const business = String(formData.get("business") ?? "").trim();
   const message = String(formData.get("message") ?? "").trim();
 
+  // Checked service cards arrive as slugs; map them back to titles and
+  // drop anything that isn't a real option (tampered values)
+  const known = new Map(getServices().map((s) => [s.slug, s.title]));
+  known.set("not-sure", "Not sure yet");
+  const services = formData
+    .getAll("services")
+    .map((slug) => known.get(String(slug)))
+    .filter((title): title is string => Boolean(title));
+
   const errors: ContactFormState["errors"] = {};
   if (!name) errors.name = "Please tell me your name.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
@@ -38,6 +48,7 @@ export async function submitContact(
     `Name: ${name}`,
     `Email: ${email}`,
     business ? `Business: ${business}` : null,
+    services.length > 0 ? `Interested in: ${services.join(", ")}` : null,
     ``,
     message,
   ]

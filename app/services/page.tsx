@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { site } from "@/content/site";
 import { getServices } from "@/lib/content";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
@@ -44,7 +43,7 @@ export default function ServicesPage() {
               the grid as a sibling; terracotta tint sets it apart. */}
           <Reveal delay={(services.length % 2) * 120} className="h-full">
             <Link
-              href={site.bookingUrl || "/contact"}
+              href="/contact"
               className="group flex h-full flex-col overflow-hidden rounded-xl border border-terracotta/20 bg-terracotta-tint transition-[translate,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1.5 hover:shadow-lg motion-reduce:hover:translate-y-0"
             >
               <div className="relative p-px">

@@ -5,12 +5,15 @@ import { SiteImage } from "@/components/SiteImage";
 type CTABandProps = {
   heading?: string;
   subline?: string;
+  /** Service slug; pre-checks that service's card on the contact form */
+  service?: string;
 };
 
 /** Full-width call-to-action band used at the bottom of most pages */
 export function CTABand({
   heading = "Not sure where to start? Let's figure that out together.",
   subline = `Tell me what's eating up your time, and I'll give you a straight answer about what's worth automating and what it would cost. No pressure, no jargon.`,
+  service,
 }: CTABandProps) {
   return (
     <section className="relative overflow-hidden bg-pine text-white">
@@ -28,8 +31,11 @@ export function CTABand({
           {subline}
         </p>
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <ConsultButton />
-          <ButtonLink href="/contact" variant="light">
+          <ConsultButton service={service} />
+          <ButtonLink
+            href={service ? `/contact?service=${service}` : "/contact"}
+            variant="light"
+          >
             Send a message
           </ButtonLink>
         </div>

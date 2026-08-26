@@ -51,7 +51,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         poolA={parseHeroCards(service.heroCardsTop)}
         poolB={parseHeroCards(service.heroCardsBottom)}
       >
-        <ConsultButton />
+        <ConsultButton service={service.slug} />
         <ButtonLink href="/services" variant="light">
           All services
         </ButtonLink>
@@ -159,13 +159,13 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                   {service.goodFit}
                 </p>
               </div>
-              <ConsultButton className="mt-6 shrink-0 sm:mt-0" />
+              <ConsultButton service={service.slug} className="mt-6 shrink-0 sm:mt-0" />
             </div>
           </Reveal>
         </section>
       )}
 
-      <CTABand />
+      <CTABand service={service.slug} />
     </>
   );
 }
