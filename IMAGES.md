@@ -118,7 +118,8 @@ tied any card to its actual town.)
   - **Prompt:** "Friendly modern flat illustration of Talent, Oregon: a small cozy storefront row with rows of vineyard vines rolling up the hillside behind it and a little creek with a footbridge in front, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
   - **Notes:** Bear Creek corridor + wine trail vineyards.
 - [ ] `public/images/areas/phoenix.jpg` (4:3)
-  - **Prompt:** "Friendly modern flat illustration of Phoenix, Oregon: a freshly rebuilt small-town street with brand-new timber storefronts, young staked saplings along the sidewalk, and a songbird taking flight in warm morning light, valley hills in the distance, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere; all signs left blank."
-  - **Notes:** the rebuild-after-Almeda story told gently: new construction,
-    young trees, a bird rising (a nod to the name without a literal
-    phoenix). Keep it hopeful, never somber.
+  - **Prompt:** "Friendly modern flat illustration of Phoenix, Oregon: a tall graceful heron standing in a shallow tree-lined creek beside a paved greenway path, a cyclist pedaling past, and pear orchards with a few small rooftops stretching toward valley hills in the distance, warm morning light, earthy cream sky, deep pine green and terracotta accents. No text or lettering anywhere."
+  - **Notes:** Blue Heron Park and the Bear Creek Greenway are Phoenix's
+    real anchors; the heron is the park's namesake. (v1 was a generic
+    "rebuilt storefronts" scene: on-narrative but placeless, so it was
+    retired. The rebuild story lives in the page copy instead.)
