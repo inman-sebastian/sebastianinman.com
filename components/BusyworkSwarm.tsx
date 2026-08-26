@@ -1,19 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 /**
  * An organic field of floating "busywork" chips the visitor can pop.
- * Popped chips burst away and, a few seconds later, a fresh one drifts
- * back in from the pool: you can swat busywork all day, it keeps
- * coming. The anchor chip ("…and whatever else…") never pops; it makes
- * the and-then-some point explicit. Used on the homepage and service
- * pages; service chips come from MDX frontmatter (`busywork`).
+ * Popped chips burst away, the field elastically closes the gap, and a
+ * fresh chip from the pool springs in moments later: you can swat
+ * busywork all day, it keeps coming. The anchor chip never pops.
+ *
+ * Elasticity: every layout change (a chip leaving or arriving) is
+ * FLIP-animated, so neighboring chips slide to their new positions on a
+ * springy curve instead of snapping. Service chips come from MDX
+ * frontmatter (`busywork`).
  */
 
 type Slot = { text: string; phase: "in" | "out" | "hidden"; gen: number };
 
 const chipTints = ["bg-pine-tint/80", "bg-terracotta-tint/80", "bg-surface"];
+
+// useLayoutEffect warns during SSR; fall back harmlessly on the server
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export function BusyworkSwarm({
   chips,
@@ -28,6 +40,42 @@ export function BusyworkSwarm({
   const [slots, setSlots] = useState<Slot[]>(() =>
     chips.slice(0, visibleCount).map((text) => ({ text, phase: "in", gen: 0 }))
   );
+
+  // FLIP: slide every chip from its previous position to its new one
+  // whenever the field's layout changes. Positions are offsets within
+  // the (relative) container, so scrolling can't contaminate them.
+  const flipRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const prevPos = useRef<Map<number, { x: number; y: number }>>(new Map());
+
+  useIsoLayoutEffect(() => {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    flipRefs.current.forEach((el, i) => {
+      if (!el) return;
+      if (el.style.display === "none") {
+        prevPos.current.delete(i);
+        return;
+      }
+      const x = el.offsetLeft;
+      const y = el.offsetTop;
+      const prev = prevPos.current.get(i);
+      if (prev && !reduced) {
+        const dx = prev.x - x;
+        const dy = prev.y - y;
+        if (dx !== 0 || dy !== 0) {
+          el.animate(
+            [
+              { transform: `translate(${dx}px, ${dy}px)` },
+              { transform: "translate(0, 0)" },
+            ],
+            { duration: 500, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+          );
+        }
+      }
+      prevPos.current.set(i, { x, y });
+    });
+  });
 
   useEffect(() => {
     const pending = timers.current;
@@ -73,37 +121,49 @@ export function BusyworkSwarm({
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="relative flex flex-wrap items-center gap-3">
       {slots.map((slot, i) => (
         <span
           key={i}
-          className="swarm-float inline-block"
-          style={
-            {
-              "--f-dur": `${6 + (i % 5)}s`,
-              "--f-del": `${(i % 7) * 0.6}s`,
-            } as React.CSSProperties
-          }
+          ref={(el) => {
+            flipRefs.current[i] = el;
+          }}
+          className="inline-block"
+          style={{ display: slot.phase === "hidden" ? "none" : undefined }}
         >
-          <button
-            key={`${i}:${slot.gen}`}
-            type="button"
-            onClick={() => pop(i)}
-            aria-label={`${slot.text}. Pop it (it'll be back).`}
-            style={{
-              rotate: `${((i * 37) % 7) - 3}deg`,
-              visibility: slot.phase === "hidden" ? "hidden" : undefined,
-            }}
-            className={`cursor-pointer rounded-full border border-line px-4 py-2 text-sm text-pine-dark shadow-sm transition-[scale] duration-200 hover:scale-105 motion-reduce:hover:scale-100 ${
-              chipTints[i % chipTints.length]
-            } ${slot.phase === "out" ? "hero-card-exit" : "hero-card-enter"}`}
+          <span
+            className="swarm-float inline-block"
+            style={
+              {
+                "--f-dur": `${6 + (i % 5)}s`,
+                "--f-del": `${(i % 7) * 0.6}s`,
+              } as React.CSSProperties
+            }
           >
-            {slot.text}
-          </button>
+            <button
+              key={`${i}:${slot.gen}`}
+              type="button"
+              onClick={() => pop(i)}
+              aria-label={`${slot.text}. Pop it (it'll be back).`}
+              style={{ rotate: `${((i * 37) % 7) - 3}deg` }}
+              className={`cursor-pointer rounded-full border border-line px-4 py-2 text-sm text-pine-dark shadow-sm transition-[scale] duration-200 hover:scale-105 motion-reduce:hover:scale-100 ${
+                chipTints[i % chipTints.length]
+              } ${slot.phase === "out" ? "hero-card-exit" : "hero-card-enter"}`}
+            >
+              {slot.text}
+            </button>
+          </span>
         </span>
       ))}
-      <span className="rounded-full bg-pine px-5 py-2.5 text-sm font-semibold text-white">
-        {anchor}
+      <span
+        ref={(el) => {
+          flipRefs.current[visibleCount] = el;
+        }}
+        className="inline-block"
+      >
+        <span className="inline-block rounded-full bg-pine px-5 py-2.5 text-sm font-semibold text-white">
+          {anchor}
+        </span>
       </span>
     </div>
   );
