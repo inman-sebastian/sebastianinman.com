@@ -1,4 +1,7 @@
+import fs from "fs";
+import path from "path";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getService, getServices } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
@@ -18,6 +21,17 @@ import { CTABand } from "@/components/CTABand";
  */
 
 export const dynamicParams = false;
+
+/**
+ * Brand favicon for a tool chip, looked up by slugified name in
+ * public/images/tools (e.g. "Microsoft 365" -> microsoft-365.png).
+ * Returns undefined when no file exists; the chip renders text-only.
+ */
+function toolIcon(name: string): string | undefined {
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+  const rel = `/images/tools/${slug}.png`;
+  return fs.existsSync(path.join(process.cwd(), "public", rel)) ? rel : undefined;
+}
 
 export function generateStaticParams() {
   return getServices().map((s) => ({ slug: s.slug }));
@@ -118,14 +132,26 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </Reveal>
           <Reveal delay={150}>
             <ul className="mt-8 flex max-w-4xl flex-wrap gap-2.5">
-              {service.tools.map((tool) => (
-                <li
-                  key={tool}
-                  className="rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-pine-dark"
-                >
-                  {tool}
-                </li>
-              ))}
+              {service.tools.map((tool) => {
+                const icon = toolIcon(tool);
+                return (
+                  <li
+                    key={tool}
+                    className="flex items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-pine-dark"
+                  >
+                    {icon && (
+                      <Image
+                        src={icon}
+                        alt=""
+                        width={18}
+                        height={18}
+                        className="shrink-0"
+                      />
+                    )}
+                    {tool}
+                  </li>
+                );
+              })}
             </ul>
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
               Don&rsquo;t see yours? If it can export a file or has any way to

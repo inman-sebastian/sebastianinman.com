@@ -92,8 +92,12 @@ under "Sound familiar?"; keep them concrete time-eaters, not sentences),
 optional `tools` (named tools/systems, rendered as a chip grid under
 "Tools I connect all the time"; real product names small businesses
 recognize, framed as tools commonly connected, never partnerships or
-certifications), and `goodFit` (one sentence, rendered as a callout with
-the CTA).
+certifications; each chip shows the brand's favicon from
+`public/images/tools/<slugified-name>.png` when that file exists, e.g.
+"Microsoft 365" → `microsoft-365.png`, text-only otherwise — fetch new
+ones via `https://www.google.com/s2/favicons?domain=<domain>&sz=64` and
+eyeball the result, some domains return a generic parent-company mark),
+and `goodFit` (one sentence, rendered as a callout with the CTA).
 Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
 put walls of text or the lists back into the body. The service appears
 automatically on the homepage cards, the /services overview, the footer,
