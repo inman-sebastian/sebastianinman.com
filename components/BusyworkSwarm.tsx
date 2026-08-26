@@ -66,7 +66,7 @@ export function BusyworkSwarm({
               copy[i] = { text: next, phase: "in", gen: copy[i].gen + 1 };
               return copy;
             });
-          }, 2500 + Math.random() * 2500)
+          }, 900 + Math.random() * 800)
         );
       }, 300)
     );
@@ -89,13 +89,12 @@ export function BusyworkSwarm({
             key={`${i}:${slot.gen}`}
             type="button"
             onClick={() => pop(i)}
-            onMouseEnter={() => pop(i)}
             aria-label={`${slot.text}. Pop it (it'll be back).`}
             style={{
               rotate: `${((i * 37) % 7) - 3}deg`,
               visibility: slot.phase === "hidden" ? "hidden" : undefined,
             }}
-            className={`cursor-pointer rounded-full border border-line px-4 py-2 text-sm text-pine-dark shadow-sm ${
+            className={`cursor-pointer rounded-full border border-line px-4 py-2 text-sm text-pine-dark shadow-sm transition-[scale] duration-200 hover:scale-105 motion-reduce:hover:scale-100 ${
               chipTints[i % chipTints.length]
             } ${slot.phase === "out" ? "hero-card-exit" : "hero-card-enter"}`}
           >
