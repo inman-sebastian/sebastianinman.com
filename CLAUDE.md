@@ -120,10 +120,14 @@ examples → why local.
 **Landing page taxonomy (keep it consistent):**
 - `kind: "location"`: a literal CITY-level place (Medford, Ashland, Grants
   Pass…), covering the WHOLE service offering angled at that place's
-  business mix. Automatically listed in the About page's "Areas I serve"
-  pills (the only navigational links to landing pages) and the sitemap.
-  Never list a county/region beside cities it contains; locals read that
-  as redundant and auto-generated.
+  business mix. Automatically rendered as a card in the About page's
+  "Areas I serve" grid (the only navigational links to landing pages) and
+  the sitemap. Location pages also need `image`, `imagePrompt`, `imageAlt`
+  (abstract topographic map art; see the Area cards section of IMAGES.md
+  for the series style; NEVER street maps or literal geography) and
+  `areaBlurb` (one short local phrase for the card). Never list a
+  county/region beside cities it contains; locals read that as redundant
+  and auto-generated.
 - `kind: "campaign"`: everything else: service+geo hybrids
   (southern-oregon-website-design) and county/region pages
   (jackson-county-ai-integration). Sitemap always; may be linked

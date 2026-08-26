@@ -84,3 +84,34 @@ owners rather than a tech crowd.
 - [x] `public/images/services/ai-insights.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Flat illustration of a small business owner looking at a simple, friendly dashboard with a gently rising chart and plain sticky-note style callouts, warm morning light, earthy cream, pine green, terracotta palette"
   - **Notes:** done.
+
+## Area cards (About page "Areas I serve")
+
+A matched series: abstract topographic contour art, one per town, each
+encoding the town's REAL geographic setting (river bend, foothills, valley
+corridor) without streets or literal maps, so nothing can be geographically
+"wrong." Deliberately abstract; never let the generator draw street grids
+or lettering. All 4:3 (e.g. 1200×900). Keep the series visually consistent:
+generate them in one session if possible.
+
+- [ ] `public/images/areas/medford.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A broad, open valley floor of widely spaced contours with a single meandering creek line crossing the frame. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** wide-open valley = Medford as the broad valley floor.
+- [ ] `public/images/areas/ashland.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Contours tightening and rising into steep foothills across one corner, with a small creek line emerging from them into open valley. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** steep corner = Siskiyou foothills above Ashland.
+- [ ] `public/images/areas/grants-pass.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A wide river line making one strong sweeping bend through the middle of the contours. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** the river bend = the Rogue through Grants Pass.
+- [ ] `public/images/areas/central-point.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Gentle, widely spaced valley contours with one straight creek line and generous open space. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** the flattest, most open of the series.
+- [ ] `public/images/areas/jacksonville.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. Tight clusters of rolling-hill contours filling one side of the frame, easing into open valley on the other. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** rolling hills = Jacksonville's historic hillside setting.
+- [ ] `public/images/areas/talent.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A narrow valley corridor of parallel contours with a creek line running diagonally corner to corner. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** the Bear Creek corridor; diagonal creek distinguishes it from Phoenix.
+- [ ] `public/images/areas/phoenix.jpg` (4:3)
+  - **Prompt:** "Abstract topographic map art in flat vector style: layered contour lines in deep pine green (#234f3e) on a warm cream background (#faf6ef), with subtle terracotta (#c05f33) accent contours and a single small terracotta map pin. A slim corridor of parallel contours with a gentle creek line and open flats spreading to both sides. No streets, no roads, no buildings, no text or lettering anywhere."
+  - **Notes:** corridor with flats; straighter and more open than Talent's.

@@ -7,7 +7,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
 import { CTABand } from "@/components/CTABand";
 import { MdxBody } from "@/components/mdx";
-import { AreaMap } from "@/components/AreaMap";
+import { AreaCard } from "@/components/AreaCard";
 
 export function generateMetadata(): Metadata {
   const page = getPage("about");
@@ -77,15 +77,13 @@ export default function AboutPage() {
                 best:
               </p>
             </Reveal>
-            <Reveal delay={150}>
-              <AreaMap
-                areas={areaPages.map((p) => ({
-                  slug: p.slug,
-                  title: p.title,
-                  city: p.city,
-                }))}
-              />
-            </Reveal>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {areaPages.map((p, i) => (
+                <Reveal key={p.slug} delay={(i % 3) * 120} className="h-full">
+                  <AreaCard area={p} />
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       )}

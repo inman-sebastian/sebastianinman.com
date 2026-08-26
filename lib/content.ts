@@ -46,6 +46,12 @@ export type LandingPage = {
    *  "campaign" pages (e.g. service+geo hybrids) are ad/search entry
    *  points that never appear in on-site navigation */
   kind: "location" | "campaign";
+  /** Area card art (location pages): abstract topographic illustration */
+  image: string;
+  imagePrompt: string;
+  imageAlt: string;
+  /** One short local phrase shown on the area card */
+  areaBlurb: string;
   /** Raw frontmatter arrays for the rotating hero cards; parse with
    *  parseHeroCards() from lib/heroCards.ts */
   heroCardsTop?: unknown[];
@@ -103,6 +109,10 @@ export function getLandingPages(): LandingPage[] {
     heroSubline: data.heroSubline ?? "",
     city: data.city ?? "",
     kind: data.kind === "campaign" ? "campaign" : "location",
+    image: data.image ?? `/images/areas/${slug}.jpg`,
+    imagePrompt: data.imagePrompt ?? "",
+    imageAlt: data.imageAlt ?? data.title ?? slug,
+    areaBlurb: data.areaBlurb ?? "",
     heroCardsTop: data.heroCardsTop,
     heroCardsBottom: data.heroCardsBottom,
     body,
