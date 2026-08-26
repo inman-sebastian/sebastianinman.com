@@ -53,10 +53,6 @@ export function BusyworkSwarm({
     ).matches;
     flipRefs.current.forEach((el, i) => {
       if (!el) return;
-      if (el.style.display === "none") {
-        prevPos.current.delete(i);
-        return;
-      }
       const x = el.offsetLeft;
       const y = el.offsetTop;
       const prev = prevPos.current.get(i);
@@ -123,13 +119,18 @@ export function BusyworkSwarm({
   return (
     <div className="relative flex flex-wrap items-center gap-3">
       {slots.map((slot, i) => (
+        // Popped chips keep their space (visibility, not display) so the
+        // field stays still; only the respawn nudges neighbors if the
+        // replacement is a different size.
         <span
           key={i}
           ref={(el) => {
             flipRefs.current[i] = el;
           }}
           className="inline-block"
-          style={{ display: slot.phase === "hidden" ? "none" : undefined }}
+          style={{
+            visibility: slot.phase === "hidden" ? "hidden" : undefined,
+          }}
         >
           <span
             className="swarm-float inline-block"
