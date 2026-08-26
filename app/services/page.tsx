@@ -21,8 +21,7 @@ export default function ServicesPage() {
           What I can take off your plate
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted">
-          Every project starts with a free consult and a plan you&rsquo;ll
-          actually understand.
+          Every project starts with a free consult and a clear plan.
           Prices below are honest starting points. Most projects are quoted
           flat, so you know the cost before we begin.
         </p>

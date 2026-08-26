@@ -22,7 +22,12 @@ The reader is a busy small-business owner, **not** a technical person.
 - **Plain language, always.** If a technical term is unavoidable, explain it
   in one everyday sentence. BUT never use the literal phrase "plain English"
   in customer-facing copy; it can read as English-speakers-only. Say "no
-  jargon," "simple terms," "everyday words," or "a straight answer" instead.
+  jargon," "clear plan," or "a straight answer" instead.
+- **Never condescend.** Frame clarity as the tech industry's jargon problem,
+  not the reader's comprehension problem. Banned patterns: "you'll actually
+  understand," "reports you'll actually read," "explained in everyday
+  words," or anything implying the reader is usually confused. "No jargon"
+  blames the jargon; that's the right direction.
 - **Lead with the problem solved, never the technology.**
   - ✅ "Stop retyping the same customer info into three different programs."
   - ❌ "Leveraging API-driven integrations for seamless data synchronization."

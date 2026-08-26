@@ -32,7 +32,7 @@ export default function HomePage() {
       <HeroSplash
         eyebrow={site.serviceAreaLine}
         heading="Your business runs better when the busywork runs itself."
-        text="I'm Sebastian. I help small businesses save hours every week with practical automation, helpful AI tools, and websites that bring in customers. Everything explained in everyday words, priced for a small business budget."
+        text="I'm Sebastian. I help small businesses save hours every week with practical automation, helpful AI tools, and websites that bring in customers. No jargon, no hype, and priced for a small business budget."
       >
         <ConsultButton />
         <ButtonLink href="/services" variant="light">

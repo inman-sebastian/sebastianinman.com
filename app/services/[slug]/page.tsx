@@ -110,7 +110,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 What you get
               </h2>
               <p className="mt-3 max-w-xl leading-relaxed text-muted">
-                Plain talk about what you&rsquo;re actually paying for.
+                Straight talk about what&rsquo;s included in the price.
               </p>
             </Reveal>
             <div className="mt-8 grid gap-x-10 gap-y-6 sm:grid-cols-2">
