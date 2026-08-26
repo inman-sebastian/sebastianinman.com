@@ -7,7 +7,7 @@ export function Footer() {
   const services = getServices();
 
   return (
-    <footer className="border-t border-line bg-pine-dark text-white/80">
+    <footer className="bg-pine-dark text-white/80">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>

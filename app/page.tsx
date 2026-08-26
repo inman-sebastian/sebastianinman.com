@@ -41,40 +41,48 @@ export default function HomePage() {
 
       {/* Who I help */}
       <section className="border-y border-line bg-surface">
-        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="text-3xl font-semibold text-pine-dark">
-            Sound like your week?
-          </h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 md:grid-cols-2">
+          <Reveal>
+            <h2 className="text-3xl font-semibold text-pine-dark">
+              Running a business shouldn&rsquo;t mean drowning in it.
+            </h2>
+            <p className="mt-4 leading-relaxed text-muted">
+              Most of the owners I talk to aren&rsquo;t looking for &ldquo;digital
+              transformation.&rdquo; They just want the paperwork to stop eating
+              their evenings, the phone to stop going to voicemail, and a website
+              they aren&rsquo;t embarrassed by.
+            </p>
+            <p className="mt-4 leading-relaxed text-muted">
+              That&rsquo;s the work I do: find the hours your business is losing
+              to busywork, and quietly hand them back.
+            </p>
+          </Reveal>
+          <div className="flex flex-col gap-4">
             {[
-              {
-                title: "The busywork never ends",
-                text: "You're doing paperwork at 10pm (retyping orders, chasing invoices, sending the same emails) instead of running your business.",
-              },
-              {
-                title: "Customers slip away",
-                text: "Calls go unanswered while you work, leads go cold overnight, and your website isn't pulling its weight, if you have one at all.",
-              },
-              {
-                title: "Everyone says “use AI”",
-                text: "You suspect there's something to it, but you don't have time to sort real help from hype, and no one explains it in plain English.",
-              },
-            ].map((item, i) => (
-              <Reveal key={item.title} delay={i * 120} className="h-full">
-                <div className="h-full rounded-xl border border-line bg-background p-6">
-                  <h3 className="text-lg font-semibold text-pine-dark">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 leading-relaxed text-muted">{item.text}</p>
-                </div>
+              "I was answering emails at my kid's soccer game.",
+              "We missed three calls today because we were slammed.",
+              "I know there's a better way. I just don't have time to find it.",
+            ].map((quote, i) => (
+              <Reveal
+                key={quote}
+                delay={i * 150}
+                className={i % 2 === 0 ? "self-start" : "self-end"}
+              >
+                <p
+                  className={`max-w-sm rounded-2xl border border-line bg-pine-tint/60 px-5 py-3.5 leading-relaxed text-pine-dark ${
+                    i % 2 === 0 ? "rounded-bl-sm" : "rounded-br-sm"
+                  }`}
+                >
+                  &ldquo;{quote}&rdquo;
+                </p>
               </Reveal>
             ))}
+            <Reveal delay={500} className="self-end">
+              <p className="max-w-sm rounded-2xl rounded-br-sm bg-pine px-5 py-3.5 leading-relaxed text-white">
+                Sound familiar? Let&rsquo;s fix that.
+              </p>
+            </Reveal>
           </div>
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed">
-            If any of that sounds familiar, you&rsquo;re exactly who I work with:
-            growing small businesses that need technology to help, not to become
-            one more thing to manage.
-          </p>
         </div>
       </section>
 
@@ -89,6 +97,11 @@ export default function HomePage() {
             See all services →
           </Link>
         </div>
+        <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+          Five services, one goal: give you your time back. Every project
+          starts with a free consult and a flat quote, so you know exactly
+          what you&rsquo;re getting and what it costs before anything begins.
+        </p>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
             <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
@@ -98,16 +111,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works */}
+      {/* How it works: three steps on a connected timeline */}
       <section className="border-y border-line bg-pine-tint/50">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-          <h2 className="text-3xl font-semibold text-pine-dark">
-            How it works
-          </h2>
-          <div className="mt-8 grid gap-8 md:grid-cols-3">
+          <Reveal>
+            <h2 className="text-3xl font-semibold text-pine-dark">
+              How it works
+            </h2>
+            <p className="mt-3 max-w-xl leading-relaxed text-muted">
+              Three steps. No jargon, no surprise invoices.
+            </p>
+          </Reveal>
+          <div className="relative mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
+            <div
+              aria-hidden="true"
+              className="absolute left-14 right-14 top-5 hidden border-t-2 border-dashed border-pine/25 md:block"
+            />
             {steps.map((step, i) => (
-              <Reveal key={step.title} delay={i * 150}>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white">
+              <Reveal key={step.title} delay={i * 180} className="relative">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white ring-8 ring-[#f1f3ec]">
                   {i + 1}
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-pine-dark">
