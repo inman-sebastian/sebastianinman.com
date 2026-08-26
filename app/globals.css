@@ -277,3 +277,49 @@ img.hero-kenburns {
   color: var(--color-muted);
   margin-bottom: 1rem;
 }
+
+/* Tool chip marquee (ToolMarquee.tsx): two counter-scrolling rows.
+   Each track holds the chip list twice; sliding by half the track width
+   plus half the inter-copy gap lands the duplicate exactly where the
+   original started, so the loop never visibly restarts. */
+@utility marquee-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* -50% of the track minus half the 0.75rem gap between the copies */
+    transform: translateX(calc(-50% - 0.375rem));
+  }
+}
+.marquee-track-left {
+  animation: marquee-scroll var(--marquee-dur, 45s) linear infinite;
+}
+.marquee-track-right {
+  animation: marquee-scroll var(--marquee-dur, 45s) linear infinite reverse;
+}
+/* Hovering anywhere over the marquee area pauses both rows */
+.marquee-pause:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Static fallback: no animation, single copy, wrapped grid */
+  .marquee-track {
+    animation: none !important;
+    width: 100%;
+  }
+  .marquee-main {
+    flex-wrap: wrap;
+  }
+  .marquee-dup {
+    display: none;
+  }
+}

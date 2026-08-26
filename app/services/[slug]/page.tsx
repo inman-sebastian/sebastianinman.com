@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getService, getServices } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
@@ -10,6 +9,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
 import { MdxBody } from "@/components/mdx";
 import { BusyworkSwarm } from "@/components/BusyworkSwarm";
+import { ToolMarquee } from "@/components/ToolMarquee";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -109,28 +109,14 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
             </p>
           </Reveal>
           <Reveal delay={150}>
-            <ul className="mt-8 flex max-w-4xl flex-wrap gap-2.5">
-              {service.tools.map((tool) => {
-                const icon = toolIcon(tool);
-                return (
-                  <li
-                    key={tool}
-                    className="flex items-center gap-2 rounded-lg border border-line bg-background px-4 py-2 text-sm font-medium text-pine-dark"
-                  >
-                    {icon && (
-                      <Image
-                        src={icon}
-                        alt=""
-                        width={18}
-                        height={18}
-                        className="shrink-0"
-                      />
-                    )}
-                    {tool}
-                  </li>
-                );
-              })}
-            </ul>
+            <div className="mt-8">
+              <ToolMarquee
+                tools={service.tools.map((name) => ({
+                  name,
+                  icon: toolIcon(name),
+                }))}
+              />
+            </div>
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
               Don&rsquo;t see yours? If it can export a file or has any way to
               connect, I can usually work with it. Ask me about it in the free
