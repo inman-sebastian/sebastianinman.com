@@ -114,11 +114,11 @@ optional `heroCardsTop` / `heroCardsBottom` (rotating hero example cards,
 same format as services; write them for the city's business mix, e.g.
 lodging and restaurants for Ashland). Body = markdown sections following
 the pattern in the existing files: local pain points → concrete examples →
-why local. It's automatically added to the sitemap, but deliberately NOT
-linked from site navigation: landing pages are entry points for search and
-targeted ad campaigns, not destinations for people browsing the site. Keep
-each page's copy genuinely specific to the place/service. No
-find-and-replace city swaps.
+why local. It's automatically added to the sitemap and to the About page's
+"Areas I serve" link list (the ONLY on-site navigation to landing pages;
+they're entry points for search and ad campaigns, so keep them out of the
+footer and header). Keep each page's copy genuinely specific to the
+place/service. No find-and-replace city swaps.
 
 ### Change contact info, tagline, or booking link
 Edit `content/site.ts`. Setting `bookingUrl` makes every "Book a free

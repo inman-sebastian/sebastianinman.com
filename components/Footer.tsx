@@ -11,7 +11,7 @@ export function Footer() {
     // If cta-treetops.jpg is ever regenerated, re-sample the silhouette
     // color and update this hex.
     <footer className="border-t border-white/10 bg-[#132c1f] text-white/80">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-4">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
           <p className="mt-2 max-w-sm text-sm leading-relaxed">
@@ -39,6 +39,14 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-white/60">
+            More
+          </p>
+          <ul className="mt-3 flex flex-col gap-2 text-sm">
             <li>
               <Link href="/about" className="hover:text-white">
                 About
@@ -51,7 +59,6 @@ export function Footer() {
             </li>
           </ul>
         </div>
-
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
         © {new Date().getFullYear()} {site.name}. All rights reserved.
