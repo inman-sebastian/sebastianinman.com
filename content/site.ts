@@ -19,7 +19,7 @@ export const site = {
 
   // Scheduling link for the "Book a free consult" buttons.
   // Empty string = buttons fall back to the contact page.
-  bookingUrl: "",
+  bookingUrl: "https://cal.com/sebastian-inman-y8vyf8/free-discovery-call",
 
   location: "Southern Oregon",
   serviceAreaLine: "Based in Southern Oregon, working with small businesses everywhere.",

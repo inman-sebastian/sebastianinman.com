@@ -190,8 +190,9 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 - [ ] **Resend**: contact form logs to server console until `RESEND_API_KEY`
       is set; also switch the `from:` address in `app/contact/actions.ts` to a
       verified domain sender
-- [ ] **Booking URL**: `bookingUrl` in `content/site.ts` is empty (buttons
-      fall back to /contact) until Sebastian sets up Cal.com/Calendly
+- [x] **Booking URL** (Aug 2026): Cal.com "free discovery call" link set in
+      `content/site.ts`; consult buttons now open the calendar and the
+      contact form is the written-inquiry path
 - [x] **Starting prices confirmed by Sebastian** (Aug 2026): website $2,000 /
       workflow automation $750 / tool integration $500 / AI assistants
       $1,000 / AI insights $1,200. Pricing strategy: slightly undercut the
