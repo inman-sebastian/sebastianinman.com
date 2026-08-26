@@ -29,6 +29,9 @@ export type Service = {
   bestFor: string[];
   /** "What you get" items, rendered as a checklist grid */
   deliverables: string[];
+  /** Named tools/systems shown as a chip grid ("Tools I connect all the
+   *  time"); section renders only when the list is non-empty */
+  tools: string[];
   /** "A good fit if…" sentence, rendered as a callout with the CTA */
   goodFit: string;
   body: string;
@@ -89,6 +92,7 @@ export function getServices(): Service[] {
       busywork: Array.isArray(data.busywork) ? data.busywork.map(String) : [],
       bestFor: Array.isArray(data.bestFor) ? data.bestFor.map(String) : [],
       deliverables: Array.isArray(data.deliverables) ? data.deliverables.map(String) : [],
+      tools: Array.isArray(data.tools) ? data.tools.map(String) : [],
       goodFit: data.goodFit ?? "",
       body,
     }))

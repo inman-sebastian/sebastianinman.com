@@ -103,6 +103,39 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </section>
       )}
 
+      {/* Named tools as a chip grid; renders only when the MDX lists any.
+          "Commonly connect" framing on purpose: no partnership claims. */}
+      {service.tools.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <Reveal>
+            <h2 className="text-3xl font-semibold text-pine-dark">
+              Tools I connect all the time
+            </h2>
+            <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+              A few of the programs small businesses run on, and I regularly
+              wire together.
+            </p>
+          </Reveal>
+          <Reveal delay={150}>
+            <ul className="mt-8 flex max-w-4xl flex-wrap gap-2.5">
+              {service.tools.map((tool) => (
+                <li
+                  key={tool}
+                  className="rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-pine-dark"
+                >
+                  {tool}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">
+              Don&rsquo;t see yours? If it can export a file or has any way to
+              connect, I can usually work with it. Ask me about it in the free
+              consult.
+            </p>
+          </Reveal>
+        </section>
+      )}
+
       {/* Deliverables as a checklist grid */}
       {service.deliverables.length > 0 && (
         <section className="bg-pine-tint/50">

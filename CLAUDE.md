@@ -89,7 +89,11 @@ service). The page's designed sections come from frontmatter, NOT prose: `busywo
 (5-8 SHORT phrases, 2-4 words each, rendered as poppable floating chips
 under "Sound familiar?"; keep them concrete time-eaters, not sentences),
 `deliverables` (list, rendered as a checklist grid under "What you get"),
-and `goodFit` (one sentence, rendered as a callout with the CTA).
+optional `tools` (named tools/systems, rendered as a chip grid under
+"Tools I connect all the time"; real product names small businesses
+recognize, framed as tools commonly connected, never partnerships or
+certifications), and `goodFit` (one sentence, rendered as a callout with
+the CTA).
 Body = ONLY the short intro: one `##` headline plus 2-3 paragraphs. Never
 put walls of text or the lists back into the body. The service appears
 automatically on the homepage cards, the /services overview, the footer,
