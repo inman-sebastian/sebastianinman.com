@@ -91,19 +91,23 @@ export function ChatBubble({
 export function StatRow({
   stats,
 }: {
-  stats: { value: string; label: string; icon?: keyof typeof heroCardIcons }[];
+  stats: {
+    value: string;
+    label: string;
+    icon?: keyof typeof heroCardIcons;
+    /** One supporting sentence; keeps the card from being a bare number */
+    detail?: string;
+  }[];
 }) {
-  // Fixed anatomy (icon circle, value, label) and a stretch grid keep
-  // every tile in a row the same height regardless of label length
   return (
-    <div className="my-6 grid gap-3 sm:grid-cols-3">
+    <div className="my-6 flex flex-col gap-3">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="flex flex-col items-center rounded-xl border border-line bg-surface px-4 py-5 text-center"
+          className="flex items-start gap-4 rounded-xl border border-line bg-surface p-5"
         >
           {stat.icon && (
-            <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-pine-tint text-pine">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pine-tint text-pine">
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -120,13 +124,56 @@ export function StatRow({
               </svg>
             </span>
           )}
-          <p className="font-serif text-2xl font-semibold leading-tight text-pine-dark">
-            {stat.value}
-          </p>
-          <p className="mt-1 text-sm leading-snug text-muted">{stat.label}</p>
+          <div>
+            <p className="font-serif text-xl font-semibold leading-tight text-pine-dark">
+              {stat.value}
+              <span className="ml-2 font-sans text-sm font-semibold text-pine">
+                {stat.label}
+              </span>
+            </p>
+            {stat.detail && (
+              <p className="mt-1 text-sm leading-relaxed text-muted">
+                {stat.detail}
+              </p>
+            )}
+          </div>
         </div>
       ))}
     </div>
+  );
+}
+
+/**
+ * The standard promise row used on the automation landing pages: what it
+ * costs, what you're committing to, how fast I reply. One source of
+ * truth so every page makes the same (true) promises.
+ */
+export function PromiseRow() {
+  return (
+    <StatRow
+      stats={[
+        {
+          icon: "tag",
+          value: "From $500",
+          label: "projects start",
+          detail:
+            "Quoted flat before we begin, so there are no surprise invoices.",
+        },
+        {
+          icon: "clock",
+          value: "30 min",
+          label: "free consult, no obligation",
+          detail:
+            "Tell me what's eating your time. If it isn't worth fixing, I'll say so.",
+        },
+        {
+          icon: "mail",
+          value: "1 business day",
+          label: "the longest you'll wait to hear back",
+          detail: "Usually much sooner. You get me, not a ticket queue.",
+        },
+      ]}
+    />
   );
 }
 
@@ -136,6 +183,7 @@ export const mdxComponents: MDXComponents = {
   CheckList,
   ChatBubble,
   StatRow,
+  PromiseRow,
 };
 
 /**

@@ -114,10 +114,14 @@ defined in `components/mdx.tsx` (add new ones there and document them here):
 - `<Callout title="...">text</Callout>`: terracotta-tinted aside
 - `<CheckList items={["...", "..."]} />`: green checkmark list
 - `<ChatBubble question="..." answer="..." caption="..." />`: chat exchange
-- `<StatRow stats={[{ icon: "clock", value: "3 hrs", label: "saved weekly" }]} />`:
-  stat tiles; optional `icon` from the hero-card icon set (check, calendar,
-  star, sync, chart, mail, clock, globe, users, tag). Convention: users for
-  populations, tag for prices, clock for the free consult
+- `<StatRow stats={[{ icon: "clock", value: "3 hrs", label: "saved weekly", detail: "One supporting sentence." }]} />`:
+  stacked stat cards; optional `icon` from the hero-card icon set (check,
+  calendar, star, sync, chart, mail, clock, globe, users, tag) and optional
+  `detail` sentence. Every stat must answer a question the visitor actually
+  has (cost, commitment, speed); no decorative factoids (population tiles
+  were removed as meaningless) and no hyperbole ("N potential customers")
+- `<PromiseRow />`: the standard price/consult/reply-time StatRow used on
+  the automation landing pages; promises live once in `components/mdx.tsx`
 Use them to break up prose (nobody wants a wall of text). Any numbers in a
 `StatRow` must be real or clearly illustrative; no invented claims.
 
@@ -159,10 +163,11 @@ Keep each page's copy genuinely specific to the place/service: anchor it
 in real, verifiable local identity (Rogue Creamery for Central Point, the
 Britt Festival for Jacksonville, the Almeda Fire rebuild for Talent and
 Phoenix, rafting for Grants Pass). Population figures in StatRows must be
-real census-based numbers in "N+" format (e.g. "21,000+"), ALWAYS rounded
-DOWN so the "+" stays literally true (Jacksonville's 2,899 renders as
-"2,800+", never "3,000+"). Not "~": most readers don't know it means
-"about". Use the MDX design components
+real and non-hyperbolic: any number in a StatRow must be literally true,
+rounded DOWN if approximated ("21,000+" never "~21,000"; the tilde reads
+as jargon). Population tiles were tried and retired (a resident already
+knows how big their town is, and "N potential customers" is hyperbole);
+landing pages use `<PromiseRow />` instead. Use the MDX design components
 (StatRow, CheckList, Callout, ChatBubble) to keep bodies visual, not
 walls of text. No find-and-replace city swaps. Slugs must include
 "oregon" when the city name is ambiguous nationally (phoenix,
