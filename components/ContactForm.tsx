@@ -16,6 +16,21 @@ export type ServiceOption = { slug: string; title: string };
 /** Extra always-present option so nobody feels quizzed */
 const NOT_SURE: ServiceOption = { slug: "not-sure", title: "Not sure yet" };
 
+/**
+ * Masks a US phone number as (541) 555-0134 while typing. Recomputed from
+ * digits only, and trailing punctuation is only added once the next digit
+ * exists, so backspacing never fights the mask.
+ */
+function formatPhone(raw: string) {
+  let d = raw.replace(/\D/g, "");
+  if (d.length === 11 && d.startsWith("1")) d = d.slice(1);
+  d = d.slice(0, 10);
+  if (d.length === 0) return "";
+  if (d.length <= 3) return `(${d}`;
+  if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+}
+
 function Field({
   label,
   error,
@@ -115,6 +130,7 @@ function FormInner({
   const [selected, setSelected] = useState<Set<string>>(
     () => new Set(initialSelected)
   );
+  const [phone, setPhone] = useState("");
 
   const toggle = (slug: string) =>
     setSelected((prev) => {
@@ -162,6 +178,8 @@ function FormInner({
           name="phone"
           autoComplete="tel"
           placeholder="If you'd rather I call you back"
+          value={phone}
+          onChange={(e) => setPhone(formatPhone(e.target.value))}
           className={inputClasses}
         />
       </Field>
