@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getServices } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import { ServiceCard } from "@/components/ServiceCard";
+import { Callout } from "@/components/mdx";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
@@ -24,11 +25,13 @@ export default function ServicesPage() {
           Prices below are honest starting points. Most projects are quoted
           flat, so you know the cost before we begin.
         </p>
-        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-          Need more than one? Most of my clients do. Combined projects get
-          scoped together with one flat quote, and it always costs less than
-          doing them separately.
-        </p>
+        <div className="max-w-2xl">
+          <Callout title="Need more than one?">
+            Most of my clients do. Combined projects get scoped together with
+            one flat quote, and it always costs less than doing them
+            separately.
+          </Callout>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
