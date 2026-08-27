@@ -36,6 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* Film-grain texture over the whole site; purely decorative,
+            never intercepts clicks (see .site-grain in globals.css) */}
+        <div aria-hidden="true" className="site-grain" />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
