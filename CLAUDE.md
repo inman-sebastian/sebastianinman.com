@@ -303,7 +303,14 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 
 ## Deferred tasks (not yet done; check before assuming)
 
-- [ ] **Vercel deployment + domain**: site is local-only so far
+- [x] **Vercel deployment + domain** (Aug 2026): live at
+      https://www.sebastianinman.com (www is canonical; apex redirects).
+      Deploys are CI/CD: every merge to `main` on GitHub auto-deploys,
+      so pushing main IS shipping to production. Vercel Web Analytics
+      is wired up via `@vercel/analytics` in `app/layout.tsx`. NOT yet
+      verified in production: `RESEND_API_KEY`/`RESEND_FROM` in Vercel
+      project settings (without them the live contact form logs to the
+      console instead of emailing; confirm with a live test submission)
 - [x] **hello@sebastianinman.com inbox** (Aug 2026): live; contact form
       test delivered to it successfully
 - [x] **Resend** (Aug 2026): live and verified end to end. `RESEND_API_KEY`
