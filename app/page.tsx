@@ -6,6 +6,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
 import { ServiceCard } from "@/components/ServiceCard";
+import { BundleCard } from "@/components/BundleCard";
 import { BusyworkCards } from "@/components/BusyworkCards";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
@@ -111,6 +112,10 @@ export default function HomePage() {
               <ServiceCard service={service} />
             </Reveal>
           ))}
+          {/* Bundle card completes the 3x2 grid */}
+          <Reveal delay={(services.length % 3) * 120} className="h-full">
+            <BundleCard />
+          </Reveal>
         </div>
       </section>
 
