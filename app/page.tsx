@@ -43,8 +43,9 @@ export default function HomePage() {
         </ButtonLink>
       </HeroSplash>
 
-      {/* Who I help */}
-      <section className="border-y border-line bg-surface">
+      {/* Who I help. No top border: the hero's sawtooth edge sits directly
+          on this section, and a border draws a hairline under the teeth. */}
+      <section className="border-b border-line bg-surface">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <Reveal>
             <h2 className="max-w-2xl text-3xl font-semibold text-pine-dark">
