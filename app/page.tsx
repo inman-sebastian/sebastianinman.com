@@ -156,13 +156,14 @@ export default function HomePage() {
         />
         <div>
           <h2 className="text-3xl font-semibold text-pine-dark">
-            A neighbor who happens to be a developer
+            Small businesses are the whole job
           </h2>
           <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
-            I live and work in Southern Oregon, and I&rsquo;d rather help
-            the businesses in my own community than build software for companies
-            I&rsquo;ll never meet. Big companies have IT departments. You get me,
-            and I answer my phone.
+            I&rsquo;m Sebastian, a developer based in Southern Oregon.
+            Everything I build is for small businesses: shops, trades,
+            restaurants, makers, and the people running them. It&rsquo;s work
+            where I know every client by name, and they know exactly who to
+            call when something needs attention.
           </p>
           <ButtonLink href="/about" variant="secondary" className="mt-6">
             More about me

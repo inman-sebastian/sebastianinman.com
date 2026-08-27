@@ -43,7 +43,13 @@ The reader is a busy small-business owner, **not** a technical person.
 - **No em dashes (—).** They read as AI-written, which undercuts the whole
   pitch. Rewrite with a period, comma, colon, or parentheses instead. This
   applies to all copy: site content, docs, comments, everything.
-- **Warm and neighborly, not corporate.** First person ("I", not "we").
+- **Talk about small businesses, never against big ones.** No big-company
+  comparisons anywhere ("big companies have IT departments", "help only
+  big companies can afford"); they read as pompous positioning. Every
+  sentence stays focused on the reader's business. Also never call
+  Sebastian a "neighbor" in copy; even though it's literally true, it
+  reads hokey and try-hard. Say local, nearby, based in Southern Oregon.
+- **Warm and neighborly in tone, not corporate.** First person ("I", not "we").
   Contractions are good. Local trust signals are good ("Based in Jackson
   County, Oregon, working with small businesses everywhere").
 - **Location: always "Southern Oregon," never a specific county** for where
