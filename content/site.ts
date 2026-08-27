@@ -4,7 +4,8 @@
  */
 export const site = {
   name: "Sebastian Inman",
-  url: "https://sebastianinman.com",
+  // The www host is canonical; the apex 308-redirects to it on Vercel
+  url: "https://www.sebastianinman.com",
 
   // Short positioning line used in the header/footer and default SEO
   tagline: "Automation & AI help for small businesses",
