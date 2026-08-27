@@ -12,7 +12,27 @@ export function Footer() {
     // above it, so the treeline reads as the footer's forest rising up.
     // If cta-treetops.jpg is ever regenerated, re-sample the silhouette
     // color and update this hex.
-    <footer className="border-t border-white/10 bg-[#132c1f] text-white/80">
+    <footer className="relative bg-[#132c1f] text-white/80">
+      {/* Sawtooth top edge: footer-green teeth biting up into the page.
+          Crisp against the contact page's cream; near-invisible against
+          the CTA band's dark treetops, preserving that treeline blend.
+          Sits 1px into the footer so rounding can't leave a hairline. */}
+      <svg
+        aria-hidden="true"
+        className="absolute inset-x-0 top-px h-2.5 w-full -translate-y-full text-[#132c1f]"
+      >
+        <defs>
+          <pattern
+            id="footer-zigzag"
+            width="20"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M0 10 L10 0 L20 10 Z" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#footer-zigzag)" />
+      </svg>
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-5">
         <div className="md:col-span-2">
           <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
