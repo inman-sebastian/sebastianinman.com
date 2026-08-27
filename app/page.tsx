@@ -105,9 +105,9 @@ export default function HomePage() {
           starts with a free consult and a flat quote, so you know exactly
           what you&rsquo;re getting and what it costs before anything begins.
         </p>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal key={service.slug} delay={(i % 2) * 120} className="h-full">
+            <Reveal key={service.slug} delay={(i % 3) * 120} className="h-full">
               <ServiceCard service={service} />
             </Reveal>
           ))}
