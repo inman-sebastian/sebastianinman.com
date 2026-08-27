@@ -86,9 +86,11 @@ and ethnicity, without any single image being about that fact.
   - **Notes:** done.
 
 - [x] `public/images/services/ai-assistants.jpg` (4:3, e.g. 1200×900)
-  - **Prompt:** "Warm flat illustration of a cozy small shop interior at night, closed sign on the door and moonlight in the window, with a laptop glowing softly on the counter showing a simple friendly chat conversation where a customer's question is getting a helpful reply, earthy cream, pine green, terracotta palette"
+  - **Prompt:** "Friendly modern flat illustration of a cozy small shop interior at night, moonlight in the window and a blank hanging sign on the door, shelves of plants and unlabeled jars, a laptop glowing warmly on the wooden counter showing a simple chat conversation drawn as two soft speech bubbles of plain abstract lines, the customer's bubble marked with a small round avatar of a smiling young Latino man, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; chat bubbles, signs, and jars all blank."
   - **Notes:** no mascot characters or thought bubbles; v1's chat-bubble
-    character read strangely.
+    character read strangely. Regenerated Aug 2026 under the casting +
+    no-lettering rules (v2 had full readable chat text, shop signage,
+    and two women avatars).
 
 - [x] `public/images/faq.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Friendly modern flat illustration of two people having a relaxed conversation at a small wooden cafe table: one is a business owner with a notebook full of scribbled questions, the other listens warmly over coffee with a laptop open between them, morning light through a window, a few plants, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; notebook scribbles abstract."
