@@ -13,7 +13,7 @@ export const site = {
   description:
     "I help small businesses save hours every week with practical automation, AI tools, and websites that actually bring in customers. Based in Southern Oregon, working with businesses everywhere.",
 
-  email: "hello@sebastianinman.com", // TODO: inbox not set up yet; see CLAUDE.md deferred tasks
+  email: "hello@sebastianinman.com",
   phone: "(541) 592-9047",
   phoneHref: "tel:+15415929047",
 

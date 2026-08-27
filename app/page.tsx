@@ -121,8 +121,12 @@ export default function HomePage() {
             <h2 className="text-3xl font-semibold text-pine-dark">
               How it works
             </h2>
-            <p className="mt-3 max-w-xl leading-relaxed text-muted">
-              Three steps. No jargon, no surprise invoices.
+            <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+              Getting technology help shouldn&rsquo;t itself feel technical.
+              It&rsquo;s three steps from first conversation to finished work:
+              we talk, you get an honest plan with a flat quote, and the build
+              happens in days. No jargon and no surprise invoices anywhere
+              along the way.
             </p>
           </Reveal>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -187,14 +191,14 @@ export default function HomePage() {
                 <li key={area.slug}>
                   <Link
                     href={`/${area.slug}`}
-                    className="flex items-center gap-2.5 rounded-lg border border-line bg-background py-1.5 pl-1.5 pr-4 text-sm font-medium text-pine-dark transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                    className="flex items-center gap-3 rounded-xl border border-line bg-background py-2 pl-2 pr-5 font-medium text-pine-dark transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
                   >
                     <Image
                       src={area.image}
                       alt=""
-                      width={80}
-                      height={60}
-                      className="h-9 w-12 rounded-md object-cover"
+                      width={192}
+                      height={144}
+                      className="h-18 w-24 rounded-lg object-cover"
                     />
                     {area.city}
                   </Link>
