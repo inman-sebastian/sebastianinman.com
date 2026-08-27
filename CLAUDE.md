@@ -240,14 +240,12 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 ## Deferred tasks (not yet done; check before assuming)
 
 - [ ] **Vercel deployment + domain**: site is local-only so far
-- [ ] **hello@sebastianinman.com inbox**: displayed on site but not yet set up
-- [ ] **Resend** (in progress, Aug 2026): key goes in `.env.local` as
-      `RESEND_API_KEY` (Sebastian has it; DNS verification propagating).
-      Once the domain verifies in Resend, set `RESEND_FROM` to a
-      sebastianinman.com sender; until then the code falls back to
-      Resend's shared onboarding sender. On Vercel, both env vars go in
-      project settings. NOTE: submissions send TO hello@sebastianinman.com,
-      which needs a real inbox (separate deferred task) or mail will bounce
+- [x] **hello@sebastianinman.com inbox** (Aug 2026): live; contact form
+      test delivered to it successfully
+- [x] **Resend** (Aug 2026): live and verified end to end. `RESEND_API_KEY`
+      and `RESEND_FROM=hello@sebastianinman.com` in `.env.local` (domain
+      verified in Resend; test submission delivered). When deploying,
+      add both env vars in Vercel project settings
 - [x] **Booking URL** (Aug 2026): Cal.com "free discovery call" link set in
       `content/site.ts`; consult buttons now open the calendar and the
       contact form is the written-inquiry path
