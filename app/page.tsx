@@ -49,15 +49,15 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <Reveal>
             <h2 className="max-w-2xl text-3xl font-semibold text-pine-dark">
-              Running a business shouldn&rsquo;t mean drowning in it.
+              You didn&rsquo;t start a business to chase paperwork.
             </h2>
             <p className="mt-4 max-w-2xl leading-relaxed text-muted">
               Most of the owners I talk to aren&rsquo;t looking for &ldquo;digital
               transformation.&rdquo; They just want the paperwork to stop eating
               their evenings, the phone to stop going to voicemail, and a website
-              they aren&rsquo;t embarrassed by. That&rsquo;s the work I do: find
-              the hours your business is losing to busywork, and quietly hand
-              them back.
+              they aren&rsquo;t embarrassed by. That&rsquo;s where we start:
+              finding the hours your business is losing to busywork, and quietly
+              taking them back.
             </p>
           </Reveal>
           <Reveal delay={150}>
