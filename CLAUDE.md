@@ -236,7 +236,10 @@ there would link the page to itself.
 Use `<SiteImage src="/images/..." alt="..." prompt="..." />`. It renders a
 placeholder showing the prompt until the file exists in `public/`. Add every
 new image to `IMAGES.md` as a checklist entry with separate **Prompt** and
-**Notes** lines. The Prompt is copy-pasted verbatim into the image generator,
+**Notes** lines. Prompts featuring people must cast them explicitly
+(gender, age, skin tone/ethnicity) and vary the cast across the series;
+see the casting rule in the IMAGES.md header (the generator's default
+is a young white woman, which skewed the early art). The Prompt is copy-pasted verbatim into the image generator,
 so it must contain ONLY generator instructions (scene, style, palette), never
 reasoning, history, or advice; that context goes in Notes. Keep the `prompt`
 prop in code identical to the IMAGES.md Prompt. Images are generated in

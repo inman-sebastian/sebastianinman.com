@@ -57,7 +57,10 @@ end to end Aug 2026.
 1. **Get the prompt** from IMAGES.md / the page's frontmatter. Use it
    VERBATIM (prompts are written to generator-safe rules; see IMAGES.md
    header). If writing a new prompt first, follow the style baseline and
-   add the entry to IMAGES.md in the same change.
+   add the entry to IMAGES.md in the same change. Any person in a new
+   prompt must be cast explicitly (gender, age, skin tone/ethnicity)
+   per the IMAGES.md casting rule; unspecified characters come out as
+   young white women and skew the series.
 
 2. **Open the target collection** (URL per Session facts; Blog Posts
    collection shown here). The persistent profile normally lands you in
@@ -103,7 +106,10 @@ end to end Aug 2026.
 
 8. **Optimize + eyeball**: run `npm run optimize:images`, then Read the
    final file and check: series style match, no sneaky lettering
-   (screens, signs, notebooks are text magnets), prompt intent realized.
+   (screens, signs, notebooks are text magnets), prompt intent realized,
+   and the characters match what the prompt cast (the generator
+   sometimes reverts to its young-white-woman default; a mismatch is a
+   fail even when the image is otherwise good).
    Fail -> back to step 4 (a fresh generation; optionally reworded
    prompt, updating IMAGES.md to match). Two failures -> show Sebastian
    both candidates and ask.

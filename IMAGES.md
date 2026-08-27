@@ -29,6 +29,17 @@ style, earthy cream background (#faf6ef), deep pine green (#234f3e) and
 terracotta (#c05f33) accents. Warm and approachable, for small-business
 owners rather than a tech crowd.
 
+**Cast characters deliberately; never write a generic "owner".** Left
+unspecified, the generator defaults to a young white woman nearly every
+time, and the series drifted that way (audited Aug 2026). Every prompt
+that features a person must name gender, approximate age, and skin tone
+or ethnicity in plain generator-friendly words ("a middle-aged Black
+man", "a silver-haired Latina owner", "a young South Asian man").
+Before writing a new prompt, skim the recent entries and pick a
+character the series is light on; the goal is that the cast across the
+site looks like actual small-business owners, varied in gender, age,
+and ethnicity, without any single image being about that fact.
+
 ## Photos
 
 - [x] `public/images/headshot.jpg` (~600×700, portrait)
@@ -100,7 +111,7 @@ Optional per post (posts render fine without one), 4:3, path
 `public/images/blog/<post-slug>.jpg`, same friendly flat series.
 
 - [x] `public/images/blog/before-you-buy-another-app.jpg` (4:3)
-  - **Prompt:** "Friendly modern flat illustration of a curious small business owner at a tidy wooden desk lifting the lid of a small wooden chest that glows softly warm from inside, everyday work objects arranged around the desk (a calculator, a wall calendar, a coffee mug, a potted plant), warm morning light through a window, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; calendar squares blank."
+  - **Prompt:** "Friendly modern flat illustration of a curious older Latino man with silver hair and glasses at a tidy wooden desk lifting the lid of a small wooden chest that glows softly warm from inside, everyday work objects arranged around the desk (a calculator, a wall calendar, a coffee mug, a potted plant), warm morning light through a window, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; calendar squares blank."
   - **Notes:** post about unused features in software you already own;
     the glowing chest is the thesis (treasure already in the toolbox).
     Calculator buttons and calendar are lettering magnets.
@@ -112,9 +123,11 @@ Optional per post (posts render fine without one), 4:3, path
     handles the missed one). Speech bubble must stay abstract.
 
 - [x] `public/images/blog/busywork-worth-automating.jpg` (4:3)
-  - **Prompt:** "Friendly modern flat illustration of a small business owner at a wooden desk sorting a pile of paper tasks into two neat trays, one tray glowing softly warm and one plain, a cup of coffee and a small plant nearby, morning light, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; papers blank."
+  - **Prompt:** "Friendly modern flat illustration of a middle-aged Black man with a short beard at a wooden desk sorting a pile of paper tasks into two neat trays, one tray glowing softly warm and one plain, a cup of coffee and a small plant nearby, morning light, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; papers blank."
   - **Notes:** seed post about which busywork to automate; the two trays
-    are the post's whole thesis (worth it / leave it alone).
+    are the post's whole thesis (worth it / leave it alone). Recast
+    Aug 2026 under the casting rule (v1 was the generator-default
+    white woman).
 
 - [x] `public/images/blog/cheapest-fix-for-no-shows.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of a small salon: the owner tidying tools at a wooden counter while a phone propped nearby glows softly and exchanges two small abstract speech bubbles with a smiling customer walking toward the shop door, warm late-afternoon light, plants and a wall calendar with blank squares, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; calendar squares and speech bubbles blank."
