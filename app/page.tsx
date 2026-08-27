@@ -189,18 +189,24 @@ export default function HomePage() {
             <ul className="mt-6 flex flex-wrap justify-center gap-3">
               {areas.map((area) => (
                 <li key={area.slug}>
+                  {/* Mini vertical card in the ServiceCard mold: image
+                      flush to the top with a 1px inset, name below */}
                   <Link
                     href={`/${area.slug}`}
-                    className="flex items-center gap-3 rounded-xl border border-line bg-background py-2 pl-2 pr-5 font-medium text-pine-dark transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                    className="block w-36 overflow-hidden rounded-xl border border-line bg-background transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
                   >
-                    <Image
-                      src={area.image}
-                      alt=""
-                      width={192}
-                      height={144}
-                      className="h-18 w-24 rounded-lg object-cover"
-                    />
-                    {area.city}
+                    <div className="p-px">
+                      <Image
+                        src={area.image}
+                        alt=""
+                        width={288}
+                        height={216}
+                        className="w-full rounded-t-[11px] object-cover"
+                      />
+                    </div>
+                    <p className="px-3 py-2.5 text-center text-sm font-medium text-pine-dark">
+                      {area.city}
+                    </p>
                   </Link>
                 </li>
               ))}
