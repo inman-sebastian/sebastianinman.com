@@ -49,6 +49,12 @@ The reader is a busy small-business owner, **not** a technical person.
   sentence stays focused on the reader's business. Also never call
   Sebastian a "neighbor" in copy; even though it's literally true, it
   reads hokey and try-hard. Say local, nearby, based in Southern Oregon.
+- **With them, not for them.** Frame the work as two kinds of expertise
+  meeting: the reader knows their business, Sebastian knows the tools.
+  Watch the you-to-I ratio; a run of "I do X, I built Y" sentences reads
+  egotistical even when the content is humble, and must never shade into
+  "I do this because you can't." The homepage about blurb ("You know
+  your business. I know the tools.") is the reference example.
 - **Warm and neighborly in tone, not corporate.** First person ("I", not "we").
   Contractions are good. Local trust signals are good ("Based in Jackson
   County, Oregon, working with small businesses everywhere").
