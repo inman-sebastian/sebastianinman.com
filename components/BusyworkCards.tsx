@@ -11,15 +11,30 @@ import { Reveal } from "@/components/Reveal";
  * site's ambient motion language.
  */
 
-const ICON_CYCLE: (keyof typeof heroCardIcons)[] = [
-  "mail",
-  "clock",
-  "calendar",
-  "sync",
-  "tag",
-  "users",
-  "chart",
+/**
+ * Keyword -> icon rules, first match wins. Ordered so specific words
+ * beat generic ones ("Voicemail tag" must hit phone, not tag; "Retyping
+ * customer info" must hit sync, not users). The shared icon map holds
+ * Heroicons outline paths; if it ever needs to grow much, switching to
+ * the @heroicons/react package gives the same visuals without
+ * hand-copying path data.
+ */
+const ICON_RULES: [pattern: RegExp, icon: keyof typeof heroCardIcons][] = [
+  [/call|phone|voicemail/i, "phone"],
+  [/retyp|copy.?paste|data entry|spreadsheet|sync|app.?hopping/i, "sync"],
+  [/invoice|quote|price|\bfees?\b|receipt|subscription/i, "tag"],
+  [/review|seller/i, "star"],
+  // calendar before chart: "Double bookings" must hit /booking/, not /book/
+  [/appointment|booking|reminder|schedul|season/i, "calendar"],
+  [/report|numbers|sales|book|decision/i, "chart"],
+  [/inbox|email|mail|repl|question/i, "mail"],
+  [/website|online|site/i, "globe"],
+  [/customer|lead|client|staff|crew|competitor/i, "users"],
 ];
+
+function iconFor(item: string): keyof typeof heroCardIcons {
+  return ICON_RULES.find(([pattern]) => pattern.test(item))?.[1] ?? "clock";
+}
 
 export function BusyworkCards({
   items,
@@ -47,7 +62,7 @@ export function BusyworkCards({
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d={heroCardIcons[ICON_CYCLE[i % ICON_CYCLE.length]]}
+                    d={heroCardIcons[iconFor(item)]}
                   />
                 </svg>
               </span>
