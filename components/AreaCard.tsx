@@ -20,6 +20,7 @@ export function AreaCard({ area }: { area: LandingPage }) {
           prompt={area.imagePrompt}
           width={800}
           height={600}
+          sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
           className="!rounded-t-[11px] !rounded-b-none"
         />
       </div>

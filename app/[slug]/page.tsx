@@ -81,6 +81,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
                 caption={page.imageCaption || undefined}
                 width={900}
                 height={675}
+                sizes="(min-width: 768px) 50vw, 100vw"
                 className="!rounded-2xl border-[6px] border-background md:shadow-lg"
               />
             </Reveal>

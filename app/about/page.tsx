@@ -48,6 +48,7 @@ export default function AboutPage() {
             width={600}
             height={700}
             priority
+            sizes="(min-width: 768px) 33vw, 100vw"
             className="!rounded-2xl border-[6px] border-background md:shadow-lg"
           />
         </div>

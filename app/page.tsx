@@ -153,6 +153,7 @@ export default function HomePage() {
           prompt="Sebastian's professional headshot (real photo; drop in the existing headshot file)"
           width={600}
           height={700}
+          sizes="(min-width: 768px) 33vw, 100vw"
         />
         <div>
           <h2 className="text-3xl font-semibold text-pine-dark">

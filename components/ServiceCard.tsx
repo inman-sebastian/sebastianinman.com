@@ -30,6 +30,7 @@ export function ServiceCard({
           prompt={service.imagePrompt}
           width={800}
           height={600}
+          sizes="(min-width: 1152px) 552px, (min-width: 640px) 50vw, 100vw"
           className="!rounded-t-[11px] !rounded-b-none"
         />
         <span className="absolute bottom-3 left-3 rounded-full bg-surface px-3.5 py-1.5 text-sm font-semibold text-terracotta shadow-sm">

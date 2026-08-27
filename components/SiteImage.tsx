@@ -27,6 +27,12 @@ type SiteImageProps = {
    * readers get both). Ignored in fill mode.
    */
   caption?: string;
+  /**
+   * next/image `sizes` for responsive srcset selection; set it to match
+   * the slot's actual rendered width so browsers don't over-download
+   * (e.g. "(min-width: 768px) 50vw, 100vw" for a two-column slot).
+   */
+  sizes?: string;
 };
 
 /**
@@ -45,6 +51,7 @@ export function SiteImage({
   className = "",
   fill = false,
   caption,
+  sizes,
 }: SiteImageProps) {
   const exists = fs.existsSync(path.join(process.cwd(), "public", src));
 
@@ -87,6 +94,7 @@ export function SiteImage({
         width={width}
         height={height}
         priority={priority}
+        sizes={sizes}
         style={{ aspectRatio: `${width} / ${height}` }}
         className={`w-full rounded-xl object-cover ${className}`}
       />

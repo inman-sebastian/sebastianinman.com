@@ -2,7 +2,9 @@
 
 Running checklist of images the site expects. Until a file exists at its
 path, the site shows a styled placeholder with the prompt text. To swap one
-in: generate the image, save it to the path below (exact filename), refresh.
+in: generate the image, save it to the path below (exact filename), run
+`npm run optimize:images` (downscales and recompresses the source; the
+generator's raw output is ~2MB where ~200KB is needed), then refresh.
 Check items off as they're done.
 
 Each entry has a **Prompt** (copy it verbatim into the generator; it matches

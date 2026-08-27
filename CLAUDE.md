@@ -11,8 +11,9 @@ code change. Follow the recipes below before touching components.
 ## Run it
 
 ```bash
-npm run dev        # dev server at http://localhost:3000
-npm run build      # production build (also the best "did I break it?" check)
+npm run dev              # dev server at http://localhost:3000
+npm run build            # production build (also the best "did I break it?" check)
+npm run optimize:images  # run after adding images to public/images (needs bun)
 ```
 
 ## Voice guide (applies to ALL site copy)
@@ -209,6 +210,13 @@ so it must contain ONLY generator instructions (scene, style, palette), never
 reasoning, history, or advice; that context goes in Notes. Keep the `prompt`
 prop in code identical to the IMAGES.md Prompt. Sebastian generates the
 images and drops them in; never commit AI-generated images yourself.
+After images land, run `npm run optimize:images` (Bun + sharp): it
+downscales sources to what the layouts actually need and recompresses
+(~2MB generator output -> ~200KB), skipping already-small files so it's
+safe to re-run. Sources stay JPEG deliberately: next/image + Vercel
+serve WebP/AVIF and per-device srcsets at request time, so converting
+source files would only churn every path in content/. When adding a new
+SiteImage slot, give it a `sizes` prop matching its rendered width.
 **All image slots are 4:3** (Sebastian's generator outputs 4:3); keep any new
 `SiteImage` width/height props at a 4:3 ratio (the component defaults to
 1200×900) and note 4:3 in the IMAGES.md entry. Exceptions: the CTA band
