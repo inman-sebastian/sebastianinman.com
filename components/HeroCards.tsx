@@ -42,7 +42,7 @@ const defaultPoolA: HeroCard[] = [
     type: "notice",
     icon: "mail",
     title: "Missed call texted back",
-    sub: "They heard from you before they tried the next place",
+    sub: "They heard from you in seconds",
   },
   {
     type: "notice",
@@ -137,16 +137,19 @@ function useRotation(poolLength: number, periodMs: number, offsetMs: number) {
 }
 
 function CardBody({ card }: { card: HeroCard }) {
+  // text-balance throughout: these boxes are narrow, and balancing is
+  // what actually prevents one-word widow lines in short multi-line text
+  // (the global text-wrap: pretty is too weak for two-line snippets)
   if (card.type === "chat") {
     return (
       <div className="flex w-72 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
-        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
+        <p className="self-start text-balance rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
           {card.question}
         </p>
-        <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
+        <p className="self-end text-balance rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
           {card.answer}
         </p>
-        <p className="mt-1 text-[11px] text-muted">{card.caption}</p>
+        <p className="mt-1 text-balance text-[11px] text-muted">{card.caption}</p>
       </div>
     );
   }
@@ -165,8 +168,10 @@ function CardBody({ card }: { card: HeroCard }) {
           </svg>
         </span>
         <div>
-          <p className="text-sm font-semibold text-pine-dark">{card.title}</p>
-          <p className="text-xs text-muted">{card.sub}</p>
+          <p className="text-balance text-sm font-semibold text-pine-dark">
+            {card.title}
+          </p>
+          <p className="text-balance text-xs text-muted">{card.sub}</p>
         </div>
       </div>
     </div>

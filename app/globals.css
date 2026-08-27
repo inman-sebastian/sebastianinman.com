@@ -24,20 +24,24 @@ body {
   font-family: var(--font-sans);
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-serif);
-  /* Even out ragged line breaks in headings */
-  text-wrap: balance;
-}
+/* In @layer base so Tailwind utilities (text-balance, font-sans, ...)
+   can override; unlayered rules would silently beat every utility */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    /* Even out ragged line breaks in headings */
+    text-wrap: balance;
+  }
 
-/* Avoid single-word widows/orphans in running text */
-p,
-li,
-blockquote {
-  text-wrap: pretty;
+  /* Avoid single-word widows/orphans in running text */
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
+  }
 }
 
 /* Hero notification cards: gentle bob, plus bubble-style pop in/out
