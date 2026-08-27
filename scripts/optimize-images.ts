@@ -17,7 +17,7 @@
  * generation-loss-degrades) an already-optimized image.
  */
 
-import { readdir, stat, rename } from "node:fs/promises";
+import { readdir, stat, rename, unlink } from "node:fs/promises";
 import { join, extname } from "node:path";
 import sharp from "sharp";
 
@@ -68,7 +68,7 @@ for await (const file of walk(ROOT)) {
   const after = (await stat(tmp)).size;
   if (after >= before) {
     // Recompression didn't help; keep the original
-    await Bun.file(tmp).delete();
+    await unlink(tmp);
     console.log(`keep  ${rel} (${fmt(before)}, recompression not smaller)`);
     continue;
   }
