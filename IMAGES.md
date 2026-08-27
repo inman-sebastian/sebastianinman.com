@@ -70,12 +70,16 @@ and ethnicity, without any single image being about that fact.
     earlier attempt at programmatic SVG leaves that didn't read as leaves.
 
 - [x] `public/images/services/website-design.jpg` (4:3, e.g. 1200×900)
-  - **Prompt:** "Warm, inviting illustration of a small storefront business (like a local bakery or hardware store) with its website shown on a laptop beside it, matching earthy cream, pine green, and terracotta color palette, friendly modern flat illustration style"
-  - **Notes:** done (Oak & Crumb Bakery version).
+  - **Prompt:** "Friendly modern flat illustration of a cozy small bakery storefront with a striped awning, its proud owner, a young Black woman in an apron, standing out front, and beside it a laptop on a wooden table showing the same storefront on screen as a simple website with abstract content blocks, warm afternoon light, street trees and potted plants, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; signs, awning, and laptop screen blocks all blank."
+  - **Notes:** regenerated Aug 2026 under the casting + no-lettering
+    rules (v1 was the Oak & Crumb Bakery version: heavy signage text,
+    white woman central).
 
 - [x] `public/images/services/workflow-automation.jpg` (4:3, e.g. 1200×900)
-  - **Prompt:** "Friendly flat illustration of a relaxed small business owner having coffee while paperwork flows neatly by itself between an inbox, a calendar, and a filing cabinet, earthy cream, pine green, and terracotta palette"
-  - **Notes:** done.
+  - **Prompt:** "Friendly modern flat illustration of a relaxed middle-aged South Asian woman having coffee at a wooden desk while paperwork flows neatly by itself in a gentle arc between an inbox tray, a wall calendar, and a green filing cabinet, warm morning light, a potted plant nearby, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; papers, folder tabs, and calendar squares blank."
+  - **Notes:** regenerated Aug 2026 under the casting + no-lettering
+    rules (v1 had INCOMING/ARCHIVES/October labels baked in and the
+    generator-default white woman).
 
 - [x] `public/images/services/tool-integration.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Flat illustration of several everyday business tools (calculator/accounting book, calendar, envelope, storefront cash register) connected by warm glowing lines into one tidy network, earthy cream, pine green, and terracotta palette"

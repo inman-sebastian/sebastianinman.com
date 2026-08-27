@@ -45,6 +45,8 @@ end to end Aug 2026.
     `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e`
   - **Blog Posts** collection (all `public/images/blog/` art):
     `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e/collection/7533d242-7c52-45a2-9c79-471027dcdb3e`
+  - **Services** collection (all `public/images/services/` art):
+    `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e/collection/b32a0786-84e8-4fa5-9e2c-e20b6de42362`
   - Callers (e.g. the write-blog-post skill) may pass a collection URL;
     if Sebastian adds new collections, list them here.
 - Model: **Nano Banana 2**, aspect **4:3** (`crop_landscape`), outputs
