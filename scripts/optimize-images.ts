@@ -85,6 +85,3 @@ console.log(
     ? "\nNothing to optimize."
     : `\nOptimized ${touched} images: ${fmt(totalBefore)} -> ${fmt(totalAfter)} (saved ${fmt(totalBefore - totalAfter)})`
 );
-console.log(
-  "Reminder: if the dev server was running, restart with `npm run dev:fresh` so the image cache doesn't serve stale copies."
-);

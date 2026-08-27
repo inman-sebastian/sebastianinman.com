@@ -116,6 +116,12 @@ Optional per post (posts render fine without one), 4:3, path
   - **Notes:** seed post about which busywork to automate; the two trays
     are the post's whole thesis (worth it / leave it alone).
 
+- [x] `public/images/blog/cheapest-fix-for-no-shows.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of a small salon: the owner tidying tools at a wooden counter while a phone propped nearby glows softly and exchanges two small abstract speech bubbles with a smiling customer walking toward the shop door, warm late-afternoon light, plants and a wall calendar with blank squares, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; calendar squares and speech bubbles blank."
+  - **Notes:** post about reply-style appointment reminders beating
+    no-show fees; the scene is the thesis (the phone confirms while the
+    customer actually shows up). Bubbles and calendar must stay blank.
+
 ## Area cards (About page "Areas I serve")
 
 A matched series in the SAME friendly flat style as the service
