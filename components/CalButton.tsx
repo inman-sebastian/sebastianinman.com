@@ -30,7 +30,11 @@ export function CalButton({
       const cal = await getCalApi({ namespace: NAMESPACE });
       cal("ui", {
         theme: "light",
-        cssVarsPerTheme: { light: { "cal-brand": "#234f3e" } },
+        // Theme is forced light; dark values only satisfy the type
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#234f3e" },
+          dark: { "cal-brand": "#234f3e" },
+        },
         hideEventTypeDetails: false,
       });
     })();
