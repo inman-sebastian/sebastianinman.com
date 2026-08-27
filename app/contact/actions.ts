@@ -64,9 +64,9 @@ export async function submitContact(
       const { Resend } = await import("resend");
       const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
-        // TODO: switch to a verified sebastianinman.com sender once the
-        // domain is verified in Resend (see CLAUDE.md deferred tasks)
-        from: "Website Contact Form <onboarding@resend.dev>",
+        // RESEND_FROM once the domain is verified in Resend; the shared
+        // onboarding sender works before verification completes
+        from: process.env.RESEND_FROM || "Website Contact Form <onboarding@resend.dev>",
         to: site.email,
         replyTo: email,
         subject: `New inquiry from ${name}${business ? ` (${business})` : ""}`,
