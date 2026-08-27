@@ -263,4 +263,5 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 - [ ] **About page bio facts are drafted, not verified**: `{/* VERIFY */}`
       comments in `content/pages/about.mdx` mark invented claims ("over a
       decade", personal story) awaiting Sebastian's corrections
-- [ ] **Images**: all placeholders; see `IMAGES.md`
+- [x] **Images** (Aug 2026): every slot has final art; `IMAGES.md` fully
+      checked. New images go through `npm run optimize:images`
