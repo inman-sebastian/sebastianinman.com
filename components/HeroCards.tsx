@@ -137,24 +137,25 @@ function useRotation(poolLength: number, periodMs: number, offsetMs: number) {
 }
 
 function CardBody({ card }: { card: HeroCard }) {
-  // text-balance throughout: these boxes are narrow, and balancing is
-  // what actually prevents one-word widow lines in short multi-line text
-  // (the global text-wrap: pretty is too weak for two-line snippets)
+  // Cards size to their content (w-max) up to a cap, so most lines never
+  // wrap at all; the cap keeps rare long lines wrapping naturally
+  // (long first line, shorter second) instead of balance's stubby first
+  // lines. Right edge stays anchored, so width variance grows leftward.
   if (card.type === "chat") {
     return (
-      <div className="flex w-72 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
-        <p className="self-start text-balance rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
+      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
           {card.question}
         </p>
-        <p className="self-end text-balance rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
+        <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
           {card.answer}
         </p>
-        <p className="mt-1 text-balance text-[11px] text-muted">{card.caption}</p>
+        <p className="mt-1 text-[11px] text-muted">{card.caption}</p>
       </div>
     );
   }
   return (
-    <div className="w-64 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+    <div className="w-max max-w-[19rem] rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pine-tint text-pine">
           <svg
@@ -168,10 +169,8 @@ function CardBody({ card }: { card: HeroCard }) {
           </svg>
         </span>
         <div>
-          <p className="text-balance text-sm font-semibold text-pine-dark">
-            {card.title}
-          </p>
-          <p className="text-balance text-xs text-muted">{card.sub}</p>
+          <p className="text-sm font-semibold text-pine-dark">{card.title}</p>
+          <p className="text-xs text-muted">{card.sub}</p>
         </div>
       </div>
     </div>
