@@ -16,15 +16,39 @@ export function CTABand({
   service,
 }: CTABandProps) {
   return (
-    <section className="relative overflow-hidden bg-pine text-white">
-      {/* Treetop silhouette background; drifts slowly like the hero */}
-      <SiteImage
-        fill
-        src="/images/cta-treetops.jpg"
-        alt="Silhouetted pine treetops"
-        prompt="Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."
-        className="hero-kenburns !bg-transparent object-bottom"
-      />
+    <section className="relative bg-pine text-white">
+      {/* Sawtooth top edge: band-green teeth biting up into the page, so
+          the CTA band + footer read as one continuous green block with a
+          single textured top edge. Sits 1px into the band against
+          subpixel hairlines. */}
+      <svg
+        aria-hidden="true"
+        className="absolute inset-x-0 top-px h-2.5 w-full -translate-y-full text-pine"
+      >
+        <defs>
+          <pattern
+            id="cta-zigzag"
+            width="20"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <path d="M0 10 L10 0 L20 10 Z" fill="currentColor" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#cta-zigzag)" />
+      </svg>
+      {/* Treetop silhouette background; drifts slowly like the hero.
+          Its own overflow-hidden wrapper (not on the section, which would
+          clip the sawtooth above) keeps the drift from bleeding out. */}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        <SiteImage
+          fill
+          src="/images/cta-treetops.jpg"
+          alt="Silhouetted pine treetops"
+          prompt="Wide 16:9 flat illustration used as a background: a solid deep pine green field (#234f3e) with a silhouetted skyline of pine treetops rising from the bottom edge in a slightly darker green (#18382c), and one or two subtle layered ridgelines behind them. The upper two thirds are completely plain solid deep pine green with no detail. Flat vector style, no texture, no text or lettering anywhere."
+          className="hero-kenburns !bg-transparent object-bottom"
+        />
+      </div>
       <div className="relative mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
         <h2 className="mx-auto max-w-2xl text-3xl font-semibold">{heading}</h2>
         <p className="mx-auto mt-4 max-w-xl text-balance leading-relaxed text-white/85">
