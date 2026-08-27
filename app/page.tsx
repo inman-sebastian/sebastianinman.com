@@ -124,7 +124,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
           <Reveal>
             <h2 className="text-3xl font-semibold text-pine-dark">
-              How it works
+              Here&rsquo;s how we&rsquo;ll work together
             </h2>
             <p className="mt-3 max-w-2xl leading-relaxed text-muted">
               Getting technology help shouldn&rsquo;t itself feel technical.
