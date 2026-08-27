@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 import { getServices } from "@/lib/content";
 import { ContactForm } from "@/components/ContactForm";
 import { HeroSplash } from "@/components/HeroSplash";
-import { ButtonLink } from "@/components/ButtonLink";
+import { CalButton } from "@/components/CalButton";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -58,13 +58,9 @@ export default function ContactPage() {
                 <p className="text-sm font-semibold uppercase tracking-wide text-muted">
                   Prefer to grab a time?
                 </p>
-                <ButtonLink
-                  href={site.bookingUrl}
-                  variant="secondary"
-                  className="mt-2"
-                >
+                <CalButton variant="secondary" className="mt-2">
                   Pick a time on my calendar
-                </ButtonLink>
+                </CalButton>
               </div>
             )}
           </div>

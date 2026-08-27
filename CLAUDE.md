@@ -198,7 +198,10 @@ medford, ashland) can omit it.
 
 ### Change contact info, tagline, or booking link
 Edit `content/site.ts`. Setting `bookingUrl` makes every "Book a free
-consult" button link there (empty string = buttons go to /contact) and
+consult" button open the Cal.com calendar in an in-page modal
+(`CalButton`; forced light theme, pine brand color, plain link as
+fallback for new-tab clicks and blocked scripts; empty string = buttons
+go to /contact) and
 reveals the contact page's "Prefer to grab a time?" block, whose button
 deliberately says "Pick a time on my calendar", not "Book a free
 consult": every consult CTA lands on /contact, so a same-named button
