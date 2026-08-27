@@ -239,8 +239,12 @@ new image to `IMAGES.md` as a checklist entry with separate **Prompt** and
 **Notes** lines. The Prompt is copy-pasted verbatim into the image generator,
 so it must contain ONLY generator instructions (scene, style, palette), never
 reasoning, history, or advice; that context goes in Notes. Keep the `prompt`
-prop in code identical to the IMAGES.md Prompt. Sebastian generates the
-images and drops them in; never commit AI-generated images yourself.
+prop in code identical to the IMAGES.md Prompt. Images are generated in
+Sebastian's Google Flow collection, either by Sebastian by hand or by
+Claude via the `generate-image` skill in `.claude/skills/` (agent-browser
+automation of his authenticated Flow session; the skill's hard rules and
+mandatory eyeball check apply). Never commit an AI-generated image that
+hasn't passed the eyeball check.
 After images land, run `npm run optimize:images` (Bun + sharp): it
 downscales sources to what the layouts actually need and recompresses
 (~2MB generator output -> ~200KB), skipping already-small files so it's
