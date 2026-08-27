@@ -73,6 +73,7 @@ The reader is a busy small-business owner, **not** a technical person.
 | Services (one MDX file each) | `content/services/*.mdx` |
 | SEO landing pages (one MDX file each; filename = URL slug) | `content/landing/*.mdx` |
 | Long-form pages (About) | `content/pages/*.mdx` |
+| FAQ questions & answers | `content/pages/faq.mdx` frontmatter (`faqs` list; rendered as accordions + FAQPage structured data by `app/faq/page.tsx`) |
 | Image checklist / prompts | `IMAGES.md` |
 | Content loaders | `lib/content.ts` |
 | Components (header, footer, CTA band, form, SiteImage) | `components/` |
