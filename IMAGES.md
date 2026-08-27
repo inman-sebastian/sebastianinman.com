@@ -99,6 +99,12 @@ owners rather than a tech crowd.
 Optional per post (posts render fine without one), 4:3, path
 `public/images/blog/<post-slug>.jpg`, same friendly flat series.
 
+- [x] `public/images/blog/before-you-buy-another-app.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of a curious small business owner at a tidy wooden desk lifting the lid of a small wooden chest that glows softly warm from inside, everyday work objects arranged around the desk (a calculator, a wall calendar, a coffee mug, a potted plant), warm morning light through a window, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; calendar squares blank."
+  - **Notes:** post about unused features in software you already own;
+    the glowing chest is the thesis (treasure already in the toolbox).
+    Calculator buttons and calendar are lettering magnets.
+
 - [x] `public/images/blog/first-automation-i-recommend.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of a busy small shop: the owner happily helping a customer at the wooden counter while a phone on the countertop softly glows and sends out a small friendly abstract speech bubble, warm afternoon light, plants and tidy shelves, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; speech bubble abstract."
   - **Notes:** post about the missed-call text-back; the scene is the

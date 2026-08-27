@@ -23,17 +23,19 @@ end to end Aug 2026.
 
 ## Session facts
 
-- **Auth does NOT survive browser restarts** (verified Aug 2026): Google
-  invalidates the device session when the automation browser closes, and
-  `--restore`/`--profile` cannot bring it back (the restored account
-  chooser shows "Signed out"). Practical model: each WORK SESSION starts
-  with Sebastian signing in once in a `--headed` window; after that,
-  generate as many images as the session needs before closing. Batch
-  image work accordingly (all of a post's/page's images in one session).
-- Sign-in account: hello@sebastiancodes.com. A "Sign in with Google"
-  button or account chooser may appear mid-session; clicking through a
-  LIVE account is fine, but an account marked "Signed out", an email or
-  password field, or any challenge means STOP and hand it to Sebastian.
+- **Auth persists in the profile directory** (verified Aug 2026):
+  ALWAYS pass `--profile ~/.agent-browser-profiles/flow` together with
+  `--session flow`. That path is a full Chrome user-data dir holding the
+  Google login (including the device-bound session keys); sign-in
+  survives complete browser restarts, and even the 4:3 aspect setting
+  sticks. Do NOT use `--restore` alone or a bare profile NAME; state
+  files carry only cookies/localStorage, which Google rejects after a
+  restart (learned the hard way).
+- Sign-in account: hello@sebastiancodes.com. If the profile's session
+  has expired (Google will do this eventually) and a sign-in page,
+  account chooser showing "Signed out", email/password field, or any
+  challenge appears: STOP, reopen `--headed`, and hand it to Sebastian.
+  One headed sign-in re-arms the profile for the long term.
 - Flow is organized to mirror the site's structure: one root project
   with dedicated collections per content area. Open the MOST SPECIFIC
   collection for the image being generated (generating inside it keeps
@@ -57,20 +59,19 @@ end to end Aug 2026.
    header). If writing a new prompt first, follow the style baseline and
    add the entry to IMAGES.md in the same change.
 
-2. **Open the target collection headed and get Sebastian signed in**
-   (URL per Session facts; Blog Posts collection shown here):
+2. **Open the target collection** (URL per Session facts; Blog Posts
+   collection shown here). The persistent profile normally lands you in
+   already signed in, headless:
 
    ```bash
-   agent-browser --session flow --headed open \
+   agent-browser --profile ~/.agent-browser-profiles/flow --session flow open \
      "https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e/collection/7533d242-7c52-45a2-9c79-471027dcdb3e"
    ```
 
    Snapshot (`agent-browser --session flow snapshot -i -c`). If the
-   collection loaded (media grid + "What do you want to create?"
-   textbox), proceed. If it's a sign-in page: ask Sebastian to sign in
-   using the headed window on his desktop, and wait for his go-ahead
-   (per the hard rules, this step is always his). Keep the browser open
-   for ALL of the session's generations; auth dies with the browser.
+   collection loaded (title textbox + "What do you want to create?"
+   box), proceed. If it's a sign-in surface instead, follow the expired-
+   session procedure in Session facts (headed + Sebastian).
 
 3. **Check the model button** (reads like "🍌 Nano Banana 2
    crop_landscape x2"). If aspect isn't `crop_landscape`, click the
