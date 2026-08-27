@@ -14,7 +14,6 @@ import { CTABand } from "@/components/CTABand";
  * /blog/<filename>. See the "write a blog post" recipe in CLAUDE.md.
  */
 
-export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getBlogPosts().map((p) => ({ slug: p.slug }));

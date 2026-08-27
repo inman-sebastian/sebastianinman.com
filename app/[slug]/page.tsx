@@ -16,7 +16,6 @@ import { site } from "@/content/site";
  * "add a landing page" recipe.
  */
 
-export const dynamicParams = false;
 
 export function generateStaticParams() {
   return getLandingPages().map((p) => ({ slug: p.slug }));

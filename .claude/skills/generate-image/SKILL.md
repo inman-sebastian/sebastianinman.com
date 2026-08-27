@@ -109,8 +109,8 @@ end to end Aug 2026.
    both candidates and ask.
 
 9. **Finish**: check off the IMAGES.md entry, `agent-browser --session
-   flow close`, restart the dev server fresh if it was running
-   (`npm run dev:fresh` — new files are safe, but replaced ones hit the
-   Turbopack stale-image cache), verify the page renders the art, build,
-   commit (the never-commit-AI-images rule is satisfied by the eyeball
-   check having passed).
+   flow close`, verify the page renders the art (dev serves images
+   unoptimized straight from public/, so a plain refresh shows new and
+   replaced files alike; no restart needed), build, commit (the
+   never-commit-AI-images rule is satisfied by the eyeball check having
+   passed).

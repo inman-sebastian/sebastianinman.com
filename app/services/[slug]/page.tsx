@@ -20,7 +20,6 @@ import { CTABand } from "@/components/CTABand";
  * render as designed sections (no walls of text).
  */
 
-export const dynamicParams = false;
 
 /**
  * Brand favicon for a tool chip, looked up by slugified name in

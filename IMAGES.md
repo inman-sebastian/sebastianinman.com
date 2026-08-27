@@ -11,11 +11,11 @@ Each entry has a **Prompt** (copy it verbatim into the generator; it matches
 what the site's placeholder displays) and **Notes** (context and lessons for
 humans and Claude only; never paste notes into the generator).
 
-**Replacing an image that's already been viewed:** the dev server's build
-cache (Turbopack) can keep serving old optimized copies of a same-named file
-even after restarts and hard refreshes. If a replaced image won't update,
-stop the dev server and run `npm run dev:fresh` (it clears `.next` before
-starting). Then hard-refresh the browser (Cmd+Shift+R).
+**Replacing an image that's already been viewed:** the dev server serves
+images unoptimized straight from `public/` (see next.config.ts), so a
+normal browser refresh shows the current file; no restart needed. If an
+old copy ever sticks anyway, `npm run dev:fresh` + hard refresh
+(Cmd+Shift+R) is the fallback.
 
 **Aspect ratio: generate illustrations at 4:3**, with two exceptions: the
 CTA band treetops are **16:9** (rendered as a full-width background), and
