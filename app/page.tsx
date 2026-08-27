@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/content/site";
 import { getLandingPages, getServices } from "@/lib/content";
@@ -124,20 +125,18 @@ export default function HomePage() {
               Three steps. No jargon, no surprise invoices.
             </p>
           </Reveal>
-          <div className="relative mt-10 grid gap-10 md:grid-cols-3 md:gap-8">
-            <div
-              aria-hidden="true"
-              className="absolute left-14 right-14 top-5 hidden border-t-2 border-dashed border-pine/25 md:block"
-            />
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
             {steps.map((step, i) => (
-              <Reveal key={step.title} delay={i * 180} className="relative">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white ring-8 ring-[#f1f3ec]">
-                  {i + 1}
+              <Reveal key={step.title} delay={i * 180} className="h-full">
+                <div className="flex h-full flex-col rounded-xl border border-line bg-surface p-6 shadow-sm">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pine font-serif text-lg font-semibold text-white">
+                    {i + 1}
+                  </div>
+                  <h3 className="mt-4 font-serif text-lg font-semibold text-pine-dark">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 leading-relaxed text-muted">{step.text}</p>
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-pine-dark">
-                  {step.title}
-                </h3>
-                <p className="mt-2 leading-relaxed text-muted">{step.text}</p>
               </Reveal>
             ))}
           </div>
@@ -172,27 +171,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Areas strip: a quiet local-trust moment + links to the location pages */}
+      {/* Areas strip: local-trust moment + links to the location pages,
+          each chip carrying its town's illustration as a thumbnail (the
+          tool-chip-with-favicon language, with our own art) */}
       <section className="border-t border-line bg-surface">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
           <Reveal>
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <p className="font-semibold text-pine-dark">
-                Working with small businesses all over Southern Oregon:
-              </p>
-              <ul className="flex flex-wrap gap-2">
-                {areas.map((area) => (
-                  <li key={area.slug}>
-                    <Link
-                      href={`/${area.slug}`}
-                      className="inline-block rounded-full bg-pine-tint/60 px-3.5 py-1.5 text-sm font-medium text-pine-dark transition-colors hover:bg-pine hover:text-white"
-                    >
-                      {area.city}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h2 className="text-center font-serif text-lg font-semibold text-pine-dark">
+              Working with small businesses all over Southern Oregon
+            </h2>
+          </Reveal>
+          <Reveal delay={150}>
+            <ul className="mt-6 flex flex-wrap justify-center gap-3">
+              {areas.map((area) => (
+                <li key={area.slug}>
+                  <Link
+                    href={`/${area.slug}`}
+                    className="flex items-center gap-2.5 rounded-lg border border-line bg-background py-1.5 pl-1.5 pr-4 text-sm font-medium text-pine-dark transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                  >
+                    <Image
+                      src={area.image}
+                      alt=""
+                      width={80}
+                      height={60}
+                      className="h-9 w-12 rounded-md object-cover"
+                    />
+                    {area.city}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>
