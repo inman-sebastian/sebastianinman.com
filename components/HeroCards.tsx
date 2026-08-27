@@ -155,7 +155,9 @@ function CardBody({ card }: { card: HeroCard }) {
     );
   }
   return (
-    <div className="w-max max-w-[19rem] rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+    // pr-5: the icon makes the left padding read bigger than it is, so the
+    // right side gets a touch more to visually balance the card
+    <div className="w-max max-w-[19rem] rounded-xl border border-line bg-surface/95 p-4 pr-5 shadow-lg">
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pine-tint text-pine">
           <svg
