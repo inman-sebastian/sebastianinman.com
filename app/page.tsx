@@ -188,12 +188,14 @@ export default function HomePage() {
           <Reveal delay={150}>
             <ul className="mt-6 flex flex-wrap justify-center gap-3">
               {areas.map((area) => (
-                <li key={area.slug}>
+                // flex-1 + min-w: cards stretch to fill the full row width
+                // on desktop, and wrap into even rows on smaller screens
+                <li key={area.slug} className="min-w-36 flex-1">
                   {/* Mini vertical card in the ServiceCard mold: image
                       flush to the top with a 1px inset, name below */}
                   <Link
                     href={`/${area.slug}`}
-                    className="block w-36 overflow-hidden rounded-xl border border-line bg-background transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
+                    className="block w-full overflow-hidden rounded-xl border border-line bg-background transition-[translate,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md motion-reduce:hover:translate-y-0"
                   >
                     <div className="p-px">
                       <Image
