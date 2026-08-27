@@ -49,7 +49,7 @@ export default function FaqPage() {
       <HeroSplash
         compact
         cards={false}
-        eyebrow="FAQ"
+        eyebrow="Frequently asked questions"
         heading={(page.frontmatter.title as string) ?? "FAQ"}
         text={(page.frontmatter.heroSubline as string) || undefined}
       />
