@@ -75,7 +75,7 @@ owners rather than a tech crowd.
   - **Notes:** no mascot characters or thought bubbles; v1's chat-bubble
     character read strangely.
 
-- [ ] `public/images/faq.jpg` (4:3, e.g. 1200×900)
+- [x] `public/images/faq.jpg` (4:3, e.g. 1200×900)
   - **Prompt:** "Friendly modern flat illustration of two people having a relaxed conversation at a small wooden cafe table: one is a business owner with a notebook full of scribbled questions, the other listens warmly over coffee with a laptop open between them, morning light through a window, a few plants, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; notebook scribbles abstract."
   - **Notes:** the FAQ page's sticky illustration; the scene is the free
     consult itself (coffee, questions, listening) to echo the page's
