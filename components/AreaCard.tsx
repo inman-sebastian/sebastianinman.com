@@ -25,7 +25,7 @@ export function AreaCard({ area }: { area: LandingPage }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-semibold text-pine-dark transition-colors duration-300 group-hover:text-pine">
+        <h3 className="text-lg font-semibold text-pine-dark transition-colors duration-300 group-hover:text-pine">
           {area.title}
         </h3>
         {area.areaBlurb && (

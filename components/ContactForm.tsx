@@ -143,7 +143,7 @@ function FormInner({
   if (state.status === "success") {
     return (
       <div className="rounded-xl border border-pine/30 bg-pine-tint p-8 text-center">
-        <h2 className="text-2xl font-semibold text-pine-dark">Got it, thanks!</h2>
+        <h2 className="text-xl font-semibold text-pine-dark">Got it, thanks!</h2>
         <p className="mt-3 leading-relaxed text-muted">
           Your message is on its way. I&rsquo;ll get back to you within one
           business day, usually sooner.

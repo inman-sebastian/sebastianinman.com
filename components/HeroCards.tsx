@@ -150,7 +150,7 @@ function CardBody({ card }: { card: HeroCard }) {
         <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
           {card.answer}
         </p>
-        <p className="mt-1 text-[11px] text-muted">{card.caption}</p>
+        <p className="mt-1 text-xs text-muted">{card.caption}</p>
       </div>
     );
   }

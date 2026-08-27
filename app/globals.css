@@ -158,7 +158,8 @@ img.hero-kenburns {
   margin-bottom: 1rem;
 }
 .prose-site h3 {
-  font-size: 1.2rem;
+  /* Matches the grid-card title tier (text-xl) */
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-pine-dark);
   margin-top: 1.75rem;

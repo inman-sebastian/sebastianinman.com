@@ -84,6 +84,29 @@ accent. Fonts: Fraunces (headings), Inter (body). Headings use
 `text-wrap: balance` and body text uses `text-wrap: pretty` globally, so
 don't hand-tune line breaks.
 
+### Typography scale (follow this; no other sizes)
+
+Every piece of text belongs to one of these roles. Headings are Fraunces
+automatically (base layer); body is Inter.
+
+| Role | Classes | Where |
+|---|---|---|
+| Display | `text-4xl sm:text-5xl font-semibold leading-none` | hero h1 ONLY |
+| Section heading | `text-3xl font-semibold` | every section h2 (prose h2 matches at 1.875rem) |
+| Card title, large | `text-xl font-semibold` | grid cards (ServiceCard, BundleCard); prose h3 matches at 1.25rem |
+| Card title, small | `font-serif text-lg font-semibold` | compact/stacked cards (promise rows, step cards, AreaCard, strip headings) |
+| Lead body | `text-lg leading-relaxed` | hero sublines, section intros, about blurb |
+| Body | (base, 16px) | prose, checklist items |
+| Support | `text-sm` | card body copy, subs, buttons, form labels, footer |
+| Caption | `text-xs` | tags, chip labels, hero-card captions |
+| Eyebrow, page | `text-sm font-semibold uppercase tracking-wide` | hero eyebrows, callout titles, contact-info labels |
+| Eyebrow, card | `text-xs font-semibold uppercase tracking-wide` | in-card labels ("Best for", "Popular combos") |
+
+Rules: never `text-2xl` (the 3xl -> xl jump is deliberate), never arbitrary
+pixel sizes (`text-[11px]`), and don't invent a new tier for one spot; pick
+the nearest role. If a design genuinely needs a new tier, add it to this
+table in the same change.
+
 ## Recipes
 
 ### Add or edit a service
