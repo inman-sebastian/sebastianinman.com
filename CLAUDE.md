@@ -73,6 +73,7 @@ The reader is a busy small-business owner, **not** a technical person.
 | Services (one MDX file each) | `content/services/*.mdx` |
 | SEO landing pages (one MDX file each; filename = URL slug) | `content/landing/*.mdx` |
 | Long-form pages (About) | `content/pages/*.mdx` |
+| Blog posts (one MDX file each; filename = URL slug) | `content/blog/*.mdx` |
 | FAQ questions & answers | `content/pages/faq.mdx` frontmatter (`faqs` list; rendered as accordions + FAQPage structured data by `app/faq/page.tsx`) |
 | Image checklist / prompts | `IMAGES.md` |
 | Content loaders | `lib/content.ts` |
@@ -254,6 +255,33 @@ treetops are a 16:9 full-width background (`SiteImage` with `fill`) and the
 headshot is a real portrait photo. The hero (`HeroSplash`) is deliberately a
 flat `pine-dark` background with NO image; don't add one back without
 Sebastian asking.
+
+### Write a blog post (a recurring Cowork job)
+
+Create `content/blog/<url-slug>.mdx`; it becomes `/blog/<url-slug>` and
+appears automatically on the index, in the sitemap, and in `/feed.xml`
+(newest first by `date`). Frontmatter: `title`, `description` (1-2
+sentences; card text, meta description, and RSS summary), `date`
+(ISO, "2026-08-27"), and optionally `image`/`imagePrompt`/`imageAlt`/
+`imageCaption` (4:3, path `/images/blog/<slug>.jpg`, normal IMAGES.md
+workflow; posts render fine without an image). Body = markdown with the
+full MDX component kit (Callout, CheckList, ChatBubble, StatRow).
+
+Editorial rules, on top of the voice guide:
+- Every post must be USEFUL to a small business owner on its own, with a
+  takeaway they can apply without hiring anyone. Posts that only exist
+  to sell read as content-farm filler and hurt more than help.
+- Practical, specific, honest. "Here's the test I use" beats "5 reasons
+  you need AI". Saying what ISN'T worth doing is on-brand and builds
+  more trust than any pitch (see the seed post's Callout).
+- No invented statistics, no fake client anecdotes, no "studies show".
+  If a claim needs a number Sebastian hasn't verified, cut the claim.
+- End with at most ONE soft link to /contact or a service page, woven
+  into a closing sentence, never a hard sales pitch.
+- Titles are sentences in the site's register ("How to spot the busywork
+  that's actually worth automating"), not listicle-speak.
+- Local color welcome where real (seasonal rushes, festival season,
+  Rogue Valley business life); never forced.
 
 ### Add a static page
 Create `app/<name>/page.tsx` (copy the shape of `app/about/page.tsx`), put

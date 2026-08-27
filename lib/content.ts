@@ -66,6 +66,21 @@ export type LandingPage = {
   body: string;
 };
 
+export type BlogPost = {
+  slug: string;
+  title: string;
+  /** One-to-two sentence summary; used on cards, meta description, RSS */
+  description: string;
+  /** ISO date, e.g. "2026-08-27" */
+  date: string;
+  /** Optional illustration (4:3); posts work fine without one */
+  image?: string;
+  imagePrompt?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  body: string;
+};
+
 function readMdxDir(dir: string) {
   const full = path.join(CONTENT_DIR, dir);
   if (!fs.existsSync(full)) return [];
@@ -131,6 +146,27 @@ export function getLandingPages(): LandingPage[] {
 
 export function getLandingPage(slug: string): LandingPage | undefined {
   return getLandingPages().find((p) => p.slug === slug);
+}
+
+/** All blog posts, newest first */
+export function getBlogPosts(): BlogPost[] {
+  return readMdxDir("blog")
+    .map(({ slug, data, body }) => ({
+      slug,
+      title: data.title ?? slug,
+      description: data.description ?? "",
+      date: data.date ?? "",
+      image: data.image,
+      imagePrompt: data.imagePrompt,
+      imageAlt: data.imageAlt ?? data.title ?? slug,
+      imageCaption: data.imageCaption,
+      body,
+    }))
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export function getBlogPost(slug: string): BlogPost | undefined {
+  return getBlogPosts().find((p) => p.slug === slug);
 }
 
 /** Load a single long-form page from content/pages (e.g. "about") */

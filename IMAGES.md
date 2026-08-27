@@ -94,6 +94,16 @@ owners rather than a tech crowd.
     automation, insights. Same friendly flat series as the other service
     illustrations; watch for lettering sneaking onto the laptop screen.
 
+## Blog post illustrations
+
+Optional per post (posts render fine without one), 4:3, path
+`public/images/blog/<post-slug>.jpg`, same friendly flat series.
+
+- [ ] `public/images/blog/busywork-worth-automating.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of a small business owner at a wooden desk sorting a pile of paper tasks into two neat trays, one tray glowing softly warm and one plain, a cup of coffee and a small plant nearby, morning light, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; papers blank."
+  - **Notes:** seed post about which busywork to automate; the two trays
+    are the post's whole thesis (worth it / leave it alone).
+
 ## Area cards (About page "Areas I serve")
 
 A matched series in the SAME friendly flat style as the service
