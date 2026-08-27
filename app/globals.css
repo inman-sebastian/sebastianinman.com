@@ -125,85 +125,6 @@ img.hero-kenburns {
   will-change: transform;
 }
 
-.swarm-float {
-  animation: float-slow var(--f-dur, 8s) ease-in-out var(--f-del, 0s) infinite;
-}
-
-/* Cartoon pop for busywork chips: quick squash (anticipation), inflate
-   past full size, then rupture instantly. Particles take over from
-   the rupture moment. */
-@keyframes chip-pop {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  22% {
-    transform: scale(0.86);
-    opacity: 1;
-  }
-  62% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  70% {
-    transform: scale(1.14);
-    opacity: 1;
-  }
-  76% {
-    transform: scale(1.2);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1.2);
-    opacity: 0;
-  }
-}
-.chip-pop {
-  animation: chip-pop 0.26s ease-in both;
-}
-@media (prefers-reduced-motion: reduce) {
-  .chip-pop {
-    animation: card-fade-out 0.3s ease both;
-  }
-}
-
-/* Particle burst when a busywork chip is popped */
-@keyframes burst-dot {
-  0% {
-    transform: translate(-50%, -50%) translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(0.15);
-    opacity: 0;
-  }
-}
-@keyframes burst-ring {
-  0% {
-    transform: translate(-50%, -50%) scale(0.35);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.7);
-    opacity: 0;
-  }
-}
-.burst-dot {
-  animation: burst-dot 0.34s ease-out 0.16s both;
-  opacity: 0;
-}
-.burst-ring {
-  animation: burst-ring 0.28s ease-out 0.16s both;
-  opacity: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  .burst-dot,
-  .burst-ring {
-    animation: none;
-    opacity: 0;
-  }
-}
-
 .draw-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -214,8 +135,7 @@ img.hero-kenburns {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  img.hero-kenburns,
-  .swarm-float {
+  img.hero-kenburns {
     animation: none;
   }
   .draw-check {

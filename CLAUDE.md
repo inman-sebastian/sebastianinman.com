@@ -101,8 +101,11 @@ and service-specific.
 Cards also show a "Best for" line from `bestFor` (3-4 short business
 types, e.g. "Contractors & trades"; pick types that genuinely fit the
 service). The page's designed sections come from frontmatter, NOT prose: `busywork`
-(5-8 SHORT phrases, 2-4 words each, rendered as poppable floating chips
-under "Sound familiar?"; keep them concrete time-eaters, not sentences),
+(5-8 SHORT phrases, 2-4 words each, rendered as static notification-style
+cards under "Sound familiar?" via `BusyworkCards`, terracotta icons to
+read as tasks-waiting versus the hero cards' work-handled; keep them
+concrete time-eaters, not sentences. The interactive poppable swarm was
+retired as off-language; don't bring interaction or sound back here),
 `deliverables` (list, rendered as a checklist grid under "What you get"),
 optional `tools` (named tools/systems, rendered as two counter-scrolling
 marquee rows of chips under "Use any of these?" via `ToolMarquee`; the

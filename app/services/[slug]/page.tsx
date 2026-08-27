@@ -8,7 +8,7 @@ import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
 import { MdxBody } from "@/components/mdx";
-import { BusyworkSwarm } from "@/components/BusyworkSwarm";
+import { BusyworkCards } from "@/components/BusyworkCards";
 import { ToolMarquee } from "@/components/ToolMarquee";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
@@ -148,15 +148,9 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
                 A few of the time-eaters this service clears off your plate.
               </p>
             </Reveal>
-            <Reveal delay={150}>
-              <div className="mt-10 max-w-4xl">
-                <BusyworkSwarm chips={service.busywork} />
-              </div>
-              <p className="mt-6 text-sm text-muted">
-                Go ahead, pop a few. They&rsquo;ll be back. That&rsquo;s the
-                point.
-              </p>
-            </Reveal>
+            <div className="mt-10 max-w-4xl">
+              <BusyworkCards items={service.busywork} />
+            </div>
           </div>
         </section>
       )}

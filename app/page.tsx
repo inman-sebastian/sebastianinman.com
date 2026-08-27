@@ -5,7 +5,7 @@ import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
 import { ServiceCard } from "@/components/ServiceCard";
-import { BusyworkSwarm } from "@/components/BusyworkSwarm";
+import { BusyworkCards } from "@/components/BusyworkCards";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 
@@ -60,30 +60,29 @@ export default function HomePage() {
               taking them back.
             </p>
           </Reveal>
-          <Reveal delay={150}>
-            <div className="mt-10 max-w-4xl">
-              <BusyworkSwarm
-                chips={[
-                  "Chasing late invoices",
-                  "Retyping customer info",
-                  "Missed calls",
-                  "After-hours questions",
-                  "No-show appointments",
-                  "Inbox overload",
-                  "Copy-paste bookkeeping",
-                  "Overdue follow-ups",
-                  "Review replies",
-                  "Month-end reports",
-                  "Website updates",
-                  "Double bookings",
-                  "Reminder texts",
-                  "Quote follow-ups",
-                ]}
-              />
-            </div>
+          <div className="mt-10 max-w-4xl">
+            <BusyworkCards
+              items={[
+                "Chasing late invoices",
+                "Retyping customer info",
+                "Missed calls",
+                "After-hours questions",
+                "No-show appointments",
+                "Inbox overload",
+                "Copy-paste bookkeeping",
+                "Overdue follow-ups",
+                "Review replies",
+                "Month-end reports",
+                "Website updates",
+                "Double bookings",
+                "Reminder texts",
+                "Quote follow-ups",
+              ]}
+            />
+          </div>
+          <Reveal delay={900}>
             <p className="mt-6 text-sm text-muted">
-              Go ahead, pop a few. They&rsquo;ll be back. Making them disappear
-              for good is my job.
+              If a few of these look familiar, we should talk.
             </p>
           </Reveal>
         </div>
