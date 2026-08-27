@@ -99,6 +99,12 @@ owners rather than a tech crowd.
 Optional per post (posts render fine without one), 4:3, path
 `public/images/blog/<post-slug>.jpg`, same friendly flat series.
 
+- [x] `public/images/blog/first-automation-i-recommend.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of a busy small shop: the owner happily helping a customer at the wooden counter while a phone on the countertop softly glows and sends out a small friendly abstract speech bubble, warm afternoon light, plants and tidy shelves, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; speech bubble abstract."
+  - **Notes:** post about the missed-call text-back; the scene is the
+    thesis (owner busy with a real customer while the phone politely
+    handles the missed one). Speech bubble must stay abstract.
+
 - [x] `public/images/blog/busywork-worth-automating.jpg` (4:3)
   - **Prompt:** "Friendly modern flat illustration of a small business owner at a wooden desk sorting a pile of paper tasks into two neat trays, one tray glowing softly warm and one plain, a cup of coffee and a small plant nearby, morning light, earthy cream, pine green, and terracotta palette. No text or lettering anywhere; papers blank."
   - **Notes:** seed post about which busywork to automate; the two trays

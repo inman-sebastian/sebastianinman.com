@@ -23,15 +23,24 @@ end to end Aug 2026.
 
 ## Session facts
 
-- Auth lives in agent-browser's persistent profile **"Profile 3"**
-  (agent-browser's own profile of that name, signed in as
-  hello@sebastiancodes.com; it is NOT Chrome's "Profile 3").
+- **Auth does NOT survive browser restarts** (verified Aug 2026): Google
+  invalidates the device session when the automation browser closes, and
+  `--restore`/`--profile` cannot bring it back (the restored account
+  chooser shows "Signed out"). Practical model: each WORK SESSION starts
+  with Sebastian signing in once in a `--headed` window; after that,
+  generate as many images as the session needs before closing. Batch
+  image work accordingly (all of a post's/page's images in one session).
+- Sign-in account: hello@sebastiancodes.com. A "Sign in with Google"
+  button or account chooser may appear mid-session; clicking through a
+  LIVE account is fine, but an account marked "Signed out", an email or
+  password field, or any challenge means STOP and hand it to Sebastian.
 - The site's collection: project **"Small Business Automation
   Illustrations"** at
   `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e`
 - Model: **Nano Banana 2**, aspect **4:3** (`crop_landscape`), outputs
-  **x2** (two candidates to choose from). Downloads at **2K Upscaled**
-  come out 2400x1792, matching every existing source image.
+  **x2** (two candidates to choose from). The aspect RESETS to 16:9
+  every new session; always check it (step 3). Downloads at **2K
+  Upscaled** come out 2400x1792, matching every existing source image.
 
 ## Steps
 
@@ -40,24 +49,30 @@ end to end Aug 2026.
    header). If writing a new prompt first, follow the style baseline and
    add the entry to IMAGES.md in the same change.
 
-2. **Open the collection** (headless is fine once authenticated):
+2. **Open the collection headed and get Sebastian signed in**:
 
    ```bash
-   agent-browser --profile "Profile 3" --session flow open \
+   agent-browser --session flow --headed open \
      "https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e"
    ```
 
-   Snapshot (`agent-browser --session flow snapshot -i -c`) and confirm
-   the collection loaded (media grid + "What do you want to create?"
-   textbox). A Google sign-in page here = STOP per the hard rules; have
-   Sebastian re-auth via `--headed`.
+   Snapshot (`agent-browser --session flow snapshot -i -c`). If the
+   collection loaded (media grid + "What do you want to create?"
+   textbox), proceed. If it's a sign-in page: ask Sebastian to sign in
+   using the headed window on his desktop, and wait for his go-ahead
+   (per the hard rules, this step is always his). Keep the browser open
+   for ALL of the session's generations; auth dies with the browser.
 
 3. **Check the model button** (reads like "🍌 Nano Banana 2
    crop_landscape x2"). If aspect isn't `crop_landscape`, click the
    button, click the "4:3" tab in the panel, and confirm.
 
-4. **Fill and submit**: `fill` the create textbox with the prompt, then
-   click the "arrow_forward Create" button (it enables once text is in).
+4. **Fill and submit**: click the create textbox, then use
+   `agent-browser --session flow keyboard type "<prompt>"` (real
+   keystrokes; programmatic `fill` sometimes fails to enable the Create
+   button). Re-snapshot and confirm "arrow_forward Create" is no longer
+   `[disabled]`, then click it. Remember refs go stale after the
+   settings panel interaction; re-snapshot before clicking.
 
 5. **Wait ~45s total** (renders show a % overlay; screenshot to check
    progress rather than polling snapshots).
