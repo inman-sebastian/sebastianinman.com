@@ -11,7 +11,8 @@ import { heroCardIcons, type HeroCard } from "@/lib/heroCards";
  * frontmatter); the defaults below are the homepage's mix. Desktop only.
  */
 
-// Homepage defaults. Top slot: one-line notifications
+// Homepage defaults. Top slot: one-line notifications, each based on a
+// real automation small businesses actually run
 const defaultPoolA: HeroCard[] = [
   {
     type: "notice",
@@ -37,6 +38,30 @@ const defaultPoolA: HeroCard[] = [
     title: "New customer entered once",
     sub: "Billing, email, and calendar all updated",
   },
+  {
+    type: "notice",
+    icon: "mail",
+    title: "Missed call texted back",
+    sub: "They heard from you before they tried the next place",
+  },
+  {
+    type: "notice",
+    icon: "star",
+    title: "Review request sent",
+    sub: "Right after the job wrapped up",
+  },
+  {
+    type: "notice",
+    icon: "sync",
+    title: "Sales synced to the books",
+    sub: "The register and QuickBooks finally agree",
+  },
+  {
+    type: "notice",
+    icon: "tag",
+    title: "Low stock flagged",
+    sub: "Reorder reminder before the weekend rush",
+  },
 ];
 
 // Homepage defaults. Lower slot: chats and insights
@@ -58,6 +83,24 @@ const defaultPoolB: HeroCard[] = [
     question: "Do you carry cedar fence boards?",
     answer: "We do! 6-foot boards are in stock right now.",
     caption: "Answered automatically at 6:15 AM",
+  },
+  {
+    type: "chat",
+    question: "Do you deliver?",
+    answer: "We do, within 15 miles! Want a quote?",
+    caption: "Answered automatically on a Sunday",
+  },
+  {
+    type: "chat",
+    question: "Can I move my appointment to Thursday?",
+    answer: "Done! See you Thursday at 2.",
+    caption: "Rescheduled without a phone call",
+  },
+  {
+    type: "notice",
+    icon: "users",
+    title: "New lead saved",
+    sub: "Website form straight into your customer list",
   },
 ];
 
