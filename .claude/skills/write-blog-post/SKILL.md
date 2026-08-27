@@ -37,7 +37,10 @@ is the workflow that applies them.
 
 4. **Generate the illustration**: invoke the `generate-image` skill and
    follow it exactly (its hard rules included: no credentials, stop at
-   challenges, mandatory eyeball check). If generation is blocked (auth
+   challenges, mandatory eyeball check). Blog art is generated in the
+   dedicated **Blog Posts** Flow collection; open its URL directly
+   (listed in the generate-image skill's Session facts) instead of the
+   root project. If generation is blocked (auth
    expired, Flow down), ship the post with its placeholder and tell
    Sebastian; a post may launch imageless, but never with an unchecked
    image.

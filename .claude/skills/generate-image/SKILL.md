@@ -34,9 +34,17 @@ end to end Aug 2026.
   button or account chooser may appear mid-session; clicking through a
   LIVE account is fine, but an account marked "Signed out", an email or
   password field, or any challenge means STOP and hand it to Sebastian.
-- The site's collection: project **"Small Business Automation
-  Illustrations"** at
-  `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e`
+- Flow is organized to mirror the site's structure: one root project
+  with dedicated collections per content area. Open the MOST SPECIFIC
+  collection for the image being generated (generating inside it keeps
+  the style influence and saves clicking through):
+  - Root project ("Small Business Automation Illustrations"; use for
+    anything without a dedicated collection):
+    `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e`
+  - **Blog Posts** collection (all `public/images/blog/` art):
+    `https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e/collection/7533d242-7c52-45a2-9c79-471027dcdb3e`
+  - Callers (e.g. the write-blog-post skill) may pass a collection URL;
+    if Sebastian adds new collections, list them here.
 - Model: **Nano Banana 2**, aspect **4:3** (`crop_landscape`), outputs
   **x2** (two candidates to choose from). The aspect RESETS to 16:9
   every new session; always check it (step 3). Downloads at **2K
@@ -49,11 +57,12 @@ end to end Aug 2026.
    header). If writing a new prompt first, follow the style baseline and
    add the entry to IMAGES.md in the same change.
 
-2. **Open the collection headed and get Sebastian signed in**:
+2. **Open the target collection headed and get Sebastian signed in**
+   (URL per Session facts; Blog Posts collection shown here):
 
    ```bash
    agent-browser --session flow --headed open \
-     "https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e"
+     "https://labs.google/fx/tools/flow/project/6e0d7078-a2db-40dc-99e7-31537267854e/collection/7533d242-7c52-45a2-9c79-471027dcdb3e"
    ```
 
    Snapshot (`agent-browser --session flow snapshot -i -c`). If the
