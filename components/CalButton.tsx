@@ -43,11 +43,18 @@ export function CalButton({
   return (
     <a
       href={site.bookingUrl}
-      target="_blank"
-      rel="noopener noreferrer"
       data-cal-link={CAL_LINK}
       data-cal-namespace={NAMESPACE}
       data-cal-config='{"theme":"light"}'
+      // The embed opens the modal but does NOT cancel the anchor's own
+      // navigation, so a plain click would do both. Suppress navigation
+      // only when the embed is actually loaded; if it failed, the link
+      // works normally (and middle-click/new-tab always does).
+      onClick={(e) => {
+        if (typeof window !== "undefined" && "Cal" in window) {
+          e.preventDefault();
+        }
+      }}
       className={buttonClassName(variant, className)}
     >
       {children}
