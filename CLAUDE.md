@@ -279,7 +279,12 @@ Editorial rules, on top of the voice guide:
   you need AI". Saying what ISN'T worth doing is on-brand and builds
   more trust than any pitch (see the seed post's Callout).
 - No invented statistics, no fake client anecdotes, no "studies show".
-  If a claim needs a number Sebastian hasn't verified, cut the claim.
+  Checkable facts (tool capabilities, prices, dates) are welcome when
+  validated against a primary or secondary source during the research
+  step (see the write-blog-post skill); anything unverifiable gets cut
+  or reworded as opinion. Research informs the post, but the prose is
+  always original and in the site's voice, never paraphrased from a
+  source, and body links stay internal.
 - End with at most ONE soft link to /contact or a service page, woven
   into a closing sentence, never a hard sales pitch.
 - Titles are sentences in the site's register ("How to spot the busywork
