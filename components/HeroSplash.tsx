@@ -42,10 +42,12 @@ export function HeroSplash({
   return (
     <section className="relative overflow-hidden bg-pine-dark">
       {cards && <HeroCards poolA={poolA} poolB={poolB} />}
-      {/* Sawtooth bottom edge: cream teeth biting into the green */}
+      {/* Sawtooth bottom edge: cream teeth biting into the green.
+          -bottom-px sinks it 1px into the next section so subpixel
+          rounding can't leave a green hairline under the teeth. */}
       <svg
         aria-hidden="true"
-        className={`absolute inset-x-0 bottom-0 h-2.5 w-full ${
+        className={`absolute inset-x-0 -bottom-px h-2.5 w-full ${
           edge === "surface" ? "text-surface" : "text-background"
         }`}
       >
