@@ -260,8 +260,12 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
       consumer-facing niches (restaurants, lodging, salons, retail) are an
       uncontested differentiator. Revisit the `bestFor` frontmatter lists
       once actual inquiries show which niches respond.
-- [ ] **About page bio facts are drafted, not verified**: `{/* VERIFY */}`
-      comments in `content/pages/about.mdx` mark invented claims ("over a
-      decade", personal story) awaiting Sebastian's corrections
+- [x] **About page bio facts verified by Sebastian** (Aug 2026): 13 years
+      as a senior web developer (mostly freelance, sectors from finance
+      to manufacturing to e-commerce), 13 years in Southern Oregon, coffee
+      offer confirmed. Results claims stay goal-framed ("scoped to pay for
+      itself"), not statistical, until real client data exists. He lives
+      in Talent; deliberately NOT stated in copy (privacy; location is
+      always "Southern Oregon" / "Rogue Valley")
 - [x] **Images** (Aug 2026): every slot has final art; `IMAGES.md` fully
       checked. New images go through `npm run optimize:images`
