@@ -71,4 +71,9 @@ is the workflow that applies them.
 
 7. **Commit** post + IMAGES.md + image together, and summarize for
    Sebastian: topic, the takeaway a reader leaves with, what the
-   research validated (with sources), and the image.
+   research validated (with sources), and the image. **Pushing is
+   deploying** (main auto-deploys), so push only when he says to.
+   He can also review and publish the post himself in Mission Control
+   (`/blog`, port 4848), which shows whether a post is live and puts
+   the push behind a confirm step; its checks (frontmatter, MDX
+   compile, unknown components, em dashes) are worth a look either way.

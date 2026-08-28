@@ -323,6 +323,65 @@ the palette changes). The agreement is not yet
 lawyer-reviewed; flag that whenever one is drafted. Never quote below
 a service's `startingPrice`.
 
+## Mission Control (the local business app)
+
+`mission-control/` is Sebastian's control center: a Next.js app with its
+own package.json, port 4848, "mission-control" launch config, LOCAL ONLY
+and never deployed (it holds client data). See its README for the full
+picture. Built so far: the CRM core and the document workspace. Pipeline
+stages live in `mission-control/lib/stages.ts` and match the arc in
+`docs/clients/email-templates.md`; keep the two in step.
+
+Records are one markdown file per person in `mission-control/data/clients/`,
+git-ignored in both that folder and the repo root. Frontmatter is the
+structured half (stage, contact, quote, next step), the body is notes
+plus a `## Timeline` section of `### YYYY-MM-DD · What happened` entries,
+oldest first, timeline last in the file. **Editing those files by hand is
+a supported path**: Cowork can read and write them directly and the app
+picks the change up on refresh. Inside the app, `lib/clients.ts` is the
+only writer.
+
+The app reads `content/site.ts` and `content/services/*.mdx` live (never
+duplicate contact info or prices into it) and mirrors the brand tokens in
+its own `app/globals.css`, same arrangement as `paperwork-app/style.css`.
+
+Documents (proposals, agreements, invoices) are started from the
+`docs/clients/` templates on a client's page, edited and previewed in the
+app, and generated as PDFs. Drafts DID NOT MOVE: they stay in
+`docs/clients/drafts/`, linked to a record by `record: <client-slug>`
+frontmatter (or a filename that starts with the client's slug).
+Templates fill in facts only (names, date, price and its half, phone,
+next invoice number, terms); the `{{WRITING PROMPTS}}` stay, and
+generating is blocked while any remain. Preview and PDF both shell out to
+`paperwork-app` (`preview.js` and `generate.js`), so the print CSS and
+`buildPdf()` stay untouched and the CLI keeps working for Cowork.
+
+Client emails go out from the composer (`/clients/<slug>/email`), which
+opens the stage's template from `docs/clients/email-templates.md` filled
+with the facts, offers their generated PDFs as attachments, and splits
+writing from sending into two screens: the second shows the exact
+sender, recipient, subject, attachments, and body, and only its button
+reaches Resend. Credentials come from the repo root `.env.local` via
+`mission-control/lib/env.ts` (Next only loads env files from its own
+folder). `lib/send.ts` is the ONLY thing in the app that reaches off the
+machine; nothing sends on a schedule, a save, or any other trigger.
+**Cowork never presses send without Sebastian saying so in the moment**,
+same rule as the draft-client-paperwork skill.
+
+The blog CMS (`/blog`) creates and edits `content/blog/*.mdx` and shows
+where each post stands (not on the site, edited since it went up,
+committed but not pushed, live). **Save and publish are two separate
+buttons and must stay that way**: save writes the file, publish commits
+and pushes, and pushing IS deploying. The commit is scoped by pathspec to
+the post and its image, so nothing else in the working tree rides along;
+never make that a `git add -A`. `mission-control/lib/validate.ts` blocks
+publishing on missing frontmatter, MDX that will not compile, an unknown
+component (checked against `components/mdx.tsx`), or a frontmatter image
+with no file, and warns on em dashes.
+
+Not built: payment processor (undecided; ask before wiring anything to
+money) and Gmail.
+
 ## Deferred tasks (not yet done; check before assuming)
 
 - [x] **Vercel deployment + domain** (Aug 2026): live at

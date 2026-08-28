@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "paperwork-app", "start"],
       "port": 4747
+    },
+    {
+      "name": "mission-control",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "mission-control", "run", "dev"],
+      "port": 4848
     }
   ]
 }

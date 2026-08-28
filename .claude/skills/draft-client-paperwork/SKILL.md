@@ -24,7 +24,11 @@ mirrors the print layout (Letter-size sheet, pinned footer) and its
   copy draft contents into committed files, chat logs that become
   content, or the public site. `git status` must stay clean of drafts.
 - **Sebastian sends everything.** Draft, render, tell him it's ready.
-  Never email a client or submit anything on his behalf.
+  Never email a client or submit anything on his behalf. Mission Control
+  now has a send button (composer at `/clients/<slug>/email`, Resend
+  behind a two-step confirm); that does not change this rule. Cowork
+  fills the wording and attaches the PDF, Sebastian presses send, unless
+  he says otherwise in the moment.
 - **Never quote below the service page's starting price** or change
   payment terms without Sebastian saying so explicitly.
 - The agreement template is **not lawyer-reviewed** until its header
@@ -60,7 +64,9 @@ come from his notes, never from imagination.
 
 4. **For emails**: fill the matching template from
    `email-templates.md` and present the finished text in chat for
-   copy-paste. Subject line included.
+   copy-paste. Subject line included. Sebastian can also open the
+   composer in Mission Control, which loads the same template already
+   filled with the client's details and their PDFs ready to attach.
 
 5. **Hand off**: tell Sebastian the finished PDF path
    (`docs/clients/drafts/out/<slug>.pdf`, ready to attach to the
@@ -78,6 +84,11 @@ come from his notes, never from imagination.
   and position:fixed backgrounds clip to the content area in current
   Chrome. Don't "simplify" this structure without re-testing a
   multi-page PDF.
+- Mission Control (`mission-control/`, port 4848) now wraps this same
+  system for Sebastian: it starts drafts from these templates, edits
+  and previews them, and generates PDFs. It does that by SHELLING OUT
+  to `paperwork-app/preview.js` and `generate.js`, so this workflow and
+  the CLI below stay the one implementation. Drafts did not move.
 - The paperwork app is plain Node with NO hot reload: after any edit
   to `paperwork-app/server.js`, RESTART the server (style.css is read
   per-request and needs no restart). A stale server serves stale

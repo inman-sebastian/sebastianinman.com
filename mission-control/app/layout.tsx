@@ -1,0 +1,68 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Fraunces, Outfit } from "next/font/google";
+import "./globals.css";
+
+const outfit = Outfit({ variable: "--font-body", subsets: ["latin"] });
+const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Mission Control",
+  description: "Local control center for Sebastian Inman's business.",
+  robots: { index: false, follow: false },
+};
+
+const NAV = [
+  { href: "/", label: "Dashboard" },
+  { href: "/clients", label: "Clients" },
+  { href: "/documents", label: "Documents" },
+  { href: "/blog", label: "Blog" },
+  { href: "/clients/new", label: "New lead" },
+];
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html
+      lang="en"
+      className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">
+        <header className="border-b border-line bg-surface">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="size-2.5 rounded-full bg-terracotta" />
+              <span className="font-serif text-lg font-semibold text-pine-dark">
+                Mission Control
+              </span>
+            </Link>
+            <nav className="flex items-center gap-4 text-sm font-semibold text-muted">
+              {NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:text-pine-dark"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <p className="ml-auto rounded-full bg-terracotta-tint px-3 py-1 text-xs font-semibold uppercase tracking-wide text-terracotta-dark">
+              Local only · never deployed
+            </p>
+          </div>
+        </header>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
+          {children}
+        </main>
+        <footer className="border-t border-line px-6 py-5 text-center text-xs text-muted">
+          Client records live in this folder&apos;s git-ignored{" "}
+          <code>data/</code>. Nothing here ships to the website.
+        </footer>
+      </body>
+    </html>
+  );
+}

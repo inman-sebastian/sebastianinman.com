@@ -1,0 +1,28 @@
+{
+  "name": "mission-control",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-only control center for Sebastian's business: CRM, client paperwork, and site content. Holds client data; never deployed.",
+  "scripts": {
+    "dev": "next dev --port 4848 --hostname 127.0.0.1",
+    "start": "next dev --port 4848 --hostname 127.0.0.1",
+    "build": "next build",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^3.1.1",
+    "gray-matter": "^4.0.3",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "resend": "^6.25.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+.next/
+
+# Client records. This is the whole reason the app is local only.
+data/

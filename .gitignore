@@ -42,3 +42,6 @@ next-env.d.ts
 
 # client paperwork drafts: contain client data, never committed/deployed
 docs/clients/drafts/
+
+# mission-control records: same rule, second wall (the app ignores it too)
+mission-control/data/
