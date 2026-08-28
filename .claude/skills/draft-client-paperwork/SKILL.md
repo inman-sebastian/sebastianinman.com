@@ -6,12 +6,14 @@ description: Draft client-facing paperwork (proposal, services agreement, or cli
 # Draft client paperwork
 
 Turns consult notes into ready-to-send documents using the templates
-in `docs/clients/`. Proposals and agreements become markdown drafts
-rendered by the standalone paperwork app (`paperwork-app/`, port 4747:
-brand letterhead, print-to-PDF, no website chrome); emails are
-delivered as text for Sebastian to paste into his mail client. Start
-the app with the "paperwork" launch config (or
-`npm --prefix paperwork-app start`).
+in `docs/clients/`. Proposals and agreements become markdown drafts;
+the standalone paperwork app (`paperwork-app/`) turns them into
+finished PDFs headlessly: `npm --prefix paperwork-app run generate --
+<slug>` writes `docs/clients/drafts/out/<slug>.pdf` (drafts with
+`signatures:` frontmatter get an appended brand signing page with
+REAL fillable AcroForm fields). Emails are delivered as text for
+Sebastian to paste into his mail client. The preview server ("paperwork"
+launch config, port 4747) is optional for on-screen checking.
 
 ## Hard rules
 
@@ -48,18 +50,20 @@ come from his notes, never from imagination.
    guide applies in full (plain language, no em dashes, warm not
    corporate). Keep proposals to one page of content.
 
-3. **Render and check**: start the paperwork app ("paperwork" launch
-   config), open `http://localhost:4747/doc/<slug>`, confirm it
-   renders cleanly (letterhead, title, no leaked placeholders), and
-   screenshot it for Sebastian.
+3. **Generate and check**: run `npm --prefix paperwork-app run
+   generate -- <slug>`, then Read the output PDF
+   (`docs/clients/drafts/out/<slug>.pdf`) page by page: letterhead,
+   title, no leaked placeholders, no broken page breaks, and (for
+   agreements) the signing page with fields present.
 
 4. **For emails**: fill the matching template from
    `email-templates.md` and present the finished text in chat for
    copy-paste. Subject line included.
 
-5. **Hand off**: tell Sebastian the draft is at
-   `http://localhost:4747/doc/<slug>` and that Cmd+P saves the PDF. For agreements, include the
-   lawyer-review reminder until the template header says reviewed.
+5. **Hand off**: tell Sebastian the finished PDF path
+   (`docs/clients/drafts/out/<slug>.pdf`, ready to attach to the
+   matching email template). For agreements, include the lawyer-review
+   reminder until the template header says reviewed.
 
 ## Facts
 
@@ -82,14 +86,18 @@ come from his notes, never from imagination.
   reads brand contact info live from `content/site.ts` and renders
   plain markdown, so drafts can be `.md` or `.mdx` with no components.
 - Documents needing signatures declare them in frontmatter
-  (`signatures:` list of names, e.g. "Jamie Doe, Sample Bakery"); the
-  app renders ruled signing blocks with date lines after the body.
-  Never write signature underscores in the markdown body. The printed
-  lines are signed with pen or PDF markup tools (Preview, Fill &
-  Sign); browser print-to-PDF cannot produce interactive form fields,
-  and that's fine: marked-up signatures are ESIGN-valid. If real
-  audit-trail e-signing is ever needed, that's an e-sign service
-  (DocuSign, DocuSeal), not this app.
+  (`signatures:` list of names, e.g. "Jamie Doe, Sample Bakery").
+  Never write signature underscores in the markdown body. generate.js
+  appends a native signing page with real fillable text fields
+  (typed signature + date per signer, ESIGN-valid); recipients can
+  also print it and sign with a pen. The HTML preview shows plain
+  ruled lines for the same data. If audit-trail e-signing is ever
+  needed, that's an e-sign service (DocuSign, DocuSeal), not this app.
+- generate.js drives the INSTALLED Chrome via puppeteer-core
+  (override path with PAPERWORK_CHROME) and uses
+  assets/fonts/fraunces-600-static.ttf for the signing page: the
+  variable-font slice the OG images use breaks letter spacing when
+  embedded in PDFs; keep both files.
 - Prices live in `content/services/*.mdx` frontmatter
   (`startingPrice`). Default terms: half up front, remainder within 14
   days of delivery, 30-day free-fix window. Sebastian can override
