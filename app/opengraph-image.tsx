@@ -12,10 +12,6 @@ export default async function OpenGraphImage() {
       <OgFrame
         eyebrow="Automation & AI for small businesses"
         headline="Your business runs better when the busywork runs itself."
-        card={{
-          title: "Missed call texted back",
-          sub: "They heard from you in seconds",
-        }}
       />
     ),
     { ...size, fonts: await ogFonts() }

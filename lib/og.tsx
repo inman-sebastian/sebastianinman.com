@@ -38,12 +38,12 @@ export function OgFrame({
   eyebrow,
   headline,
   headlineSize = 66,
-  card,
+  sub,
 }: {
   eyebrow: string;
   headline: string;
   headlineSize?: number;
-  card?: { title: string; sub: string };
+  sub?: string;
 }) {
   return (
     <div
@@ -106,59 +106,25 @@ export function OgFrame({
             fontSize: headlineSize,
             lineHeight: 1.12,
             color: "#faf6ef",
-            maxWidth: card ? 760 : 1000,
+            maxWidth: 1000,
           }}
         >
           {headline}
         </div>
-      </div>
-
-      {/* A floating hero-style notification card */}
-      {card && (
-        <div
-          style={{
-            position: "absolute",
-            top: 170,
-            right: 64,
-            display: "flex",
-            alignItems: "center",
-            gap: 18,
-            background: "#fdfbf7",
-            borderRadius: 18,
-            padding: "24px 30px",
-            transform: "rotate(2deg)",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.25)",
-          }}
-        >
+        {sub && (
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 52,
-              height: 52,
-              borderRadius: 9999,
-              background: "#d9ecdc",
+              fontSize: 27,
+              lineHeight: 1.45,
+              color: "#cfe0d5",
+              maxWidth: 880,
+              marginTop: 26,
             }}
           >
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-              <path
-                d="m4.5 12.75 6 6 9-13.5"
-                stroke="#234f3e"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {sub}
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 26, color: "#1f3d31" }}>{card.title}</div>
-            <div style={{ fontSize: 20, color: "#6b7f74", marginTop: 4 }}>
-              {card.sub}
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Cream sawtooth edge with the domain, like every page's fold */}
       <div
