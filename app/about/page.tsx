@@ -32,7 +32,7 @@ export default function AboutPage() {
         cards={false}
         eyebrow="About"
         heading={(page.frontmatter.title as string) ?? "About"}
-        text="I'm the one-person shop behind everything on this site. Here's who you'd be working with, how I ended up in Southern Oregon, and what working together looks like."
+        text="I'm the one-person shop behind everything on this site: based in Southern Oregon, working with small businesses everywhere. Here's what working together looks like."
       />
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
