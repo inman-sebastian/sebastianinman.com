@@ -1,49 +1,23 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/content/site";
+import { OgFrame, OG_SIZE, ogFonts } from "@/lib/og";
 
 export const alt = `${site.name} | ${site.tagline}`;
-export const size = { width: 1200, height: 630 };
+export const size = OG_SIZE;
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+export default async function OpenGraphImage() {
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: "#18382c",
-          color: "#faf6ef",
-          fontFamily: "Georgia, serif",
+      <OgFrame
+        eyebrow="Automation & AI for small businesses"
+        headline="Your business runs better when the busywork runs itself."
+        card={{
+          title: "Missed call texted back",
+          sub: "They heard from you in seconds",
         }}
-      >
-        <div style={{ fontSize: 64, fontWeight: 700 }}>{site.name}</div>
-        <div
-          style={{
-            marginTop: 24,
-            fontSize: 36,
-            color: "#e9f0ea",
-            maxWidth: 900,
-          }}
-        >
-          {site.tagline}
-        </div>
-        <div
-          style={{
-            marginTop: 48,
-            fontSize: 26,
-            color: "#c05f33",
-            display: "flex",
-          }}
-        >
-          sebastianinman.com
-        </div>
-      </div>
+      />
     ),
-    { ...size }
+    { ...size, fonts: await ogFonts() }
   );
 }

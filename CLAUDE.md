@@ -271,7 +271,10 @@ Sebastian asking.
 
 Create `content/blog/<url-slug>.mdx`; it becomes `/blog/<url-slug>` and
 appears automatically on the index, in the sitemap, and in `/feed.xml`
-(newest first by `date`). Frontmatter: `title`, `description` (1-2
+(newest first by `date`). Every post also gets a branded share card
+automatically (`app/blog/[slug]/opengraph-image.tsx` renders the title
+on the OG frame in `lib/og.tsx`; fonts are vendored TTFs in
+`assets/fonts`); nothing to do per post. Frontmatter: `title`, `description` (1-2
 sentences; card text, meta description, and RSS summary), `date`
 (ISO, "2026-08-27"), and optionally `image`/`imagePrompt`/`imageAlt`/
 `imageCaption` (4:3, path `/images/blog/<slug>.jpg`, normal IMAGES.md
