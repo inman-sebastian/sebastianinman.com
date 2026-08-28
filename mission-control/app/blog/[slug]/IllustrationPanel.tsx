@@ -6,7 +6,6 @@ import {
   discardCandidateAction,
   dismissJobAction,
   generateIllustrationAction,
-  setIllustrationAction,
   uploadIllustrationAction,
 } from "@/app/blog/actions";
 import type { Job } from "@/lib/illustrate";
@@ -14,8 +13,8 @@ import type { Candidate } from "@/lib/images";
 
 /**
  * The illustration half of a post: what it looks like now, a button that
- * runs the real Flow pipeline, and two ways to point at a file without
- * typing a path.
+ * runs the real Flow pipeline, whatever that run has staged for a
+ * decision, and an upload for art made elsewhere.
  */
 export function IllustrationPanel({
   slug,
@@ -24,8 +23,6 @@ export function IllustrationPanel({
   imagePrompt,
   imageAlt,
   imageCaption,
-  suggestedPath,
-  available,
   initialJob,
   candidates,
 }: {
@@ -35,9 +32,6 @@ export function IllustrationPanel({
   imagePrompt: string;
   imageAlt: string;
   imageCaption: string;
-  suggestedPath: string;
-  /** Files already in public/images/blog */
-  available: string[];
   initialJob: Job;
   /** Generated images and previously-used ones, none of them live */
   candidates: Candidate[];
@@ -57,7 +51,16 @@ export function IllustrationPanel({
   // reports back that one is going
   useEffect(() => {
     if (state.message) {
-      setJob({ state: "running", startedAt: "", elapsed: 0, log: "" });
+      setJob({
+        state: "running",
+        startedAt: "",
+        elapsed: 0,
+        log: "",
+        summary: "",
+        costUsd: null,
+        denials: [],
+        problem: "",
+      });
     }
   }, [state.message]);
 
@@ -158,10 +161,6 @@ export function IllustrationPanel({
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Friendly modern flat illustration of ... warm cream, deep pine green, and terracotta palette. No text or lettering anywhere."
           />
-          <p className="mt-1 text-xs text-muted">
-            Generator instructions only: scene, style, palette. Cast any people
-            explicitly, or they come out as the generator&apos;s default.
-          </p>
         </div>
 
         <form action={formAction} id="generate-illustration">
@@ -181,12 +180,6 @@ export function IllustrationPanel({
                 ? "Generate a new one"
                 : "Generate the illustration"}
           </button>
-          <p className="mt-2 text-xs text-muted">
-            Runs your Flow pipeline: your collection for style, two candidates,
-            a 2K download, and the eyeball check. It drives a browser, so give
-            it a few minutes. What it makes is staged below for you to look at;
-            it does not touch the post, the website, or git.
-          </p>
         </form>
 
         {state.error && (
@@ -209,15 +202,34 @@ export function IllustrationPanel({
               {job.state === "done" && "Finished."}
               {job.state === "failed" && "That run did not finish."}
             </p>
+
+            {job.summary && (
+              <p className="mt-1 whitespace-pre-wrap">{job.summary}</p>
+            )}
+
+            {job.problem && (
+              <p className="mt-2 rounded bg-terracotta-tint px-3 py-2 text-terracotta-dark">
+                {job.problem}
+              </p>
+            )}
+
+            {/* Live while it runs, so the minutes are not silent */}
             {job.log && (
-              <details className="mt-2">
+              <details className="mt-2" open={job.state === "running"}>
                 <summary className="cursor-pointer text-xs">
-                  What it did
+                  {job.state === "running" ? "What it's doing" : "What it did"}
                 </summary>
                 <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap text-xs">
                   {job.log}
                 </pre>
               </details>
+            )}
+
+            {job.costUsd !== null && job.state !== "running" && (
+              <p className="mt-2 text-xs opacity-80">
+                Covered by your Claude subscription. At API rates this run
+                would have been ${job.costUsd.toFixed(2)}.
+              </p>
             )}
             {job.state !== "running" && (
               <form action={dismissJobAction} className="mt-2">
@@ -233,14 +245,7 @@ export function IllustrationPanel({
 
       {candidates.length > 0 && (
         <section className="space-y-3 border-t border-line pt-4">
-          <div>
-            <p className="label">Waiting for you to decide</p>
-            <p className="text-xs text-muted">
-              Nothing here is on the post yet. Click one to see it full size.
-              Choosing it puts it on the post and keeps the current image here,
-              so you can go back.
-            </p>
-          </div>
+          <p className="label">Waiting for you to decide</p>
           <div className="grid gap-4 sm:grid-cols-2">
             {candidates.map((c) => (
               <figure
@@ -303,8 +308,7 @@ export function IllustrationPanel({
       )}
 
       <section className="space-y-3 border-t border-line pt-4">
-        <p className="label">Or use a file you already have</p>
-
+        <p className="label">Upload your own</p>
         <form action={uploadIllustrationAction} className="flex flex-wrap items-center gap-3">
           <input type="hidden" name="slug" value={slug} />
           <input
@@ -317,27 +321,6 @@ export function IllustrationPanel({
             Use this file
           </button>
         </form>
-        <p className="text-xs text-muted">
-          Copies it to <code>{suggestedPath}</code> and runs the optimizer. 4:3
-          is what every slot on the site expects.
-        </p>
-
-        {available.length > 0 && (
-          <form action={setIllustrationAction} className="flex flex-wrap items-center gap-3">
-            <input type="hidden" name="slug" value={slug} />
-            <select name="file" className="field max-w-xs" defaultValue={fileName}>
-              <option value="">No illustration</option>
-              {available.map((f) => (
-                <option key={f} value={f}>
-                  {f}
-                </option>
-              ))}
-            </select>
-            <button type="submit" className="btn btn-quiet">
-              Point at this one
-            </button>
-          </form>
-        )}
       </section>
     </div>
   );

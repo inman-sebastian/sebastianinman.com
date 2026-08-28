@@ -68,20 +68,63 @@ export async function publishFiles(
   if (rels.length === 0) return { ok: false, message: "Nothing to publish." };
   try {
     await git(["add", "--", ...rels]);
-    // The pathspec on commit is the guard: even if something else is
-    // staged, only these files go into this commit
-    await git(["commit", "-m", message, "--", ...rels]);
+    // Committing with nothing changed is an error, not a no-op, and a
+    // post that is already up to date is a normal thing to press
+    // publish on. In that case there is only a push left to do.
+    const staged = await git(["diff", "--cached", "--name-only", "--", ...rels]);
+    if (staged) {
+      // The pathspec on commit is the guard: even if something else is
+      // staged, only these files go into this commit
+      await git(["commit", "-m", message, "--", ...rels]);
+    }
     const pushed = await git(["push", "origin", "HEAD"]);
     const sha = await git(["rev-parse", "--short", "HEAD"]);
     return {
       ok: true,
-      message: `Committed ${sha} and pushed. ${pushed || "Vercel is building now."}`.trim(),
+      message: staged
+        ? `Committed ${sha} and pushed. ${pushed || "Vercel is building now."}`.trim()
+        : `Nothing new to commit, so just pushed. ${pushed || "Vercel is building now."}`.trim(),
     };
   } catch (err) {
-    const detail =
-      err && typeof err === "object" && "stderr" in err
-        ? String((err as { stderr: string }).stderr).trim()
-        : String(err);
-    return { ok: false, message: detail.split("\n").slice(0, 5).join("\n") };
+    return { ok: false, message: gitError(err) };
   }
+}
+
+/**
+ * Take a post off the site: remove the files, commit the removal, push.
+ *
+ * Deleting something already published is not the same act as deleting
+ * a local draft. A draft only exists here, so unlinking it is the whole
+ * job; a published post is live until a commit says otherwise, and
+ * leaving that commit unpushed would mean the post is still up with no
+ * page left in the CMS to tell you so.
+ */
+export async function removeAndPublish(
+  absPaths: string[],
+  message: string
+): Promise<PublishResult> {
+  const rels = absPaths.map((p) => path.relative(REPO_ROOT, p));
+  if (rels.length === 0) return { ok: false, message: "Nothing to remove." };
+  try {
+    await git(["rm", "-f", "--ignore-unmatch", "--", ...rels]);
+    const staged = await git(["diff", "--cached", "--name-only", "--", ...rels]);
+    if (!staged) return { ok: false, message: "Nothing was tracked to remove." };
+    await git(["commit", "-m", message, "--", ...rels]);
+    await git(["push", "origin", "HEAD"]);
+    const sha = await git(["rev-parse", "--short", "HEAD"]);
+    return {
+      ok: true,
+      message: `Removed in ${sha} and pushed. It comes off the site once Vercel rebuilds.`,
+    };
+  } catch (err) {
+    return { ok: false, message: gitError(err) };
+  }
+}
+
+function gitError(err: unknown): string {
+  const detail =
+    err && typeof err === "object" && "stderr" in err
+      ? String((err as { stderr: string }).stderr).trim()
+      : String(err);
+  return detail.split("\n").slice(0, 5).join("\n");
 }

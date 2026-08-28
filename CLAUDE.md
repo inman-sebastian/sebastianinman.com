@@ -402,11 +402,22 @@ Skill rules that matter: only businesses actually looked at, every signal
 carries the URL it was seen on, never invent a contact detail, and never
 contact anyone.
 
+Prospects also record where they are (`city`, optional `address`,
+`lat`/`lng`) and whether they have a Google Business Profile
+(`googleProfile`). The dashboard maps everyone who has coordinates
+(Mapbox, `MAPBOX_API_KEY` in the repo root `.env.local`, a public `pk.`
+token); a button geocodes anyone with a town but no pin via
+`mission-control/lib/geo.ts`. Pins are town-level unless a street
+address or a Google Maps embed gave something better, and records in the
+same town are nudged apart so they do not stack into one dot.
+
 `mission-control/scripts/detect-stack.mjs <url>` reads a site's metadata
 in one fetch and reports the platform (WordPress, Shopify, Squarespace,
 Wix…) plus the tools already running on it (booking, ordering, payments,
 email, chat, analytics), marking any that appear in the `tools` list on
-`content/services/tool-integration.mdx`. Its `platform:` and `stack:`
+`content/services/tool-integration.mdx`. It also reports a Google Maps
+link on the page, and pulls the exact pin coordinates out of the embed
+when there is one. Its `platform:` and `stack:`
 output goes into the prospect's frontmatter and shows on the prospect
 page. A non-200 reads nothing and says so; never record a block page as
 evidence about a business.

@@ -2,11 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { publishFiles } from "@/lib/git";
+import { fileState, publishFiles, removeAndPublish } from "@/lib/git";
 import {
   createPost,
   deletePost,
   getPost,
+  postPath,
   publishPaths,
   savePost,
 } from "@/lib/posts";
@@ -17,7 +18,6 @@ import {
   discardCandidate,
   optimizeImages,
   saveUpload,
-  webPathFor,
 } from "@/lib/images";
 
 /**
@@ -113,14 +113,6 @@ export async function generateIllustrationAction(
   return { message: "Started. It drives Flow in a browser, so give it a few minutes." };
 }
 
-/** Point the post at an image already sitting in public/images/blog */
-export async function setIllustrationAction(formData: FormData) {
-  const slug = text(formData, "slug");
-  const file = text(formData, "file");
-  savePost(slug, { image: file ? webPathFor(file) : "" });
-  revalidatePath(`/blog/${slug}`);
-}
-
 /** Take a file off Sebastian's machine and put it where the site expects */
 export async function uploadIllustrationAction(formData: FormData) {
   const slug = text(formData, "slug");
@@ -160,9 +152,31 @@ export async function dismissJobAction(formData: FormData) {
   revalidatePath(`/blog/${text(formData, "slug")}`);
 }
 
+/**
+ * Deleting a local draft just removes the file. Deleting something that
+ * is already published has to say so on the site too, so that one
+ * commits the removal and pushes it.
+ */
 export async function deletePostAction(formData: FormData) {
   const slug = text(formData, "slug");
-  deletePost(slug);
+  const post = getPost(slug);
+  if (!post) redirect("/blog");
+
+  const state = await fileState(postPath(slug));
+  if (state === "untracked") {
+    deletePost(slug);
+  } else {
+    const result = await removeAndPublish(
+      publishPaths(post),
+      `Remove blog post: ${post.title || slug}`
+    );
+    // git rm takes the file with it; if git refused, fall back to
+    // removing it here so the CMS does not keep showing a post the
+    // user has decided is gone
+    if (!result.ok) deletePost(slug);
+  }
+
+  clearJob(slug);
   revalidatePath("/blog");
   redirect("/blog");
 }

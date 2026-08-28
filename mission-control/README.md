@@ -120,6 +120,33 @@ means it read nothing at all and says so, rather than reporting an
 absence as a fact; a Cloudflare challenge page is not evidence about
 anybody's website.
 
+### Where they are, and the map
+
+Research records a `city` for every prospect and a street `address`
+where the listing shows one, plus whether they have a Google Business
+Profile (`googleProfile: yes | no | unknown`). Not having one is a real
+finding rather than a blank: it is why nobody local finds them on a
+phone, and it costs nothing to fix.
+
+`detect-stack.mjs` helps here too. A Google Maps embed on their own site
+carries the business's pin as `!2d<lng>!3d<lat>`, so when one is present
+the script prints exact coordinates, which beats geocoding the middle of
+a town.
+
+The dashboard shows everyone with coordinates on a Mapbox map,
+terracotta for prospects and pine for clients, with a popup linking to
+the record. Anything with a town but no coordinates gets a "place N more
+on the map" button, which geocodes through `lib/geo.ts` and writes the
+result into the record. That is a button rather than something that
+happens on save, because a record write should not depend on a network
+being there.
+
+Pins are usually town-level, and the map says so. Records sharing a town
+get a small deterministic offset so six businesses in Medford read as
+six pins rather than one. `MAPBOX_API_KEY` lives in the repo root's
+`.env.local` and is a public `pk.` token, which is the kind meant to be
+used from a browser.
+
 `data/do-not-contact.md` is a plain list, one business, domain, or
 address per line. Research skips them and the app refuses to write to
 them. Add anyone who asks, the day they ask.

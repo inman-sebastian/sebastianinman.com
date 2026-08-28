@@ -24,14 +24,6 @@ function safeName(name: string): string {
   return path.basename(name).replace(/[^A-Za-z0-9._-]/g, "");
 }
 
-export function listBlogImages(): string[] {
-  if (!fs.existsSync(BLOG_IMAGES_DIR)) return [];
-  return fs
-    .readdirSync(BLOG_IMAGES_DIR)
-    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
-    .sort();
-}
-
 /** Resolve a web path like /images/blog/x.jpg onto disk, refusing to
     step outside the blog images folder */
 export function blogImagePath(webPath: string): string | null {
@@ -41,11 +33,6 @@ export function blogImagePath(webPath: string): string | null {
   const full = path.join(BLOG_IMAGES_DIR, name);
   if (!full.startsWith(BLOG_IMAGES_DIR)) return null;
   return full;
-}
-
-export function blogImageExists(webPath: string): boolean {
-  const full = blogImagePath(webPath);
-  return Boolean(full && fs.existsSync(full));
 }
 
 /** Changes whenever the file does, so the browser reloads the preview */

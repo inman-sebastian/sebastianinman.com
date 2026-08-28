@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { publishPostAction } from "@/app/blog/actions";
+import type { PostStage } from "@/lib/posts";
 
 /**
  * Publishing, behind the same two-step confirm the email composer uses,
@@ -16,6 +17,7 @@ export function PublishPanel({
   defaultMessage,
   blocked,
   status,
+  stage,
 }: {
   slug: string;
   branch: string;
@@ -24,16 +26,52 @@ export function PublishPanel({
   /** Errors that have to be fixed first; empty means it is publishable */
   blocked: string[];
   status: string;
+  /** Everything on this panel reads off this, so an already-published
+      post is never described as though it were a draft */
+  stage: PostStage;
 }) {
   const [state, formAction, pending] = useActionState(publishPostAction, {});
   const [confirming, setConfirming] = useState(false);
   const [message, setMessage] = useState(defaultMessage);
 
+  const words = {
+    draft: {
+      heading: "Put it on the site",
+      action: "Publish this post",
+      confirm: "Yes, publish it",
+      warning: "This publishes it to sebastianinman.com.",
+      done: "It's on its way",
+    },
+    changed: {
+      heading: "Update the live post",
+      action: "Publish the changes",
+      confirm: "Yes, update it",
+      warning: "This replaces the live version on sebastianinman.com.",
+      done: "The update is on its way",
+    },
+    unpushed: {
+      heading: "Waiting to go out",
+      action: "Push it",
+      confirm: "Yes, push it",
+      warning: "This pushes what is already committed to sebastianinman.com.",
+      done: "On its way",
+    },
+    live: {
+      heading: "On the site",
+      action: "Nothing to publish",
+      confirm: "",
+      warning: "",
+      done: "",
+    },
+  }[stage];
+
+  const nothingToDo = stage === "live";
+
   if (state.message) {
     return (
       <div className="card space-y-2 border-pine p-5">
         <h2 className="font-serif text-lg font-semibold text-pine-dark">
-          It&apos;s on its way
+          {words.done}
         </h2>
         <p className="text-sm">{state.message}</p>
         <p className="text-sm text-muted">
@@ -47,7 +85,7 @@ export function PublishPanel({
   return (
     <section className="card p-5">
       <h2 className="font-serif text-lg font-semibold text-pine-dark">
-        Put it on the site
+        {words.heading}
       </h2>
       <p className="mt-1 text-sm text-muted">{status}</p>
 
@@ -79,10 +117,10 @@ export function PublishPanel({
           <button
             type="button"
             className="btn"
-            disabled={blocked.length > 0 || !message.trim()}
+            disabled={blocked.length > 0 || !message.trim() || nothingToDo}
             onClick={() => setConfirming(true)}
           >
-            Publish this post
+            {words.action}
           </button>
         </form>
       )}
@@ -93,12 +131,10 @@ export function PublishPanel({
           <input type="hidden" name="message" value={message} />
 
           <div className="rounded-lg border border-terracotta bg-terracotta-tint px-4 py-3 text-sm text-terracotta-dark">
-            <p className="font-semibold">
-              This publishes to sebastianinman.com.
-            </p>
+            <p className="font-semibold">{words.warning}</p>
             <p className="mt-1">
-              Pushing <code>{branch}</code> is what deploys the site, so the
-              post is public a couple of minutes after this.
+              Pushing <code>{branch}</code> is what deploys the site, so it
+              takes effect a couple of minutes after this.
             </p>
           </div>
 
@@ -136,7 +172,7 @@ export function PublishPanel({
 
           <div className="flex flex-wrap gap-3">
             <button type="submit" className="btn" disabled={pending}>
-              {pending ? "Publishing..." : "Yes, publish it"}
+              {pending ? "Publishing..." : words.confirm}
             </button>
             <button
               type="button"

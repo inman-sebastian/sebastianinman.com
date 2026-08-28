@@ -4,14 +4,8 @@ import path from "node:path";
 import { deletePostAction, savePostAction } from "@/app/blog/actions";
 import { repoState } from "@/lib/git";
 import { readJob } from "@/lib/illustrate";
-import { blogImageVersion, listBlogImages, listCandidates } from "@/lib/images";
-import {
-  getPost,
-  postStatus,
-  publishPaths,
-  statusLabel,
-  suggestedImagePath,
-} from "@/lib/posts";
+import { blogImageVersion, listCandidates } from "@/lib/images";
+import { getPost, postStatus, publishPaths, statusLabel } from "@/lib/posts";
 import { REPO_ROOT, siteInfo } from "@/lib/site";
 import { validatePost } from "@/lib/validate";
 import { IllustrationPanel } from "./IllustrationPanel";
@@ -147,11 +141,13 @@ export default async function PostPage({
             />
           </div>
           <button type="submit" className="btn">
-            Save the draft
+            {label.kind === "draft" ? "Save the draft" : "Save changes"}
           </button>
           <p className="text-xs text-muted">
-            Saving writes the file and nothing else. It does not touch the
-            website.
+            Saving writes the file and nothing else.{" "}
+            {label.kind === "draft"
+              ? "Nobody can see it yet."
+              : "The live post does not change until you publish."}
           </p>
         </form>
 
@@ -160,9 +156,14 @@ export default async function PostPage({
             slug={post.slug}
             branch={repo.branch}
             files={publishPaths(post).map((p) => path.relative(REPO_ROOT, p))}
-            defaultMessage={`Add blog post: ${post.title || post.slug}`}
+            defaultMessage={
+              label.kind === "draft"
+                ? `Add blog post: ${post.title || post.slug}`
+                : `Update blog post: ${post.title || post.slug}`
+            }
             blocked={errors.map((e) => e.message)}
             status={label.detail}
+            stage={label.kind}
           />
 
           <section className="card p-5">
@@ -177,8 +178,6 @@ export default async function PostPage({
                 imagePrompt={post.imagePrompt}
                 imageAlt={post.imageAlt}
                 imageCaption={post.imageCaption}
-                suggestedPath={suggestedImagePath(post.slug)}
-                available={listBlogImages()}
                 initialJob={readJob(post.slug)}
                 candidates={listCandidates(post.slug)}
               />
@@ -241,17 +240,26 @@ export default async function PostPage({
 
       <details className="card border-terracotta-tint p-5">
         <summary className="cursor-pointer text-sm font-semibold text-terracotta-dark">
-          Delete this draft
+          {label.kind === "draft" ? "Delete this draft" : "Delete this post"}
         </summary>
-        <p className="mt-2 text-sm text-muted">
-          Removes <code>content/blog/{post.slug}.mdx</code> from this machine.
-          {label.live &&
-            " This post is already live, so taking it off the site is a separate commit you would make yourself."}
-        </p>
+        {label.kind === "draft" ? (
+          <p className="mt-2 text-sm text-muted">
+            Removes <code>content/blog/{post.slug}.mdx</code> from this
+            machine. It was never published, so nothing else has to happen.
+          </p>
+        ) : (
+          <p className="mt-2 text-sm text-muted">
+            This post is published. Deleting it removes the file and its
+            illustration, commits that, and pushes, so it comes off
+            sebastianinman.com once Vercel rebuilds. There is no undo here.
+          </p>
+        )}
         <form action={deletePostAction} className="mt-3">
           <input type="hidden" name="slug" value={post.slug} />
           <button type="submit" className="btn btn-danger">
-            Delete the draft
+            {label.kind === "draft"
+              ? "Delete the draft"
+              : "Delete and take it off the site"}
           </button>
         </form>
       </details>

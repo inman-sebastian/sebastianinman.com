@@ -13,7 +13,6 @@ import { fileState, type FileState, type RepoState } from "./git";
  */
 
 export const POSTS_DIR = path.join(REPO_ROOT, "content", "blog");
-const IMAGES_DIR = path.join(REPO_ROOT, "public", "images", "blog");
 
 export type BlogPost = {
   slug: string;
@@ -118,12 +117,19 @@ export function publishPaths(post: BlogPost): string[] {
  * file is committed and the branch has nothing waiting to push, which
  * is as close to "it is on the website" as git can tell us.
  */
+/**
+ * `kind` is what every label and button on the page keys off, so a post
+ * that is already published never gets described as a draft.
+ */
+export type PostStage = "draft" | "changed" | "unpushed" | "live";
+
 export function statusLabel(
   status: PostStatus,
   repo: RepoState
-): { label: string; detail: string; live: boolean } {
+): { kind: PostStage; label: string; detail: string; live: boolean } {
   if (status.file === "untracked") {
     return {
+      kind: "draft",
       label: "Not on the site",
       detail: "A draft on this machine. Nobody can see it yet.",
       live: false,
@@ -131,6 +137,7 @@ export function statusLabel(
   }
   if (status.file === "modified") {
     return {
+      kind: "changed",
       label: "Edited since it went up",
       detail: "The live version is the older one until you publish again.",
       live: false,
@@ -138,12 +145,18 @@ export function statusLabel(
   }
   if (repo.ahead > 0) {
     return {
+      kind: "unpushed",
       label: "Committed, not pushed",
       detail: `${repo.ahead} commit${repo.ahead === 1 ? "" : "s"} on ${repo.branch} waiting to go out.`,
       live: false,
     };
   }
-  return { label: "Live", detail: "Committed and pushed.", live: true };
+  return {
+    kind: "live",
+    label: "Live",
+    detail: "Published and up to date with what is on this machine.",
+    live: true,
+  };
 }
 
 export function slugify(input: string): string {
@@ -236,11 +249,3 @@ export function deletePost(slug: string): boolean {
   return true;
 }
 
-/** Where an illustration for this post would go, by the repo's convention */
-export function suggestedImagePath(slug: string): string {
-  return `/images/blog/${slug}.jpg`;
-}
-
-export function imageOnDisk(slug: string): boolean {
-  return fs.existsSync(path.join(IMAGES_DIR, `${slug}.jpg`));
-}

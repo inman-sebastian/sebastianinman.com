@@ -86,11 +86,43 @@ end to end Aug 2026.
    `agent-browser --session flow keyboard type "<prompt>"` (real
    keystrokes; programmatic `fill` sometimes fails to enable the Create
    button). Re-snapshot and confirm "arrow_forward Create" is no longer
-   `[disabled]`, then click it. Remember refs go stale after the
-   settings panel interaction; re-snapshot before clicking.
+   `[disabled]`. **Capture `BEFORE` from step 5 now, while the click has
+   not happened yet**, then click Create. Remember refs go stale after
+   the settings panel interaction; re-snapshot before clicking.
 
-5. **Wait ~45s total** (renders show a % overlay; screenshot to check
-   progress rather than polling snapshots).
+5. **Wait for the render to actually land**, rather than sleeping a
+   guessed number of seconds. New images arrive at the FRONT of the
+   grid, so remember which one is newest BEFORE clicking Create, then
+   wait for that to change:
+
+   ```bash
+   # before step 4's Create click
+   BEFORE=$(agent-browser --session flow eval \
+     "(()=>{const a=document.querySelector('img[alt=\"Generated image\"]');return a?a.src:'';})()")
+
+   # after clicking Create (typically lands in 20-30s)
+   agent-browser --session flow wait --timeout 180000 \
+     --fn "(()=>{const a=document.querySelector('img[alt=\"Generated image\"]');return !!a && a.src!==$BEFORE;})()"
+   ```
+
+   `eval` returns a JSON-quoted string, so `$BEFORE` drops straight into
+   the expression as a JS string literal. Compare `a.src` to it
+   directly: `JSON.stringify(a.src)` adds quote characters and never
+   matches. A timeout exits non-zero with "Wait timed out after Nms",
+   which is the signal to screenshot and look rather than carry on.
+
+   Measured on the Blog Posts collection, Aug 2026 (the old advice here
+   was a blind `sleep 45`, which was both slower than needed and no
+   guarantee):
+   - Renders completed in ~22-24s, both candidates landing together.
+   - There is NO percentage in the text layer, and no `[role=progressbar]`,
+     `[aria-busy]`, or spinner class anywhere. Do not wait on those.
+   - The grid VIRTUALIZES: the count of `img[alt="Generated image"]`
+     drops and recovers during a render (10 -> 8 -> 10), so counting
+     images is not a reliable completion signal. The front image's src
+     is.
+   - `eval` shares one scope across calls, so a bare `const` collides
+     with the previous call. Wrap every eval in `(()=>{ ... })()`.
 
 6. **Pick the better candidate**: screenshot the grid, Read it, and judge
    both against the prompt and the series (palette, warmth, composition).
