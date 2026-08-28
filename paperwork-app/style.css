@@ -190,14 +190,17 @@ a {
 
 /* ---- Print: same brand look as the screen version ----
    Browsers strip background colors when printing by default;
-   print-color-adjust: exact opts every element back in, so the cream
+   print-color-adjust: exact opts every element back in, so the warm
    page, pine headings, and terracotta dot survive into the PDF.
-   @page margin 0 removes the browser's white paper margins (the
-   sheet's own padding becomes the document margin), which also lets
-   the background run edge to edge on every page. */
+   Vertical margins come from @page so EVERY page gets them (element
+   padding only applies on the first and last page; interior breaks
+   would butt content against the page edge). Horizontal margins stay
+   on the sheet so the background runs edge to edge left and right.
+   The @page margin areas print paper-white, but the surface tint
+   (#fffdf8) is near-white, so the seam doesn't read. */
 
 @page {
-  margin: 0;
+  margin: 0.8in 0;
 }
 
 @media print {
@@ -217,8 +220,8 @@ a {
     border: 0;
     border-radius: 0;
     background: var(--surface);
-    padding: 0.85in 0.9in;
-    min-height: 100vh;
+    padding: 0 0.9in;
+    min-height: 100%;
   }
 
   /* Fragmentation: keep logical units on one page. A heading never
