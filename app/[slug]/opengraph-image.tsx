@@ -23,7 +23,7 @@ export default async function LandingOgImage({
   return new ImageResponse(
     (
       <OgFrame
-        eyebrow={page?.city || "Southern Oregon"}
+        eyebrow={page?.city ? `${page.city}, Oregon` : "Southern Oregon"}
         headline={headline}
         headlineSize={headline.length > 55 ? 56 : 64}
         sub={page?.heroSubline || undefined}
