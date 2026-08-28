@@ -8,8 +8,9 @@ description: Research real small businesses in Southern Oregon that would benefi
 Fills the top of the funnel. Finds real local businesses, checks what
 can actually be seen from outside, and writes each qualified one to
 `mission-control/data/prospects/<slug>.md` for Sebastian to review at
-`/prospects` (port 4848). He decides who is worth pursuing; promoting a
-prospect is his click, not yours.
+`/prospects` (port 4848), which is also where the Find leads button
+lives. He decides who is worth pursuing; moving a record on is his
+click, not yours.
 
 ## Hard rules
 
@@ -28,10 +29,20 @@ prospect is his click, not yours.
 - **Quality over volume.** Roughly 10 to 20 qualified per run. If four
   qualify, report four. A long list of weak leads is worse than a short
   list of real ones; it just moves the sorting work onto him.
-- **Skip anyone already known**: a file in `mission-control/data/clients/`
-  or `mission-control/data/prospects/` (any status, including `passed`),
-  or a match on `mission-control/data/do-not-contact.md`. Read all three
-  before writing anything.
+- **Never add anybody already on file.** There is one record store now
+  (`mission-control/data/clients/`), and a business already in it must
+  not be added again at any stage, including ones passed on: re-adding
+  something already decided against quietly undoes the decision. Do not
+  judge this by eye. Before writing anything:
+
+  ```bash
+  node mission-control/scripts/known-businesses.mjs
+  node mission-control/scripts/known-businesses.mjs --check "Name One" "Name Two"
+  ```
+
+  `KNOWN` means skip. `MAYBE` means skip unless you can show it is a
+  different business (different address, different phone). Also skip
+  anything on `mission-control/data/do-not-contact.md`.
 - **The voice guide applies to every drafted word** (CLAUDE.md). The
   hardest one here: never condescend about their current setup. A dated
   website is not a failing, and the opening line must not imply it is.
@@ -47,11 +58,19 @@ prospect is his click, not yours.
    Talent, and Phoenix. Local competitors chase professional services,
    so the consumer-facing side is open.
 
-2. **Find real businesses.** Load Firecrawl with
-   `ToolSearch({ query: "firecrawl", max_results: 10 })`, then search
-   for the trade plus the town. Google Maps and Yelp results surface
-   the actual local operators; skip directories, national chains, and
-   listicles. The user-level `site-blueprint` skill
+2. **Find real businesses.** Search for the trade plus the town. Google
+   Maps and Yelp results surface the actual local operators; skip
+   directories, national chains, and listicles.
+
+   Use Firecrawl when it is there (`ToolSearch({ query: "firecrawl",
+   max_results: 10 })`); its results are richer. **It is often not
+   there**: MCP servers do not connect in a headless `claude -p` run,
+   which is how the Find leads button in Mission Control invokes this
+   skill. In that case use `WebSearch` and `WebFetch`, which do the same
+   job. Check what you have rather than assuming, and do not stall if
+   Firecrawl is missing.
+
+   The user-level `site-blueprint` skill
    (`~/.claude/skills/site-blueprint/SKILL.md`, Step 2) has the search
    patterns that work for local service niches; reuse them rather than
    inventing new ones.
@@ -60,6 +79,20 @@ prospect is his click, not yours.
    listing either way. Look for the signals below. Checking properly
    takes a couple of minutes per business, which is why the run is
    small.
+
+   Two things to settle for every business, whether or not they have a
+   site:
+   - **Do they have a Google Business Profile?** Search the name plus
+     the town; a profile shows as a Google Maps place result with hours
+     and reviews. Record `googleProfile: yes` with the
+     `googleProfileUrl`, or `no` when a search plainly turns up
+     nothing. Leave it `unknown` rather than guessing. Not having one
+     is a real finding: it is why nobody local can find them on a
+     phone, and it is free to fix.
+   - **Where are they?** Record the `city` always, and the street
+     `address` when the listing shows one. This is what puts them on
+     the dashboard map, and it is how the pipeline gets grouped by
+     town. City alone is fine; do not invent a street address.
 
 4. **Read the site's stack.** For anyone with a website, run:
 
@@ -79,8 +112,13 @@ prospect is his click, not yours.
    homepage has a form, and any published mailto address. That last one
    is a real email you may use; anything else is a guess and stays out.
 
-   Copy the `platform:` and `stack:` lines it prints into the prospect's
-   frontmatter. If it reports a non-200, it read nothing: say so in the
+   It also reports any Google Maps link on the page. Those embeds carry
+   the business's own pin as `!2d<lng>!3d<lat>`, so when one is present
+   the script prints exact `lat:`/`lng:` and `googleProfile: yes`, which
+   beats geocoding the middle of a town.
+
+   Copy the `platform:`, `stack:`, `googleProfile:`, `lat:` and `lng:`
+   lines it prints into the prospect's frontmatter. If it reports a non-200, it read nothing: say so in the
    file and check by hand, rather than recording an absence as a fact.
 
    What the stack means for the pitch:
@@ -94,8 +132,14 @@ prospect is his click, not yours.
      is the AI-insights conversation.
 
 5. **Write the qualified ones** to
-   `mission-control/data/prospects/<slug>.md` in the format below. Slug
-   is the business name, lowercased and hyphenated.
+   `mission-control/data/clients/<slug>.md` in the format below. Slug is
+   the business name, lowercased and hyphenated.
+
+   A researched business and a client are the SAME record at different
+   stages, not two kinds of thing. Write `stage: researched` and
+   `source: outreach`; Sebastian moves it to `prospect` when he decides
+   it is worth pursuing, or `lost` when it is not. Never write any other
+   stage.
 
 6. **Report back**: how many were looked at, how many qualified, the
    two or three standouts and why, and anything the research couldn't
@@ -131,19 +175,31 @@ not a lead, and saying so is useful.
 
 ```markdown
 ---
+name: ''                      # a person's name, if one is published
 business: Example Barbers
-city: Medford
-category: Salons & studios
-website: ''
-phone: (541) 555-0100
 email: ''
+phone: (541) 555-0100
+city: Medford
+address: 422 Bridge St
+lat: ''                       # from detect-stack, or left for the app
+lng: ''
+stage: researched             # always this; Sebastian moves it on
+website: ''
+category: Salons & studios
 listing: https://www.google.com/maps/place/...
+googleProfile: yes            # yes | no | unknown
+googleProfileUrl: https://www.google.com/maps/place/...
 platform: ''
 stack: []
-fit: strong
-services: [website-design, ai-assistants]
+fit: strong                   # strong | worth a look
 researched: '2026-08-28'
-status: new
+services: [website-design, ai-assistants]
+value: ''
+source: outreach
+nextStep: Decide whether they are worth pursuing
+nextStepDue: ''
+created: '2026-08-28'
+updated: '2026-08-28'
 ---
 
 ## What I saw
@@ -162,6 +218,10 @@ when they're open. That's a small website's whole job.
 
 I went looking for your hours on my phone last week and ended up on a
 Facebook page from 2023.
+
+## Timeline
+
+### 2026-08-28 · Found by research
 ```
 
 The opening line is the part that matters. It is the true, specific
@@ -178,5 +238,8 @@ one is worse than no email at all.
   re-add one that was already passed on.
 - Don't infer signals from the outside that you can't see. "They
   probably still use paper timesheets" is a guess; leave it out.
-- Don't set `status` to anything but `new`. Promoted and passed are
-  Sebastian's decisions, recorded by the app.
+- Don't set `stage` to anything but `researched`. Moving it on is
+  Sebastian's decision, recorded by the app.
+- Don't skip the duplicate check because a name "looks new". The check
+  is one command and it is the difference between a useful run and one
+  that quietly re-adds work he already turned down.

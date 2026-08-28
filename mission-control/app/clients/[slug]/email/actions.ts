@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { appendTimeline, getClient } from "@/lib/clients";
 import { unfilled } from "@/lib/emails";
-import { isBlocked } from "@/lib/prospects";
+import { isBlocked } from "@/lib/suppression";
 import { sendBlockReason, sendClientEmail } from "@/lib/send";
 
 /**

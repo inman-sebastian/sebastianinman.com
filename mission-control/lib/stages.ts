@@ -9,9 +9,16 @@
     and whatever gets said should be a personal note. */
 export const STAGES = [
   {
+    id: "researched",
+    label: "Researched",
+    blurb: "Turned up by research. You have not looked at it yet.",
+    nextStep: "Decide whether they are worth pursuing",
+    emailId: 0,
+  },
+  {
     id: "prospect",
     label: "Prospect",
-    blurb: "Found by research. Nobody has said hello yet.",
+    blurb: "Worth pursuing. Nobody has said hello yet.",
     nextStep: "Write the first email",
     emailId: 6,
   },
@@ -89,10 +96,20 @@ export const STAGES = [
 
 export type Stage = (typeof STAGES)[number]["id"];
 
-/** Stages that still need something from Sebastian, in board order */
+/**
+ * Stages that still need something from Sebastian, in board order.
+ *
+ * `researched` is left off the board on purpose: those are a batch from
+ * a research run that nobody has read yet, and they belong in the review
+ * queue at /prospects rather than in the working pipeline. They join the
+ * board the moment they are moved to `prospect`.
+ */
 export const ACTIVE_STAGES = STAGES.filter(
-  (s) => s.id !== "done" && s.id !== "lost"
+  (s) => s.id !== "done" && s.id !== "lost" && s.id !== "researched"
 );
+
+/** Found by research and not yet judged */
+export const REVIEW_STAGE = "researched";
 
 export const STAGE_IDS = STAGES.map((s) => s.id) as readonly Stage[];
 

@@ -42,6 +42,19 @@ export function ClientFields({
           />
         </div>
         <div>
+          <label className="label" htmlFor="city">
+            Town
+          </label>
+          <input
+            id="city"
+            name="city"
+            className="field"
+            defaultValue={defaults.city ?? ""}
+            placeholder="Medford"
+            autoComplete="off"
+          />
+        </div>
+        <div>
           <label className="label" htmlFor="email">
             Email
           </label>

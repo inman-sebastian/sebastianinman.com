@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { appendTimeline, createClient } from "@/lib/clients";
-import { getProspect, updateProspect } from "@/lib/prospects";
+import { appendTimeline, getClient, updateClient } from "@/lib/clients";
 import { stageInfo } from "@/lib/stages";
 
 /**
- * Promoting is the only way a researched business becomes a record in
- * the pipeline. It is a decision Sebastian makes one at a time, on
- * purpose: a research run finds a batch, and most of a batch is not
- * worth pursuing.
+ * Reviewing what research turned up.
+ *
+ * These used to move a record between two stores. Now a researched
+ * business and a client are the same record at different stages, so
+ * deciding is just a stage change with a note about why.
  */
 
 function text(formData: FormData, key: string): string {
@@ -19,86 +19,49 @@ function text(formData: FormData, key: string): string {
 
 export async function promoteProspectAction(formData: FormData) {
   const slug = text(formData, "slug");
-  const prospect = getProspect(slug);
-  if (!prospect || prospect.status === "promoted") return;
+  const record = getClient(slug);
+  if (!record) return;
 
-  const stack =
-    prospect.platform || prospect.stack.length
-      ? [
-          "## What they're running",
-          "",
-          prospect.platform ? `- Built on ${prospect.platform}` : "",
-          ...prospect.stack.map((t) => `- ${t}`),
-        ]
-          .filter(Boolean)
-          .join("\n")
-      : "";
-
-  const notes = [
-    prospect.why,
-    prospect.saw ? `## What I saw\n\n${prospect.saw}` : "",
-    stack,
-    prospect.openingLine ? `## Opening line\n\n${prospect.openingLine}` : "",
-  ]
-    .filter(Boolean)
-    .join("\n\n");
-
-  const record = createClient({
-    name: "",
-    business: prospect.business,
-    email: prospect.email,
-    phone: prospect.phone,
+  updateClient(slug, {
     stage: "prospect",
-    services: prospect.services,
-    source: "outreach",
     nextStep: stageInfo("prospect").nextStep,
-    notes,
   });
-
-  appendTimeline(
-    record.slug,
-    "Found by research",
-    [
-      prospect.city ? `${prospect.category} in ${prospect.city}` : prospect.category,
-      prospect.listing ? `Found at ${prospect.listing}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n")
-  );
-
-  updateProspect(slug, { status: "promoted" });
+  appendTimeline(slug, "Worth pursuing", "Moved out of the research queue.");
 
   revalidatePath("/");
   revalidatePath("/prospects");
   revalidatePath("/clients");
-  redirect(`/clients/${record.slug}`);
+  redirect(`/clients/${slug}`);
 }
 
 export async function passProspectAction(formData: FormData) {
   const slug = text(formData, "slug");
-  // Kept rather than deleted, so a later research run knows it was
+  if (!getClient(slug)) return;
+  // Kept rather than deleted, so a later research run knows this one was
   // already looked at and decided against
-  updateProspect(slug, { status: "passed" });
+  updateClient(slug, { stage: "lost", nextStep: "" });
+  appendTimeline(slug, "Not a fit", "Decided against from the research queue.");
   revalidatePath("/prospects");
   revalidatePath(`/prospects/${slug}`);
 }
 
 export async function reopenProspectAction(formData: FormData) {
   const slug = text(formData, "slug");
-  updateProspect(slug, { status: "new" });
+  if (!getClient(slug)) return;
+  updateClient(slug, { stage: "researched" });
   revalidatePath("/prospects");
   revalidatePath(`/prospects/${slug}`);
 }
 
 export async function saveProspectAction(formData: FormData) {
   const slug = text(formData, "slug");
-  updateProspect(slug, {
+  updateClient(slug, {
     business: text(formData, "business"),
     city: text(formData, "city"),
     email: text(formData, "email"),
     phone: text(formData, "phone"),
     website: text(formData, "website"),
-    body: text(formData, "body"),
+    notes: text(formData, "body"),
   });
   revalidatePath("/prospects");
   revalidatePath(`/prospects/${slug}`);

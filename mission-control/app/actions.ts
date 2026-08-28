@@ -35,6 +35,7 @@ function readInput(formData: FormData): ClientInput {
     business: text(formData, "business"),
     email: text(formData, "email"),
     phone: text(formData, "phone"),
+    city: text(formData, "city"),
     stage: isStage(stage) ? stage : "inquiry",
     services: formData.getAll("services").map(String),
     value: rawValue && Number.isFinite(value) && value > 0 ? Math.round(value) : null,

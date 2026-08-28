@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { mailConfig } from "./env";
 import { OUT_DIR } from "./documents";
-import { isBlocked } from "./prospects";
+import { isBlocked } from "./suppression";
 import { OUTREACH_SOURCE } from "./stages";
 
 /**

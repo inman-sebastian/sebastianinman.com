@@ -16,7 +16,7 @@ import { REPO_ROOT } from "./site";
 
 let cache: Record<string, string> | null = null;
 
-function repoEnv(): Record<string, string> {
+export function repoEnv(): Record<string, string> {
   if (cache) return cache;
   const out: Record<string, string> = {};
   const file = path.join(REPO_ROOT, ".env.local");

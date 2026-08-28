@@ -24,7 +24,34 @@ export type ClientRecord = {
   business: string;
   email: string;
   phone: string;
+  /** Town, so they can be put on the map with everyone else */
+  city: string;
+  address: string;
+  lat: number | null;
+  lng: number | null;
   stage: Stage;
+
+  /**
+   * Everything below is filled in by research and stays empty for
+   * anyone who got in touch on their own. They are attributes of one
+   * client record, not a second kind of thing: a business found by
+   * research and a business that emailed the contact form are the same
+   * sort of entity at different points in the same arc.
+   */
+  website: string;
+  category: string;
+  /** Where the research found them, so the claims can be checked */
+  listing: string;
+  googleProfile: "yes" | "no" | "unknown";
+  googleProfileUrl: string;
+  /** What their site is built on, from scripts/detect-stack.mjs */
+  platform: string;
+  /** Tools already running on their site */
+  stack: string[];
+  /** "strong" or "worth a look"; empty for inbound */
+  fit: string;
+  /** ISO date the research ran */
+  researched: string;
   /** Service slugs from content/services/*.mdx */
   services: string[];
   /** Whole dollars; null until there is a real quote */
@@ -54,6 +81,19 @@ export type ClientInput = Partial<
     | "business"
     | "email"
     | "phone"
+    | "city"
+    | "address"
+    | "lat"
+    | "lng"
+    | "website"
+    | "category"
+    | "listing"
+    | "googleProfile"
+    | "googleProfileUrl"
+    | "platform"
+    | "stack"
+    | "fit"
+    | "researched"
     | "stage"
     | "services"
     | "value"
@@ -152,7 +192,25 @@ function toRecord(slug: string, raw: string): ClientRecord {
     business: asText(data.business),
     email: asText(data.email),
     phone: asText(data.phone),
+    city: asText(data.city),
+    address: asText(data.address),
+    lat: Number.isFinite(Number(data.lat)) && data.lat !== "" ? Number(data.lat) : null,
+    lng: Number.isFinite(Number(data.lng)) && data.lng !== "" ? Number(data.lng) : null,
     stage: isStage(data.stage) ? data.stage : "inquiry",
+    website: asText(data.website),
+    category: asText(data.category),
+    listing: asText(data.listing),
+    googleProfile:
+      asText(data.googleProfile).toLowerCase() === "yes"
+        ? "yes"
+        : asText(data.googleProfile).toLowerCase() === "no"
+          ? "no"
+          : "unknown",
+    googleProfileUrl: asText(data.googleProfileUrl),
+    platform: asText(data.platform),
+    stack: Array.isArray(data.stack) ? data.stack.map((t: unknown) => String(t)) : [],
+    fit: asText(data.fit),
+    researched: asDate(data.researched),
     services,
     value: Number.isFinite(value) && value > 0 ? value : null,
     source: isSource(data.source) ? data.source : "manual",
@@ -171,7 +229,20 @@ function serialize(record: ClientRecord): string {
     business: record.business,
     email: record.email,
     phone: record.phone,
+    city: record.city,
+    address: record.address,
+    lat: record.lat ?? "",
+    lng: record.lng ?? "",
     stage: record.stage,
+    website: record.website,
+    category: record.category,
+    listing: record.listing,
+    googleProfile: record.googleProfile,
+    googleProfileUrl: record.googleProfileUrl,
+    platform: record.platform,
+    stack: record.stack,
+    fit: record.fit,
+    researched: record.researched,
     services: record.services,
     value: record.value ?? "",
     source: record.source,
@@ -224,7 +295,20 @@ export function createClient(input: ClientInput): ClientRecord {
     business: input.business ?? "",
     email: input.email ?? "",
     phone: input.phone ?? "",
+    city: input.city ?? "",
+    address: input.address ?? "",
+    lat: input.lat ?? null,
+    lng: input.lng ?? null,
     stage,
+    website: input.website ?? "",
+    category: input.category ?? "",
+    listing: input.listing ?? "",
+    googleProfile: input.googleProfile ?? "unknown",
+    googleProfileUrl: input.googleProfileUrl ?? "",
+    platform: input.platform ?? "",
+    stack: input.stack ?? [],
+    fit: input.fit ?? "",
+    researched: input.researched ?? "",
     services: input.services ?? [],
     value: input.value ?? null,
     source: input.source ?? "manual",
@@ -294,6 +378,16 @@ export function needsAttention(clients: ClientRecord[]): ClientRecord[] {
     if (!c.nextStep || !c.nextStepDue) return true;
     return c.nextStepDue <= now;
   });
+}
+
+/** Found by research, not yet judged. The review queue. */
+export function listResearched(): ClientRecord[] {
+  return listClients()
+    .filter((c) => c.stage === "researched")
+    .sort((a, b) => {
+      if (a.fit !== b.fit) return a.fit === "strong" ? -1 : 1;
+      return a.created < b.created ? 1 : -1;
+    });
 }
 
 export function displayName(c: ClientRecord): string {

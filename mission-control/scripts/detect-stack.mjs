@@ -149,6 +149,9 @@ export async function detect(url) {
     hasForm: false,
     emails: [],
     title: "",
+    googleMapsLink: "",
+    lat: null,
+    lng: null,
     note: "",
   };
 
@@ -194,6 +197,23 @@ export async function detect(url) {
     })
   );
 
+  // A link or embed pointing at Google Maps is a decent sign the
+  // business has a Business Profile, and gives the research something
+  // concrete to check rather than guess at.
+  const mapsLink = html.match(
+    /https?:\/\/(?:www\.)?google\.[a-z.]+\/maps\/[^"'\s<>]+|https?:\/\/maps\.app\.goo\.gl\/[^"'\s<>]+|https?:\/\/goo\.gl\/maps\/[^"'\s<>]+/i
+  );
+  out.googleMapsLink = mapsLink ? mapsLink[0].replace(/&amp;/g, "&") : "";
+
+  // Google's embed URLs carry the pin's own coordinates as !2d<lng>!3d<lat>.
+  // When a site embeds its own map that is the business's actual spot,
+  // which beats geocoding the middle of the town.
+  const coords = out.googleMapsLink.match(/!2d(-?\d+\.\d+)!3d(-?\d+\.\d+)/);
+  if (coords) {
+    out.lng = Number(coords[1]);
+    out.lat = Number(coords[2]);
+  }
+
   out.mobileReady = /<meta[^>]+name=["']viewport["']/i.test(html);
   out.hasForm = /<form[\s>]/i.test(html);
   out.emails = [
@@ -230,11 +250,23 @@ function report(r) {
 
   lines.push(`  On a phone: ${r.mobileReady ? "yes, has a viewport tag" : "NO VIEWPORT TAG, likely broken on phones"}`);
   lines.push(`  A form:     ${r.hasForm ? "yes" : "none on the homepage"}`);
+  if (r.googleMapsLink) {
+    lines.push(`  Google Maps link on the page: ${r.googleMapsLink}`);
+    lines.push("    (so they very likely have a Business Profile; open it and confirm)");
+  }
+  if (r.lat !== null && r.lng !== null) {
+    lines.push(`  Pin on their own map: ${r.lat}, ${r.lng}`);
+  }
   if (r.emails.length) lines.push(`  Published:  ${r.emails.join(", ")}`);
 
   // Paste-ready for the prospect file
   lines.push("  ---");
   lines.push(`  platform: ${r.platform ? `'${r.platform}'` : "''"}`);
+  if (r.googleMapsLink) lines.push("  googleProfile: yes");
+  if (r.lat !== null && r.lng !== null) {
+    lines.push(`  lat: ${r.lat}`);
+    lines.push(`  lng: ${r.lng}`);
+  }
   if (r.tools.length) {
     lines.push("  stack:");
     for (const t of r.tools) lines.push(`    - ${t.name}`);

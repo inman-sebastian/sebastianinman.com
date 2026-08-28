@@ -6,7 +6,8 @@ import {
   reopenProspectAction,
   saveProspectAction,
 } from "@/app/prospects/actions";
-import { getProspect, isBlocked } from "@/lib/prospects";
+import { displayName, getClient } from "@/lib/clients";
+import { isBlocked } from "@/lib/suppression";
 import { longDate, money, telHref } from "@/lib/format";
 import { integratedTools, listServices } from "@/lib/services";
 
@@ -18,7 +19,7 @@ export default async function ProspectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const prospect = getProspect(slug);
+  const prospect = getClient(slug);
   if (!prospect) notFound();
 
   const services = listServices();
@@ -41,16 +42,16 @@ export default async function ProspectPage({
         </Link>
         <div className="mt-2 flex flex-wrap items-center gap-3">
           <h1 className="text-3xl font-semibold text-pine-dark">
-            {prospect.business}
+            {displayName(prospect)}
           </h1>
           {prospect.fit === "strong" && (
             <span className="rounded-full bg-pine-tint px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-pine-dark">
               Strong fit
             </span>
           )}
-          {prospect.status !== "new" && (
+          {prospect.stage !== "researched" && (
             <span className="rounded-full bg-line/60 px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-muted">
-              {prospect.status === "promoted" ? "In the pipeline" : "Not a fit"}
+              {prospect.stage === "lost" ? "Not a fit" : "In the pipeline"}
             </span>
           )}
         </div>
@@ -66,7 +67,7 @@ export default async function ProspectPage({
               {prospect.email}
             </a>
           )}
-          <span>Researched {longDate(prospect.researched)}</span>
+          <span>Researched {longDate(prospect.researched || prospect.created)}</span>
         </p>
       </div>
 
@@ -88,20 +89,9 @@ export default async function ProspectPage({
               before you write to anyone.
             </p>
             <div className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
-              {prospect.saw || "Nothing recorded."}
+              {prospect.notes || "Nothing recorded."}
             </div>
           </section>
-
-          {prospect.why && (
-            <section className="card p-5">
-              <h2 className="font-serif text-lg font-semibold text-pine-dark">
-                Why it&apos;s a fit
-              </h2>
-              <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed">
-                {prospect.why}
-              </p>
-            </section>
-          )}
 
           {(prospect.platform || prospect.stack.length > 0) && (
             <section className="card p-5">
@@ -144,20 +134,6 @@ export default async function ProspectPage({
             </section>
           )}
 
-          {prospect.openingLine && (
-            <section className="card p-5">
-              <h2 className="font-serif text-lg font-semibold text-pine-dark">
-                Opening line
-              </h2>
-              <p className="mt-1 text-xs text-muted">
-                The specific true thing the first email leads with. If it could
-                be said to any business in town, it is not specific enough.
-              </p>
-              <p className="mt-3 rounded-lg bg-pine-tint px-4 py-3 text-sm leading-relaxed">
-                {prospect.openingLine}
-              </p>
-            </section>
-          )}
         </div>
 
         <div className="space-y-6">
@@ -165,7 +141,7 @@ export default async function ProspectPage({
             <h2 className="font-serif text-lg font-semibold text-pine-dark">
               Worth pursuing?
             </h2>
-            {prospect.status === "new" ? (
+            {prospect.stage === "researched" ? (
               <>
                 <p className="mt-1 text-sm text-muted">
                   Adding them puts a record in the pipeline at the prospect
@@ -191,9 +167,9 @@ export default async function ProspectPage({
               <form action={reopenProspectAction} className="mt-3">
                 <input type="hidden" name="slug" value={prospect.slug} />
                 <p className="text-sm text-muted">
-                  {prospect.status === "promoted"
-                    ? "Already in the pipeline."
-                    : "Passed on. Kept so research skips them next time."}
+                  {prospect.stage === "lost"
+                    ? "Passed on. Kept so research skips them next time."
+                    : "Already in the pipeline."}
                 </p>
                 <button type="submit" className="btn btn-quiet mt-3">
                   Put it back in the queue
@@ -221,6 +197,40 @@ export default async function ProspectPage({
                     </a>
                   ) : (
                     "None found"
+                  )}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted">Google profile</dt>
+                <dd className="text-right">
+                  {prospect.googleProfile === "yes" ? (
+                    prospect.googleProfileUrl ? (
+                      <a
+                        className="hover:underline"
+                        href={prospect.googleProfileUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Yes, view it
+                      </a>
+                    ) : (
+                      "Yes"
+                    )
+                  ) : prospect.googleProfile === "no" ? (
+                    <span className="text-terracotta-dark">None found</span>
+                  ) : (
+                    "Not checked"
+                  )}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted">Where</dt>
+                <dd className="text-right">
+                  {prospect.address || prospect.city || "Not recorded"}
+                  {prospect.lat === null && (prospect.city || prospect.address) && (
+                    <span className="block text-xs text-muted">
+                      not on the map yet
+                    </span>
                   )}
                 </dd>
               </div>
@@ -256,7 +266,7 @@ export default async function ProspectPage({
               <div className="flex justify-between gap-4">
                 <dt className="text-muted">Record</dt>
                 <dd>
-                  <code className="text-xs">data/prospects/{prospect.slug}.md</code>
+                  <code className="text-xs">data/clients/{prospect.slug}.md</code>
                 </dd>
               </div>
             </dl>
@@ -279,7 +289,7 @@ export default async function ProspectPage({
                 id="business"
                 name="business"
                 className="field"
-                defaultValue={prospect.business}
+                defaultValue={displayName(prospect)}
               />
             </div>
             <div>
@@ -336,7 +346,7 @@ export default async function ProspectPage({
               name="body"
               rows={16}
               className="field font-mono text-sm"
-              defaultValue={prospect.body}
+              defaultValue={prospect.notes}
             />
           </div>
           <button type="submit" className="btn">

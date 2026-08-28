@@ -2,16 +2,53 @@ import Link from "next/link";
 import { ClientCard } from "@/components/ClientCard";
 import { displayName, listClients, needsAttention } from "@/lib/clients";
 import { money } from "@/lib/format";
-import { ACTIVE_STAGES } from "@/lib/stages";
+import { mapboxToken, scatter } from "@/lib/geo";
+import { ACTIVE_STAGES, stageInfo } from "@/lib/stages";
+import { MapPanel } from "./MapPanel";
+import type { MapPin } from "@/components/PipelineMap";
 
 export const dynamic = "force-dynamic";
 
 export default function Dashboard() {
   const clients = listClients();
-  const open = clients.filter((c) => c.stage !== "done" && c.stage !== "lost");
+  // Everything research turned up that has not been ruled out
+  const researched = clients.filter((c) => c.stage === "researched");
+
+  // Everyone who has been placed, nudged apart when they share a town
+  const pins: MapPin[] = clients
+    .filter((c) => c.lat !== null && c.lng !== null && c.stage !== "lost")
+    .map((c) => {
+      const [lat, lng] = scatter(c.lat as number, c.lng as number, c.slug);
+      const waiting = c.stage === "researched";
+      return {
+        slug: c.slug,
+        label: displayName(c),
+        city: c.city,
+        lat,
+        lng,
+        kind: waiting ? ("prospect" as const) : ("client" as const),
+        href: waiting ? `/prospects/${c.slug}` : `/clients/${c.slug}`,
+        detail: [
+          waiting ? c.category : stageInfo(c.stage).label,
+          c.city,
+        ]
+          .filter(Boolean)
+          .join(" · "),
+      };
+    });
+
+  const unplaced = clients.filter(
+    (c) => c.lat === null && (c.city || c.address) && c.stage !== "lost"
+  ).length;
+  const open = clients.filter(
+    (c) => c.stage !== "done" && c.stage !== "lost" && c.stage !== "researched"
+  );
   const waiting = needsAttention(clients);
   const quoted = open.reduce((sum, c) => sum + (c.value ?? 0), 0);
 
+  // Only truly empty when there is nothing at all. Prospects on their
+  // own are worth a dashboard: that is the normal state before the
+  // first client.
   if (clients.length === 0) {
     return (
       <section className="card mx-auto max-w-xl p-10 text-center">
@@ -36,7 +73,9 @@ export default function Dashboard() {
           <h1 className="text-3xl font-semibold text-pine-dark">Pipeline</h1>
           <p className="mt-1 text-lg leading-relaxed text-muted">
             {open.length} open {open.length === 1 ? "conversation" : "conversations"}
-            {quoted > 0 && `, ${money(quoted)} quoted`}.
+            {quoted > 0 && `, ${money(quoted)} quoted`}
+            {researched.length > 0 && `, ${researched.length} waiting to review`}
+            .
           </p>
         </div>
         <Link href="/clients/new" className="btn">
@@ -70,6 +109,10 @@ export default function Dashboard() {
             ))}
           </ul>
         </section>
+      )}
+
+      {(pins.length > 0 || unplaced > 0) && (
+        <MapPanel pins={pins} token={mapboxToken()} unplaced={unplaced} />
       )}
 
       <section>
