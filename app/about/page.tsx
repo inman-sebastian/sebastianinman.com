@@ -32,7 +32,7 @@ export default function AboutPage() {
         cards={false}
         eyebrow="About"
         heading={(page.frontmatter.title as string) ?? "About"}
-        text={site.serviceAreaLine}
+        text="I'm the one-person shop behind everything on this site. Here's who you'd be working with, how I ended up in Southern Oregon, and what working together looks like."
       />
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-14 sm:px-6 md:grid-cols-[1fr_2fr]">
@@ -44,7 +44,7 @@ export default function AboutPage() {
             src="/images/headshot.jpg"
             alt={`Professional headshot of ${site.name}`}
             prompt="Sebastian's professional headshot (real photo; drop in the existing headshot file)"
-            caption="Hi. I answer my own phone."
+            caption="Coffee's on me if you're ever in the Rogue Valley."
             width={600}
             height={700}
             priority
