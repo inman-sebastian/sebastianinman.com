@@ -148,6 +148,14 @@ img.hero-kenburns {
 .prose-site {
   max-width: 65ch;
 }
+/* Document title tier: only the paperwork drafts use an h1 inside
+   prose (site pages put their h1 in the hero) */
+.prose-site h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: var(--color-pine-dark);
+  margin-bottom: 1.25rem;
+}
 /* Same size as the designed sections' h2s (text-3xl) so body headings
    don't read as subordinate to the sections around them */
 .prose-site h2 {
@@ -263,4 +271,19 @@ img.hero-kenburns {
      and invisible at normal zoom; 0.55 gives visible paper-like tooth */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 240px 240px;
+}
+
+/* Printing (used by the dev-only /paperwork PDF flow): the document,
+   nothing else */
+@media print {
+  /* Direct children only: the sticky site header and site footer.
+     Nested <header>/<footer> (the paperwork letterhead) still print. */
+  body > header,
+  body > footer,
+  .site-grain {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
 }

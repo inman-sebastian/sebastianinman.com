@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# client paperwork drafts: contain client data, never committed/deployed
+docs/clients/drafts/

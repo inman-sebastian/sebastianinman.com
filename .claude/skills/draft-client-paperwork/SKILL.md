@@ -1,0 +1,69 @@
+---
+name: draft-client-paperwork
+description: Draft client-facing paperwork (proposal, services agreement, or client emails) from the templates in docs/clients/, rendered at the dev-only /paperwork route for PDF export. Use when Sebastian wants to send a quote/proposal, get an agreement ready, or reply to an inquiry, typically after a consult.
+---
+
+# Draft client paperwork
+
+Turns consult notes into ready-to-send documents using the templates
+in `docs/clients/`. Proposals and agreements become MDX drafts
+rendered at `/paperwork` (brand letterhead, print-to-PDF); emails are
+delivered as text for Sebastian to paste into his mail client.
+
+## Hard rules
+
+- **Drafts contain client data and NEVER get committed.**
+  `docs/clients/drafts/` is git-ignored; leave it that way, and never
+  copy draft contents into committed files, chat logs that become
+  content, or the public site. `git status` must stay clean of drafts.
+- **Sebastian sends everything.** Draft, render, tell him it's ready.
+  Never email a client or submit anything on his behalf.
+- **Never quote below the service page's starting price** or change
+  payment terms without Sebastian saying so explicitly.
+- The agreement template is **not lawyer-reviewed** until its header
+  says otherwise; remind Sebastian of that any time an agreement draft
+  is produced.
+
+## Inputs
+
+Consult notes from Sebastian: who the client is, the problem in their
+words, what he plans to build, the price, the timeline. Missing
+pieces: ask, don't invent. Client quotes/details in the proposal must
+come from his notes, never from imagination.
+
+## Steps
+
+1. **Pick the template**: `proposal-template.md`,
+   `services-agreement.md`, or `email-templates.md` (all in
+   `docs/clients/`). Read the template's header notes; they carry the
+   rules for that document.
+
+2. **For proposals and agreements**: write the filled document to
+   `docs/clients/drafts/<client-slug>-<type>.mdx` with frontmatter
+   `title`, `client`, `date` (ISO). Follow the template's structure
+   exactly; every `{{...}}` resolved, no placeholders left. Voice
+   guide applies in full (plain language, no em dashes, warm not
+   corporate). Keep proposals to one page of content.
+
+3. **Render and check**: with the dev server running, open
+   `/paperwork/<slug>`, confirm it renders cleanly (letterhead, title,
+   no leaked placeholders), and screenshot it for Sebastian.
+
+4. **For emails**: fill the matching template from
+   `email-templates.md` and present the finished text in chat for
+   copy-paste. Subject line included.
+
+5. **Hand off**: tell Sebastian the draft is at `/paperwork/<slug>`
+   and that Cmd+P saves the PDF. For agreements, include the
+   lawyer-review reminder until the template header says reviewed.
+
+## Facts
+
+- The `/paperwork` routes are dev-only (404 in production) and drafts
+  are git-ignored: two walls between client data and the public site.
+- Prices live in `content/services/*.mdx` frontmatter
+  (`startingPrice`). Default terms: half up front, remainder within 14
+  days of delivery, 30-day free-fix window. Sebastian can override
+  per-project.
+- Sample draft `sample-bakery-proposal.mdx` (fictional) shows the
+  target output; it stays in drafts as a reference.
