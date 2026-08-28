@@ -220,4 +220,28 @@ a {
     padding: 0.85in 0.9in;
     min-height: 100vh;
   }
+
+  /* Fragmentation: keep logical units on one page. A heading never
+     strands at a page bottom away from its content, short lists and
+     individual bullets stay whole (a list taller than a page still
+     breaks; the browser overrides avoid when it must), and paragraphs
+     never leave fewer than 3 lines on either side of a break. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  ul,
+  ol,
+  blockquote,
+  li,
+  .letterhead,
+  .docfoot {
+    break-inside: avoid;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
 }
