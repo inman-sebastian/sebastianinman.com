@@ -63,6 +63,15 @@ come from his notes, never from imagination.
 
 ## Facts
 
+- The print layout is deliberately built on an invisible table frame
+  (thead/tfoot spacer rows repeat on every printed page = per-page
+  vertical margins) with @page margin 0 (full-bleed background, no
+  browser date/URL stamps). Verified working Aug 2026 after simpler
+  approaches failed: element padding only pads the first/last page,
+  @page margins print as white bands against the tinted background,
+  and position:fixed backgrounds clip to the content area in current
+  Chrome. Don't "simplify" this structure without re-testing a
+  multi-page PDF.
 - The paperwork app is plain Node with NO hot reload: after any edit
   to `paperwork-app/server.js`, RESTART the server (style.css is read
   per-request and needs no restart). A stale server serves stale
