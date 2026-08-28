@@ -63,6 +63,10 @@ come from his notes, never from imagination.
 
 ## Facts
 
+- The paperwork app is plain Node with NO hot reload: after any edit
+  to `paperwork-app/server.js`, RESTART the server (style.css is read
+  per-request and needs no restart). A stale server serves stale
+  markup and makes CSS changes look broken.
 - The paperwork app is a separate local-only server (never deployed;
   it lives in `paperwork-app/` and binds to 127.0.0.1) and drafts are
   git-ignored: two walls between client data and the public site. It
