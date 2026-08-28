@@ -40,21 +40,9 @@ const defaultPoolA: HeroCard[] = [
   },
   {
     type: "notice",
-    icon: "mail",
-    title: "Missed call texted back",
-    sub: "They heard from you in seconds",
-  },
-  {
-    type: "notice",
     icon: "star",
     title: "Review request sent",
     sub: "Right after the job wrapped up",
-  },
-  {
-    type: "notice",
-    icon: "sync",
-    title: "Sales synced to the books",
-    sub: "The register and QuickBooks finally agree",
   },
   {
     type: "notice",
@@ -64,7 +52,7 @@ const defaultPoolA: HeroCard[] = [
   },
 ];
 
-// Homepage defaults. Lower slot: chats and insights
+// Homepage defaults. Lower slot: chats and conversions
 const defaultPoolB: HeroCard[] = [
   {
     type: "chat",
@@ -73,22 +61,10 @@ const defaultPoolB: HeroCard[] = [
     caption: "Answered automatically at 9:42 PM",
   },
   {
-    type: "notice",
-    icon: "chart",
-    title: "Weekly numbers ready",
-    sub: "Saturday sales up 12% over last month",
-  },
-  {
     type: "chat",
     question: "Do you carry cedar fence boards?",
     answer: "We do! 6-foot boards are in stock right now.",
     caption: "Answered automatically at 6:15 AM",
-  },
-  {
-    type: "chat",
-    question: "Do you deliver?",
-    answer: "We do, within 15 miles! Want a quote?",
-    caption: "Answered automatically on a Sunday",
   },
   {
     type: "voice",
@@ -98,15 +74,44 @@ const defaultPoolB: HeroCard[] = [
   },
   {
     type: "chat",
+    question: "Do you deliver?",
+    answer: "We do, within 15 miles! Want a quote?",
+    caption: "Answered automatically on a Sunday",
+  },
+  {
+    type: "translate",
+    original: "\u00bfHacen pedidos grandes para eventos?",
+    translated: "Do you take large orders for events?",
+    caption: "Translated automatically, both directions",
+  },
+];
+
+// Homepage defaults. Middle slot (homepage only): a second mixed pool so
+// the desktop hero reads as a lively cluster instead of two far corners
+const defaultPoolC: HeroCard[] = [
+  {
+    type: "notice",
+    icon: "chart",
+    title: "Weekly numbers ready",
+    sub: "Saturday sales up 12% over last month",
+  },
+  {
+    type: "notice",
+    icon: "mail",
+    title: "Missed call texted back",
+    sub: "They heard from you in seconds",
+  },
+  {
+    type: "chat",
     question: "Can I move my appointment to Thursday?",
     answer: "Done! See you Thursday at 2.",
     caption: "Rescheduled without a phone call",
   },
   {
-    type: "translate",
-    original: "¿Hacen pedidos grandes para eventos?",
-    translated: "Do you take large orders for events?",
-    caption: "Translated automatically, both directions",
+    type: "notice",
+    icon: "sync",
+    title: "Sales synced to the books",
+    sub: "The register and QuickBooks finally agree",
   },
   {
     type: "notice",
@@ -232,17 +237,23 @@ function CardBody({ card }: { card: HeroCard }) {
 export function HeroCards({
   poolA = defaultPoolA,
   poolB = defaultPoolB,
+  third = false,
 }: {
   poolA?: HeroCard[];
   poolB?: HeroCard[];
+  /** Render the middle slot too (the tall homepage hero only; compact
+      inner-page heroes don't have the room) */
+  third?: boolean;
 }) {
-  // Staggered so the two slots never swap at the same moment
+  // Staggered periods and offsets so no two slots ever swap in sync;
+  // the middle slot's odd period makes the rhythm drift naturally
   const slotA = useRotation(poolA.length, 8000, 5000);
   const slotB = useRotation(poolB.length, 8000, 9000);
+  const slotC = useRotation(third ? defaultPoolC.length : 0, 9500, 12500);
 
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden lg:block">
-      <div className="absolute right-[8%] top-[18%] rotate-2">
+      <div className={`absolute right-[8%] rotate-2 ${third ? "top-[12%]" : "top-[18%]"}`}>
         <div className="hero-card-float-a">
           <div
             key={slotA.index}
@@ -252,10 +263,28 @@ export function HeroCards({
           </div>
         </div>
       </div>
+      {/* Middle slot: hugs the far right edge so the drifting cluster
+          never reaches toward the hero text column */}
+      {third && (
+        <div className="absolute right-[2%] top-[41%] -rotate-1">
+          <div className="hero-card-float-b">
+            <div
+              key={slotC.index}
+              className={slotC.leaving ? "hero-card-exit" : "hero-card-enter"}
+            >
+              <CardBody card={defaultPoolC[slotC.index]} />
+            </div>
+          </div>
+        </div>
+      )}
       {/* Kept clear of the hero's bottom edge: inner pages overlap an
           image into that area (see the service page intro section) */}
-      <div className="absolute bottom-[24%] right-[16%] -rotate-1">
-        <div className="hero-card-float-b">
+      <div
+        className={`absolute ${
+          third ? "bottom-[14%] right-[18%] rotate-1" : "bottom-[24%] right-[16%] -rotate-1"
+        }`}
+      >
+        <div className={third ? "hero-card-float-a" : "hero-card-float-b"}>
           <div
             key={slotB.index}
             className={slotB.leaving ? "hero-card-exit" : "hero-card-enter"}

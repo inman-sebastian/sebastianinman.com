@@ -49,7 +49,9 @@ export function HeroSplash({
 }: HeroSplashProps) {
   return (
     <section className="relative overflow-hidden bg-pine-dark">
-      {cards && <HeroCards poolA={poolA} poolB={poolB} />}
+      {/* The tall homepage hero gets a third card slot; compact inner
+          heroes stay at two so they don't crowd */}
+      {cards && <HeroCards poolA={poolA} poolB={poolB} third={!compact} />}
       {/* Sawtooth bottom edge: cream teeth biting into the green.
           -bottom-px sinks it 1px into the next section so subpixel
           rounding can't leave a green hairline under the teeth. */}
