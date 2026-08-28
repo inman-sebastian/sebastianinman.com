@@ -73,6 +73,57 @@ the same code path. The print CSS and `buildPdf()` are untouched; see
 the Facts section of `.claude/skills/draft-client-paperwork/SKILL.md`
 before changing any of it.
 
+## Prospects
+
+`/prospects` is the review queue for businesses Cowork found by
+research. They are deliberately not clients: nobody here has been in
+touch, and a research run produces a batch at once, so they stay out of
+the pipeline until you promote one.
+
+Records live in `data/prospects/<slug>.md`, same format and same
+only-writer rule as the client records. The `find-leads` skill writes
+them; it is told to record what was actually seen and the URL it was
+seen on, never to invent a contact detail, and never to write to
+anybody.
+
+Promoting creates a pipeline record at the `prospect` stage with
+`source: outreach`, the research as its notes, and a timeline entry
+saying where it came from. Passing marks the file `passed` and keeps it,
+so a later research run knows it was already looked at.
+
+Two stages sit at the front of the board for this: `prospect` and
+`contacted`. Neither counts towards "waiting on you" unless it has a
+date on it, so an afternoon of research cannot bury the people who
+actually wrote in.
+
+### What a site is running
+
+```bash
+node scripts/detect-stack.mjs https://example.com [more urls...]
+```
+
+Fetches each page once, the same as opening it in a browser, and reads
+the metadata: the generator tag, the script and stylesheet hosts, a few
+response headers. No crawling and no second page.
+
+It reports the platform (WordPress, Shopify, Squarespace, Wix, Webflow,
+GoDaddy, Weebly, Duda, and the rest) and the tools already wired in:
+booking, ordering, payments, email, chat, analytics. Anything that also
+appears on the tool-integration service page is marked, because those
+are the ones already claimed as work. It also answers whether the page
+has a viewport tag (none usually means it is broken on phones), whether
+there is a form, and any published mailto address.
+
+The `platform:` and `stack:` lines it prints go straight into a
+prospect's frontmatter, and the prospect page shows them. A non-200
+means it read nothing at all and says so, rather than reporting an
+absence as a fact; a Cloudflare challenge page is not evidence about
+anybody's website.
+
+`data/do-not-contact.md` is a plain list, one business, domain, or
+address per line. Research skips them and the app refuses to write to
+them. Add anyone who asks, the day they ask.
+
 ## Sending
 
 The composer (`/clients/<slug>/email`) opens the right template for the
@@ -87,6 +138,15 @@ in this app sends on a schedule, on a save, or on any other trigger,
 and Cowork never presses the button without Sebastian saying so in the
 moment. `lib/send.ts` is the only file that talks to the outside world;
 keep it that way.
+
+**Outreach never goes through Resend.** Their acceptable use policy bans
+cold outreach outright, and that account also carries the website's
+contact form and every client email, so a prospecting complaint would
+take down the mail the business actually runs on. Records with
+`source: outreach` get a Copy button instead of a Send button, and
+`sendBlockReason()` in `lib/send.ts` is checked again inside the send
+action, because a UI guard is a suggestion. One function, both places;
+do not let them drift.
 
 Credentials come from the repo root's `.env.local` (`RESEND_API_KEY`,
 `RESEND_FROM`), read by `lib/env.ts`. Next only loads env files from

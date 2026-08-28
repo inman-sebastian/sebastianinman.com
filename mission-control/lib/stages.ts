@@ -9,6 +9,20 @@
     and whatever gets said should be a personal note. */
 export const STAGES = [
   {
+    id: "prospect",
+    label: "Prospect",
+    blurb: "Found by research. Nobody has said hello yet.",
+    nextStep: "Write the first email",
+    emailId: 6,
+  },
+  {
+    id: "contacted",
+    label: "Contacted",
+    blurb: "First email sent. The ball is with them.",
+    nextStep: "Give it a week, then let it go",
+    emailId: 0,
+  },
+  {
     id: "inquiry",
     label: "Inquiry",
     blurb: "They reached out. Nothing scheduled yet.",
@@ -99,8 +113,18 @@ export const SOURCES = [
   { id: "contact-form", label: "Contact form" },
   { id: "booking", label: "Cal.com booking" },
   { id: "referral", label: "Referral" },
+  { id: "outreach", label: "Research" },
   { id: "manual", label: "Somewhere else" },
 ] as const;
+
+/**
+ * Records that came from research rather than from someone getting in
+ * touch. They never asked to hear from Sebastian, which is why the app
+ * refuses to send to them: Resend's acceptable use policy bans cold
+ * outreach, and that account also carries the website's contact form and
+ * every client email. Outreach gets drafted here and sent by hand.
+ */
+export const OUTREACH_SOURCE = "outreach";
 
 export type Source = (typeof SOURCES)[number]["id"];
 

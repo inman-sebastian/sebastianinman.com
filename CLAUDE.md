@@ -379,6 +379,36 @@ publishing on missing frontmatter, MDX that will not compile, an unknown
 component (checked against `components/mdx.tsx`), or a frontmatter image
 with no file, and warns on em dashes.
 
+**Lead research** fills the top of the funnel. The `find-leads` skill in
+`.claude/skills/` researches real local businesses, checks them against
+signals that map to the services, and writes them to
+`mission-control/data/prospects/*.md`; `/prospects` is the review queue,
+and promoting one creates a pipeline record at the new `prospect` stage
+with `source: outreach`. Targeting comes from `docs/market-research.md`
+(consumer-facing local businesses, which local competitors ignore).
+Skill rules that matter: only businesses actually looked at, every signal
+carries the URL it was seen on, never invent a contact detail, and never
+contact anyone.
+
+`mission-control/scripts/detect-stack.mjs <url>` reads a site's metadata
+in one fetch and reports the platform (WordPress, Shopify, Squarespace,
+Wix…) plus the tools already running on it (booking, ordering, payments,
+email, chat, analytics), marking any that appear in the `tools` list on
+`content/services/tool-integration.mdx`. Its `platform:` and `stack:`
+output goes into the prospect's frontmatter and shows on the prospect
+page. A non-200 reads nothing and says so; never record a block page as
+evidence about a business.
+
+**Outreach is drafted, never sent by the app.** Resend's acceptable use
+policy bans cold outreach, and that account also carries the contact form
+and all client email, so a complaint there takes down the mail the
+business runs on. Template 6 in `docs/clients/email-templates.md` is the
+first-contact email; the composer swaps Send for Copy on
+`source: outreach` records, and `sendBlockReason()` in
+`mission-control/lib/send.ts` is re-checked inside the send action.
+`mission-control/data/do-not-contact.md` is honoured by both the research
+and the composer.
+
 Not built: payment processor (undecided; ask before wiring anything to
 money) and Gmail.
 

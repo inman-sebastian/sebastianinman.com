@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { appendTimeline, getClient } from "@/lib/clients";
 import { unfilled } from "@/lib/emails";
-import { sendClientEmail } from "@/lib/send";
+import { isBlocked } from "@/lib/prospects";
+import { sendBlockReason, sendClientEmail } from "@/lib/send";
 
 /**
  * The send action. It runs only when Sebastian presses the button on the
@@ -29,6 +30,22 @@ export async function sendEmailAction(
 
   const client = getClient(slug);
   if (!client) return { error: "That client record is gone." };
+
+  // The guarantee, not the convenience. The button is already swapped
+  // out for these, but this is what stops a future change from quietly
+  // turning the app into a cold-email sender. Same function the UI uses,
+  // checked again here because the UI is not a guard.
+  const blocked = sendBlockReason(client);
+  if (blocked) return { error: blocked.reason };
+
+  // The typed address is checked separately, since it can be edited
+  const listedByHand = isBlocked([to]);
+  if (listedByHand) {
+    return {
+      error: `That address matches "${listedByHand}" on the do-not-contact list. Not sending.`,
+    };
+  }
+
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
     return { error: "That address doesn't look right." };
   }

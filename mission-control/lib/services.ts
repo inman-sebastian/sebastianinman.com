@@ -42,6 +42,20 @@ export function slugForTitle(title: string): string | null {
   return hit ? hit.slug : null;
 }
 
+/**
+ * The tools the site already says Sebastian connects, from the
+ * tool-integration service page. When detection finds one of these on a
+ * prospect's site, that is a real thing to open a conversation with
+ * rather than a guess.
+ */
+export function integratedTools(): Set<string> {
+  const file = path.join(SERVICES_DIR, "tool-integration.mdx");
+  if (!fs.existsSync(file)) return new Set();
+  const { data } = matter(fs.readFileSync(file, "utf8"));
+  const tools = Array.isArray(data.tools) ? data.tools : [];
+  return new Set(tools.map((t: unknown) => String(t).toLowerCase()));
+}
+
 export function serviceTitles(slugs: string[]): string[] {
   const byslug = new Map(listServices().map((s) => [s.slug, s.title]));
   return slugs.map((s) => byslug.get(s) ?? s);

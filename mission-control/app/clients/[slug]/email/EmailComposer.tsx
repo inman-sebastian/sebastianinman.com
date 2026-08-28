@@ -29,6 +29,7 @@ export function EmailComposer({
   defaults,
   attachments,
   canSend,
+  copyOnly,
 }: {
   clientSlug: string;
   clientName: string;
@@ -36,10 +37,14 @@ export function EmailComposer({
   defaults: { to: string; subject: string; body: string };
   attachments: AttachmentOption[];
   canSend: boolean;
+  /** Set for records that came from research: the app will not send to
+      them, so the last step hands the message over instead */
+  copyOnly?: string;
 }) {
   const [state, formAction, pending] = useActionState(sendEmailAction, {});
   const [confirming, setConfirming] = useState(false);
   const [problem, setProblem] = useState("");
+  const [copied, setCopied] = useState(false);
   const [to, setTo] = useState(defaults.to);
   const [subject, setSubject] = useState(defaults.subject);
   const [body, setBody] = useState(defaults.body);
@@ -172,9 +177,9 @@ export function EmailComposer({
           type="button"
           className="btn"
           onClick={review}
-          disabled={!canSend}
+          disabled={!canSend && !copyOnly}
         >
-          Read it over before sending
+          {copyOnly ? "Read it over" : "Read it over before sending"}
         </button>
       </div>
 
@@ -195,7 +200,7 @@ export function EmailComposer({
 
           <div className="card overflow-hidden">
             <p className="border-b border-line bg-pine-tint px-4 py-2 text-xs font-semibold uppercase tracking-wide text-pine-dark">
-              This is exactly what goes out
+              {copyOnly ? "This is the message" : "This is exactly what goes out"}
             </p>
             <dl className="divide-y divide-line text-sm">
               <div className="flex gap-4 px-4 py-2">
@@ -233,9 +238,24 @@ export function EmailComposer({
           )}
 
           <div className="flex flex-wrap gap-3">
-            <button type="submit" className="btn" disabled={pending}>
-              {pending ? "Sending..." : `Send it to ${to}`}
-            </button>
+            {copyOnly ? (
+              <button
+                type="button"
+                className="btn"
+                onClick={async () => {
+                  await navigator.clipboard.writeText(
+                    `To: ${to}\nSubject: ${subject}\n\n${body}`
+                  );
+                  setCopied(true);
+                }}
+              >
+                {copied ? "Copied" : "Copy it for your inbox"}
+              </button>
+            ) : (
+              <button type="submit" className="btn" disabled={pending}>
+                {pending ? "Sending..." : `Send it to ${to}`}
+              </button>
+            )}
             <button
               type="button"
               className="btn btn-quiet"
@@ -245,6 +265,12 @@ export function EmailComposer({
               Back to editing
             </button>
           </div>
+
+          {copyOnly && (
+            <p className="rounded-lg bg-terracotta-tint px-4 py-3 text-sm text-terracotta-dark">
+              {copyOnly}
+            </p>
+          )}
         </div>
       )}
     </form>

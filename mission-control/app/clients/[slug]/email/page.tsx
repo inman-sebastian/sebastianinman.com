@@ -4,7 +4,7 @@ import { displayName, getClient } from "@/lib/clients";
 import { documentsForClient } from "@/lib/documents";
 import { fillEmail, getEmailTemplate, listEmailTemplates } from "@/lib/emails";
 import { mailFrom, mailReady } from "@/lib/env";
-import { attachmentsFor } from "@/lib/send";
+import { attachmentsFor, sendBlockReason } from "@/lib/send";
 import { stageInfo } from "@/lib/stages";
 import { EmailComposer } from "./EmailComposer";
 
@@ -42,6 +42,13 @@ export default async function EmailPage({
 
   const ready = mailReady();
 
+  // The same rule the send action enforces. Research turned these up;
+  // they never asked to hear from anyone, so the app hands the message
+  // over instead of sending it.
+  const blocked = sendBlockReason(client);
+  const copyOnly = blocked?.kind === "outreach" ? blocked.reason : undefined;
+  const onList = blocked?.kind === "do-not-contact" ? blocked.reason : "";
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div>
@@ -55,17 +62,25 @@ export default async function EmailPage({
           Write to {client.name || displayName(client)}
         </h1>
         <p className="mt-1 text-sm text-muted">
-          Sending as {ready ? mailFrom() : "nobody yet"}
+          {copyOnly
+            ? "To send from your own inbox"
+            : `Sending as ${ready ? mailFrom() : "nobody yet"}`}
         </p>
       </div>
 
       <p className="rounded-lg bg-pine-tint px-4 py-3 text-sm text-pine-dark">
-        Nothing sends until you read it over and press the button on the next
-        step. This is the only part of the app that reaches anybody, and it is
-        yours to press.
+        {copyOnly
+          ? "Nothing sends from here for a researched business. You will read it over, copy it, and send it yourself."
+          : "Nothing sends until you read it over and press the button on the next step. This is the only part of the app that reaches anybody, and it is yours to press."}
       </p>
 
-      {!ready && (
+      {onList && (
+        <p className="rounded-lg bg-terracotta-tint px-4 py-3 text-sm text-terracotta-dark">
+          <strong>{onList}</strong> Close this one.
+        </p>
+      )}
+
+      {!ready && !copyOnly && (
         <p className="rounded-lg bg-terracotta-tint px-4 py-3 text-sm text-terracotta-dark">
           No mail credentials found. <code>RESEND_API_KEY</code> and{" "}
           <code>RESEND_FROM</code> live in the repo root&apos;s{" "}
@@ -90,13 +105,23 @@ export default async function EmailPage({
         ))}
       </nav>
 
+      {active?.notes && (
+        <details className="card p-4 text-sm">
+          <summary className="cursor-pointer font-semibold text-pine-dark">
+            What this template says about itself
+          </summary>
+          <p className="mt-2 whitespace-pre-wrap text-muted">{active.notes}</p>
+        </details>
+      )}
+
       <EmailComposer
         clientSlug={slug}
         clientName={displayName(client)}
         from={ready ? mailFrom() : ""}
         defaults={{ to: client.email, ...filled }}
         attachments={attachments}
-        canSend={ready}
+        canSend={ready && !onList}
+        copyOnly={copyOnly}
       />
 
       <p className="text-xs text-muted">

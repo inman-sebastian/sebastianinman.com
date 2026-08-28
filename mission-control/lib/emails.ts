@@ -21,6 +21,9 @@ export type EmailTemplate = {
   id: number;
   /** "New inquiry reply (contact form submission)" */
   title: string;
+  /** Anything the template says about itself between its heading and
+      its subject line, like the rule about sending outreach by hand */
+  notes: string;
   subject: string;
   body: string;
 };
@@ -34,9 +37,15 @@ export function listEmailTemplates(): EmailTemplate[] {
     .map((chunk) => {
       const at = chunk.search(/^\*\*Subject:\*\*/m);
       if (at === -1) return null;
-      // Headings wrap across lines in that file, so the title is
-      // everything before the subject line, whitespace collapsed
-      const heading = chunk.slice(0, at).replace(/\s+/g, " ").trim();
+      // Headings wrap across lines in that file, and some templates
+      // carry a paragraph of their own rules before the subject line.
+      // The heading is the first paragraph; the rest is notes.
+      const head = chunk.slice(0, at);
+      const split = head.indexOf("\n\n");
+      const heading = (split === -1 ? head : head.slice(0, split))
+        .replace(/\s+/g, " ")
+        .trim();
+      const notes = split === -1 ? "" : head.slice(split).trim();
       const rest = chunk.slice(at);
       const newline = rest.indexOf("\n");
       const subject = rest.slice(0, newline).replace(/^\*\*Subject:\*\*\s*/, "");
@@ -44,6 +53,7 @@ export function listEmailTemplates(): EmailTemplate[] {
       return {
         id: numbered ? Number(numbered[1]) : 0,
         title: numbered ? numbered[2] : heading,
+        notes,
         subject: subject.trim(),
         body: rest.slice(newline + 1).trim(),
       };

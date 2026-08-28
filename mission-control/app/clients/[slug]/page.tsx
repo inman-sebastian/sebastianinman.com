@@ -14,7 +14,7 @@ import { documentsForClient } from "@/lib/documents";
 import { getEmailTemplate } from "@/lib/emails";
 import { longDate, money, telHref } from "@/lib/format";
 import { listServices, serviceTitles } from "@/lib/services";
-import { sourceLabel, stageInfo, STAGES } from "@/lib/stages";
+import { OUTREACH_SOURCE, sourceLabel, stageInfo, STAGES } from "@/lib/stages";
 
 export const dynamic = "force-dynamic";
 
@@ -83,6 +83,12 @@ export default async function ClientPage({
                   It comes up filled in, and nothing sends until you have read
                   it over.
                 </p>
+                {client.source === OUTREACH_SOURCE && (
+                  <p className="mt-2 text-xs">
+                    This one you send from your own inbox. The app drafts it
+                    and will not send it.
+                  </p>
+                )}
                 <Link
                   href={`/clients/${client.slug}/email?template=${stageEmail.id}`}
                   className="btn mt-3"

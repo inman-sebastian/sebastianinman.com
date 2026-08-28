@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { mailConfig } from "./env";
 import { OUT_DIR } from "./documents";
+import { isBlocked } from "./prospects";
+import { OUTREACH_SOURCE } from "./stages";
 
 /**
  * The one place this app talks to the outside world.
@@ -12,6 +14,42 @@ import { OUT_DIR } from "./documents";
  * pressed the button. Cowork drafts, fills, and attaches; Cowork does
  * not press it. Never wire this to anything automatic.
  */
+
+export type SendBlock = {
+  kind: "outreach" | "do-not-contact";
+  reason: string;
+} | null;
+
+/**
+ * Why a record must not be emailed from this app, or null when it is
+ * fine to send.
+ *
+ * One rule in one place. The composer calls it to swap the send button
+ * for a copy button, and the send action calls it to refuse outright.
+ * If these two ever drift apart, the UI becomes the only guard, and a
+ * UI guard is a suggestion.
+ */
+export function sendBlockReason(client: {
+  source: string;
+  business: string;
+  email: string;
+}): SendBlock {
+  if (client.source === OUTREACH_SOURCE) {
+    return {
+      kind: "outreach",
+      reason:
+        "This one came from research. Resend does not allow cold outreach, and that is the same account the website's contact form and your client email run through, so this goes from your own inbox. One at a time, to people you would genuinely be glad to help.",
+    };
+  }
+  const listed = isBlocked([client.business, client.email]);
+  if (listed) {
+    return {
+      kind: "do-not-contact",
+      reason: `They are on the do-not-contact list (matched "${listed}").`,
+    };
+  }
+  return null;
+}
 
 export type Attachment = { filename: string; slug: string; bytes: number };
 

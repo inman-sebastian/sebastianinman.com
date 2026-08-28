@@ -101,3 +101,37 @@ email instead; I'd rather fix it.
 
 Thanks either way,
 Sebastian
+
+## 6. First contact (outreach, sent by hand)
+
+**SEND THIS ONE FROM YOUR OWN INBOX, NOT THROUGH THE APP.** Resend's
+acceptable use policy bans cold outreach, and that account also carries
+the website's contact form and every client email; a complaint there
+takes all of it down. Mission Control drafts this and blocks sending it.
+One at a time, never in bulk, and only to a business you would genuinely
+be glad to help. If they don't reply, that's the answer; no second email.
+
+**Subject:** {{SPECIFIC_THING}}
+
+Hi{{FIRST_NAME_IF_KNOWN}},
+
+{{OPENING_LINE: the true, specific thing you noticed about THIS business,
+from the research. "I was looking for a barber in Medford on my phone
+last week and yours was the one I couldn't find hours for." If this
+sentence could be sent to any business in town, don't send the email.}}
+
+I'm Sebastian, based in Southern Oregon. I build websites and set up
+small automations for local businesses, the kind of thing that stops you
+retyping the same information twice or missing a call you'd have liked
+to get.
+
+{{THE_OFFER: something concrete and small, and honest about the fact
+that they may not need anything. "If it'd be useful, I'm happy to tell
+you the two things I'd change and roughly what they'd cost, whether or
+not you ever hire me."}}
+
+If this isn't something you're thinking about, no problem at all; just
+say so and I won't write again.
+
+Sebastian Inman
+(541) 592-9047 · sebastianinman.com
