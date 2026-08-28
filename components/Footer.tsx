@@ -35,7 +35,11 @@ export function Footer() {
       </svg>
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-5">
         <div className="md:col-span-2">
-          <p className="font-serif text-lg font-semibold text-white">{site.name}</p>
+          <p className="inline-flex items-center gap-2.5 font-serif text-lg font-semibold text-white">
+            {/* Same terracotta sun dot as the header wordmark */}
+            <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full bg-terracotta" />
+            {site.name}
+          </p>
           <p className="mt-2 max-w-sm text-sm leading-relaxed">
             {site.serviceAreaLine}
           </p>
