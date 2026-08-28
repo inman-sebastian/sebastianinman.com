@@ -10,9 +10,9 @@ quote below the listed starting price without Sebastian's say-so.
 
 # Proposal for {{CLIENT_BUSINESS}}
 
-**Prepared by** Sebastian Inman · sebastianinman.com\
-**For** {{CLIENT_NAME}}, {{CLIENT_BUSINESS}}\
-**Date** {{DATE}} · good for 30 days
+**Prepared by:** Sebastian Inman · sebastianinman.com\
+**For:** {{CLIENT_NAME}}, {{CLIENT_BUSINESS}}\
+**Date:** {{DATE}} · good for 30 days
 
 ## The problem we talked about
 

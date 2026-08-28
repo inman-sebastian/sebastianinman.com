@@ -13,10 +13,10 @@ frontmatter on invoices.
 
 # Invoice INV-{{YEAR}}-{{NNN}}
 
-**Billed to** {{CLIENT_NAME}}, {{CLIENT_BUSINESS}}\
-**Project** {{PROJECT_SHORTNAME}}\
-**Date** {{DATE}}\
-**Due** {{DUE: "On receipt" for deposits, "Within 14 days" for finals}}
+**Billed to:** {{CLIENT_NAME}}, {{CLIENT_BUSINESS}}\
+**Project:** {{PROJECT_SHORTNAME}}\
+**Date:** {{DATE}}\
+**Due:** {{DUE: "On receipt" for deposits, "Within 14 days" for finals}}
 
 | Description | Amount |
 | --- | ---: |
@@ -29,7 +29,7 @@ frontmatter on invoices.
 accepts payment (bank transfer details, card link, or check). Ask him
 if unset; never invent payment details.}}
 
-Questions about this invoice? Call or text {{PHONE}}, or just reply to
-the email it came with.
+Questions about this invoice? Call or text {{PHONE}}, or reply to the
+delivery email and I'll get right back to you.
 
 Thanks for the work; I appreciate it.

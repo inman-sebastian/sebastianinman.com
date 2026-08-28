@@ -26,6 +26,13 @@ body {
   line-height: 1.7;
 }
 
+p,
+li,
+td {
+  /* Avoid single-word widows/orphans, same as the website */
+  text-wrap: pretty;
+}
+
 h1,
 h2,
 h3 {
