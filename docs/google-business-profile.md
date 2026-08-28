@@ -2,7 +2,20 @@
 
 Everything to copy into business.google.com when creating the profile.
 Written in the site voice; keep edits inside the voice guide
-(CLAUDE.md). Status: drafted Aug 2026, profile not yet created.
+(CLAUDE.md).
+
+**Status (Aug 2026): profile CREATED, verification submitted, pending
+approval.** Done: name, primary + 2 additional categories (Marketing
+consultant skipped; Google's picker flow got the other two), 9 service
+areas (all confirmed as the Oregon ones), phone, website, Mon-Fri 9-5
+hours, description, opening date Aug 2026, all 5 services (AI insights
+listed as "AI-Powered Insights & Reporting"), headshot photo. Address
+confirmed hidden ("No location; deliveries and home services only").
+SMS chat and the $500 Google Ads credit were deliberately skipped.
+
+**Blocked until verification approves** (Google gates these): the
+Cal.com booking link (Bookings section), the three opening Posts, and
+the seeded Q&A below. Do these the day verification clears.
 
 ## Non-negotiable setup choices
 
