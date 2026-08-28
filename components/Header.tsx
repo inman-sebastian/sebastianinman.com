@@ -23,9 +23,11 @@ export function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link
           href="/"
-          className="font-serif text-lg font-semibold text-pine-dark"
+          className="inline-flex items-center gap-2.5 font-serif text-lg font-semibold text-pine-dark"
           onClick={() => setOpen(false)}
         >
+          {/* The favicon's terracotta sun, reduced to a quiet accent dot */}
+          <span aria-hidden="true" className="h-3 w-3 shrink-0 rounded-full bg-terracotta" />
           Sebastian Inman
         </Link>
 
