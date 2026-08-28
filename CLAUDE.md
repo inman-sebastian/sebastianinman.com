@@ -404,12 +404,18 @@ contact anyone.
 
 Prospects also record where they are (`city`, optional `address`,
 `lat`/`lng`) and whether they have a Google Business Profile
-(`googleProfile`). The dashboard maps everyone who has coordinates
-(Mapbox, `MAPBOX_API_KEY` in the repo root `.env.local`, a public `pk.`
-token); a button geocodes anyone with a town but no pin via
-`mission-control/lib/geo.ts`. Pins are town-level unless a street
-address or a Google Maps embed gave something better, and records in the
-same town are nudged apart so they do not stack into one dot.
+(`googleProfile`). The dashboard maps everyone who has coordinates, at
+any stage (Mapbox, `MAPBOX_API_KEY` in the repo root `.env.local`, a
+public `pk.` token); anyone with a town but no pin is geocoded
+automatically on dashboard load via `mission-control/lib/geo.ts`, with
+no button to press. Pins are town-level unless a street address or a
+Google Maps embed gave something better, and records in the same town
+are nudged apart so they do not stack into one dot. Pin colour comes
+from `PHASES` in `mission-control/lib/stages.ts`, which groups the
+twelve stages into four readable bands. One row of chips above the map
+is both the key and the filter (Everyone, then a chip per stage in use);
+clicking one narrows the map to that stage. Adding a stage without
+putting it in a phase is a build error, not a miscoloured pin.
 
 `mission-control/scripts/detect-stack.mjs <url>` reads a site's metadata
 in one fetch and reports the platform (WordPress, Shopify, Squarespace,

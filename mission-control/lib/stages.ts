@@ -126,6 +126,61 @@ export function stageIndex(id: Stage) {
   return STAGE_IDS.indexOf(id);
 }
 
+/**
+ * The arc in four phases, for the places where a colour has to stand in
+ * for a stage: the map's pins and its legend.
+ *
+ * Twelve colours would be a decoder ring, so stages that mean the same
+ * thing at a glance share one. The order matches STAGES, and every stage
+ * belongs to exactly one phase. Adding a stage above without placing it
+ * here is a build error, not a quietly miscoloured pin.
+ */
+export const PHASES = [
+  {
+    id: "outreach",
+    label: "Not contacted",
+    colour: "#c05f33",
+    stages: ["researched", "prospect", "contacted"],
+  },
+  {
+    id: "talking",
+    label: "In conversation",
+    colour: "#b8862b",
+    stages: ["inquiry", "consult", "proposal"],
+  },
+  {
+    id: "working",
+    label: "Working together",
+    colour: "#234f3e",
+    stages: ["agreement", "build", "delivered", "review"],
+  },
+  {
+    id: "closed",
+    label: "Closed",
+    colour: "#9a9086",
+    stages: ["done", "lost"],
+  },
+] as const satisfies readonly {
+  id: string;
+  label: string;
+  colour: string;
+  stages: readonly Stage[];
+}[];
+
+export type Phase = (typeof PHASES)[number];
+
+/** Empty only when every stage above sits in exactly one phase */
+type Unplaced = Exclude<Stage, (typeof PHASES)[number]["stages"][number]>;
+type MustBeEmpty<T extends never> = T;
+export type _EveryStageHasAPhase = MustBeEmpty<Unplaced>;
+
+export function phaseOf(stage: Stage): Phase {
+  return (
+    PHASES.find((p) => (p.stages as readonly Stage[]).includes(stage)) ??
+    PHASES[0]
+  );
+}
+
 export const SOURCES = [
   { id: "contact-form", label: "Contact form" },
   { id: "booking", label: "Cal.com booking" },

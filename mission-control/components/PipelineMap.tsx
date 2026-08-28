@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { phaseOf, type Stage } from "@/lib/stages";
 
 /**
  * Everyone with a location, on one map.
@@ -19,12 +20,10 @@ export type MapPin = {
   city: string;
   lat: number;
   lng: number;
-  kind: "prospect" | "client";
+  stage: Stage;
   href: string;
   detail: string;
 };
-
-const COLOUR = { prospect: "#c05f33", client: "#234f3e" };
 
 export function PipelineMap({
   pins,
@@ -35,6 +34,7 @@ export function PipelineMap({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const fitted = useRef(false);
 
   useEffect(() => {
     if (!container.current || map.current || !token) return;
@@ -67,7 +67,7 @@ export function PipelineMap({
       // both navigated and opened a bubble, which is neither.
       const dot = document.createElement("div");
       dot.title = `${pin.label} · ${pin.city}`;
-      dot.style.cssText = `width:15px;height:15px;border-radius:50%;border:2.5px solid #fffdf8;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;background:${COLOUR[pin.kind]}`;
+      dot.style.cssText = `width:15px;height:15px;border-radius:50%;border:2.5px solid #fffdf8;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer;background:${phaseOf(pin.stage).colour}`;
 
       return new mapboxgl.Marker({ element: dot })
         .setLngLat([pin.lng, pin.lat])
@@ -84,14 +84,19 @@ export function PipelineMap({
     });
 
     // Frame everything, unless there is only one, which would zoom to
-    // street level on a pin that only claims to know the town
+    // street level on a pin that only claims to know the town.
+    // The first fit is instant; later ones follow a filter being
+    // toggled, and a short glide makes it obvious the view moved rather
+    // than the pins teleporting.
+    const duration = fitted.current ? 400 : 0;
+    fitted.current = true;
+
     if (pins.length > 1) {
       const bounds = new mapboxgl.LngLatBounds();
       for (const pin of pins) bounds.extend([pin.lng, pin.lat]);
-      instance.fitBounds(bounds, { padding: 60, maxZoom: 11, duration: 0 });
+      instance.fitBounds(bounds, { padding: 60, maxZoom: 11, duration });
     } else {
-      instance.setCenter([pins[0].lng, pins[0].lat]);
-      instance.setZoom(10);
+      instance.easeTo({ center: [pins[0].lng, pins[0].lat], zoom: 10, duration });
     }
 
     return () => {
@@ -108,7 +113,7 @@ export function PipelineMap({
     );
   }
 
-  return <div ref={container} className="h-80 w-full rounded-xl" />;
+  return <div ref={container} className="h-[28rem] w-full rounded-xl" />;
 }
 
 function escapeHtml(value: string): string {

@@ -133,13 +133,28 @@ carries the business's pin as `!2d<lng>!3d<lat>`, so when one is present
 the script prints exact coordinates, which beats geocoding the middle of
 a town.
 
-The dashboard shows everyone with coordinates on a Mapbox map,
-terracotta for prospects and pine for clients, with a popup linking to
-the record. Anything with a town but no coordinates gets a "place N more
-on the map" button, which geocodes through `lib/geo.ts` and writes the
-result into the record. That is a button rather than something that
-happens on save, because a record write should not depend on a network
-being there.
+The dashboard shows everyone with coordinates on a Mapbox map, whatever
+stage they are at, with a popup linking to the record. Pins are coloured
+by the four phases in `lib/stages.ts` (`PHASES`): not contacted, in
+conversation, working together, closed. Twelve colours would be a decoder
+ring, so stages that mean the same thing at a glance share one, and every
+stage has to belong to exactly one phase or the build fails.
+
+Above the map is one row of chips: Everyone, then a chip per stage
+anybody is actually at, with its count and the colour its pins are drawn
+in. The row is the filter and the key at once, which is the point;
+clicking a chip narrows the map to that stage, clicking it again goes
+back to everyone. That filter is what makes "everyone" readable: a
+research run can put thirty pins up, and the two you are building for get
+lost in them. It runs in the browser, since the pins are already there.
+
+Anything with a town but no coordinates is geocoded through `lib/geo.ts`
+on its own when the dashboard loads, and the result is written into the
+record, so it is a one-time cost per business and nothing has to be
+pressed. It runs after the page has rendered rather than during it,
+because the pipeline has to be readable on a bad connection. Businesses
+Mapbox has nothing for are remembered for the life of the server, so an
+unplaceable record is not looked up again on every visit.
 
 Pins are usually town-level, and the map says so. Records sharing a town
 get a small deterministic offset so six businesses in Medford read as

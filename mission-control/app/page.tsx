@@ -14,9 +14,12 @@ export default function Dashboard() {
   // Everything research turned up that has not been ruled out
   const researched = clients.filter((c) => c.stage === "researched");
 
-  // Everyone who has been placed, nudged apart when they share a town
+  // Everyone who has been placed, whatever stage they are at, nudged
+  // apart when they share a town. The map shows the lot and the filter
+  // narrows it; leaving stages out here would mean a pin count that
+  // quietly disagrees with the pipeline.
   const pins: MapPin[] = clients
-    .filter((c) => c.lat !== null && c.lng !== null && c.stage !== "lost")
+    .filter((c) => c.lat !== null && c.lng !== null)
     .map((c) => {
       const [lat, lng] = scatter(c.lat as number, c.lng as number, c.slug);
       const waiting = c.stage === "researched";
@@ -26,19 +29,17 @@ export default function Dashboard() {
         city: c.city,
         lat,
         lng,
-        kind: waiting ? ("prospect" as const) : ("client" as const),
+        stage: c.stage,
         href: waiting ? `/prospects/${c.slug}` : `/clients/${c.slug}`,
-        detail: [
-          waiting ? c.category : stageInfo(c.stage).label,
-          c.city,
-        ]
+        detail: [stageInfo(c.stage).label, c.category, c.city]
           .filter(Boolean)
           .join(" · "),
       };
     });
 
+  // Matches what the locate button actually does, which is everyone
   const unplaced = clients.filter(
-    (c) => c.lat === null && (c.city || c.address) && c.stage !== "lost"
+    (c) => c.lat === null && (c.city || c.address)
   ).length;
   const open = clients.filter(
     (c) => c.stage !== "done" && c.stage !== "lost" && c.stage !== "researched"
