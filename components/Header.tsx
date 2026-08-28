@@ -34,7 +34,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-pine ${
+              className={`text-sm font-semibold transition-colors hover:text-pine ${
                 pathname === link.href ? "text-pine" : "text-muted"
               }`}
             >
@@ -78,7 +78,7 @@ export function Header() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="block rounded-lg px-3 py-2.5 font-medium text-ink hover:bg-pine-tint"
+                  className="block rounded-lg px-3 py-2.5 font-semibold text-ink hover:bg-pine-tint"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
