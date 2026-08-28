@@ -190,7 +190,7 @@ a {
 .print-frame td {
   padding: 0;
 }
-.print-space td {
+.print-space .spacer {
   height: 0;
 }
 
@@ -237,7 +237,7 @@ a {
     padding: 0 0.9in;
     min-height: 100vh;
   }
-  .print-space td {
+  .print-space .spacer {
     height: 0.8in;
   }
 

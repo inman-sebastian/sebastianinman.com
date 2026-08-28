@@ -107,7 +107,7 @@ function renderDoc(d) {
     </nav>
     <article class="sheet">
       <table class="print-frame">
-        <thead class="print-space"><tr><td></td></tr></thead>
+        <thead class="print-space"><tr><td><div class="spacer"></div></td></tr></thead>
         <tbody><tr><td>
           <header class="letterhead">
             <p class="wordmark"><span class="dot"></span>${esc(info.name)}</p>
@@ -116,7 +116,7 @@ function renderDoc(d) {
           <div class="content">${html}</div>
           <footer class="docfoot">${esc(info.name)} · Southern Oregon · ${esc(info.email)} · ${esc(info.phone)}</footer>
         </td></tr></tbody>
-        <tfoot class="print-space"><tr><td></td></tr></tfoot>
+        <tfoot class="print-space"><tr><td><div class="spacer"></div></td></tr></tfoot>
       </table>
     </article>`,
     { print: true }
