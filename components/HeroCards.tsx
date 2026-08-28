@@ -155,11 +155,11 @@ function CardBody({ card }: { card: HeroCard }) {
   // lines. Right edge stays anchored, so width variance grows leftward.
   if (card.type === "chat") {
     return (
-      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
-        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
+      <div className="flex w-[22rem] max-w-[22rem] flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-sm text-pine-dark">
           {card.question}
         </p>
-        <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
+        <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-sm text-white">
           {card.answer}
         </p>
         <p className="mt-1 text-xs text-muted">{card.caption}</p>
@@ -170,7 +170,7 @@ function CardBody({ card }: { card: HeroCard }) {
     // A voicemail bubble (waveform + duration) with its transcription
     // written out beneath it: reading beats replaying
     return (
-      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+      <div className="flex w-[22rem] max-w-[22rem] flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
         <div className="flex items-center gap-2 self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-2">
           <span className="flex items-center gap-[3px]" aria-hidden="true">
             {[5, 9, 13, 8, 15, 11, 6, 12, 9, 4].map((h, i) => (
@@ -181,9 +181,9 @@ function CardBody({ card }: { card: HeroCard }) {
               />
             ))}
           </span>
-          <span className="text-xs font-semibold text-pine-dark">{card.duration}</span>
+          <span className="text-sm font-semibold text-pine-dark">{card.duration}</span>
         </div>
-        <p className="text-xs leading-relaxed text-ink">&ldquo;{card.text}&rdquo;</p>
+        <p className="text-sm leading-relaxed text-ink">&ldquo;{card.text}&rdquo;</p>
         <p className="mt-1 text-xs text-muted">{card.caption}</p>
       </div>
     );
@@ -193,11 +193,11 @@ function CardBody({ card }: { card: HeroCard }) {
     // an outlined bubble (not a pine reply bubble, which would read as
     // the business answering rather than translating)
     return (
-      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
-        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
+      <div className="flex w-[22rem] max-w-[22rem] flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-sm text-pine-dark">
           {card.original}
         </p>
-        <p className="self-start rounded-2xl rounded-tl-sm border border-line bg-background px-3 py-1.5 text-xs text-ink">
+        <p className="self-start rounded-2xl rounded-tl-sm border border-line bg-background px-3 py-1.5 text-sm text-ink">
           {card.translated}
         </p>
         <p className="mt-1 text-xs text-muted">{card.caption}</p>
@@ -207,7 +207,7 @@ function CardBody({ card }: { card: HeroCard }) {
   return (
     // pr-5: the icon makes the left padding read bigger than it is, so the
     // right side gets a touch more to visually balance the card
-    <div className="w-max max-w-[19rem] rounded-xl border border-line bg-surface/95 p-4 pr-5 shadow-lg">
+    <div className="w-max max-w-[21rem] rounded-xl border border-line bg-surface/95 p-4 pr-5 shadow-lg">
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-pine-tint text-pine">
           <svg
@@ -222,7 +222,7 @@ function CardBody({ card }: { card: HeroCard }) {
         </span>
         <div>
           <p className="text-sm font-semibold text-pine-dark">{card.title}</p>
-          <p className="text-xs text-muted">{card.sub}</p>
+          <p className="text-sm text-muted">{card.sub}</p>
         </div>
       </div>
     </div>
