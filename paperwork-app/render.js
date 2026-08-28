@@ -131,7 +131,8 @@ export function renderDoc(
   const bar = toolbar
     ? `<nav class="toolbar">
       <a href="/">&larr; All documents</a>
-      <span>Preview only: generate the finished PDF with <code>npm run generate -- ${esc(d.slug)}</code></span>
+      <span>Letter-size preview; long documents grow instead of paginating</span>
+      <a href="/pdf/${esc(d.slug)}" target="_blank">View exact PDF &rarr;</a>
     </nav>`
     : "";
   return pageHtml(

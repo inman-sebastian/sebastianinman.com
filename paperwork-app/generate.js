@@ -157,6 +157,19 @@ async function appendSignaturePage(bodyPdfBytes, draft) {
   return doc.save();
 }
 
+/** Build the finished PDF bytes for a draft (used by the CLI below and
+    the preview server's /pdf/<slug> route) */
+export async function buildPdf(draft) {
+  if (!fs.existsSync(CHROME)) {
+    throw new Error(`Chrome not found at ${CHROME}; set PAPERWORK_CHROME`);
+  }
+  let pdf = await renderBodyPdf(draft);
+  if (draft.signatures.length) {
+    pdf = await appendSignaturePage(pdf, draft);
+  }
+  return pdf;
+}
+
 async function main() {
   const slug = process.argv[2];
   if (!slug) {
@@ -170,16 +183,8 @@ async function main() {
     console.error(`No draft named "${slug}" in docs/clients/drafts/`);
     process.exit(1);
   }
-  if (!fs.existsSync(CHROME)) {
-    console.error(`Chrome not found at ${CHROME}; set PAPERWORK_CHROME`);
-    process.exit(1);
-  }
 
-  let pdf = await renderBodyPdf(draft);
-  if (draft.signatures.length) {
-    pdf = await appendSignaturePage(pdf, draft);
-  }
-
+  const pdf = await buildPdf(draft);
   const outDir = path.join(DRAFTS, "out");
   fs.mkdirSync(outDir, { recursive: true });
   const outPath = path.join(outDir, `${slug}.pdf`);
@@ -189,7 +194,10 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Run the CLI only when invoked directly, not when imported
+if (process.argv[1] && process.argv[1].endsWith("generate.js")) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

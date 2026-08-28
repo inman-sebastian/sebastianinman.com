@@ -17,6 +17,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT, getDrafts, renderIndex, renderDoc } from "./render.js";
+import { buildPdf } from "./generate.js";
 
 const PORT = 4747;
 
@@ -37,6 +38,16 @@ const server = http.createServer((req, res) => {
   if (m) {
     const d = getDrafts().find((x) => x.slug === m[1]);
     if (d) return send(200, "text/html; charset=utf-8", renderDoc(d));
+  }
+  // The exact final artifact, generated on demand (takes a few seconds)
+  const pm = url.pathname.match(/^\/pdf\/([\w-]+)$/);
+  if (pm) {
+    const d = getDrafts().find((x) => x.slug === pm[1]);
+    if (d) {
+      return buildPdf(d)
+        .then((pdf) => send(200, "application/pdf", Buffer.from(pdf)))
+        .catch((err) => send(500, "text/plain", String(err)));
+    }
   }
   send(404, "text/plain", "Not found");
 });

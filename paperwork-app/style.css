@@ -104,7 +104,7 @@ a {
 /* ---- Document ---- */
 
 .toolbar {
-  max-width: 46rem;
+  max-width: 8.5in;
   margin: 0 auto;
   padding: 1.25rem 1.5rem 0;
   font-size: 0.9rem;
@@ -118,13 +118,50 @@ a {
   text-decoration: none;
 }
 
+/* On screen the sheet is a real Letter page: 8.5in wide, at least
+   11in tall, with the print margins, and the footer pinned to the
+   sheet bottom (a short document previews exactly like its printed
+   page). The screen can't paginate flowing content, so longer
+   documents grow the sheet; the toolbar's "exact PDF" link shows the
+   true pagination. */
 .sheet {
-  max-width: 46rem;
+  width: 8.5in;
+  max-width: calc(100vw - 2rem);
   margin: 1.5rem auto 4rem;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 1rem;
-  padding: 3rem;
+  padding: 0.8in 0.9in;
+  min-height: 11in;
+  display: flex;
+}
+
+/* Neutralize the print-frame table on screen and turn it into a flex
+   chain so the footer can pin to the sheet bottom */
+@media screen {
+  /* Direct children only: content tables inside documents (invoices)
+     must keep their normal table display */
+  .print-frame,
+  .print-frame > tbody,
+  .print-frame > tbody > tr,
+  .print-frame > tbody > tr > td {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+  }
+  .print-frame > thead,
+  .print-frame > tfoot {
+    display: none;
+  }
+  .doc .docfoot {
+    margin-top: auto;
+  }
+  /* Minimum breathing room above the pinned footer when content is
+     long enough to reach it */
+  .print-frame > tbody > tr > td > :nth-last-child(2) {
+    margin-bottom: 2.5rem;
+  }
 }
 
 .letterhead {
@@ -267,6 +304,7 @@ a {
   font-size: 0.75rem;
   color: var(--muted);
 }
+
 
 /* ---- Print: same brand look as the screen version ----
    Browsers strip background colors when printing by default;

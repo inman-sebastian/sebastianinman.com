@@ -13,7 +13,9 @@ finished PDFs headlessly: `npm --prefix paperwork-app run generate --
 `signatures:` frontmatter get an appended brand signing page with
 REAL fillable AcroForm fields). Emails are delivered as text for
 Sebastian to paste into his mail client. The preview server ("paperwork"
-launch config, port 4747) is optional for on-screen checking.
+launch config, port 4747) is optional for on-screen checking; it
+mirrors the print layout (Letter-size sheet, pinned footer) and its
+`/pdf/<slug>` route serves the exact final artifact on demand.
 
 ## Hard rules
 
