@@ -5,6 +5,12 @@
 # builds, imports, or serves either of them, and mission-control is the
 # one that handles client data. Neither belongs on a server.
 #
-# This only affects what gets uploaded to Vercel. Both stay in git.
+# This only affects what gets uploaded to Vercel. Everything here stays
+# in git.
 mission-control
 paperwork-app
+
+# Working notes and repo tooling. The site reads neither: all published
+# copy lives in content/.
+docs
+.claude
