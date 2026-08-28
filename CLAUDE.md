@@ -307,10 +307,12 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
       https://www.sebastianinman.com (www is canonical; apex redirects).
       Deploys are CI/CD: every merge to `main` on GitHub auto-deploys,
       so pushing main IS shipping to production. Vercel Web Analytics
-      is wired up via `@vercel/analytics` in `app/layout.tsx`. NOT yet
-      verified in production: `RESEND_API_KEY`/`RESEND_FROM` in Vercel
-      project settings (without them the live contact form logs to the
-      console instead of emailing; confirm with a live test submission)
+      (`@vercel/analytics`) and Speed Insights (`@vercel/speed-insights`)
+      are wired up in `app/layout.tsx`. `RESEND_API_KEY`/`RESEND_FROM`
+      are set in Vercel and verified: a live form submission delivered
+      to hello@ (Aug 2026). Env-var gotcha for the future: Vercel
+      snapshots env per deployment, so changing vars requires a
+      redeploy, and vars must be scoped to the Production environment
 - [x] **hello@sebastianinman.com inbox** (Aug 2026): live; contact form
       test delivered to it successfully
 - [x] **Resend** (Aug 2026): live and verified end to end. `RESEND_API_KEY`
