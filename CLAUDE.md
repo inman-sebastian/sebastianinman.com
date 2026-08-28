@@ -313,9 +313,13 @@ long-form copy in `content/pages/<name>.mdx`, add a nav link in
 Templates live in `docs/clients/` (proposal, plain-language services
 agreement, email replies); the `draft-client-paperwork` skill in
 `.claude/skills/` turns consult notes into filled drafts. Drafts are
-MDX in `docs/clients/drafts/` (GIT-IGNORED: client data never gets
-committed or deployed) and render at the dev-only `/paperwork` route
-with brand letterhead for print-to-PDF. The agreement is not yet
+markdown in `docs/clients/drafts/` (GIT-IGNORED: client data never
+gets committed or deployed) and render in the STANDALONE paperwork app
+(`paperwork-app/`, its own package.json, port 4747, "paperwork" launch
+config) with brand letterhead for print-to-PDF; the website itself has
+no paperwork routes. The app parses `content/site.ts` for contact info
+and mirrors the design tokens in its own stylesheet (keep in sync when
+the palette changes). The agreement is not yet
 lawyer-reviewed; flag that whenever one is drafted. Never quote below
 a service's `startingPrice`.
 

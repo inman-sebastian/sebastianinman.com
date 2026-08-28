@@ -2,10 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "dev",
+      "name": "site",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "paperwork",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "paperwork-app", "start"],
+      "port": 4747
     }
   ]
 }

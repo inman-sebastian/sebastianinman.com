@@ -1,14 +1,17 @@
 ---
 name: draft-client-paperwork
-description: Draft client-facing paperwork (proposal, services agreement, or client emails) from the templates in docs/clients/, rendered at the dev-only /paperwork route for PDF export. Use when Sebastian wants to send a quote/proposal, get an agreement ready, or reply to an inquiry, typically after a consult.
+description: Draft client-facing paperwork (proposal, services agreement, or client emails) from the templates in docs/clients/, rendered by the standalone local paperwork app (paperwork-app/, port 4747) for PDF export. Use when Sebastian wants to send a quote/proposal, get an agreement ready, or reply to an inquiry, typically after a consult.
 ---
 
 # Draft client paperwork
 
 Turns consult notes into ready-to-send documents using the templates
-in `docs/clients/`. Proposals and agreements become MDX drafts
-rendered at `/paperwork` (brand letterhead, print-to-PDF); emails are
-delivered as text for Sebastian to paste into his mail client.
+in `docs/clients/`. Proposals and agreements become markdown drafts
+rendered by the standalone paperwork app (`paperwork-app/`, port 4747:
+brand letterhead, print-to-PDF, no website chrome); emails are
+delivered as text for Sebastian to paste into his mail client. Start
+the app with the "paperwork" launch config (or
+`npm --prefix paperwork-app start`).
 
 ## Hard rules
 
@@ -45,22 +48,26 @@ come from his notes, never from imagination.
    guide applies in full (plain language, no em dashes, warm not
    corporate). Keep proposals to one page of content.
 
-3. **Render and check**: with the dev server running, open
-   `/paperwork/<slug>`, confirm it renders cleanly (letterhead, title,
-   no leaked placeholders), and screenshot it for Sebastian.
+3. **Render and check**: start the paperwork app ("paperwork" launch
+   config), open `http://localhost:4747/doc/<slug>`, confirm it
+   renders cleanly (letterhead, title, no leaked placeholders), and
+   screenshot it for Sebastian.
 
 4. **For emails**: fill the matching template from
    `email-templates.md` and present the finished text in chat for
    copy-paste. Subject line included.
 
-5. **Hand off**: tell Sebastian the draft is at `/paperwork/<slug>`
-   and that Cmd+P saves the PDF. For agreements, include the
+5. **Hand off**: tell Sebastian the draft is at
+   `http://localhost:4747/doc/<slug>` and that Cmd+P saves the PDF. For agreements, include the
    lawyer-review reminder until the template header says reviewed.
 
 ## Facts
 
-- The `/paperwork` routes are dev-only (404 in production) and drafts
-  are git-ignored: two walls between client data and the public site.
+- The paperwork app is a separate local-only server (never deployed;
+  it lives in `paperwork-app/` and binds to 127.0.0.1) and drafts are
+  git-ignored: two walls between client data and the public site. It
+  reads brand contact info live from `content/site.ts` and renders
+  plain markdown, so drafts can be `.md` or `.mdx` with no components.
 - Prices live in `content/services/*.mdx` frontmatter
   (`startingPrice`). Default terms: half up front, remainder within 14
   days of delivery, 30-day free-fix window. Sebastian can override

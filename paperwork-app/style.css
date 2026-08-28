@@ -1,0 +1,208 @@
+/* Paperwork app: the website's design tokens, applied to documents.
+   Keep in sync with app/globals.css @theme when the palette changes. */
+
+:root {
+  --background: #faf6ef;
+  --surface: #fffdf8;
+  --ink: #2b2620;
+  --muted: #6b6257;
+  --pine: #234f3e;
+  --pine-dark: #18382c;
+  --terracotta: #c05f33;
+  --line: #e7dfd2;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Outfit", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  color: var(--pine-dark);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+a {
+  color: var(--terracotta);
+}
+
+/* ---- Index ---- */
+
+.index main {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+.eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin: 0;
+}
+.index h1 {
+  margin: 0.5rem 0 0;
+  font-size: 2rem;
+}
+.sub {
+  color: var(--muted);
+}
+.drafts {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+.drafts li {
+  margin-bottom: 0.75rem;
+}
+.drafts a {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+}
+.drafts a:hover {
+  border-color: var(--pine);
+}
+.drafts strong {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--pine-dark);
+  display: block;
+}
+.drafts span {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.empty {
+  color: var(--muted);
+}
+
+/* ---- Document ---- */
+
+.toolbar {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  display: flex;
+  gap: 1rem;
+}
+.toolbar a {
+  font-weight: 600;
+  color: var(--pine);
+  text-decoration: none;
+}
+
+.sheet {
+  max-width: 46rem;
+  margin: 1.5rem auto 4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+.letterhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--pine);
+  padding-bottom: 1.25rem;
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--pine-dark);
+  margin: 0;
+}
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: var(--terracotta);
+  flex-shrink: 0;
+}
+.contact {
+  text-align: right;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+.content {
+  margin-top: 2rem;
+}
+.content h1 {
+  font-size: 2rem;
+  margin: 0 0 1rem;
+}
+.content h2 {
+  font-size: 1.4rem;
+  margin: 2rem 0 0.5rem;
+}
+.content p,
+.content ul,
+.content ol {
+  margin: 0 0 1rem;
+}
+.content li {
+  margin-bottom: 0.3rem;
+}
+.content strong {
+  color: var(--pine-dark);
+}
+.content hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+.docfoot {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---- Print: the sheet becomes the page ---- */
+
+@media print {
+  body {
+    background: white;
+  }
+  .toolbar {
+    display: none;
+  }
+  .sheet {
+    max-width: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: white;
+  }
+}
