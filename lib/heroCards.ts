@@ -27,11 +27,14 @@ export type HeroCardIcon = keyof typeof heroCardIcons;
 
 export type HeroCard =
   | { type: "notice"; icon: HeroCardIcon; title: string; sub: string }
-  | { type: "chat"; question: string; answer: string; caption: string };
+  | { type: "chat"; question: string; answer: string; caption: string }
+  | { type: "voice"; duration: string; text: string; caption: string }
+  | { type: "translate"; original: string; translated: string; caption: string };
 
 /**
  * Convert raw frontmatter entries into typed cards. Entries with a
- * `question` become chat cards; everything else is a notice card
+ * `question` become chat cards, `duration` a voice-transcription card,
+ * `original` a translation card; everything else is a notice card
  * (icon/title/sub). Unknown icons fall back to a check mark.
  */
 export function parseHeroCards(raw: unknown): HeroCard[] | undefined {
@@ -43,6 +46,22 @@ export function parseHeroCards(raw: unknown): HeroCard[] | undefined {
         type: "chat" as const,
         question: entry.question,
         answer: String(entry.answer ?? ""),
+        caption: String(entry.caption ?? ""),
+      };
+    }
+    if (typeof entry.duration === "string") {
+      return {
+        type: "voice" as const,
+        duration: entry.duration,
+        text: String(entry.text ?? ""),
+        caption: String(entry.caption ?? ""),
+      };
+    }
+    if (typeof entry.original === "string") {
+      return {
+        type: "translate" as const,
+        original: entry.original,
+        translated: String(entry.translated ?? ""),
         caption: String(entry.caption ?? ""),
       };
     }

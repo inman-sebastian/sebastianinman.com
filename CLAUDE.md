@@ -118,10 +118,14 @@ landing page at `/services/<slug>`. Frontmatter: `title`, `summary`, `order`
 `imagePrompt`, `imageAlt`, `imageCaption` (short editorial figcaption
 shown under the intro illustration; a warm one-liner that complements
 the alt text, never repeats it), plus optional `heroCardsTop` / `heroCardsBottom`:
-lists of rotating hero example cards. Each card is either a notification
-(`icon` of check/calendar/star/sync/chart/mail/clock/globe, `title`, `sub`)
-or a chat (`question`, `answer`, `caption`). Keep card copy plain-English
-and service-specific.
+lists of rotating hero example cards. Each card is a notification
+(`icon` of check/calendar/star/sync/chart/mail/clock/globe, `title`, `sub`),
+a chat (`question`, `answer`, `caption`), a voicemail transcription
+(`duration` like "0:14", `text` = the transcript, `caption`), or a
+translation (`original` = the message in its original language,
+`translated`, `caption`; the translation renders as an outlined bubble
+from the same speaker, deliberately not a reply bubble). Keep card copy
+plain-English and service-specific.
 
 Cards also show a "Best for" line from `bestFor` (3-4 short business
 types, e.g. "Contractors & trades"; pick types that genuinely fit the

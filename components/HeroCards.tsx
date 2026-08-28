@@ -91,10 +91,22 @@ const defaultPoolB: HeroCard[] = [
     caption: "Answered automatically on a Sunday",
   },
   {
+    type: "voice",
+    duration: "0:14",
+    text: "Hi, hoping you can fit me in for a cut this Friday afternoon. Call me back!",
+    caption: "Voicemail transcribed the moment it landed",
+  },
+  {
     type: "chat",
     question: "Can I move my appointment to Thursday?",
     answer: "Done! See you Thursday at 2.",
     caption: "Rescheduled without a phone call",
+  },
+  {
+    type: "translate",
+    original: "¿Hacen pedidos grandes para eventos?",
+    translated: "Do you take large orders for events?",
+    caption: "Translated automatically, both directions",
   },
   {
     type: "notice",
@@ -149,6 +161,44 @@ function CardBody({ card }: { card: HeroCard }) {
         </p>
         <p className="self-end rounded-2xl rounded-br-sm bg-pine px-3 py-1.5 text-xs text-white">
           {card.answer}
+        </p>
+        <p className="mt-1 text-xs text-muted">{card.caption}</p>
+      </div>
+    );
+  }
+  if (card.type === "voice") {
+    // A voicemail bubble (waveform + duration) with its transcription
+    // written out beneath it: reading beats replaying
+    return (
+      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+        <div className="flex items-center gap-2 self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-2">
+          <span className="flex items-center gap-[3px]" aria-hidden="true">
+            {[5, 9, 13, 8, 15, 11, 6, 12, 9, 4].map((h, i) => (
+              <span
+                key={i}
+                className="w-[3px] rounded-full bg-pine"
+                style={{ height: `${h}px` }}
+              />
+            ))}
+          </span>
+          <span className="text-xs font-semibold text-pine-dark">{card.duration}</span>
+        </div>
+        <p className="text-xs leading-relaxed text-ink">&ldquo;{card.text}&rdquo;</p>
+        <p className="mt-1 text-xs text-muted">{card.caption}</p>
+      </div>
+    );
+  }
+  if (card.type === "translate") {
+    // Same speaker twice: the original message, then its translation in
+    // an outlined bubble (not a pine reply bubble, which would read as
+    // the business answering rather than translating)
+    return (
+      <div className="flex w-80 max-w-80 flex-col gap-2 rounded-xl border border-line bg-surface/95 p-4 shadow-lg">
+        <p className="self-start rounded-2xl rounded-bl-sm bg-pine-tint px-3 py-1.5 text-xs text-pine-dark">
+          {card.original}
+        </p>
+        <p className="self-start rounded-2xl rounded-tl-sm border border-line bg-background px-3 py-1.5 text-xs text-ink">
+          {card.translated}
         </p>
         <p className="mt-1 text-xs text-muted">{card.caption}</p>
       </div>
