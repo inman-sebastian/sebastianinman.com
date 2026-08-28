@@ -188,11 +188,25 @@ a {
   color: var(--muted);
 }
 
-/* ---- Print: the sheet becomes the page ---- */
+/* ---- Print: same brand look as the screen version ----
+   Browsers strip background colors when printing by default;
+   print-color-adjust: exact opts every element back in, so the cream
+   page, pine headings, and terracotta dot survive into the PDF.
+   @page margin 0 removes the browser's white paper margins (the
+   sheet's own padding becomes the document margin), which also lets
+   the background run edge to edge on every page. */
+
+@page {
+  margin: 0;
+}
 
 @media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
   body {
-    background: white;
+    background: var(--surface);
   }
   .toolbar {
     display: none;
@@ -202,7 +216,8 @@ a {
     margin: 0;
     border: 0;
     border-radius: 0;
-    padding: 0;
-    background: white;
+    background: var(--surface);
+    padding: 0.85in 0.9in;
+    min-height: 100vh;
   }
 }
