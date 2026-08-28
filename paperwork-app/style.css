@@ -180,6 +180,20 @@ a {
   margin: 2rem 0;
 }
 
+/* The invisible table frame: neutral on screen (spacer rows are zero
+   height); in print, thead/tfoot repeat on every page and become the
+   vertical page margins. */
+.print-frame {
+  width: 100%;
+  border-collapse: collapse;
+}
+.print-frame td {
+  padding: 0;
+}
+.print-space td {
+  height: 0;
+}
+
 .docfoot {
   margin-top: 2.5rem;
   border-top: 1px solid var(--line);
@@ -192,19 +206,15 @@ a {
    Browsers strip background colors when printing by default;
    print-color-adjust: exact opts every element back in, so the warm
    page, pine headings, and terracotta dot survive into the PDF.
-   Margins come from @page so EVERY page gets them (element padding
-   only applies on the first and last page). @page margin areas don't
-   paint element backgrounds, so the full-page tint comes from
-   .page-bg: position: fixed elements replicate on every printed page,
-   and the negative inset pushes it past the page area into the margin
-   bands. One layer, every page, no seams. */
+   @page margin is 0: the body background covers the whole paper on
+   every page (no white bands, and Chrome's date/URL header-footers
+   have nowhere to render). Per-page vertical margins come from the
+   table frame instead: thead/tfoot repeat at the top and bottom of
+   every printed page, and their spacer rows grow to margin height in
+   print. Horizontal margins are the sheet's padding. */
 
 @page {
-  margin: 0.8in 0.9in;
-}
-
-.page-bg {
-  display: none;
+  margin: 0;
 }
 
 @media print {
@@ -218,21 +228,17 @@ a {
   .toolbar {
     display: none;
   }
-  .page-bg {
-    display: block;
-    position: fixed;
-    inset: -2in;
-    background: var(--surface);
-    z-index: -1;
-  }
   .sheet {
     max-width: none;
     margin: 0;
     border: 0;
     border-radius: 0;
-    background: transparent;
-    padding: 0;
-    min-height: auto;
+    background: var(--surface);
+    padding: 0 0.9in;
+    min-height: 100vh;
+  }
+  .print-space td {
+    height: 0.8in;
   }
 
   /* Fragmentation: keep logical units on one page. A heading never

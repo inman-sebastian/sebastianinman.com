@@ -101,18 +101,23 @@ function renderDoc(d) {
   const html = marked.parse(d.body);
   return page(
     d.title,
-    `<div class="page-bg" aria-hidden="true"></div>
-    <nav class="toolbar">
+    `<nav class="toolbar">
       <a href="/">&larr; All documents</a>
       <span>Check every line, then Cmd+P to save as PDF</span>
     </nav>
     <article class="sheet">
-      <header class="letterhead">
-        <p class="wordmark"><span class="dot"></span>${esc(info.name)}</p>
-        <p class="contact">${esc(info.email)}<br>${esc(info.phone)} · sebastianinman.com</p>
-      </header>
-      <div class="content">${html}</div>
-      <footer class="docfoot">${esc(info.name)} · Southern Oregon · ${esc(info.email)} · ${esc(info.phone)}</footer>
+      <table class="print-frame">
+        <thead class="print-space"><tr><td></td></tr></thead>
+        <tbody><tr><td>
+          <header class="letterhead">
+            <p class="wordmark"><span class="dot"></span>${esc(info.name)}</p>
+            <p class="contact">${esc(info.email)}<br>${esc(info.phone)} · sebastianinman.com</p>
+          </header>
+          <div class="content">${html}</div>
+          <footer class="docfoot">${esc(info.name)} · Southern Oregon · ${esc(info.email)} · ${esc(info.phone)}</footer>
+        </td></tr></tbody>
+        <tfoot class="print-space"><tr><td></td></tr></tfoot>
+      </table>
     </article>`,
     { print: true }
   );
