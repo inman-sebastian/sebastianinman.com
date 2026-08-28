@@ -192,15 +192,19 @@ a {
    Browsers strip background colors when printing by default;
    print-color-adjust: exact opts every element back in, so the warm
    page, pine headings, and terracotta dot survive into the PDF.
-   Vertical margins come from @page so EVERY page gets them (element
-   padding only applies on the first and last page; interior breaks
-   would butt content against the page edge). Horizontal margins stay
-   on the sheet so the background runs edge to edge left and right.
-   The @page margin areas print paper-white, but the surface tint
-   (#fffdf8) is near-white, so the seam doesn't read. */
+   Margins come from @page so EVERY page gets them (element padding
+   only applies on the first and last page). @page margin areas don't
+   paint element backgrounds, so the full-page tint comes from
+   .page-bg: position: fixed elements replicate on every printed page,
+   and the negative inset pushes it past the page area into the margin
+   bands. One layer, every page, no seams. */
 
 @page {
-  margin: 0.8in 0;
+  margin: 0.8in 0.9in;
+}
+
+.page-bg {
+  display: none;
 }
 
 @media print {
@@ -214,14 +218,21 @@ a {
   .toolbar {
     display: none;
   }
+  .page-bg {
+    display: block;
+    position: fixed;
+    inset: -2in;
+    background: var(--surface);
+    z-index: -1;
+  }
   .sheet {
     max-width: none;
     margin: 0;
     border: 0;
     border-radius: 0;
-    background: var(--surface);
-    padding: 0 0.9in;
-    min-height: 100%;
+    background: transparent;
+    padding: 0;
+    min-height: auto;
   }
 
   /* Fragmentation: keep logical units on one page. A heading never

@@ -101,7 +101,8 @@ function renderDoc(d) {
   const html = marked.parse(d.body);
   return page(
     d.title,
-    `<nav class="toolbar">
+    `<div class="page-bg" aria-hidden="true"></div>
+    <nav class="toolbar">
       <a href="/">&larr; All documents</a>
       <span>Check every line, then Cmd+P to save as PDF</span>
     </nav>
