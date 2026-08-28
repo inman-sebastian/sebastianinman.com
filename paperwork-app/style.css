@@ -280,6 +280,9 @@ a {
    print. Horizontal margins are the sheet's padding. */
 
 @page {
+  /* Fixed US Letter size so every generated page is 8.5x11 regardless
+     of the environment's default paper */
+  size: 8.5in 11in;
   margin: 0;
 }
 
@@ -305,6 +308,17 @@ a {
   }
   .print-space .spacer {
     height: 0.8in;
+  }
+  /* The contact footer pins to the physical bottom of EVERY page
+     (fixed elements repeat per printed page; with @page margin 0 the
+     content area is the full sheet). The tfoot spacer above reserves
+     the bottom 0.8in so body text never collides with it. */
+  .docfoot {
+    position: fixed;
+    bottom: 0.42in;
+    left: 0.9in;
+    right: 0.9in;
+    margin: 0;
   }
 
   /* Fragmentation: keep logical units on one page. A heading never

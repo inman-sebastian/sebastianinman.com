@@ -146,9 +146,12 @@ async function appendSignaturePage(bodyPdfBytes, draft) {
     y = lineY - 64;
   });
 
-  // Footer
+  // Footer, aligned with the HTML pages' pinned docfoot (hairline at
+  // ~0.7in, text baseline ~0.43in)
+  const LINE = rgb(231 / 255, 223 / 255, 210 / 255);
+  page.drawRectangle({ x: MARGIN, y: 50, width: PAGE_W - 2 * MARGIN, height: 0.75, color: LINE });
   const foot = `${info.name} · Southern Oregon · ${info.email} · ${info.phone}`;
-  page.drawText(foot, { x: MARGIN, y: 48, size: 8, font: outfit, color: MUTED });
+  page.drawText(foot, { x: MARGIN, y: 31, size: 8, font: outfit, color: MUTED });
 
   form.updateFieldAppearances(outfit);
   return doc.save();
