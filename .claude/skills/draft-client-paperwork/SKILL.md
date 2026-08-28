@@ -39,9 +39,9 @@ come from his notes, never from imagination.
 ## Steps
 
 1. **Pick the template**: `proposal-template.md`,
-   `services-agreement.md`, or `email-templates.md` (all in
-   `docs/clients/`). Read the template's header notes; they carry the
-   rules for that document.
+   `services-agreement.md`, `invoice-template.md`, or
+   `email-templates.md` (all in `docs/clients/`). Read the template's
+   header notes; they carry the rules for that document.
 
 2. **For proposals and agreements**: write the filled document to
    `docs/clients/drafts/<client-slug>-<type>.mdx` with frontmatter
@@ -98,6 +98,12 @@ come from his notes, never from imagination.
   assets/fonts/fraunces-600-static.ttf for the signing page: the
   variable-font slice the OG images use breaks letter spacing when
   embedded in PDFs; keep both files.
+- Invoices: numbered INV-<year>-<NNN> sequentially (check existing
+  drafts for the last number; ask Sebastian if unclear), amounts must
+  match the proposal, and line items must sum to the total (verify
+  the arithmetic explicitly). Payment instructions come from
+  Sebastian, never invented. Deposit invoice goes with the signed
+  agreement; final invoice with the delivery email.
 - Prices live in `content/services/*.mdx` frontmatter
   (`startingPrice`). Default terms: half up front, remainder within 14
   days of delivery, 30-day free-fix window. Sebastian can override
