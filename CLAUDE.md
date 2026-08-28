@@ -379,6 +379,18 @@ publishing on missing frontmatter, MDX that will not compile, an unknown
 component (checked against `components/mdx.tsx`), or a frontmatter image
 with no file, and warns on em dashes.
 
+The post's Illustration panel generates art by shelling out to Claude
+Code headless (`claude -p "/generate-image ..."`), which runs the real
+generate-image skill against Flow: same collection, same two candidates,
+same eyeball check, and it bills the Claude subscription rather than a
+metered image API. The run is scoped to `Bash(agent-browser:*)`, `Read`,
+`Glob`, `Grep`, and is told explicitly not to run git, write into
+`public/`, or touch the optimizer. **Everything it makes is staged in the
+git-ignored `mission-control/data/image-candidates/`**; adopting one
+copies it into `public/images/blog/`, sets the frontmatter, runs
+`npm run optimize:images`, and keeps the replaced image staged so going
+back is one click. Verified end to end Aug 2026.
+
 **Lead research** fills the top of the funnel. The `find-leads` skill in
 `.claude/skills/` researches real local businesses, checks them against
 signals that map to the services, and writes them to

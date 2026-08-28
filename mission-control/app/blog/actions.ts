@@ -11,6 +11,14 @@ import {
   savePost,
 } from "@/lib/posts";
 import { validatePost } from "@/lib/validate";
+import { clearJob, startIllustration } from "@/lib/illustrate";
+import {
+  adoptCandidate,
+  discardCandidate,
+  optimizeImages,
+  saveUpload,
+  webPathFor,
+} from "@/lib/images";
 
 /**
  * Saving writes a file. Publishing commits and pushes, and because main
@@ -77,6 +85,79 @@ export async function publishPostAction(
   revalidatePath("/blog");
   revalidatePath(`/blog/${slug}`);
   return result.ok ? { message: result.message } : { error: result.message };
+}
+
+/**
+ * Starts the real illustration pipeline in the background. It does not
+ * wait: the run drives a browser and takes minutes. Nothing it produces
+ * is published; it writes an image into public/images/blog and stops.
+ */
+export async function generateIllustrationAction(
+  _prev: PostState,
+  formData: FormData
+): Promise<PostState> {
+  const slug = text(formData, "slug");
+  const prompt = text(formData, "imagePrompt");
+  const post = getPost(slug);
+  if (!post) return { error: "That post is gone." };
+
+  // Save the prompt first, so what runs is what is on screen
+  if (prompt && prompt !== post.imagePrompt) {
+    savePost(slug, { imagePrompt: prompt });
+  }
+
+  const problem = startIllustration(slug, prompt || post.imagePrompt);
+  if (problem) return { error: problem };
+
+  revalidatePath(`/blog/${slug}`);
+  return { message: "Started. It drives Flow in a browser, so give it a few minutes." };
+}
+
+/** Point the post at an image already sitting in public/images/blog */
+export async function setIllustrationAction(formData: FormData) {
+  const slug = text(formData, "slug");
+  const file = text(formData, "file");
+  savePost(slug, { image: file ? webPathFor(file) : "" });
+  revalidatePath(`/blog/${slug}`);
+}
+
+/** Take a file off Sebastian's machine and put it where the site expects */
+export async function uploadIllustrationAction(formData: FormData) {
+  const slug = text(formData, "slug");
+  const file = formData.get("upload");
+  if (!(file instanceof File) || file.size === 0) return;
+  const bytes = Buffer.from(await file.arrayBuffer());
+  const webPath = saveUpload(slug, bytes, file.name);
+  savePost(slug, { image: webPath });
+  await optimizeImages();
+  revalidatePath(`/blog/${slug}`);
+}
+
+/** Put a staged image on the post. The one it replaces is kept, staged,
+    so changing your mind does not mean generating again. */
+export async function adoptCandidateAction(formData: FormData) {
+  const slug = text(formData, "slug");
+  const file = text(formData, "file");
+  try {
+    const webPath = adoptCandidate(slug, file);
+    savePost(slug, { image: webPath });
+    await optimizeImages();
+  } catch {
+    // The only way here is a candidate that vanished under us; the page
+    // re-render will show it is gone
+  }
+  clearJob(slug);
+  revalidatePath(`/blog/${slug}`);
+}
+
+export async function discardCandidateAction(formData: FormData) {
+  discardCandidate(text(formData, "file"));
+  revalidatePath(`/blog/${text(formData, "slug")}`);
+}
+
+export async function dismissJobAction(formData: FormData) {
+  clearJob(text(formData, "slug"));
+  revalidatePath(`/blog/${text(formData, "slug")}`);
 }
 
 export async function deletePostAction(formData: FormData) {

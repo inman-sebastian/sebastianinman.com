@@ -170,6 +170,37 @@ The commit is scoped by pathspec to the post and its illustration, so
 whatever else is dirty in the working tree never rides along. Never
 change that to a `git add -A`.
 
+### Illustrations
+
+The Illustration panel on a post shows the current image, a Generate
+button, and a file picker. Clicking any image opens it full size.
+
+**Generate runs the real pipeline.** It shells out to Claude Code in
+headless mode (`claude -p "/generate-image ..."`), which runs the
+generate-image skill: Sebastian's Flow collection for style influence,
+two candidates, a 2K download, the eyeball check. That is deliberate.
+The skill drives a browser through agent-browser and a web request
+cannot, so this does not reimplement the pipeline, it invokes it. It
+also means generation bills against the Claude subscription rather than
+a second metered key, and the pipeline stays one implementation.
+
+The run is scoped hard: `Bash(agent-browser:*)`, `Read`, `Glob`, `Grep`
+and nothing else. No writes into the repo, no optimizer, and explicitly
+no git, because main auto-deploys and a button must never be able to
+ship anything.
+
+**Nothing it makes goes near the website.** Output lands in the
+git-ignored `data/image-candidates/` and waits. Choosing one copies it
+to `public/images/blog/<slug>.jpg`, sets the frontmatter, and runs
+`npm run optimize:images` (2.4MB down to about 200KB in practice). The
+image it replaces is kept as another candidate labelled "was on the
+post", so a picture that was liked is never simply gone.
+
+Runs take minutes, so they go in the background and leave their state on
+disk in `data/image-jobs/`: a log, and an exit-code file written at the
+end. The panel polls `/blog/<slug>/job`, which survives this server
+restarting mid-run.
+
 Before publishing, `lib/validate.ts` checks the things that actually go
 wrong: missing frontmatter, MDX that will not compile, a component the
 site does not have (the list is read from the site's own

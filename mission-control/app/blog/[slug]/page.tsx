@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import path from "node:path";
 import { deletePostAction, savePostAction } from "@/app/blog/actions";
 import { repoState } from "@/lib/git";
+import { readJob } from "@/lib/illustrate";
+import { blogImageVersion, listBlogImages, listCandidates } from "@/lib/images";
 import {
   getPost,
   postStatus,
@@ -12,6 +14,7 @@ import {
 } from "@/lib/posts";
 import { REPO_ROOT, siteInfo } from "@/lib/site";
 import { validatePost } from "@/lib/validate";
+import { IllustrationPanel } from "./IllustrationPanel";
 import { PublishPanel } from "./PublishPanel";
 
 export const dynamic = "force-dynamic";
@@ -162,18 +165,30 @@ export default async function PostPage({
             status={label.detail}
           />
 
-          <details className="card p-5">
-            <summary className="cursor-pointer font-serif text-lg font-semibold text-pine-dark">
+          <section className="card p-5">
+            <h2 className="font-serif text-lg font-semibold text-pine-dark">
               Illustration
-            </summary>
-            <div className="mt-3 space-y-4">
-              <p className="text-sm text-muted">
-                Optional; posts read fine without one. The convention is 4:3 at{" "}
-                <code>{suggestedImagePath(post.slug)}</code>. The
-                generate-image skill makes it and{" "}
-                <code>npm run optimize:images</code> shrinks it afterwards.
-              </p>
-              <form action={savePostAction} className="space-y-3">
+            </h2>
+            <div className="mt-3">
+              <IllustrationPanel
+                slug={post.slug}
+                image={post.image}
+                imageVersion={blogImageVersion(post.image)}
+                imagePrompt={post.imagePrompt}
+                imageAlt={post.imageAlt}
+                imageCaption={post.imageCaption}
+                suggestedPath={suggestedImagePath(post.slug)}
+                available={listBlogImages()}
+                initialJob={readJob(post.slug)}
+                candidates={listCandidates(post.slug)}
+              />
+            </div>
+
+            <details className="mt-5 border-t border-line pt-4">
+              <summary className="cursor-pointer text-sm font-semibold text-muted">
+                Alt text and caption
+              </summary>
+              <form action={savePostAction} className="mt-3 space-y-3">
                 <input type="hidden" name="slug" value={post.slug} />
                 <input type="hidden" name="title" value={post.title} />
                 <input
@@ -183,34 +198,12 @@ export default async function PostPage({
                 />
                 <input type="hidden" name="date" value={post.date} />
                 <input type="hidden" name="body" value={post.body} />
-                <div>
-                  <label className="label" htmlFor="image">
-                    Path
-                  </label>
-                  <input
-                    id="image"
-                    name="image"
-                    className="field"
-                    placeholder={suggestedImagePath(post.slug)}
-                    defaultValue={post.image}
-                  />
-                </div>
-                <div>
-                  <label className="label" htmlFor="imagePrompt">
-                    Prompt
-                  </label>
-                  <textarea
-                    id="imagePrompt"
-                    name="imagePrompt"
-                    rows={4}
-                    className="field text-sm"
-                    defaultValue={post.imagePrompt}
-                  />
-                  <p className="mt-1 text-xs text-muted">
-                    Generator instructions only: scene, style, palette. No
-                    reasoning or history, and cast any people explicitly.
-                  </p>
-                </div>
+                <input type="hidden" name="image" value={post.image} />
+                <input
+                  type="hidden"
+                  name="imagePrompt"
+                  value={post.imagePrompt}
+                />
                 <div>
                   <label className="label" htmlFor="imageAlt">
                     Alt text
@@ -238,11 +231,11 @@ export default async function PostPage({
                   </p>
                 </div>
                 <button type="submit" className="btn btn-quiet">
-                  Save the image details
+                  Save
                 </button>
               </form>
-            </div>
-          </details>
+            </details>
+          </section>
         </div>
       </div>
 

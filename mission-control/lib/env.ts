@@ -51,3 +51,8 @@ export function mailReady(): boolean {
 export function mailFrom(): string {
   return mailConfig().from;
 }
+
+/** For image generation. Same file, same rule: never logged, never shown. */
+export function geminiKey(): string {
+  return process.env.GEMINI_API_KEY || repoEnv().GEMINI_API_KEY || "";
+}
