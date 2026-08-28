@@ -194,6 +194,38 @@ a {
   height: 0;
 }
 
+/* Signature blocks (frontmatter `signatures: [names]`): ruled lines
+   with generous signing space. Recipients sign with a pen or any PDF
+   markup tool (Preview, Fill & Sign); print-to-PDF can't produce
+   interactive form fields, so the lines are the interface. */
+.signatures {
+  margin-top: 3rem;
+  break-inside: avoid;
+}
+.sig-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2.25rem;
+}
+.sig-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.sig-date {
+  flex: 0 0 30%;
+}
+.sig-line {
+  display: block;
+  height: 2.4rem;
+  border-bottom: 1.5px solid var(--ink);
+}
+.sig-label {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .docfoot {
   margin-top: 2.5rem;
   border-top: 1px solid var(--line);

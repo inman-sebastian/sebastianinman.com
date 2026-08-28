@@ -68,8 +68,11 @@ the amount you paid me for the project. This agreement is governed by
 Oregon law, and anything we can't resolve by talking gets resolved in
 {{COUNTY}} County, Oregon.
 
-Signed:
+Agreed and signed:
 
-Sebastian Inman · Date: ____________
-
-{{CLIENT_NAME}}, {{CLIENT_BUSINESS}} · Date: ____________
+<!-- Do NOT write signature lines in the body. Set them in the draft's
+frontmatter and the app renders proper signing blocks:
+  signatures:
+    - "Sebastian Inman"
+    - "{{CLIENT_NAME}}, {{CLIENT_BUSINESS}}"
+-->

@@ -50,6 +50,7 @@ function drafts() {
         title: String(data.title ?? f),
         client: String(data.client ?? ""),
         date: String(data.date ?? ""),
+        signatures: Array.isArray(data.signatures) ? data.signatures.map(String) : [],
         body: content,
       };
     })
@@ -99,6 +100,24 @@ function renderIndex() {
 function renderDoc(d) {
   const info = siteInfo();
   const html = marked.parse(d.body);
+  const signatures = d.signatures.length
+    ? `<section class="signatures">
+        ${d.signatures
+          .map(
+            (name) => `<div class="sig-row">
+          <div class="sig-field">
+            <span class="sig-line"></span>
+            <span class="sig-label">Signature · ${esc(name)}</span>
+          </div>
+          <div class="sig-field sig-date">
+            <span class="sig-line"></span>
+            <span class="sig-label">Date</span>
+          </div>
+        </div>`
+          )
+          .join("\n")}
+      </section>`
+    : "";
   return page(
     d.title,
     `<nav class="toolbar">
@@ -114,6 +133,7 @@ function renderDoc(d) {
             <p class="contact">${esc(info.email)}<br>${esc(info.phone)} · sebastianinman.com</p>
           </header>
           <div class="content">${html}</div>
+          ${signatures}
           <footer class="docfoot">${esc(info.name)} · Southern Oregon · ${esc(info.email)} · ${esc(info.phone)}</footer>
         </td></tr></tbody>
         <tfoot class="print-space"><tr><td><div class="spacer"></div></td></tr></tfoot>

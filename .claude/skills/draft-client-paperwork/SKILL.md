@@ -81,6 +81,15 @@ come from his notes, never from imagination.
   git-ignored: two walls between client data and the public site. It
   reads brand contact info live from `content/site.ts` and renders
   plain markdown, so drafts can be `.md` or `.mdx` with no components.
+- Documents needing signatures declare them in frontmatter
+  (`signatures:` list of names, e.g. "Jamie Doe, Sample Bakery"); the
+  app renders ruled signing blocks with date lines after the body.
+  Never write signature underscores in the markdown body. The printed
+  lines are signed with pen or PDF markup tools (Preview, Fill &
+  Sign); browser print-to-PDF cannot produce interactive form fields,
+  and that's fine: marked-up signatures are ESIGN-valid. If real
+  audit-trail e-signing is ever needed, that's an e-sign service
+  (DocuSign, DocuSeal), not this app.
 - Prices live in `content/services/*.mdx` frontmatter
   (`startingPrice`). Default terms: half up front, remainder within 14
   days of delivery, 30-day free-fix window. Sebastian can override
