@@ -11,6 +11,13 @@ type HeroSplashProps = {
   poolB?: HeroCard[];
   /** Shorter hero for inner pages */
   compact?: boolean;
+  /**
+   * Match the hero column to a centered max-w-3xl article column (blog
+   * posts) instead of the wide 6xl grid, so the hero text and the prose
+   * below share a left edge. Extra bottom padding keeps the overlapping
+   * article image clear of the text.
+   */
+  narrow?: boolean;
   /** Set false on pages that don't need the rotating example cards */
   cards?: boolean;
   /**
@@ -35,6 +42,7 @@ export function HeroSplash({
   poolA,
   poolB,
   compact = false,
+  narrow = false,
   cards = true,
   edge = "background",
   children,
@@ -64,16 +72,21 @@ export function HeroSplash({
         <rect width="100%" height="100%" fill="url(#hero-zigzag)" />
       </svg>
       <div
-        className={`relative mx-auto flex max-w-6xl items-center px-4 sm:px-6 ${
+        className={`relative mx-auto flex items-center px-4 sm:px-6 ${
+          narrow ? "max-w-3xl" : "max-w-6xl"
+        } ${
           compact
-            ? "py-16 md:min-h-[460px] md:py-20 md:pb-24"
+            ? narrow
+              ? "py-16 md:min-h-[460px] md:py-20 md:pb-36"
+              : "py-16 md:min-h-[460px] md:py-20 md:pb-24"
             : "py-20 md:min-h-[560px] md:py-24 lg:min-h-[640px]"
         }`}
       >
         {/* Capped at the width of the section grids' left column below, so
             the text always clears the rotating cards and any element that
-            overlaps up into the hero (images, form card, headshot) */}
-        <div className="max-w-xl md:max-w-[calc(50%-1.25rem)]">
+            overlaps up into the hero (images, form card, headshot). Narrow
+            heroes span their whole (already narrow) column instead. */}
+        <div className={narrow ? undefined : "max-w-xl md:max-w-[calc(50%-1.25rem)]"}>
           {eyebrow && (
             // Lightened terracotta for contrast on the dark green
             <p className="max-w-md text-balance text-sm font-semibold uppercase tracking-wide text-[#e09468]">

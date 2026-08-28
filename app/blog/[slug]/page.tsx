@@ -61,6 +61,7 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
       />
       <HeroSplash
         compact
+        narrow
         cards={false}
         eyebrow={formatDate(post.date)}
         heading={post.title}
