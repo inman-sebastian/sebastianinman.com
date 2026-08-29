@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { appendTimeline, getClient } from "@/lib/clients";
+import { appendTimeline, getClient, updateClient } from "@/lib/clients";
 import { unfilled } from "@/lib/emails";
 import { isBlocked } from "@/lib/suppression";
 import { sendBlockReason, sendClientEmail } from "@/lib/send";
+import { stageInfo } from "@/lib/stages";
 
 /**
  * The send action. It runs only when Sebastian presses the button on the
@@ -78,4 +79,48 @@ export async function sendEmailAction(
   revalidatePath("/");
   revalidatePath(`/clients/${slug}`);
   return { sent: to };
+}
+
+/**
+ * "I sent that one myself."
+ *
+ * Outreach leaves this app as text on the clipboard, so nothing here
+ * ever learns that it went. Without this the record sits at `prospect`
+ * forever, and because prospects only count as waiting when they carry
+ * a date, an entire round of outreach could go quiet with nothing on
+ * the dashboard saying so.
+ *
+ * This records what Sebastian already did. It sends nothing.
+ */
+export async function markContactedAction(
+  _prev: SendState,
+  formData: FormData
+): Promise<SendState> {
+  const slug = text(formData, "slug");
+  const subject = text(formData, "subject");
+  const client = getClient(slug);
+  if (!client) return { error: "That client record is gone." };
+
+  // A week from now, matching what the contacted stage says to do:
+  // give it a week, then let it go.
+  const due = new Date();
+  due.setDate(due.getDate() + 7);
+
+  updateClient(slug, {
+    stage: "contacted",
+    nextStep: stageInfo("contacted").nextStep,
+    nextStepDue: due.toISOString().slice(0, 10),
+  });
+  appendTimeline(
+    slug,
+    "First email sent by hand",
+    [subject && `Subject: ${subject}`, "Copied from the composer and sent from Sebastian's own inbox."]
+      .filter(Boolean)
+      .join("\n")
+  );
+
+  revalidatePath("/");
+  revalidatePath("/research");
+  revalidatePath(`/clients/${slug}`);
+  return { sent: client.email || "your inbox" };
 }

@@ -368,6 +368,60 @@ export function deleteClient(slug: string): boolean {
  * date has come. Otherwise one afternoon of research would bury the
  * people who actually wrote in.
  */
+/**
+ * How long a record can sit untouched before it is worth a nudge.
+ *
+ * Per stage, because the stages do not mean the same thing. Somebody
+ * who wrote in and heard nothing for two days is a worse problem than a
+ * build that has been quiet for a week. Stages left out of this are
+ * either not started (`researched`, `prospect`) or over (`done`,
+ * `lost`), and a batch from a research run must never nag.
+ */
+const QUIET_AFTER: Partial<Record<Stage, number>> = {
+  contacted: 7, // the stage's own advice: give it a week
+  inquiry: 2, // they reached out; silence here costs the most
+  consult: 3, // the proposal should follow the call while it is warm
+  proposal: 5, // the quote is with them
+  agreement: 5, // paperwork out, waiting on a signature
+  build: 10, // work in progress, but silence still costs trust
+  delivered: 7,
+  review: 7,
+};
+
+function daysBetween(from: string, to: string): number {
+  const a = Date.parse(`${from}T00:00:00Z`);
+  const b = Date.parse(`${to}T00:00:00Z`);
+  if (Number.isNaN(a) || Number.isNaN(b)) return 0;
+  return Math.round((b - a) / 86_400_000);
+}
+
+/**
+ * Records nothing has happened to in a while.
+ *
+ * This is the other half of `needsAttention`, and deliberately not the
+ * same question. That one asks what is due; this asks what has gone
+ * quiet, which is how a deal actually dies: not with a missed date, but
+ * with nobody noticing that three weeks went by. Anything already
+ * flagged as due is left out so one record never appears twice.
+ */
+export function goneQuiet(clients: ClientRecord[]): ClientRecord[] {
+  const now = today();
+  const due = new Set(needsAttention(clients).map((c) => c.slug));
+  return clients
+    .filter((c) => {
+      if (due.has(c.slug)) return false;
+      const limit = QUIET_AFTER[c.stage];
+      if (limit === undefined) return false;
+      return daysBetween(c.updated, now) >= limit;
+    })
+    .sort((a, b) => (a.updated < b.updated ? -1 : 1));
+}
+
+/** How long a record has been sitting, in days */
+export function daysSinceTouched(c: ClientRecord): number {
+  return daysBetween(c.updated, today());
+}
+
 export function needsAttention(clients: ClientRecord[]): ClientRecord[] {
   const now = today();
   return clients.filter((c) => {

@@ -1,8 +1,15 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ClientCard } from "@/components/ClientCard";
+import { StageBadge } from "@/components/StageBadge";
 import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
-import { displayName, listClients, needsAttention } from "@/lib/clients";
+import {
+  daysSinceTouched,
+  displayName,
+  goneQuiet,
+  listClients,
+  needsAttention,
+} from "@/lib/clients";
 import { money } from "@/lib/format";
 import { mapboxToken, scatter } from "@/lib/geo";
 import { ACTIVE_STAGES, stageInfo } from "@/lib/stages";
@@ -47,6 +54,7 @@ export default function Dashboard() {
     (c) => c.stage !== "done" && c.stage !== "lost" && c.stage !== "researched"
   );
   const waiting = needsAttention(clients);
+  const quiet = goneQuiet(clients);
   const quoted = open.reduce((sum, c) => sum + (c.value ?? 0), 0);
 
   // Only truly empty when there is nothing at all. Researched leads on their
@@ -108,6 +116,37 @@ export default function Dashboard() {
                     due {c.nextStepDue}
                   </span>
                 )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {quiet.length > 0 && (
+        <section className="card p-5">
+          <h2 className="font-serif text-lg font-semibold text-pine-dark">
+            Gone quiet
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            Nothing has happened on these in a while. Deals die here more
+            often than they die on a no.
+          </p>
+          <ul className="mt-3 divide-y divide-line">
+            {quiet.map((c) => (
+              <li
+                key={c.slug}
+                className="flex flex-wrap items-baseline gap-x-3 py-2"
+              >
+                <Link
+                  href={`/clients/${c.slug}`}
+                  className="font-semibold text-pine-dark hover:underline"
+                >
+                  {displayName(c)}
+                </Link>
+                <StageBadge stage={c.stage} />
+                <span className="ml-auto text-sm text-terracotta-dark">
+                  {daysSinceTouched(c)} days quiet
+                </span>
               </li>
             ))}
           </ul>

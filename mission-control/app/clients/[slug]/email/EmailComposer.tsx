@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useState } from "react";
-import { sendEmailAction } from "./actions";
+import { startTransition, useActionState, useState } from "react";
+import { markContactedAction, sendEmailAction } from "./actions";
 
 /**
  * Writing and sending, deliberately as two separate screens.
@@ -42,6 +42,7 @@ export function EmailComposer({
   copyOnly?: string;
 }) {
   const [state, formAction, pending] = useActionState(sendEmailAction, {});
+  const [marked, markAction, marking] = useActionState(markContactedAction, {});
   const [confirming, setConfirming] = useState(false);
   const [problem, setProblem] = useState("");
   const [copied, setCopied] = useState(false);
@@ -265,6 +266,46 @@ export function EmailComposer({
               Back to editing
             </button>
           </div>
+
+          {/* Only once it is on the clipboard, because until then there
+              is nothing to have sent. This records what Sebastian
+              already did; it sends nothing. */}
+          {copyOnly && copied && !marked.sent && (
+            <div className="rounded-lg bg-pine-tint px-4 py-3">
+              <p className="text-sm text-pine-dark">
+                Once you have sent it, say so and this moves to Contacted
+                with a check-back a week out.
+              </p>
+              <button
+                type="button"
+                className="btn mt-3"
+                disabled={marking}
+                onClick={() => {
+                  const data = new FormData();
+                  data.set("slug", clientSlug);
+                  data.set("subject", subject);
+                  // Dispatched by hand rather than from a form: this sits
+                  // inside the composer's own form, and forms cannot nest.
+                  startTransition(() => markAction(data));
+                }}
+              >
+                {marking ? "Noting it..." : "I sent it"}
+              </button>
+            </div>
+          )}
+
+          {marked.sent && (
+            <p className="rounded-lg bg-pine-tint px-4 py-3 text-sm text-pine-dark">
+              Noted. {clientName} is at Contacted, with a check-back in a
+              week.{" "}
+              <Link
+                href={`/clients/${clientSlug}`}
+                className="font-semibold underline"
+              >
+                Open the record
+              </Link>
+            </p>
+          )}
 
           {copyOnly && (
             <p className="rounded-lg bg-terracotta-tint px-4 py-3 text-sm text-terracotta-dark">
