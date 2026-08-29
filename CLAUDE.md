@@ -549,6 +549,28 @@ card fees on a $2,000 invoice are about $58. **It has never taken a real
 payment**: as of Aug 2026 the account holds zero customers and zero
 invoices, so the whole path past "draft an invoice" is unexercised.
 
+**Drafting** fills the `{{WRITING PROMPTS}}` from the record instead of
+by hand. "Draft it from the notes" in the composer sends the template,
+the frontmatter, the notes (research included) and the timeline to
+`mission-control/lib/drafting.ts`, which returns a subject and body.
+Deliberately the API path (`lib/claude.ts`), NOT the headless
+`claude -p` runner: drafting needs no tools, so it is one request and a
+few seconds rather than a background job with a log file. "Draft
+another" bumps an attempt counter, which is only there to miss the
+content-addressed cache.
+
+Two rules do the work, and both are in the system prompt:
+
+- **It leaves a placeholder rather than inventing.** Asked for a
+  post-consult email about a client who never had a consult, it returns
+  `{{WHEN}}`, `{{FLAT_PRICE}}` and the rest untouched and lists why. The
+  existing "sending is blocked while a `{{...}}` remains" guard is what
+  makes that safe, so the two features depend on each other.
+- **It reuses the record's `## Opening line` rather than writing a new
+  observation.** That line was checked against the live site by a human.
+  A better-sounding one Claude thought up has not been checked, and the
+  business can disprove it in five seconds.
+
 `mission-control/lib/hunter.ts` checks that an address will accept mail
 (`HUNTER_API_KEY` in the repo root `.env.local`, free plan: 50 searches
 and 100 verifications a month). It runs only when a button is pressed,

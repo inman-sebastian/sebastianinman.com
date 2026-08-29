@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { startTransition, useActionState, useState } from "react";
+import { startTransition, useActionState, useState, useTransition } from "react";
 import { VerifyEmail } from "@/components/VerifyEmail";
-import { markContactedAction, sendEmailAction } from "./actions";
+import {
+  draftEmailAction,
+  markContactedAction,
+  sendEmailAction,
+  type DraftState,
+} from "./actions";
 
 /**
  * Writing and sending, deliberately as two separate screens.
@@ -32,10 +37,13 @@ export function EmailComposer({
   canSend,
   copyOnly,
   signature,
+  templateId,
 }: {
   clientSlug: string;
   clientName: string;
   from: string;
+  /** Which numbered template is on screen, so a draft matches it */
+  templateId: number;
   defaults: { to: string; subject: string; body: string };
   attachments: AttachmentOption[];
   canSend: boolean;
@@ -56,6 +64,20 @@ export function EmailComposer({
   const [subject, setSubject] = useState(defaults.subject);
   const [body, setBody] = useState(defaults.body);
   const [checked, setChecked] = useState<string[]>([]);
+  const [draft, setDraft] = useState<DraftState>({});
+  const [attempt, setAttempt] = useState(0);
+  const [drafting, startDrafting] = useTransition();
+
+  function askForDraft() {
+    const next = attempt + 1;
+    setAttempt(next);
+    startDrafting(async () => {
+      const result = await draftEmailAction(clientSlug, templateId, next);
+      setDraft(result);
+      if (result.subject) setSubject(result.subject);
+      if (result.body) setBody(result.body);
+    });
+  }
 
   const left =
     (subject.match(/\{\{[\s\S]*?\}\}/g) ?? []).length +
@@ -99,6 +121,53 @@ export function EmailComposer({
       <input type="hidden" name="slug" value={clientSlug} />
 
       <div className={confirming ? "hidden" : "space-y-4"}>
+        {/* Fills the writing prompts from the record and its notes.
+            Overwrites whatever is in the fields, which is why it sits
+            above them rather than beside the send button. */}
+        <div className="rounded-lg border border-line bg-surface px-4 py-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              className="btn btn-quiet text-xs"
+              onClick={askForDraft}
+              disabled={drafting}
+            >
+              {drafting
+                ? "Reading the record..."
+                : attempt === 0
+                  ? "Draft it from the notes"
+                  : "Draft another"}
+            </button>
+            <p className="text-xs text-muted">
+              Uses this record&apos;s notes, research and timeline. It replaces
+              what is in the fields below, and sends nothing.
+            </p>
+          </div>
+
+          {draft.error && (
+            <p className="mt-2 rounded-lg bg-terracotta-tint px-3 py-2 text-xs text-terracotta-dark">
+              {draft.error}
+            </p>
+          )}
+
+          {/* What it refused to invent. The placeholder guard already
+              stops a send, so this is the list of what to supply. */}
+          {draft.leftBlank && draft.leftBlank.length > 0 && (
+            <div className="mt-2 rounded-lg bg-background px-3 py-2 text-xs">
+              <p className="font-semibold text-pine-dark">
+                Left blank on purpose, because the record doesn&apos;t say:
+              </p>
+              <ul className="mt-1 space-y-0.5 text-muted">
+                {draft.leftBlank.map((b) => (
+                  <li key={b.placeholder}>
+                    <code>{b.placeholder}</code> &mdash; {b.missing}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
         <div>
           <label className="label" htmlFor="to">
             To

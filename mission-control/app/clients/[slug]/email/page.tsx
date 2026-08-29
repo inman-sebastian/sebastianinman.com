@@ -124,6 +124,7 @@ export default async function EmailPage({
         canSend={ready && !onList}
         copyOnly={copyOnly}
         signature={signatureHtml()}
+        templateId={activeId}
       />
 
       <p className="text-xs text-muted">

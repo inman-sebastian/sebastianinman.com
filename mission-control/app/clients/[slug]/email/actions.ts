@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { appendTimeline, getClient, updateClient } from "@/lib/clients";
-import { unfilled } from "@/lib/emails";
+import { draftEmail } from "@/lib/drafting";
+import { getEmailTemplate, unfilled } from "@/lib/emails";
 import { isBlocked } from "@/lib/suppression";
 import { sendBlockReason, sendClientEmail } from "@/lib/send";
 import { stageInfo } from "@/lib/stages";
@@ -14,6 +15,46 @@ import { stageInfo } from "@/lib/stages";
  */
 
 export type SendState = { error?: string; sent?: string };
+
+export type DraftState = {
+  error?: string;
+  subject?: string;
+  body?: string;
+  leftBlank?: { placeholder: string; missing: string }[];
+  costUsd?: number;
+};
+
+/**
+ * Fill the writing prompts from what the record already knows.
+ *
+ * Sends nothing and saves nothing. It hands text back to the form,
+ * which Sebastian then edits, reads on the confirm step, and only then
+ * sends. The placeholder guard still applies afterwards, which is what
+ * makes it safe for the model to leave one alone rather than guess.
+ */
+export async function draftEmailAction(
+  slug: string,
+  templateId: number,
+  attempt: number,
+): Promise<DraftState> {
+  const client = getClient(slug);
+  if (!client) return { error: "That client record is gone." };
+
+  const template = getEmailTemplate(templateId);
+  if (!template) return { error: "That template is gone." };
+
+  try {
+    const { value, costUsd } = await draftEmail({ client, template, attempt });
+    return {
+      subject: value.subject,
+      body: value.body,
+      leftBlank: value.leftBlank,
+      costUsd,
+    };
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : String(err) };
+  }
+}
 
 function text(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
