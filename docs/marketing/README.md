@@ -8,6 +8,59 @@ which goes to one named person after a consult.
 |---|---|
 | `rogue-valley-talk.pptx` | A 15 to 20 minute talk for a room |
 | `leave-behind.md` -> `out/leave-behind.pdf` | One page to hand over or email |
+| `email-signature.html` | The Gmail signature, in a full and a short version |
+
+## The email signature
+
+Open the file in a browser, select what's inside a dashed box, copy, and
+paste into Gmail (Settings -> See all settings -> Signature). Gmail holds
+several and lets you pick one per message from the pen icon, so the full
+one goes on first contact and the short one on replies.
+
+Four things about it are deliberate, and all four break if edited
+casually:
+
+- **Every style is inline on the element.** Gmail discards `<style>`
+  blocks and `<link>` tags in a signature, so a stylesheet would vanish
+  on paste. The page chrome in that file is stylesheet-based precisely so
+  it can't leak in: if a signature looks right there, it looks right in
+  Gmail.
+- **No images.** Remote images in a signature are blocked by default in
+  a lot of clients, which turns the brand mark into a grey box and an
+  "images not displayed" banner. It is also the same mechanism as an
+  open-tracking pixel, which is not a thing to teach a new client's mail
+  server about you. The terracotta dot is the `&#9679;` character in
+  brand colour, so it renders everywhere and weighs nothing.
+- **The dot's font-size is not its diameter.** That glyph only inks about
+  0.43 of its em, so matching the site header's proportion (a 12px dot
+  beside 18px type, so 0.67) needs `font-size:26px` beside a 17px name.
+  It carries an explicit `line-height` in px for that reason: without one
+  the oversized glyph inflates the line box and opens a gap above the
+  line beneath it. `vertical-align:-1px` drops it onto the cap-height
+  centre. Change the name's size and all three have to move together.
+- **Table layout, no flexbox and no border-radius.** Outlook on Windows
+  renders through Word and supports neither. Borders on table cells it
+  handles fine.
+- **Georgia, not Fraunces.** Web fonts do not load in email. Georgia
+  ships on Windows and macOS and is the closest common serif to the
+  brand face. The sans stack falls back to Arial for the same reason.
+- **Contact links are underlined, one per line.** An earlier draft had
+  them unstyled and packed two to a line with a faint middot between,
+  which looked tidier and failed at the only job the block has: four
+  pine-coloured items ran together and nothing said any of them was
+  clickable. Underlines are the one link affordance that works in every
+  client and does not depend on seeing colour. Taking them off to
+  neaten it up is walking back a fix.
+
+Colours are the tokens from `app/globals.css` (pine `#234f3e`, pine-dark
+`#18382c`, terracotta `#c05f33`, muted `#6b6257`), and the contact facts
+come from `content/site.ts`. **Neither is wired up**, so a phone number
+or booking link that changes on the site has to be changed here by hand.
+
+One known limit: some clients recolour text in dark mode, so the pine
+and terracotta can shift. There is no fix for it that survives Gmail
+stripping media queries, and a signature is not worth an image to dodge
+it.
 
 ## The leave-behind
 
