@@ -76,7 +76,12 @@ export function MdxBodyEditor({
       </div>
 
       {/* The escape hatch. Anything the rich editor cannot express, or
-          gets wrong, is fixable here without leaving the page. */}
+          gets wrong, is fixable here without leaving the page.
+
+          `mdx-editor-shell` below is not decoration: MDXEditor declares
+          its theme variables on a hashed class of its own, so a bare
+          `.mdxeditor` override is a coin toss on stylesheet order. The
+          extra parent settles it. See the block in globals.css. */}
       {source ? (
         <textarea
           rows={30}
@@ -85,7 +90,7 @@ export function MdxBodyEditor({
           onChange={(e) => setValue(e.target.value)}
         />
       ) : (
-        <div className="rounded-lg border border-line bg-background">
+        <div className="mdx-editor-shell">
           <Editor
             markdown={initial}
             onChange={(next) => setValue(stripImports(next))}

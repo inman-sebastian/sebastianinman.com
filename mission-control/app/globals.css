@@ -162,3 +162,101 @@ body {
   padding: 0.05em 0.3em;
   font-size: 0.9em;
 }
+
+/* MDXEditor, wearing the app's clothes.
+
+   Themed through its own variables rather than its class names, because
+   the class names are content-hashed (._toolbarRoot_er3ed_162) and
+   change between versions. The semantic variables are stable API. The
+   handful of structural rules below use the unhashed aliases MDXEditor
+   also applies (.mdxeditor-toolbar and friends), which are stable too.
+
+   Scoped under .mdx-editor-shell because MDXEditor sets these variables
+   on a hashed class of the same specificity, so without the extra
+   parent it comes down to stylesheet order, which nothing guarantees. */
+.mdx-editor-shell .mdxeditor {
+  font-family: var(--font-sans);
+
+  /* Surfaces: the writing area matches .field, the toolbar sits on the
+     page cream so it reads as chrome rather than as content. */
+  --basePageBg: var(--color-surface);
+  --baseBase: var(--color-surface);
+  --baseBgSubtle: var(--color-background);
+  --baseBg: var(--color-background);
+  --baseBgHover: var(--color-pine-tint);
+  --baseBgActive: var(--color-pine-tint);
+  --baseLine: var(--color-line);
+  --baseBorder: var(--color-line);
+  --baseBorderHover: var(--color-muted);
+  --baseSolid: var(--color-muted);
+  --baseSolidHover: var(--color-ink);
+  --baseText: var(--color-muted);
+  --baseTextContrast: var(--color-ink);
+
+  /* Accent is pine, not the stock blue: active toggles, focus rings,
+     links and the JSX component frames all key off these. */
+  --accentBase: var(--color-pine-tint);
+  --accentBgSubtle: var(--color-pine-tint);
+  --accentBg: var(--color-pine-tint);
+  --accentBgHover: var(--color-pine-tint);
+  --accentBgActive: var(--color-pine-tint);
+  --accentLine: var(--color-line);
+  --accentBorder: var(--color-pine);
+  --accentBorderHover: var(--color-pine-dark);
+  --accentSolid: var(--color-pine);
+  --accentSolidHover: var(--color-pine-dark);
+  --accentText: var(--color-pine-dark);
+  --accentTextContrast: var(--color-pine-dark);
+}
+
+/* The frame, matching .field rather than sitting in one */
+.mdx-editor-shell .mdxeditor {
+  border: 1px solid var(--color-line);
+  border-radius: 0.6rem;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+
+.mdx-editor-shell .mdxeditor-toolbar {
+  border-radius: 0;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-background);
+  gap: 0.15rem;
+}
+
+/* No border-radius here on purpose. MDXEditor rounds only the outer
+   ends of each button group, and overriding every button flat made the
+   groups read as loose squares. Colour is ours; shape is theirs. */
+.mdx-editor-shell .mdxeditor-toolbar button {
+  color: var(--color-muted);
+}
+.mdx-editor-shell .mdxeditor-toolbar button:hover {
+  color: var(--color-pine-dark);
+}
+.mdx-editor-shell .mdxeditor-toolbar button[data-state="on"] {
+  background: var(--color-pine-tint);
+  color: var(--color-pine-dark);
+}
+
+/* The component insert buttons read as words, not icons, so they need
+   to look like the app's quiet buttons rather than icon squares. */
+.mdx-editor-shell .mdxeditor-toolbar button:not(:has(svg)) {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+
+/* The frame MDXEditor draws around a JSX component takes its colour
+   from the inherited text colour, which lands near-black and reads far
+   heavier than anything else on the page. */
+.mdx-editor-shell [data-lexical-decorator] > div {
+  border-color: var(--color-line);
+}
+
+.mdx-editor-shell .mdxeditor-root-contenteditable {
+  min-height: 26rem;
+}
+.mdx-editor-shell .mdx-body {
+  padding: 1rem 1.1rem;
+  color: var(--color-ink);
+}
