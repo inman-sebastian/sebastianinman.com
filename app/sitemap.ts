@@ -3,10 +3,21 @@ import { site } from "@/content/site";
 import { getBlogPosts, getLandingPages, getServices } from "@/lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = ["", "/services", "/about", "/faq", "/blog", "/contact"].map((path) => ({
+  // Legal pages are listed so they are findable, at a low priority
+  // because nobody arrives at this site searching for them
+  const legalPages = ["/privacy", "/terms"];
+  const staticPages = [
+    "",
+    "/services",
+    "/about",
+    "/faq",
+    "/blog",
+    "/contact",
+    ...legalPages,
+  ].map((path) => ({
     url: `${site.url}${path}`,
     changeFrequency: "monthly" as const,
-    priority: path === "" ? 1 : 0.8,
+    priority: path === "" ? 1 : legalPages.includes(path) ? 0.3 : 0.8,
   }));
 
   const blogPosts = getBlogPosts().map((post) => ({

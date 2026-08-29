@@ -111,8 +111,20 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
-        © {new Date().getFullYear()} {site.name}. All rights reserved.
+      {/* Legal lives here rather than in the header: people look for it
+          at the bottom, and it earns no room in the main nav. */}
+      <div className="flex flex-col items-center gap-2 border-t border-white/10 py-4 text-xs text-white/50 sm:flex-row sm:justify-between sm:px-6">
+        <p>
+          © {new Date().getFullYear()} {site.name}. All rights reserved.
+        </p>
+        <p className="flex items-center gap-4">
+          <Link href="/privacy" className="hover:text-white">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-white">
+            Terms
+          </Link>
+        </p>
       </div>
     </footer>
   );
