@@ -141,6 +141,16 @@ Optional per post (posts render fine without one), 4:3, path
     no-show fees; the scene is the thesis (the phone confirms while the
     customer actually shows up). Bubbles and calendar must stay blank.
 
+- [x] `public/images/blog/judge-ai-like-any-other-tool.jpg` (4:3)
+  - **Prompt:** "Friendly modern flat illustration of a calm East Asian woman in her fifties with short dark hair standing behind a small shop counter, unhurriedly examining a new countertop device she is deciding whether to keep, an older card reader and a tidy receipt spike beside it, a potted plant and warm afternoon light through the window, earthy cream, deep pine green, and terracotta palette. No text or lettering anywhere; device screens blank."
+  - **Notes:** post arguing AI should be judged like any other tool; the
+    scene is the thesis (an owner calmly sizing up a new gadget beside
+    the one she already trusts, unbothered). The old card reader beside
+    the new device is doing the work, so it must stay in frame. Device
+    screens and any receipt are lettering magnets. Cast picked under the
+    casting rule: the named blog cast was two men (older Latino, middle
+    -aged Black) and the series had no Asian representation.
+
 ## Area cards (About page "Areas I serve")
 
 A matched series in the SAME friendly flat style as the service
