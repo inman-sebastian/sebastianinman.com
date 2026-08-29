@@ -36,22 +36,39 @@ platforms ~$30-200/mo); worth being upfront about in consults.
   niche), Nathan Neil (ops consulting). Portland-based remote providers
   claim the area but have no local presence.
 
-- **ashland.biz** (found Aug 2026 while verifying a lead): the first
-  competitor seen aiming at our exact target. "Local business pages,
-  done the clean way", one page per business on a memorable subdomain
-  (`flattop.ashland.biz`), hosted on Vercel, recruiting openly with a
-  "Request yours" button. Four businesses live: The Flat Top, Bento,
-  Rarity Ink, Lithia Park Shoes. The pages are good, and genuinely so:
-  responsive, fast, hours, price menu, photos, call and directions.
-  No pricing published and no operator named.
+- **ashland.biz** (found Aug 2026 while verifying a lead): **not a
+  competitor yet. Watch it, don't plan around it.** Sells one templated
+  page per business on a subdomain (`flattop.ashland.biz`), on Vercel,
+  recruiting with a "Request yours" button. No pricing published, no
+  operator named.
 
-  Worth watching rather than worrying about. It is a *cheaper, lighter*
-  product than a website, not the same one: the business does not own
-  the domain, cannot be found by their own name, and takes the page down
-  with the directory if it ever folds. That is a real distinction to be
-  able to draw, and it must be drawn without sneering at a page that is
-  better than a lot of small-business sites. It also means one of our
-  own leads (Flat Top) is effectively already served.
+  What it actually looks like, checked Aug 29:
+
+  - **Half of it is broken.** Of the four businesses it lists, two
+    (`bento`, `rarityink`) return a bare Vercel `NOT_FOUND` 404. The
+    directory links to its own dead pages.
+  - **One template, applied rigidly.** Same layout every time, different
+    colours. Heavy emoji, a "CONFETTI" button, image captions that are
+    the filenames (`image-1.jpg`).
+  - **Quality is inconsistent and the featured page flatters it.** Flat
+    Top's is decent. Lithia Park Shoes is muddy and low-contrast, and it
+    publishes owner-facing controls ("COPY OWNER TEXT", "COPY 1-LINER")
+    and a "Pro tip: add the QR to the door + counter + receipts" on the
+    page customers land on.
+  - The business never owns the domain, so they cannot be found under
+    their own name and lose the page if the directory folds.
+
+  It is a link-in-bio page with a local twist, not a website, and it is
+  aimed at businesses who would otherwise have nothing. Sebastian's read,
+  and it is the right one: revisit if it grows and the quality comes up.
+  Until then the only thing it changes is that one of our leads (Flat
+  Top) is adequately served and not worth pursuing.
+
+  **Note on how this got recorded wrong the first time:** the initial
+  entry called it a real competitor whose "pages are good, and genuinely
+  so", generalised from opening exactly one page, which was the one it
+  features. Same mistake the find-leads audit had just added a rule
+  about. Look at more than the sample the seller chose.
 
 ### Implications for "Best for" targeting
 Local AI/automation competitors chase B2B and professional-services
