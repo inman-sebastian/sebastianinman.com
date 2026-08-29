@@ -88,7 +88,12 @@ export default async function PostPage({
       ))}
 
       <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
-        <form action={savePostAction} className="space-y-4">
+        {/* min-w-0 is load-bearing. A grid item defaults to
+            min-width:auto, so it refuses to shrink below its content's
+            min-content width, and MDXEditor's toolbar is wide. Without
+            this the first column pushed past its 3fr share and shoved
+            the sidebar out of the container. */}
+        <form action={savePostAction} className="min-w-0 space-y-4">
           <input type="hidden" name="slug" value={post.slug} />
           <div>
             <label className="label" htmlFor="title">
