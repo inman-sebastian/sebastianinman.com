@@ -4,7 +4,9 @@ import { estimatedWorth } from "@/lib/services";
 import { money } from "@/lib/format";
 import { readJob } from "@/lib/agent-run";
 import { RESEARCH_JOB } from "@/lib/research";
+import { Suspense } from "react";
 import { FindLeadsPanel } from "./FindLeadsPanel";
+import { RankingPanel, RankingPanelSkeleton } from "./RankingPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -27,6 +29,10 @@ export default function ResearchPage() {
       </div>
 
       <FindLeadsPanel initialJob={readJob(RESEARCH_JOB)} waiting={waiting.length} />
+
+      <Suspense fallback={<RankingPanelSkeleton />}>
+        <RankingPanel />
+      </Suspense>
 
       <section className="card">
         <p className="border-b border-line px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted">

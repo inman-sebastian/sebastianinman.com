@@ -5,6 +5,7 @@ import { StageBadge } from "@/components/StageBadge";
 import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
 import { MoneyPanel, MoneyPanelSkeleton } from "./MoneyPanel";
 import { MoneyStats, Stat, StatPending, TrafficStat } from "./Stats";
+import { BriefingPanel, BriefingPanelSkeleton } from "./BriefingPanel";
 import {
   daysSinceTouched,
   displayName,
@@ -155,9 +156,16 @@ export default function Dashboard() {
         </p>
       )}
 
-      {/* Band 2: what to do, and what is owed */}
+      {/* Band 2: what to do, and what is owed. The briefing sits with
+          the to-do list because it is the same question asked a
+          different way, not a separate topic. */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <NeedsYou nudges={nudges} />
+        <div className="space-y-6">
+          <NeedsYou nudges={nudges} />
+          <Suspense fallback={<BriefingPanelSkeleton />}>
+            <BriefingPanel />
+          </Suspense>
+        </div>
         <Suspense fallback={<MoneyPanelSkeleton />}>
           <MoneyPanel />
         </Suspense>
