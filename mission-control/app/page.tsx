@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ClientCard } from "@/components/ClientCard";
 import { StageBadge } from "@/components/StageBadge";
 import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
+import { MoneyPanel, MoneyPanelSkeleton } from "./MoneyPanel";
 import {
   daysSinceTouched,
   displayName,
@@ -152,6 +153,11 @@ export default function Dashboard() {
           </ul>
         </section>
       )}
+
+      {/* Money before traffic: what is owed outranks who visited */}
+      <Suspense fallback={<MoneyPanelSkeleton />}>
+        <MoneyPanel />
+      </Suspense>
 
       <Suspense fallback={<TrafficPanelSkeleton />}>
         <TrafficPanel />

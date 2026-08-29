@@ -160,7 +160,14 @@ export type InvoiceSummary = {
   amountPaid: number;
   created: string;
   dueDate: string;
+  /** When it was actually paid, which is not when it was raised */
+  paidAt: string;
   paid: boolean;
+  /** The client record this came from, when the app created it */
+  slug: string;
+  /** Snapshotted on the invoice by Stripe, so it survives the customer
+      being renamed or deleted */
+  customerName: string;
   /** Past its due date and still owing */
   overdue: boolean;
   hostedUrl: string;
@@ -183,7 +190,10 @@ function toSummary(inv: Stripe.Invoice): InvoiceSummary {
     amountPaid: (inv.amount_paid ?? 0) / 100,
     created: iso(inv.created),
     dueDate: due,
+    paidAt: iso(inv.status_transitions?.paid_at),
     paid,
+    slug: String(inv.metadata?.missionControlSlug ?? ""),
+    customerName: inv.customer_name ?? "",
     // Only an invoice that actually went out can be late. A draft
     // sitting past a date nobody has seen is not overdue, it is unsent.
     overdue:
@@ -232,8 +242,11 @@ export async function moneySummary(): Promise<MoneySummary> {
       .filter((i) => i.status === "open")
       .reduce((sum, i) => sum + i.amountDue, 0),
     overdue: all.filter((i) => i.overdue).reduce((sum, i) => sum + i.amountDue, 0),
+    // On when it was PAID, not when it was raised. Filtering on
+    // created would miss an invoice sent seven weeks ago and settled
+    // yesterday, which is exactly the one worth knowing about.
     paidLast30: all
-      .filter((i) => i.paid && i.created >= since)
+      .filter((i) => i.paid && i.paidAt >= since)
       .reduce((sum, i) => sum + i.amountPaid, 0),
     invoices: all,
   };
