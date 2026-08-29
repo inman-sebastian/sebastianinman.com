@@ -8,7 +8,7 @@ import { FindLeadsPanel } from "./FindLeadsPanel";
 
 export const dynamic = "force-dynamic";
 
-export default function ProspectsPage() {
+export default function ResearchPage() {
   const waiting = listResearched();
   // Everything research has already turned up and been judged on
   const decided = listClients().filter(
@@ -38,7 +38,7 @@ export default function ProspectsPage() {
             return (
               <li key={r.slug}>
                 <Link
-                  href={`/prospects/${r.slug}`}
+                  href={`/clients/${r.slug}/review`}
                   className="flex flex-wrap items-center gap-x-3 gap-y-1 p-4 hover:bg-pine-tint/40"
                 >
                   <span className="font-serif text-lg font-semibold text-pine-dark">

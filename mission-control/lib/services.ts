@@ -45,7 +45,7 @@ export function slugForTitle(title: string): string | null {
 /**
  * The tools the site already says Sebastian connects, from the
  * tool-integration service page. When detection finds one of these on a
- * prospect's site, that is a real thing to open a conversation with
+ * researched business's site, that is a real thing to open a conversation
  * rather than a guess.
  */
 export function integratedTools(): Set<string> {

@@ -101,7 +101,7 @@ export type Stage = (typeof STAGES)[number]["id"];
  *
  * `researched` is left off the board on purpose: those are a batch from
  * a research run that nobody has read yet, and they belong in the review
- * queue at /prospects rather than in the working pipeline. They join the
+ * queue at /research rather than in the working pipeline. They join the
  * board the moment they are moved to `prospect`.
  */
 export const ACTIVE_STAGES = STAGES.filter(

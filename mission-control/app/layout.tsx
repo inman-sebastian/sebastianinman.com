@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 const NAV = [
   { href: "/", label: "Dashboard" },
   { href: "/clients", label: "Clients" },
-  { href: "/prospects", label: "Prospects" },
+  { href: "/research", label: "Research" },
   { href: "/documents", label: "Documents" },
   { href: "/blog", label: "Blog" },
-  { href: "/clients/new", label: "New lead" },
+  { href: "/clients/new", label: "New client" },
 ];
 
 export default function RootLayout({

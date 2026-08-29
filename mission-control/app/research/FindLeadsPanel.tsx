@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { clearResearchJobAction, startResearchAction } from "./research-actions";
+import { clearResearchJobAction, startResearchAction } from "./actions";
 import type { Job } from "@/lib/agent-run";
 
 /**
@@ -50,7 +50,7 @@ export function FindLeadsPanel({
   useEffect(() => {
     if (job.state !== "running") return;
     const timer = setInterval(async () => {
-      const next = await fetch("/prospects/job", { cache: "no-store" })
+      const next = await fetch("/research/job", { cache: "no-store" })
         .then((r) => r.json() as Promise<Job>)
         .catch(() => null);
       if (next) setJob(next);

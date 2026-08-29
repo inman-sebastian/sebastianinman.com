@@ -17,7 +17,7 @@ function text(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
 
-export async function promoteProspectAction(formData: FormData) {
+export async function pursueAction(formData: FormData) {
   const slug = text(formData, "slug");
   const record = getClient(slug);
   if (!record) return;
@@ -29,31 +29,31 @@ export async function promoteProspectAction(formData: FormData) {
   appendTimeline(slug, "Worth pursuing", "Moved out of the research queue.");
 
   revalidatePath("/");
-  revalidatePath("/prospects");
+  revalidatePath("/research");
   revalidatePath("/clients");
   redirect(`/clients/${slug}`);
 }
 
-export async function passProspectAction(formData: FormData) {
+export async function passAction(formData: FormData) {
   const slug = text(formData, "slug");
   if (!getClient(slug)) return;
   // Kept rather than deleted, so a later research run knows this one was
   // already looked at and decided against
   updateClient(slug, { stage: "lost", nextStep: "" });
   appendTimeline(slug, "Not a fit", "Decided against from the research queue.");
-  revalidatePath("/prospects");
-  revalidatePath(`/prospects/${slug}`);
+  revalidatePath("/research");
+  revalidatePath(`/clients/${slug}/review`);
 }
 
-export async function reopenProspectAction(formData: FormData) {
+export async function reopenAction(formData: FormData) {
   const slug = text(formData, "slug");
   if (!getClient(slug)) return;
   updateClient(slug, { stage: "researched" });
-  revalidatePath("/prospects");
-  revalidatePath(`/prospects/${slug}`);
+  revalidatePath("/research");
+  revalidatePath(`/clients/${slug}/review`);
 }
 
-export async function saveProspectAction(formData: FormData) {
+export async function saveReviewAction(formData: FormData) {
   const slug = text(formData, "slug");
   updateClient(slug, {
     business: text(formData, "business"),
@@ -63,6 +63,6 @@ export async function saveProspectAction(formData: FormData) {
     website: text(formData, "website"),
     notes: text(formData, "body"),
   });
-  revalidatePath("/prospects");
-  revalidatePath(`/prospects/${slug}`);
+  revalidatePath("/research");
+  revalidatePath(`/clients/${slug}/review`);
 }

@@ -63,7 +63,7 @@ export async function locateEveryoneAction(): Promise<LocateState> {
   }
 
   revalidatePath("/");
-  revalidatePath("/prospects");
+  revalidatePath("/research");
   revalidatePath("/clients");
 
   if (located === 0 && missed === 0) {

@@ -18,7 +18,7 @@ export async function startResearchAction(
   const brief = String(formData.get("brief") ?? "").trim();
   const problem = startResearch(brief);
   if (problem) return { error: problem };
-  revalidatePath("/prospects");
+  revalidatePath("/research");
   return { message: "Started. It searches and checks sites, so give it a few minutes." };
 }
 
@@ -36,5 +36,5 @@ export async function startResearchAction(
  */
 export async function clearResearchJobAction(): Promise<void> {
   clearJob(RESEARCH_JOB);
-  revalidatePath("/prospects");
+  revalidatePath("/research");
 }

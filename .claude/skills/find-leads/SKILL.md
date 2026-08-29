@@ -1,15 +1,15 @@
 ---
 name: find-leads
-description: Research real small businesses in Southern Oregon that would benefit from Sebastian's services, and write them up as prospects in Mission Control for him to review. Use when he asks to find leads, find prospects, look for businesses to reach out to, or fill the top of the pipeline. Covers finding real businesses, checking them against observable signals, writing the prospect files, and drafting an honest opening line.
+description: Research real small businesses in Southern Oregon that would benefit from Sebastian's services, and write them up as client records in Mission Control for him to review. Use when he asks to find leads, find prospects, look for businesses to reach out to, or fill the top of the pipeline. Covers finding real businesses, checking them against observable signals, writing the records, and drafting an honest opening line.
 ---
 
 # Find leads
 
 Fills the top of the funnel. Finds real local businesses, checks what
 can actually be seen from outside, and writes each qualified one to
-`mission-control/data/prospects/<slug>.md` for Sebastian to review at
-`/prospects` (port 4848), which is also where the Find leads button
-lives. He decides who is worth pursuing; moving a record on is his
+`mission-control/data/clients/<slug>.md` at the `researched` stage, for
+Sebastian to review at `/research` (port 4848), which is also where the
+Find leads button lives. He decides who is worth pursuing; moving a record on is his
 click, not yours.
 
 ## Hard rules

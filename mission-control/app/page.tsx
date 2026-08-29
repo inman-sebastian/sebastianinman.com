@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { ClientCard } from "@/components/ClientCard";
+import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
 import { displayName, listClients, needsAttention } from "@/lib/clients";
 import { money } from "@/lib/format";
 import { mapboxToken, scatter } from "@/lib/geo";
@@ -30,7 +32,7 @@ export default function Dashboard() {
         lat,
         lng,
         stage: c.stage,
-        href: waiting ? `/prospects/${c.slug}` : `/clients/${c.slug}`,
+        href: waiting ? `/clients/${c.slug}/review` : `/clients/${c.slug}`,
         detail: [stageInfo(c.stage).label, c.category, c.city]
           .filter(Boolean)
           .join(" · "),
@@ -47,7 +49,7 @@ export default function Dashboard() {
   const waiting = needsAttention(clients);
   const quoted = open.reduce((sum, c) => sum + (c.value ?? 0), 0);
 
-  // Only truly empty when there is nothing at all. Prospects on their
+  // Only truly empty when there is nothing at all. Researched leads on their
   // own are worth a dashboard: that is the normal state before the
   // first client.
   if (clients.length === 0) {
@@ -61,7 +63,7 @@ export default function Dashboard() {
           it fills most of this out for you.
         </p>
         <Link href="/clients/new" className="btn mt-6">
-          Add the first lead
+          Add the first client
         </Link>
       </section>
     );
@@ -80,7 +82,7 @@ export default function Dashboard() {
           </p>
         </div>
         <Link href="/clients/new" className="btn">
-          New lead
+          New client
         </Link>
       </section>
 
@@ -111,6 +113,10 @@ export default function Dashboard() {
           </ul>
         </section>
       )}
+
+      <Suspense fallback={<TrafficPanelSkeleton />}>
+        <TrafficPanel />
+      </Suspense>
 
       {(pins.length > 0 || unplaced > 0) && (
         <MapPanel pins={pins} token={mapboxToken()} unplaced={unplaced} />

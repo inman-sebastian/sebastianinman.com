@@ -391,18 +391,41 @@ copies it into `public/images/blog/`, sets the frontmatter, runs
 `npm run optimize:images`, and keeps the replaced image staged so going
 back is one click. Verified end to end Aug 2026.
 
+`components/SiteAnalytics.tsx` wraps `<Analytics>` with a `beforeSend`
+that drops our own traffic before it is ever sent: Sebastian's browser
+when `localStorage["va-disable"]` is set (run
+`localStorage.setItem("va-disable", "1")` once per browser on the live
+site), plus browser automation. Automation needs all three checks:
+agent-browser sets `navigator.webdriver` and reports `HeadlessChrome`,
+but Claude's own browser leaves `webdriver` false and is only
+identifiable by the `Claude/` token in its user agent. It has to be a
+client component; the root layout is a server component and a function
+prop cannot cross that boundary.
+
+The dashboard's top panel shows what the website did in the last seven
+days, read from Vercel Web Analytics through its public API
+(`mission-control/lib/analytics.ts`, `VERCEL_API_TOKEN` in the repo root
+`.env.local`, read-only): visitors, page views, pages per visitor, the
+busiest routes, and `/contact` views against inquiries actually
+received. Two Hobby-plan limits shape what can go here: custom events
+are Pro-only (so no button-click tracking; `events/count` answers 402)
+and the reporting window is one month. The panel renders inside Suspense
+so a slow Vercel never holds up the pipeline, and answers are cached for
+five minutes.
+
 **Lead research** fills the top of the funnel. The `find-leads` skill in
 `.claude/skills/` researches real local businesses, checks them against
 signals that map to the services, and writes them to
-`mission-control/data/prospects/*.md`; `/prospects` is the review queue,
-and promoting one creates a pipeline record at the new `prospect` stage
-with `source: outreach`. Targeting comes from `docs/market-research.md`
+`mission-control/data/clients/*.md` at the `researched` stage with
+`source: outreach`; `/research` is the review queue and
+`/clients/<slug>/review` is where one gets judged, which moves it on to
+the `prospect` stage or to `lost`. Targeting comes from `docs/market-research.md`
 (consumer-facing local businesses, which local competitors ignore).
 Skill rules that matter: only businesses actually looked at, every signal
 carries the URL it was seen on, never invent a contact detail, and never
 contact anyone.
 
-Prospects also record where they are (`city`, optional `address`,
+Research also records where a business is (`city`, optional `address`,
 `lat`/`lng`) and whether they have a Google Business Profile
 (`googleProfile`). The dashboard maps everyone who has coordinates, at
 any stage (Mapbox, `MAPBOX_API_KEY` in the repo root `.env.local`, a
@@ -424,7 +447,7 @@ email, chat, analytics), marking any that appear in the `tools` list on
 `content/services/tool-integration.mdx`. It also reports a Google Maps
 link on the page, and pulls the exact pin coordinates out of the embed
 when there is one. Its `platform:` and `stack:`
-output goes into the prospect's frontmatter and shows on the prospect
+output goes into the record's frontmatter and shows on its review
 page. A non-200 reads nothing and says so; never record a block page as
 evidence about a business.
 

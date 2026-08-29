@@ -31,7 +31,7 @@ export default async function ClientsPage({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="text-3xl font-semibold text-pine-dark">Clients</h1>
         <Link href="/clients/new" className="btn">
-          New lead
+          New client
         </Link>
       </div>
 

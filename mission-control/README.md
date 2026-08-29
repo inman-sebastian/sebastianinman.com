@@ -12,15 +12,29 @@ Next.js with hot reload, so edits show up without a restart (the thing
 
 ## What is here now
 
-The CRM core: leads and clients moving through the same arc the client
+The CRM core: clients moving through the same arc the client
 emails already follow (inquiry, consult, proposal, agreement and
 deposit, build, delivered, review ask, wrapped up, or not moving
 forward).
 
 - **Dashboard** (`/`): the board by stage, plus a "waiting on you" list
 - **Clients** (`/clients`): everyone, filterable by stage
-- **New lead** (`/clients/new`): type it in, or paste the notification
+- **New client** (`/clients/new`): type it in, or paste the notification
   email the website sends and let it fill the form
+
+### What things are called
+
+One entity, the **client**, at a **stage**. There are no prospects,
+leads, or contacts as separate things; those words describe where a
+client is in the arc, and `lib/stages.ts` is the only place they are
+defined. `prospect` is a stage, not a section.
+
+The URLs follow from that. Everything about one client lives under
+`/clients/<slug>`, including workflow screens for it
+(`/clients/<slug>/review`, `/clients/<slug>/email`). Anything that
+spans many of them gets its own top-level word: `/clients`, `/research`,
+`/documents`, `/blog`. Adding a screen means deciding which of those two
+it is, and there is no third option.
 
 And the document workspace: proposals, agreements, and invoices per
 client (`/documents`), started from the templates in `docs/clients/`,
@@ -73,23 +87,24 @@ the same code path. The print CSS and `buildPdf()` are untouched; see
 the Facts section of `.claude/skills/draft-client-paperwork/SKILL.md`
 before changing any of it.
 
-## Prospects
+## Research
 
-`/prospects` is the review queue for businesses Cowork found by
-research. They are deliberately not clients: nobody here has been in
-touch, and a research run produces a batch at once, so they stay out of
-the pipeline until you promote one.
+`/research` is the review queue for businesses Cowork found, plus the
+button that goes looking for more. They are ordinary client records
+sitting at the `researched` stage: nobody there has been in touch, and a
+research run produces a batch at once, so that stage is kept off the
+board until you have judged one.
 
-Records live in `data/prospects/<slug>.md`, same format and same
-only-writer rule as the client records. The `find-leads` skill writes
-them; it is told to record what was actually seen and the URL it was
-seen on, never to invent a contact detail, and never to write to
-anybody.
+Records live in `data/clients/<slug>.md` like every other client, same
+only-writer rule. The `find-leads` skill writes them; it is told to
+record what was actually seen and the URL it was seen on, never to
+invent a contact detail, and never to write to anybody.
 
-Promoting creates a pipeline record at the `prospect` stage with
-`source: outreach`, the research as its notes, and a timeline entry
-saying where it came from. Passing marks the file `passed` and keeps it,
-so a later research run knows it was already looked at.
+Reviewing one happens at `/clients/<slug>/review`, which shows what the
+research found and the two decisions. Pursuing it moves the record to
+the `prospect` stage and lands you on the record itself. Passing moves
+it to `lost` rather than deleting it, so a later research run knows it
+was already looked at and decided against.
 
 Two stages sit at the front of the board for this: `prospect` and
 `contacted`. Neither counts towards "waiting on you" unless it has a
@@ -115,14 +130,14 @@ has a viewport tag (none usually means it is broken on phones), whether
 there is a form, and any published mailto address.
 
 The `platform:` and `stack:` lines it prints go straight into a
-prospect's frontmatter, and the prospect page shows them. A non-200
+record's frontmatter, and its review page shows them. A non-200
 means it read nothing at all and says so, rather than reporting an
 absence as a fact; a Cloudflare challenge page is not evidence about
 anybody's website.
 
 ### Where they are, and the map
 
-Research records a `city` for every prospect and a street `address`
+Research records a `city` for every business it finds and a street `address`
 where the listing shows one, plus whether they have a Google Business
 Profile (`googleProfile: yes | no | unknown`). Not having one is a real
 finding rather than a blank: it is why nobody local finds them on a
@@ -165,6 +180,42 @@ used from a browser.
 `data/do-not-contact.md` is a plain list, one business, domain, or
 address per line. Research skips them and the app refuses to write to
 them. Add anyone who asks, the day they ask.
+
+## What the website is doing
+
+The dashboard's top panel reads Vercel Web Analytics through the public
+API (`lib/analytics.ts`), so the numbers match what the Vercel dashboard
+shows. Last seven days: visitors, page views, pages per visitor, the
+busiest routes, and how many people reached `/contact` against how many
+actually got in touch. That last pair is deliberate: a form submission
+becomes a client record here, which is a truer measure of the form
+working than a click could be.
+
+`VERCEL_API_TOKEN` goes in the repo root's `.env.local`, same place as
+the Resend and Mapbox keys, and wants only read access. `VERCEL_PROJECT_ID`
+and `VERCEL_TEAM_ID` are optional overrides; the project defaults to
+sebastianinman.com, and the team id is only needed if a bare token gets
+refused.
+
+Our own traffic never reaches these numbers: the site filters it in
+`components/SiteAnalytics.tsx` before sending, covering Sebastian's
+browser (via a `va-disable` flag in localStorage) and the browser
+automation used to build and check the site.
+
+Two limits come from the Hobby plan and are worth knowing before adding
+to this panel:
+
+- **Custom events are Pro-only.** `events/count` answers 402, so "did
+  somebody click that button" is not askable. Anything expressible as a
+  route is, because page views are automatic.
+- **The reporting window is one month**, so there is no year-over-year
+  to build here.
+
+The panel renders inside Suspense and everything else on the dashboard
+renders without waiting for it. It is the only part of this app that
+depends on somebody else's server being up, and a slow Vercel must not
+hold up the pipeline. Answers are held for five minutes, since these
+numbers move slowly and the dashboard gets refreshed without thinking.
 
 ## Sending
 

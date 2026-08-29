@@ -85,7 +85,7 @@ export async function geocode(parts: {
  * Nudge pins that share a spot so they do not stack into one dot.
  *
  * Everything geocoded to the middle of Medford lands on the identical
- * point, which reads as one prospect instead of six. The offset is
+ * point, which reads as one business instead of six. The offset is
  * derived from the record's own key so it stays put between renders,
  * and it is tiny: a few hundred metres, well inside the town it is
  * already only claiming to be near.
