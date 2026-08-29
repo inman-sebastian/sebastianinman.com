@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -6,6 +7,7 @@ import {
   setStageAction,
   updateClientAction,
 } from "@/app/actions";
+import { InvoicePanel, InvoicePanelSkeleton } from "./InvoicePanel";
 import { ClientFields } from "@/components/ClientFields";
 import { DocumentList, NewDocumentButtons } from "@/components/DocumentList";
 import { StageBadge } from "@/components/StageBadge";
@@ -163,6 +165,10 @@ export default async function ClientPage({
               the invoice number). The writing prompts stay for you.
             </p>
           </section>
+
+          <Suspense fallback={<InvoicePanelSkeleton />}>
+            <InvoicePanel client={client} />
+          </Suspense>
 
           {client.notes && (
             <section className="card p-5">

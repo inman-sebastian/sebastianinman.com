@@ -56,6 +56,8 @@ export type ClientRecord = {
   services: string[];
   /** Whole dollars; null until there is a real quote */
   value: number | null;
+  /** The Stripe customer this record bills through, once one exists */
+  stripeCustomerId: string;
   source: Source;
   nextStep: string;
   /** ISO date, or "" when nothing is scheduled */
@@ -90,6 +92,7 @@ export type ClientInput = Partial<
     | "listing"
     | "googleProfile"
     | "googleProfileUrl"
+    | "stripeCustomerId"
     | "platform"
     | "stack"
     | "fit"
@@ -207,6 +210,7 @@ function toRecord(slug: string, raw: string): ClientRecord {
           ? "no"
           : "unknown",
     googleProfileUrl: asText(data.googleProfileUrl),
+    stripeCustomerId: asText(data.stripeCustomerId),
     platform: asText(data.platform),
     stack: Array.isArray(data.stack) ? data.stack.map((t: unknown) => String(t)) : [],
     fit: asText(data.fit),
@@ -239,6 +243,7 @@ function serialize(record: ClientRecord): string {
     listing: record.listing,
     googleProfile: record.googleProfile,
     googleProfileUrl: record.googleProfileUrl,
+    stripeCustomerId: record.stripeCustomerId,
     platform: record.platform,
     stack: record.stack,
     fit: record.fit,
@@ -305,6 +310,7 @@ export function createClient(input: ClientInput): ClientRecord {
     listing: input.listing ?? "",
     googleProfile: input.googleProfile ?? "unknown",
     googleProfileUrl: input.googleProfileUrl ?? "",
+    stripeCustomerId: input.stripeCustomerId ?? "",
     platform: input.platform ?? "",
     stack: input.stack ?? [],
     fit: input.fit ?? "",
