@@ -17,8 +17,28 @@ paste into Gmail (Settings -> See all settings -> Signature). Gmail holds
 several and lets you pick one per message from the pen icon, so the full
 one goes on first contact and the short one on replies.
 
-Four things about it are deliberate, and all four break if edited
-casually:
+### Two things read this file, and only one of them updates itself
+
+Mission Control reads the FULL signature straight out of this file
+(`mission-control/lib/signature.ts`, matching on the
+`<!-- ===== COPY FROM HERE ===== -->` markers) and appends it to every
+client email it sends. Change the markup here and the app's mail changes
+on the next send, with nothing to do.
+
+**Gmail does not.** Its copy was pasted in once and is a snapshot. So
+after any edit here:
+
+1. Re-paste the full signature into Gmail's signature settings.
+2. Re-paste the short one if that block changed.
+
+Miss step 1 and nothing breaks loudly. Mail from the app and mail typed
+in Gmail simply stop matching, and the only place that shows is a
+client's inbox. **Do not rename or delete the copy markers**, either;
+they are how the app finds the block, and the first block is the full
+signature the app uses.
+
+Four things about the markup are deliberate, and all four break if
+edited casually:
 
 - **Every style is inline on the element.** Gmail discards `<style>`
   blocks and `<link>` tags in a signature, so a stylesheet would vanish

@@ -440,6 +440,14 @@ machine; nothing sends on a schedule, a save, or any other trigger.
 **Cowork never presses send without Sebastian saying so in the moment**,
 same rule as the draft-client-paperwork skill.
 
+Sent mail is multipart: HTML plus a plain-text twin. The signature on it
+is read live from `docs/marketing/email-signature.html`, the same file
+Sebastian pastes into Gmail, so app mail and hand-typed mail match. The
+seam to know about: an edit to that file reaches the app immediately and
+Gmail not at all, so Gmail has to be re-pasted by hand (the marketing
+README spells this out). Templates in `email-templates.md` therefore end
+on a sign-off and never on contact details, or they print twice.
+
 The blog CMS (`/blog`) creates and edits `content/blog/*.mdx` and shows
 where each post stands (not on the site, edited since it went up,
 committed but not pushed, live). **Save and publish are two separate
