@@ -134,7 +134,13 @@ export default async function PostPage({
               defaultValue={post.date}
             />
           </div>
-          <MdxBodyEditor initial={post.body} />
+          <MdxBodyEditor
+            label="The post"
+            initial={post.body}
+            withComponents
+            minHeight="26rem"
+            sourceRows={30}
+          />
           <button type="submit" className="btn">
             {label.kind === "draft" ? "Save the draft" : "Save changes"}
           </button>

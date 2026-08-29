@@ -269,7 +269,7 @@ body {
 }
 
 .mdx-editor-shell .mdxeditor-root-contenteditable {
-  min-height: 26rem;
+  min-height: var(--mdx-min-height, 16rem);
 }
 .mdx-editor-shell .mdx-body {
   padding: 1rem 1.1rem;

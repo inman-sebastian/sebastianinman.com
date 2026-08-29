@@ -155,10 +155,15 @@ export default function InitializedMDXEditor({
   editorRef,
   markdown,
   onChange,
+  withComponents = false,
 }: {
   editorRef?: ForwardedRef<MDXEditorMethods> | null;
   markdown: string;
   onChange: (value: string) => void;
+  /** Enable the site's MDX components. Off for plain-markdown fields:
+      without the plugin, a stray JSX tag is left as text rather than
+      being offered as something to insert. */
+  withComponents?: boolean;
 }) {
   return (
     <MDXEditor
@@ -174,7 +179,9 @@ export default function InitializedMDXEditor({
         linkPlugin(),
         linkDialogPlugin(),
         markdownShortcutPlugin(),
-        jsxPlugin({ jsxComponentDescriptors: descriptors }),
+        ...(withComponents
+          ? [jsxPlugin({ jsxComponentDescriptors: descriptors })]
+          : []),
         toolbarPlugin({
           toolbarContents: () => (
             <>
@@ -184,12 +191,16 @@ export default function InitializedMDXEditor({
               <ListsToggle />
               <BlockTypeSelect />
               <CreateLink />
-              {/* Forces the component buttons onto a row of their own
-                  rather than letting them wrap wherever they land. A
-                  flex item at 100% basis takes the whole line, so
-                  everything after it starts on the next one. */}
-              <div className="mdx-toolbar-break" />
-              <InsertComponents />
+              {withComponents && (
+                <>
+                  {/* Forces the component buttons onto a row of their
+                      own rather than letting them wrap wherever they
+                      land. A flex item at 100% basis takes the whole
+                      line, so everything after it starts on the next. */}
+                  <div className="mdx-toolbar-break" />
+                  <InsertComponents />
+                </>
+              )}
             </>
           ),
         }),

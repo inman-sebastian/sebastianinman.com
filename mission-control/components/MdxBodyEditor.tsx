@@ -5,21 +5,23 @@ import { useState } from "react";
 import "@mdxeditor/editor/style.css";
 
 /**
- * The post body, edited as a document rather than as source.
+ * Prose edited as a document rather than as source.
  *
  * MDXEditor touches `window` at import time, so it is loaded with
  * `ssr: false` from here. That is why the real editor lives in its own
  * file: this one is a thin wrapper whose only jobs are to load it on
  * the client and to keep the surrounding form working.
  *
- * The form posts to a server action that reads `body` from the form
+ * The forms post to server actions that read this field out of the form
  * data, and a rich text editor has no form value of its own, so the
  * current markdown rides along in a hidden input.
  *
- * Only the body goes through here. lib/posts.ts splits frontmatter off
- * with gray-matter before this ever sees the file and re-stringifies it
- * on save, preserving keys the app does not manage, so nothing the
- * editor does can reach the frontmatter.
+ * Two flavours, and the difference matters. A blog post is MDX and may
+ * use the site's components, so it gets the insert buttons. Client
+ * notes are plain markdown rendered by components/Markdown.tsx, which
+ * does not render JSX at all: a <Callout> inserted there would show up
+ * as literal angle brackets on the record. So `withComponents` is off
+ * by default and only the blog turns it on.
  */
 
 const Editor = dynamic(() => import("./mdx-editor/InitializedMDXEditor"), {
@@ -55,23 +57,37 @@ function stripImports(markdown: string): string {
 export function MdxBodyEditor({
   name = "body",
   initial,
+  label,
+  /** Offer the site's MDX components. Blog posts only; see the header. */
+  withComponents = false,
+  /** How tall the writing area starts out */
+  minHeight = "16rem",
+  sourceRows = 14,
+  help,
 }: {
   name?: string;
   initial: string;
+  label: string;
+  withComponents?: boolean;
+  minHeight?: string;
+  sourceRows?: number;
+  help?: string;
 }) {
   const [value, setValue] = useState(initial);
   const [source, setSource] = useState(false);
 
+  const sourceLabel = withComponents ? "MDX" : "Markdown";
+
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <label className="label">The post</label>
+        <label className="label mb-0">{label}</label>
         <button
           type="button"
           className="btn btn-quiet text-xs"
           onClick={() => setSource((s) => !s)}
         >
-          {source ? "Back to the editor" : "Edit as MDX"}
+          {source ? "Back to the editor" : `Edit as ${sourceLabel}`}
         </button>
       </div>
 
@@ -84,19 +100,25 @@ export function MdxBodyEditor({
           extra parent settles it. See the block in globals.css. */}
       {source ? (
         <textarea
-          rows={30}
+          rows={sourceRows}
           className="field font-mono text-sm"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
       ) : (
-        <div className="mdx-editor-shell">
+        <div
+          className="mdx-editor-shell"
+          style={{ "--mdx-min-height": minHeight } as React.CSSProperties}
+        >
           <Editor
             markdown={initial}
+            withComponents={withComponents}
             onChange={(next) => setValue(stripImports(next))}
           />
         </div>
       )}
+
+      {help && <p className="mt-1 text-xs text-muted">{help}</p>}
 
       <input type="hidden" name={name} value={value} />
     </div>

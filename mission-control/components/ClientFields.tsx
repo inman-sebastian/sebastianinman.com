@@ -1,3 +1,4 @@
+import { MdxBodyEditor } from "@/components/MdxBodyEditor";
 import type { ClientInput } from "@/lib/clients";
 import type { ServiceSummary } from "@/lib/services";
 import { SOURCES, STAGES } from "@/lib/stages";
@@ -179,23 +180,17 @@ export function ClientFields({
         </div>
       </div>
 
-      <div>
-        <label className="label" htmlFor="notes">
-          Notes
-        </label>
-        <textarea
-          id="notes"
-          name="notes"
-          rows={8}
-          className="field font-mono text-sm"
-          placeholder="What they said, in their words."
-          defaultValue={defaults.notes ?? ""}
-        />
-        <p className="mt-1 text-xs text-muted">
-          Markdown. This is the top half of the record file; the timeline
-          lives below it.
-        </p>
-      </div>
+      {/* Plain markdown, deliberately: these notes are rendered by
+          components/Markdown.tsx, which does not render JSX, so the
+          editor here is the flavour without the component buttons. */}
+      <MdxBodyEditor
+        name="notes"
+        label="Notes"
+        initial={defaults.notes ?? ""}
+        minHeight="14rem"
+        sourceRows={10}
+        help="Markdown. This is the top half of the record file; the timeline lives below it."
+      />
     </div>
   );
 }
