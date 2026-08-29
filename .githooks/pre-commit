@@ -1,0 +1,61 @@
+#!/bin/sh
+# Refuse to commit an API key.
+#
+# Key exposure in a repository is the leading cause of Stripe account
+# takeover, and this repo pushes to a public GitHub remote that
+# auto-deploys. .env.local is git-ignored, which handles the normal
+# case; this catches the abnormal one, where a key gets pasted into a
+# source file, a doc, or a commit message example.
+#
+# Live keys are refused outright. Test keys warn, because they are worth
+# knowing about but cannot cost anybody money.
+#
+# Enabled with: git config core.hooksPath .githooks
+# Bypass, if you are truly sure: git commit --no-verify
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+found_live=0
+found_test=0
+
+for file in $staged; do
+  [ -f "$file" ] || continue
+  # Only added lines, so an existing false positive cannot block every
+  # future commit
+  added=$(git diff --cached -U0 -- "$file" | grep '^+' | grep -v '^+++')
+
+  # Stripe secret and restricted keys, live and test
+  if printf '%s' "$added" | grep -Eq '[sr]k_live_[A-Za-z0-9]{10,}'; then
+    echo "BLOCKED: a live Stripe key appears in $file"
+    found_live=1
+  fi
+  if printf '%s' "$added" | grep -Eq '[sr]k_test_[A-Za-z0-9]{10,}'; then
+    echo "Warning: a Stripe test key appears in $file"
+    found_test=1
+  fi
+  # Other keys this repo actually handles
+  if printf '%s' "$added" | grep -Eq 're_[A-Za-z0-9]{20,}'; then
+    echo "BLOCKED: what looks like a Resend key appears in $file"
+    found_live=1
+  fi
+  if printf '%s' "$added" | grep -Eq 'sk\.eyJ[A-Za-z0-9._-]{20,}'; then
+    echo "BLOCKED: what looks like a secret Mapbox token appears in $file"
+    found_live=1
+  fi
+done
+
+if [ "$found_live" = "1" ]; then
+  echo ""
+  echo "Nothing was committed. Move the value into the repo root's"
+  echo ".env.local (git-ignored) and reference it from there."
+  echo "If this is a false positive: git commit --no-verify"
+  exit 1
+fi
+
+if [ "$found_test" = "1" ]; then
+  echo "Committing anyway, since test keys cannot move money. Never do"
+  echo "this with a live key."
+fi
+
+exit 0
