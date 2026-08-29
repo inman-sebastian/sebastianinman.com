@@ -432,6 +432,11 @@ export function needsAttention(clients: ClientRecord[]): ClientRecord[] {
   const now = today();
   return clients.filter((c) => {
     if (c.stage === "done" || c.stage === "lost") return false;
+    // A research batch is not a to-do list. Those are judged in the
+    // review queue, which is where they are already counted; listing
+    // all of them here fills the dashboard with identical rows saying
+    // the stage's own default next step.
+    if (c.stage === "researched") return false;
     if (c.stage === "prospect" || c.stage === "contacted") {
       return Boolean(c.nextStepDue) && c.nextStepDue <= now;
     }

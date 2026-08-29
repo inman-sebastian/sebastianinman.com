@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { repoEnv } from "./env";
 
 /**
@@ -57,7 +58,7 @@ function teamId(): string {
  * changed.
  */
 const TTL_MS = 5 * 60 * 1000;
-const cache = new Map<string, { at: number; value: unknown }>();
+const memo = new Map<string, { at: number; value: unknown }>();
 
 async function query<T>(
   path: string,
@@ -68,7 +69,7 @@ async function query<T>(
   if (team) search.set("teamId", team);
 
   const url = `${API}/${path}?${search}`;
-  const hit = cache.get(url);
+  const hit = memo.get(url);
   if (hit && Date.now() - hit.at < TTL_MS) return hit.value as T;
 
   const res = await fetch(url, {
@@ -91,7 +92,7 @@ async function query<T>(
     );
   }
   const json = (await res.json()) as { data: T };
-  cache.set(url, { at: Date.now(), value: json.data });
+  memo.set(url, { at: Date.now(), value: json.data });
   return json.data;
 }
 
@@ -134,7 +135,7 @@ export type SiteTraffic = {
   contactViews: number;
 };
 
-export async function siteTraffic(): Promise<SiteTraffic> {
+export const siteTraffic = cache(async function siteTraffic(): Promise<SiteTraffic> {
   const [week, previousWeek, routes, referrers] = await Promise.all([
     query<Totals>("visits/count", THIS_WEEK),
     query<Totals>("visits/count", LAST_WEEK),
@@ -164,4 +165,4 @@ export async function siteTraffic(): Promise<SiteTraffic> {
     referrers: referrers.filter((r) => r.visitors > 0),
     contactViews: contact?.visitors ?? 0,
   };
-}
+});

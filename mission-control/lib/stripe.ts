@@ -1,3 +1,4 @@
+import { cache } from "react";
 import Stripe from "stripe";
 import { repoEnv } from "./env";
 
@@ -227,8 +228,13 @@ export type MoneySummary = {
   invoices: InvoiceSummary[];
 };
 
-/** The money question, for the dashboard: what is owed, what is late */
-export async function moneySummary(): Promise<MoneySummary> {
+/**
+ * The money question, for the dashboard: what is owed, what is late.
+ *
+ * Wrapped in React's cache so the figures at the top of the dashboard
+ * and the list further down are one request to Stripe rather than two.
+ */
+export const moneySummary = cache(async function moneySummary(): Promise<MoneySummary> {
   const s = stripe();
   const list = await s.invoices.list({ limit: 100 });
   const all = list.data.map(toSummary);
@@ -250,4 +256,4 @@ export async function moneySummary(): Promise<MoneySummary> {
       .reduce((sum, i) => sum + i.amountPaid, 0),
     invoices: all,
   };
-}
+});

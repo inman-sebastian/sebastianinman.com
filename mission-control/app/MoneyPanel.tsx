@@ -3,12 +3,13 @@ import { money, shortDate } from "@/lib/format";
 import { moneySummary, stripeReady } from "@/lib/stripe";
 
 /**
- * What is owed, what is late, what came in.
+ * Who owes what.
  *
- * Read from Stripe every time rather than stored here, so it cannot
- * disagree with what was actually billed. Like the traffic panel it
- * renders inside Suspense: the pipeline must stay readable when
- * somebody else's server is slow.
+ * The totals live in the row at the top of the page, so this is only the
+ * detail: which invoices are still out and how late they are. Read from
+ * Stripe on each load rather than stored, so it cannot disagree with
+ * what was actually billed, and rendered inside Suspense so a slow
+ * Stripe never holds up the pipeline.
  */
 export async function MoneyPanel() {
   if (!stripeReady()) return null;
@@ -26,14 +27,12 @@ export async function MoneyPanel() {
     );
   }
 
-  const { outstanding, overdue, paidLast30, invoices } = summary;
+  const { invoices } = summary;
 
-  // Nothing billed yet is the normal state before the first client, and
-  // three zeros say that worse than a sentence does.
   if (invoices.length === 0) {
     return (
       <Shell>
-        <p className="px-4 py-5 text-sm text-muted">
+        <p className="px-4 py-6 text-sm text-muted">
           Nothing invoiced yet. Draft one from a client record and it shows up
           here.
         </p>
@@ -41,27 +40,24 @@ export async function MoneyPanel() {
     );
   }
 
-  // Anything still owing, worst first. Paid invoices are history and
-  // belong on the client's own page, not on a dashboard.
+  // Still owing, worst first. Paid invoices are history and belong on
+  // the client's own page, not on a dashboard.
   const owing = invoices
     .filter((i) => i.status === "open")
     .sort((a, b) => (a.dueDate < b.dueDate ? -1 : 1));
 
   // A drafted invoice is worth nothing until it is sent, so it counts
-  // towards none of the figures above. Saying so beats three zeros with
-  // no explanation, which is what this looked like otherwise.
+  // towards none of the totals up top. Saying so beats leaving a gap.
   const drafts = invoices.filter((i) => i.status === "draft").length;
 
   return (
     <Shell>
-      <div className="grid gap-px bg-line sm:grid-cols-3">
-        <Figure label="Outstanding" value={outstanding} />
-        <Figure label="Overdue" value={overdue} alarming={overdue > 0} />
-        <Figure label="Paid, last 30 days" value={paidLast30} />
-      </div>
-
-      {owing.length > 0 && (
-        <ul className="divide-y divide-line border-t border-line">
+      {owing.length === 0 ? (
+        <p className="px-4 py-6 text-sm text-muted">
+          Nothing outstanding. Everything sent has been paid.
+        </p>
+      ) : (
+        <ul className="divide-y divide-line">
           {owing.map((inv) => (
             <li
               key={inv.id}
@@ -84,7 +80,9 @@ export async function MoneyPanel() {
               )}
               <span
                 className={
-                  inv.overdue ? "font-semibold text-terracotta-dark" : "text-muted"
+                  inv.overdue
+                    ? "font-semibold text-terracotta-dark"
+                    : "text-muted"
                 }
               >
                 {inv.overdue
@@ -119,7 +117,7 @@ export async function MoneyPanel() {
 export function MoneyPanelSkeleton() {
   return (
     <Shell>
-      <p className="px-4 py-5 text-sm text-muted">Asking Stripe...</p>
+      <p className="px-4 py-6 text-sm text-muted">Asking Stripe...</p>
     </Shell>
   );
 }
@@ -128,34 +126,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <section className="card overflow-hidden">
       <p className="border-b border-line px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted">
-        Money
+        Who owes what
       </p>
       {children}
     </section>
-  );
-}
-
-function Figure({
-  label,
-  value,
-  alarming = false,
-}: {
-  label: string;
-  value: number;
-  alarming?: boolean;
-}) {
-  return (
-    <div className="bg-surface px-4 py-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-        {label}
-      </p>
-      <p
-        className={`mt-1 font-serif text-3xl font-semibold ${
-          alarming ? "text-terracotta-dark" : "text-pine-dark"
-        }`}
-      >
-        {value > 0 ? money(value) : "$0"}
-      </p>
-    </div>
   );
 }

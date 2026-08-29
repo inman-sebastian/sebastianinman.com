@@ -36,7 +36,10 @@ export async function TrafficPanel() {
     );
   }
 
-  const { week, previousWeek, routes, contactViews } = traffic;
+  const { week, routes, contactViews } = traffic;
+  const perVisitor = week.visitors
+    ? (week.pageviews / week.visitors).toFixed(1)
+    : "0";
 
   // Enquiries that arrived this week, from the records rather than from
   // Vercel. A form submission is a client record, which is a truer
@@ -51,30 +54,13 @@ export async function TrafficPanel() {
 
   return (
     <Shell>
-      <div className="grid gap-px bg-line sm:grid-cols-3">
-        <Figure
-          label="Visitors"
-          value={week.visitors}
-          previous={previousWeek.visitors}
-        />
-        <Figure
-          label="Page views"
-          value={week.pageviews}
-          previous={previousWeek.pageviews}
-        />
-        <Figure
-          label="Pages per visitor"
-          value={week.visitors ? week.pageviews / week.visitors : 0}
-          decimals={1}
-        />
-      </div>
+      <p className="border-b border-line px-4 py-2 text-xs text-muted">
+        {week.pageviews} page views, {perVisitor} pages per visitor.
+      </p>
 
       {routes.length > 0 && (
-        <div className="border-t border-line px-4 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-            Where they went
-          </p>
-          <ul className="mt-2 space-y-1">
+        <div className="px-4 py-3">
+          <ul className="space-y-1">
             {routes.map((r) => (
               <li key={r.route} className="flex items-center gap-3 text-sm">
                 <span className="w-8 shrink-0 text-right font-semibold text-ink">
@@ -133,46 +119,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <section className="card overflow-hidden">
       <p className="border-b border-line px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted">
-        The website, this week
+        Where they went
       </p>
       {children}
     </section>
-  );
-}
-
-function Figure({
-  label,
-  value,
-  previous,
-  decimals = 0,
-}: {
-  label: string;
-  value: number;
-  previous?: number;
-  decimals?: number;
-}) {
-  // A percentage off a base of zero is not a number anybody can use, so
-  // the first week with traffic says "new" rather than "+infinity".
-  const change =
-    previous === undefined
-      ? null
-      : previous === 0
-        ? value > 0
-          ? "new"
-          : null
-        : `${value >= previous ? "+" : ""}${Math.round(((value - previous) / previous) * 100)}%`;
-
-  return (
-    <div className="bg-surface px-4 py-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted">
-        {label}
-      </p>
-      <p className="mt-1 flex items-baseline gap-2">
-        <span className="font-serif text-3xl font-semibold text-pine-dark">
-          {value.toFixed(decimals)}
-        </span>
-        {change && <span className="text-xs text-muted">{change}</span>}
-      </p>
-    </div>
   );
 }
