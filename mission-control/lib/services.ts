@@ -60,3 +60,17 @@ export function serviceTitles(slugs: string[]): string[] {
   const byslug = new Map(listServices().map((s) => [s.slug, s.title]));
   return slugs.map((s) => byslug.get(s) ?? s);
 }
+
+/**
+ * Roughly what a piece of work would be worth, added up from the
+ * starting prices of the services it needs.
+ *
+ * A floor, never a quote: the starting price is the least a service can
+ * go for, so anywhere this shows it has to read as "from". Both the
+ * research queue and the client list use it to put a number against a
+ * record nobody has quoted yet.
+ */
+export function estimatedWorth(services: string[]): number {
+  const prices = new Map(listServices().map((s) => [s.slug, s.startingPrice]));
+  return services.reduce((sum, s) => sum + (prices.get(s) ?? 0), 0);
+}

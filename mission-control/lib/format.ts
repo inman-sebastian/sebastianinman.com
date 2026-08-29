@@ -14,6 +14,18 @@ export function telHref(phone: string): string {
   return `tel:${digits}`;
 }
 
+/** "Aug 27, 2026" from an ISO date. For table columns, where the long
+    form takes more width than the information is worth. */
+export function shortDate(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 /** "August 27, 2026" from an ISO date, without timezone surprises */
 export function longDate(iso: string): string {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
