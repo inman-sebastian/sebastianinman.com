@@ -1,20 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { ClientCard } from "@/components/ClientCard";
-import { StageBadge } from "@/components/StageBadge";
 import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
 import { MoneyPanel, MoneyPanelSkeleton } from "./MoneyPanel";
 import { MoneyStats, Stat, StatPending, TrafficStat } from "./Stats";
-import { BriefingPanel, BriefingPanelSkeleton } from "./BriefingPanel";
-import {
-  daysSinceTouched,
-  displayName,
-  goneQuiet,
-  listClients,
-  needsAttention,
-  type ClientRecord,
-} from "@/lib/clients";
-import { money, shortDate } from "@/lib/format";
+import { TodayPanel } from "./TodayPanel";
+import { displayName, listClients } from "@/lib/clients";
+import { money } from "@/lib/format";
 import { mapboxToken, scatter } from "@/lib/geo";
 import { ACTIVE_STAGES, stageInfo } from "@/lib/stages";
 import { MapPanel } from "./MapPanel";
@@ -68,24 +60,6 @@ export default function Dashboard() {
     (c) => c.stage !== "done" && c.stage !== "lost" && c.stage !== "researched",
   );
   const quoted = open.reduce((sum, c) => sum + (c.value ?? 0), 0);
-
-  // Two questions with one answer: what is due, and what has stopped
-  // moving. They were separate cards saying similar things in different
-  // words, which was much of why this page read as a list of lists.
-  const nudges: Nudge[] = [
-    ...needsAttention(clients).map((c) => ({
-      client: c,
-      why: c.nextStep || "No next step set",
-      when: c.nextStepDue ? `due ${shortDate(c.nextStepDue)}` : "no date set",
-      urgent: true,
-    })),
-    ...goneQuiet(clients).map((c) => ({
-      client: c,
-      why: "Nothing has happened here in a while",
-      when: `${daysSinceTouched(c)} days quiet`,
-      urgent: false,
-    })),
-  ];
 
   if (clients.length === 0) {
     return (
@@ -156,20 +130,10 @@ export default function Dashboard() {
         </p>
       )}
 
-      {/* Band 2: what to do, and what is owed. The briefing sits with
-          the to-do list because it is the same question asked a
-          different way, not a separate topic. */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-6">
-          <NeedsYou nudges={nudges} />
-          <Suspense fallback={<BriefingPanelSkeleton />}>
-            <BriefingPanel />
-          </Suspense>
-        </div>
-        <Suspense fallback={<MoneyPanelSkeleton />}>
-          <MoneyPanel />
-        </Suspense>
-      </div>
+      {/* Band 2: the jobs. Full width, because it is the reason to open
+          this page and because pairing it with an empty money card left
+          a tall blank column beside it. */}
+      <TodayPanel />
 
       {/* Band 3: the pipeline itself */}
       <section>
@@ -198,62 +162,20 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* Band 4: where everyone is, and what the website did */}
+      {/* Band 4: everything else, none of it urgent */}
       <div className="grid gap-6 lg:grid-cols-2">
         {(pins.length > 0 || unplaced > 0) && (
           <MapPanel pins={pins} token={mapboxToken()} unplaced={unplaced} />
         )}
-        <Suspense fallback={<TrafficPanelSkeleton />}>
-          <TrafficPanel />
-        </Suspense>
+        <div className="space-y-6">
+          <Suspense fallback={<MoneyPanelSkeleton />}>
+            <MoneyPanel />
+          </Suspense>
+          <Suspense fallback={<TrafficPanelSkeleton />}>
+            <TrafficPanel />
+          </Suspense>
+        </div>
       </div>
     </div>
-  );
-}
-
-type Nudge = {
-  client: ClientRecord;
-  why: string;
-  when: string;
-  urgent: boolean;
-};
-
-/** What is due and what has stalled, as one list */
-function NeedsYou({ nudges }: { nudges: Nudge[] }) {
-  return (
-    <section className="card overflow-hidden">
-      <p className="border-b border-line px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted">
-        Needs you{nudges.length > 0 && ` · ${nudges.length}`}
-      </p>
-      {nudges.length === 0 ? (
-        <p className="px-4 py-6 text-sm text-muted">
-          Nothing due and nothing gone quiet. Genuinely clear.
-        </p>
-      ) : (
-        <ul className="divide-y divide-line">
-          {nudges.map(({ client, why, when, urgent }) => (
-            <li key={`${client.slug}-${urgent}`} className="px-4 py-2.5">
-              <p className="flex flex-wrap items-center gap-x-2">
-                <Link
-                  href={`/clients/${client.slug}`}
-                  className="font-semibold text-pine-dark hover:underline"
-                >
-                  {displayName(client)}
-                </Link>
-                <StageBadge stage={client.stage} />
-                <span
-                  className={`ml-auto text-xs ${
-                    urgent ? "text-terracotta-dark" : "text-muted"
-                  }`}
-                >
-                  {when}
-                </span>
-              </p>
-              <p className="mt-0.5 text-sm text-muted">{why}</p>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
   );
 }
