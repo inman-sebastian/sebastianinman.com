@@ -12,6 +12,8 @@ import { BusyworkCards } from "@/components/BusyworkCards";
 import { ToolMarquee } from "@/components/ToolMarquee";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
+import { Testimonials } from "@/components/Testimonials";
+import { testimonialsFor } from "@/content/testimonials";
 
 /**
  * Dedicated landing page per service. One MDX file in content/services/
@@ -196,6 +198,15 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           </div>
         </section>
       )}
+
+      {/* Only the quotes that honestly speak to this service. Every
+          review on file is about web work, so nothing appears on the
+          automation or AI pages, where it would imply an endorsement
+          nobody gave. */}
+      <Testimonials
+        items={testimonialsFor(service.slug)}
+        heading="What clients said about this"
+      />
 
       {/* Good-fit callout with the CTA */}
       {service.goodFit && (

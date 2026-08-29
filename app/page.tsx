@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/content/site";
+import { testimonials } from "@/content/testimonials";
+import { Testimonials } from "@/components/Testimonials";
 import { getLandingPages, getServices } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
@@ -179,6 +181,8 @@ export default function HomePage() {
           </ButtonLink>
         </div>
       </section>
+
+      <Testimonials items={testimonials} />
 
       {/* Areas strip: local-trust moment + links to the location pages,
           each chip carrying its town's illustration as a thumbnail (the

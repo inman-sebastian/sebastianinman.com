@@ -70,6 +70,7 @@ The reader is a busy small-business owner, **not** a technical person.
 | What | Where |
 |---|---|
 | Site-wide info (name, tagline, email, phone, booking URL, SEO defaults) | `content/site.ts` |
+| Client reviews (verbatim; which service each speaks to) | `content/testimonials.ts` |
 | Services (one MDX file each) | `content/services/*.mdx` |
 | SEO landing pages (one MDX file each; filename = URL slug) | `content/landing/*.mdx` |
 | Long-form pages (About) | `content/pages/*.mdx` |
@@ -301,6 +302,36 @@ Editorial rules, on top of the voice guide:
   that's actually worth automating"), not listicle-speak.
 - Local color welcome where real (seasonal rushes, festival season,
   Rogue Valley business life); never forced.
+
+### Add or use a client review
+
+Reviews live in `content/testimonials.ts`, quoted verbatim, and render
+through `components/Testimonials.tsx` on the homepage and on any service
+page whose slug appears in a review's `about` list.
+
+The rules are not stylistic:
+
+- **Verbatim.** Trim for length with an ellipsis, never for meaning, and
+  never tidy somebody's grammar.
+- **`about` is a claim, not a tag.** A review may only appear beside a
+  service it actually speaks to. Every review currently on file is about
+  web work, so none appears on the automation or AI pages; putting one
+  there would imply an endorsement nobody gave.
+- **Clients only.** A fourth 5-star review exists from a developer
+  Sebastian worked alongside rather than for. It is deliberately absent:
+  a colleague among client testimonials is the one move here that would
+  actually mislead.
+- **Say where they came from.** `testimonialSource` is the section
+  intro, written in the same register and length as the other homepage
+  intros rather than as a bolted-on disclaimer. It carries the two facts
+  that matter: the work was freelance, and it was a couple of years ago.
+  The year on each card does the rest. It deliberately no longer names
+  the old business (Southern Oregon Web Design, now permanently closed),
+  which told a reader nothing they needed. Do not quietly drop "freelance
+  work" or the timeframe; those are the parts doing the honest work.
+
+Screenshots of the originals are kept off-repo. The old Google profile
+is closed, so nothing here is publicly verifiable anymore.
 
 ### Add a static page
 Create `app/<name>/page.tsx` (copy the shape of `app/about/page.tsx`), put
