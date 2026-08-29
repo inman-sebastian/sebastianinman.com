@@ -4,6 +4,49 @@ Things Sebastian shows a room or hands to somebody, as opposed to the
 client paperwork in `docs/clients/` (proposals, agreements, invoices)
 which goes to one named person after a consult.
 
+| File | What it is |
+|---|---|
+| `rogue-valley-talk.pptx` | A 15 to 20 minute talk for a room |
+| `leave-behind.md` -> `out/leave-behind.pdf` | One page to hand over or email |
+
+## The leave-behind
+
+`leave-behind.md` is the generic one-pager: who he is, what the five
+services cost, how a job goes, and what he will not do. Nothing in it is
+specific to one client, so it can be handed to anybody, printed in a
+stack for a talk, or emailed to someone deciding.
+
+It answers the two questions nobody can recall after a meeting: what
+does this cost, and what happens next. That is why the price table and
+the steps get most of the page.
+
+It goes through the same renderer as the proposals, so it carries the
+same letterhead:
+
+```bash
+cd paperwork-app
+PAPERWORK_DRAFTS=docs/marketing npm run generate -- leave-behind
+```
+
+The `PAPERWORK_DRAFTS` override exists for exactly this: the app
+normally reads `docs/clients/drafts/`, which is git-ignored because it
+holds client data. This is not client data and should be committed.
+
+**Keep it to one page.** It is currently a few lines short of spilling,
+and a two-page leave-behind is a brochure nobody reads. Check the page
+count after any edit:
+
+```bash
+pdftoppm -png -r 90 docs/marketing/out/leave-behind.pdf /tmp/lb && ls /tmp/lb*
+```
+
+One known cosmetic quirk: the last row of the price table gets extra
+space and no divider. That is `.content tr:last-child td` in
+`paperwork-app/style.css`, meant for an invoice's total row. Since the
+table runs cheapest to dearest it just emphasises the website, which is
+fine. Do not "fix" it in the shared stylesheet; proposals and invoices
+depend on that rule.
+
 ## The talk
 
 `rogue-valley-talk.pptx` is a 15 to 20 minute talk for a room of local

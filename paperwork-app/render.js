@@ -11,7 +11,21 @@ import matter from "gray-matter";
 import { marked } from "marked";
 
 export const ROOT = path.dirname(fileURLToPath(import.meta.url));
-export const DRAFTS = path.join(ROOT, "..", "docs", "clients", "drafts");
+/**
+ * Where documents are read from.
+ *
+ * Client paperwork by default, in the git-ignored drafts folder. The
+ * override exists for documents that are not client data and should be
+ * committed, like the marketing one-pager:
+ *
+ *   PAPERWORK_DRAFTS=docs/marketing npm run generate -- leave-behind
+ *
+ * Relative paths resolve from the repo root, so the default and the
+ * override read the same way.
+ */
+export const DRAFTS = process.env.PAPERWORK_DRAFTS
+  ? path.resolve(ROOT, "..", process.env.PAPERWORK_DRAFTS)
+  : path.join(ROOT, "..", "docs", "clients", "drafts");
 const SITE_TS = path.join(ROOT, "..", "content", "site.ts");
 
 /** Pull name/email/phone from the website's single source of truth */
