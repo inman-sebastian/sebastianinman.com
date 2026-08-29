@@ -17,6 +17,14 @@ click, not yours.
 - **Only businesses you actually looked at.** Every signal records what
   was seen and the URL it was seen on. If a claim can't be checked by
   opening a link, it doesn't go in the file.
+- **A blocked check is not a broken site.** Cloudflare and friends
+  answer automated requests with a 403 or a "Just a moment..." page,
+  which reads exactly like a site that is down. Never record "their
+  website doesn't load" from a fetch alone: open it in a real browser
+  first. This one already produced a wrong record (Waterstone Salon,
+  Aug 2026) whose opening line would have told a business their working
+  site was dead. A prospect can check that in five seconds, and being
+  wrong about it in a first email is worse than never writing.
 - **Never invent contact details.** No guessed emails
   (`info@theirdomain.com` is a guess), no reconstructed phone numbers.
   Blank is correct when you didn't find one; Sebastian can call.

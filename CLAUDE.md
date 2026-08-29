@@ -541,8 +541,17 @@ first-contact email; the composer swaps Send for Copy on
 `mission-control/data/do-not-contact.md` is honoured by both the research
 and the composer.
 
-Not built: payment processor (undecided; ask before wiring anything to
-money) and Gmail.
+Money runs on Stripe (`mission-control/lib/stripe.ts`, live restricted
+key in the repo root `.env.local`). Invoices are drafted from a client's
+page (`InvoicePanel`), and the dashboard's money summary and the briefing
+read from the same place. Cards and ACH are both on; ACH matters, since
+card fees on a $2,000 invoice are about $58. **It has never taken a real
+payment**: as of Aug 2026 the account holds zero customers and zero
+invoices, so the whole path past "draft an invoice" is unexercised.
+
+Not built: Gmail. Nothing in this app can see hello@, so an inquiry does
+not exist here until Sebastian pastes the notification email into
+`/clients/new`, where `lib/parse-inquiry.ts` fills the form from it.
 
 ## Deferred tasks (not yet done; check before assuming)
 
