@@ -242,6 +242,17 @@ body {
   color: var(--color-pine-dark);
 }
 
+/* Forces the row break between the formatting controls and the
+   component buttons. Full basis takes the whole line, so anything
+   after it starts on the next one, and the border draws the divider
+   between the two tiers. */
+.mdx-editor-shell .mdx-toolbar-break {
+  flex-basis: 100%;
+  height: 0;
+  margin: 0.35rem 0;
+  border-top: 1px solid var(--color-line);
+}
+
 /* The component insert buttons read as words, not icons, so they need
    to look like the app's quiet buttons rather than icon squares. */
 .mdx-editor-shell .mdxeditor-toolbar button:not(:has(svg)) {

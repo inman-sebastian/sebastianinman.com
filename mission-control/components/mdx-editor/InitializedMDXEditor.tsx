@@ -184,7 +184,11 @@ export default function InitializedMDXEditor({
               <ListsToggle />
               <BlockTypeSelect />
               <CreateLink />
-              <Separator />
+              {/* Forces the component buttons onto a row of their own
+                  rather than letting them wrap wherever they land. A
+                  flex item at 100% basis takes the whole line, so
+                  everything after it starts on the next one. */}
+              <div className="mdx-toolbar-break" />
               <InsertComponents />
             </>
           ),
