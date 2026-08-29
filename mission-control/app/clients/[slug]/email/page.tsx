@@ -5,6 +5,7 @@ import { documentsForClient } from "@/lib/documents";
 import { fillEmail, getEmailTemplate, listEmailTemplates } from "@/lib/emails";
 import { mailFrom, mailReady } from "@/lib/env";
 import { attachmentsFor, sendBlockReason } from "@/lib/send";
+import { signatureHtml } from "@/lib/signature";
 import { stageInfo } from "@/lib/stages";
 import { EmailComposer } from "./EmailComposer";
 
@@ -122,6 +123,7 @@ export default async function EmailPage({
         attachments={attachments}
         canSend={ready && !onList}
         copyOnly={copyOnly}
+        signature={signatureHtml()}
       />
 
       <p className="text-xs text-muted">

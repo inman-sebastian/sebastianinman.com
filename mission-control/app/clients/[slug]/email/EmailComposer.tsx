@@ -30,6 +30,7 @@ export function EmailComposer({
   attachments,
   canSend,
   copyOnly,
+  signature,
 }: {
   clientSlug: string;
   clientName: string;
@@ -40,6 +41,10 @@ export function EmailComposer({
   /** Set for records that came from research: the app will not send to
       them, so the last step hands the message over instead */
   copyOnly?: string;
+  /** The signature the send path appends, rendered in the confirm step
+      so "exactly what goes out" keeps meaning it. Trusted markup from
+      docs/marketing/email-signature.html, never anything typed here. */
+  signature: string;
 }) {
   const [state, formAction, pending] = useActionState(sendEmailAction, {});
   const [marked, markAction, marking] = useActionState(markContactedAction, {});
@@ -225,6 +230,16 @@ export function EmailComposer({
             <p className="whitespace-pre-wrap border-t border-line px-4 py-4 text-sm leading-relaxed">
               {body}
             </p>
+            {/* The signature is added by the send path, not typed above,
+                so it has to be shown here or the heading is a lie. Not
+                shown for outreach: that message gets copied into Gmail,
+                which appends its own. */}
+            {!copyOnly && signature && (
+              <div
+                className="border-t border-line bg-surface px-4 py-4"
+                dangerouslySetInnerHTML={{ __html: signature }}
+              />
+            )}
           </div>
 
           {state.error && (

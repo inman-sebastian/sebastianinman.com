@@ -6,6 +6,12 @@ dashes, one clear next step per email. Fill `{{...}}`, personalize the
 first line to what they actually wrote, and cut anything that doesn't
 apply. Send from hello@sebastianinman.com.
 
+**End on a sign-off, never on contact details.** Both paths already add
+the signature from `docs/marketing/email-signature.html`: Mission
+Control appends it to anything it sends, and Gmail appends it to
+template 6, which gets copied into a Gmail compose. A template that
+signs off with a phone number and a web address prints them twice.
+
 ## 1. New inquiry reply (contact form submission)
 
 **Subject:** Re: your note about {{THEIR_TOPIC}}
@@ -27,7 +33,6 @@ Or just reply with a couple of times that work and I'll make one fit.
 
 Talk soon,
 Sebastian
-(541) 592-9047 · sebastianinman.com
 
 ## 2. Post-consult, sending the proposal
 
@@ -133,5 +138,4 @@ not you ever hire me."}}
 If this isn't something you're thinking about, no problem at all; just
 say so and I won't write again.
 
-Sebastian Inman
-(541) 592-9047 · sebastianinman.com
+Sebastian

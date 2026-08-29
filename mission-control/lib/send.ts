@@ -3,6 +3,7 @@ import path from "node:path";
 import { mailConfig } from "./env";
 import { OUT_DIR } from "./documents";
 import { isBlocked } from "./suppression";
+import { emailHtml, emailText } from "./signature";
 import { OUTREACH_SOURCE } from "./stages";
 
 /**
@@ -93,12 +94,17 @@ export async function sendClientEmail(input: {
   try {
     const { Resend } = await import("resend");
     const resend = new Resend(key);
+    // Both parts, so the message is multipart/alternative: the HTML
+    // carries the same signature Gmail pastes in, and the plain-text
+    // twin is what a text-only client (or a spam filter) reads. Sending
+    // HTML alone would look branded in most inboxes and empty in a few.
     const { data, error } = await resend.emails.send({
       from,
       to: input.to,
       replyTo: from,
       subject: input.subject,
-      text: input.body,
+      text: emailText(input.body),
+      html: emailHtml(input.body),
       attachments: attachments.length ? attachments : undefined,
     });
     if (error) return { ok: false, message: error.message || String(error) };
