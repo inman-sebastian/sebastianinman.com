@@ -56,3 +56,8 @@ export function mailFrom(): string {
 export function geminiKey(): string {
   return process.env.GEMINI_API_KEY || repoEnv().GEMINI_API_KEY || "";
 }
+
+/** For checking an address will accept mail. Same file, same rule. */
+export function hunterKey(): string {
+  return process.env.HUNTER_API_KEY || repoEnv().HUNTER_API_KEY || "";
+}

@@ -549,6 +549,26 @@ card fees on a $2,000 invoice are about $58. **It has never taken a real
 payment**: as of Aug 2026 the account holds zero customers and zero
 invoices, so the whole path past "draft an invoice" is unexercised.
 
+`mission-control/lib/hunter.ts` checks that an address will accept mail
+(`HUNTER_API_KEY` in the repo root `.env.local`, free plan: 50 searches
+and 100 verifications a month). It runs only when a button is pressed,
+in two places: after pasting an inquiry at `/clients/new`, and beside
+the recipient on the composer's confirm step. Answers are cached in the
+git-ignored `data/hunter-cache/`, so a second click is free.
+
+**Verification only. Do not add Domain Search or Email Finder.** Domain
+Search was tested against real leads and returned zero addresses for all
+three that even have a domain, because Hunter indexes companies with a
+public web footprint and a three-chair salon has none; five of the eight
+businesses on file have no website for it to search at all. Email Finder
+is worse: it returns pattern *guesses* with a confidence score, which is
+exactly what the find-leads skill forbids.
+
+The trap worth knowing: a catch-all server accepts every address, so
+"deliverable" against one proves only that the domain exists.
+sebastianinman.com is itself catch-all, and `readVerdict()` checks
+`accept_all` BEFORE `deliverable` for that reason. Do not reorder it.
+
 Not built: Gmail. Nothing in this app can see hello@, so an inquiry does
 not exist here until Sebastian pastes the notification email into
 `/clients/new`, where `lib/parse-inquiry.ts` fills the form from it.

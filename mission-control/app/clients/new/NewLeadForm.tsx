@@ -2,6 +2,7 @@
 
 import { useActionState, useState, useTransition } from "react";
 import { ClientFields } from "@/components/ClientFields";
+import { VerifyEmail } from "@/components/VerifyEmail";
 import { createClientAction, parseInquiryAction } from "@/app/actions";
 import type { ClientInput } from "@/lib/clients";
 import type { ServiceSummary } from "@/lib/services";
@@ -52,6 +53,16 @@ export function NewLeadForm({ services }: { services: ServiceSummary[] }) {
         >
           {reading ? "Reading..." : "Fill the form from this"}
         </button>
+
+        {/* The moment a typo matters. A wrong address here means the
+            reply goes nowhere and the inquiry looks ignored, which is
+            the expensive kind of mistake. */}
+        {defaults.email && (
+          <VerifyEmail
+            email={defaults.email}
+            label={`Check ${defaults.email} accepts mail`}
+          />
+        )}
       </section>
 
       <form action={formAction} className="space-y-6">

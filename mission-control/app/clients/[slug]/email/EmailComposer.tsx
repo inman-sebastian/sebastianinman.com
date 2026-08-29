@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { startTransition, useActionState, useState } from "react";
+import { VerifyEmail } from "@/components/VerifyEmail";
 import { markContactedAction, sendEmailAction } from "./actions";
 
 /**
@@ -210,7 +211,13 @@ export function EmailComposer({
               </div>
               <div className="flex gap-4 px-4 py-2">
                 <dt className="w-20 shrink-0 text-muted">To</dt>
-                <dd className="font-semibold">{to}</dd>
+                <dd className="flex-1">
+                  <span className="font-semibold">{to}</span>
+                  {/* Last chance to catch a bad address. Optional on
+                      purpose: the check costs one of a hundred a month,
+                      and most sends are to somebody already written to. */}
+                  <VerifyEmail email={to} />
+                </dd>
               </div>
               <div className="flex gap-4 px-4 py-2">
                 <dt className="w-20 shrink-0 text-muted">Subject</dt>
