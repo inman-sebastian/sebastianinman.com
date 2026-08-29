@@ -182,6 +182,20 @@ function joinBody(notes: string, timeline: TimelineEntry[]): string {
     .concat("\n");
 }
 
+/**
+ * A coordinate, or null when the record hasn't got one.
+ *
+ * Worth its own function because the obvious check is wrong: Number(null)
+ * is 0, 0 is finite, and 0, 0 is a real place in the Gulf of Guinea. A
+ * hand-written record saying `lat: null` is a supported way to edit these
+ * files, so it must not come back as a pin off the coast of Africa.
+ */
+function coord(value: unknown): number | null {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
 function toRecord(slug: string, raw: string): ClientRecord {
   const { data, content } = matter(raw);
   const { notes, timeline } = splitBody(content);
@@ -197,8 +211,8 @@ function toRecord(slug: string, raw: string): ClientRecord {
     phone: asText(data.phone),
     city: asText(data.city),
     address: asText(data.address),
-    lat: Number.isFinite(Number(data.lat)) && data.lat !== "" ? Number(data.lat) : null,
-    lng: Number.isFinite(Number(data.lng)) && data.lng !== "" ? Number(data.lng) : null,
+    lat: coord(data.lat),
+    lng: coord(data.lng),
     stage: isStage(data.stage) ? data.stage : "inquiry",
     website: asText(data.website),
     category: asText(data.category),

@@ -186,18 +186,13 @@ export function EmailComposer({
 
       {confirming && (
         <div className="space-y-4">
-          {/* Hidden copies so the values still post from this step */}
-          <input type="hidden" name="to" value={to} />
-          <input type="hidden" name="subject" value={subject} />
-          <input type="hidden" name="body" value={body} />
-          {picked.map((a) => (
-            <input
-              key={a.slug}
-              type="hidden"
-              name="attachments"
-              value={a.slug}
-            />
-          ))}
+          {/* No hidden copies of the fields here on purpose. The editing
+              step above is hidden with CSS, not unmounted, so its inputs
+              are still in this form and still post. Duplicating them was
+              harmless for the single-value fields, where the action reads
+              the first one, but every checked attachment posted twice and
+              went out attached twice. If that block ever stops being
+              rendered while confirming, the values have to come back. */}
 
           <div className="card overflow-hidden">
             <p className="border-b border-line bg-pine-tint px-4 py-2 text-xs font-semibold uppercase tracking-wide text-pine-dark">

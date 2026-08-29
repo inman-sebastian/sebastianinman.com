@@ -27,7 +27,11 @@ export async function sendEmailAction(
   const to = text(formData, "to");
   const subject = text(formData, "subject");
   const body = text(formData, "body");
-  const attachmentSlugs = formData.getAll("attachments").map(String);
+  // Deduped, because a repeated slug attaches the same PDF twice and
+  // nothing about that looks like an error until it lands in an inbox.
+  const attachmentSlugs = [
+    ...new Set(formData.getAll("attachments").map(String)),
+  ];
 
   const client = getClient(slug);
   if (!client) return { error: "That client record is gone." };
