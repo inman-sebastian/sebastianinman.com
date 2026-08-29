@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { blogSchema, jsonLdProps } from "@/lib/schema";
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/content";
 import { HeroSplash } from "@/components/HeroSplash";
@@ -25,6 +26,7 @@ export default function BlogIndexPage() {
 
   return (
     <>
+      <script {...jsonLdProps(blogSchema(posts))} />
       <HeroSplash
         compact
         cards={false}

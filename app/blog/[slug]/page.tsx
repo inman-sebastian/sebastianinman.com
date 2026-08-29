@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getBlogPost, getBlogPosts } from "@/lib/content";
 import { site } from "@/content/site";
+import { blogPostSchema, breadcrumbs, jsonLdProps } from "@/lib/schema";
 import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
@@ -44,21 +45,16 @@ export default async function BlogPostPage({ params }: PageProps<"/blog/[slug]">
   const post = getBlogPost(slug);
   if (!post) notFound();
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    author: { "@type": "Person", name: site.name, url: site.url },
-  };
+  const jsonLd = blogPostSchema(post);
+  const trail = breadcrumbs([
+    { name: "Blog", path: "/blog" },
+    { name: post.title, path: `/blog/${post.slug}` },
+  ]);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script {...jsonLdProps(jsonLd)} />
+      <script {...jsonLdProps(trail)} />
       <HeroSplash
         compact
         narrow

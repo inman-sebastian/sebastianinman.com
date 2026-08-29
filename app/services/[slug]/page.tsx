@@ -13,6 +13,7 @@ import { ToolMarquee } from "@/components/ToolMarquee";
 import { ButtonLink, ConsultButton } from "@/components/ButtonLink";
 import { CTABand } from "@/components/CTABand";
 import { Testimonials } from "@/components/Testimonials";
+import { breadcrumbs, jsonLdProps, serviceSchema } from "@/lib/schema";
 import { testimonialsFor } from "@/content/testimonials";
 
 /**
@@ -58,6 +59,15 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
 
   return (
     <>
+      <script {...jsonLdProps(serviceSchema(service))} />
+      <script
+        {...jsonLdProps(
+          breadcrumbs([
+            { name: "Services", path: "/services" },
+            { name: service.title, path: `/services/${service.slug}` },
+          ])
+        )}
+      />
       <HeroSplash
         compact
         eyebrow={`Starting at $${service.startingPrice.toLocaleString()}`}

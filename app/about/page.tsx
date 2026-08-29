@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { site } from "@/content/site";
+import { jsonLdProps, person } from "@/lib/schema";
 import { getLandingPages, getPage } from "@/lib/content";
 import { SiteImage } from "@/components/SiteImage";
 import { HeroSplash } from "@/components/HeroSplash";
@@ -27,6 +28,15 @@ export default function AboutPage() {
 
   return (
     <>
+      <script
+        {...jsonLdProps({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          name: "About",
+          url: `${site.url}/about`,
+          mainEntity: person(),
+        })}
+      />
       <HeroSplash
         compact
         cards={false}

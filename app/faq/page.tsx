@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { site } from "@/content/site";
 import Link from "next/link";
 import { getPage } from "@/lib/content";
+import { jsonLdProps } from "@/lib/schema";
 import { HeroSplash } from "@/components/HeroSplash";
 import { SiteImage } from "@/components/SiteImage";
 import { Reveal } from "@/components/Reveal";
@@ -33,6 +35,10 @@ export default function FaqPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    url: `${site.url}/faq`,
+    // Ties the answers to the business that gives them, rather than
+    // leaving a set of questions belonging to nobody
+    about: { "@id": `${site.url}/#business` },
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
@@ -42,10 +48,7 @@ export default function FaqPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script {...jsonLdProps(jsonLd)} />
       <HeroSplash
         compact
         cards={false}

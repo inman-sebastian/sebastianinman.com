@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { jsonLdProps, landingSchema } from "@/lib/schema";
 import { notFound } from "next/navigation";
 import { getLandingPage, getLandingPages } from "@/lib/content";
 import { parseHeroCards } from "@/lib/heroCards";
@@ -42,6 +43,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
 
   return (
     <>
+      <script {...jsonLdProps(landingSchema(page))} />
       <HeroSplash
         compact
         eyebrow={`${site.name} · ${page.city}`}

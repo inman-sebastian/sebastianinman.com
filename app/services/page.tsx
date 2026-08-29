@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { jsonLdProps, serviceCatalog } from "@/lib/schema";
 import { getServices } from "@/lib/content";
 import { HeroSplash } from "@/components/HeroSplash";
 import { Reveal } from "@/components/Reveal";
@@ -18,6 +19,7 @@ export default function ServicesPage() {
 
   return (
     <>
+      <script {...jsonLdProps(serviceCatalog(services))} />
       <HeroSplash
         compact
         eyebrow="Services"

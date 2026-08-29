@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { jsonLdProps } from "@/lib/schema";
 import { site } from "@/content/site";
 import { getServices } from "@/lib/content";
 import { ContactForm } from "@/components/ContactForm";
@@ -15,6 +16,15 @@ export default function ContactPage() {
   const services = getServices().map(({ slug, title }) => ({ slug, title }));
   return (
     <>
+      <script
+        {...jsonLdProps({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          name: "Contact",
+          url: `${site.url}/contact`,
+          about: { "@id": `${site.url}/#business` },
+        })}
+      />
       <HeroSplash
         compact
         cards={false}

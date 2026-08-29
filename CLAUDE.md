@@ -333,6 +333,47 @@ The rules are not stylistic:
 Screenshots of the originals are kept off-repo. The old Google profile
 is closed, so nothing here is publicly verifiable anymore.
 
+### Structured data (JSON-LD)
+
+Everything lives in `lib/schema.ts`, built as one graph so every page
+agrees about who Sebastian is. The root layout emits
+`ProfessionalService` + `Person` + `WebSite` once, each with a stable
+`@id` (`#business`, `#person`, `#website`); every other page references
+those by id rather than describing a second Sebastian. Per page on top
+of that: `Service` + `BreadcrumbList` on a service page, `OfferCatalog`
+on /services, `BlogPosting` + `BreadcrumbList` on a post, `Blog` on
+/blog, `WebPage` on a landing page, plus `AboutPage`, `ContactPage` and
+`FAQPage`.
+
+Three rules that are not style preferences:
+
+- **Never add `Review` or `AggregateRating` for the testimonials.**
+  Google stopped showing review rich results in 2019 where the entity
+  being reviewed controls the reviews, which is exactly what quotes we
+  publish about ourselves are. It earns no stars and states a rating no
+  search engine will use. Stars come from a real Google Business
+  Profile, which lives on Google, not here.
+- **No street address, ever.** `LocalBusiness` formally requires a
+  `PostalAddress`, but Sebastian works from home and that address stays
+  private. The markup carries `addressRegion` and `addressCountry` only,
+  and `areaServed` does the real work. The known cost is that Google
+  will not grant local rich results without a full address. Publishing
+  his home address to get them is not a trade worth making.
+- **Never state a fact the site does not have.** No `dateModified` on
+  posts (nothing tracks edits), no invented ratings, no opening hours
+  that are not real.
+
+Verify after changing it. Both checks are worth rerunning:
+
+```bash
+npm run dev            # the checks read the running site
+node scripts/check-jsonld.mjs        # every page parses, right types present
+node scripts/check-jsonld-vocab.mjs  # every type and property is real schema.org
+```
+
+Prices in `Offer` come from each service's `startingPrice`, so a price
+change on a service page flows through automatically.
+
 ### Add a static page
 Create `app/<name>/page.tsx` (copy the shape of `app/about/page.tsx`), put
 long-form copy in `content/pages/<name>.mdx`, add a nav link in

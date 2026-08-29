@@ -3,6 +3,7 @@ import { Fraunces, Outfit } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SiteAnalytics } from "@/components/SiteAnalytics";
 import { site } from "@/content/site";
+import { jsonLdProps, siteGraph } from "@/lib/schema";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
@@ -42,6 +43,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Film-grain texture over the whole site; purely decorative,
             never intercepts clicks (see .site-grain in globals.css) */}
         <div aria-hidden="true" className="site-grain" />
+        {/* Who this business is, said once for the whole site.
+            Every page then references these by id instead of
+            describing a second Sebastian. */}
+        <script {...jsonLdProps(siteGraph())} />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
