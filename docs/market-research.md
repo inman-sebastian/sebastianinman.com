@@ -36,8 +36,50 @@ platforms ~$30-200/mo); worth being upfront about in consults.
   niche), Nathan Neil (ops consulting). Portland-based remote providers
   claim the area but have no local presence.
 
+- **Tech Smart Magic** (techsmartmagic.com, Ashland; found Aug 2026):
+  **the closest competitor found so far, and a real one.** One person,
+  local, same town, selling websites, "AI workflows and automation
+  systems", and "forms, links, calendars, reminders, AI helpers, payment
+  flows, dashboards, and automations". That is three of our five
+  services aimed at the same customer in the same valley. Run by Derek
+  Owens Oas, who also runs ashland.biz (below).
+
+  Where he is genuinely strong, and it should be said plainly:
+
+  - Recent, dated, specific testimonials naming the work done. Ours are
+    two to three years old from a business that no longer trades.
+  - Speed, corroborated by a client: a retreat centre page "in just a
+    few days".
+  - Low-friction contact. The nav button is "Text Derek", and the CTA is
+    to text the word PAGE. No form to fill in.
+  - He is visible and actually shipping locally, which right now we are
+    not.
+
+  Where we are stronger:
+
+  - **He publishes no prices at all.** Checked Aug 29: not one figure on
+    the site, and the word "pricing" never appears. We publish a
+    starting price on every service, which is the single thing the
+    market research says small businesses most want and least get.
+  - **Focus.** His list runs websites, flyers, business cards, signs, QR
+    codes, logos, portraits, photography, video, outreach, AI, plus
+    stock backtesting and data analysis in one review. That is a list of
+    things one person can do, not a position. We sell five things.
+  - **Testimonial discipline.** His review wall mixes in five
+    Math/Stats/Programming *tutoring* reviews from six and seven years
+    ago, and two of the business reviews are from a David Oas and a Lyn
+    Owens, which read as family (inference from the names, not
+    established). We deliberately left out a colleague's five-star
+    review for exactly this reason. That call now has a competitive
+    payoff as well as an ethical one.
+
+  Do not compete on price against him, because he has no published
+  price to compete with. Compete on being the one who says the number
+  before you ask.
+
 - **ashland.biz** (found Aug 2026 while verifying a lead): **not a
-  competitor yet. Watch it, don't plan around it.** Sells one templated
+  competitor yet. Watch it, don't plan around it.** Same operator as
+  Tech Smart Magic above, which is the more serious of the two. Sells one templated
   page per business on a subdomain (`flattop.ashland.biz`), on Vercel,
   recruiting with a "Request yours" button. No pricing published, no
   operator named.
