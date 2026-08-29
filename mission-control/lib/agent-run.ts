@@ -105,14 +105,20 @@ export function readJob(slug: string): Job {
     ? fs.readFileSync(jobFile(slug, "log"), "utf8")
     : "";
   const read = interpret(raw);
-  const elapsed = Math.max(
-    0,
-    Math.round((Date.now() - new Date(startedAt).getTime()) / 1000)
-  );
 
   const exitFile = jobFile(slug, "exit");
   const finished = fs.existsSync(exitFile);
   const code = finished ? Number(fs.readFileSync(exitFile, "utf8").trim()) : 0;
+
+  // How long the run took, not how long ago it started. The exit file is
+  // written the moment the run ends, so its timestamp is the finish
+  // line; measuring to now instead would report an eight-minute run left
+  // open overnight as an eight-hour one.
+  const endedAt = finished ? fs.statSync(exitFile).mtimeMs : Date.now();
+  const elapsed = Math.max(
+    0,
+    Math.round((endedAt - new Date(startedAt).getTime()) / 1000)
+  );
 
   return {
     ...read,
@@ -208,7 +214,9 @@ function interpret(raw: string): Omit<Job, "state" | "startedAt" | "elapsed"> {
   }
 
   if (denials.length > 0 && !problem) {
-    problem = `The run wanted ${[...new Set(denials)].join(", ")} and was not allowed it. If the skill has changed, ALLOWED_TOOLS in lib/illustrate.ts needs to change with it.`;
+    // Deliberately does not name a file: this runs every skill now, and
+    // pointing at the wrong one is worse than pointing at none.
+    problem = `The run wanted ${[...new Set(denials)].join(", ")} and was not allowed it. If the skill has changed, the ALLOWED_TOOLS list that starts this run needs to change with it.`;
   }
 
   return { log: lines.slice(-60).join("\n"), summary, costUsd, denials, problem };

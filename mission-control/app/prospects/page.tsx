@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { displayName, listClients, listResearched, type ClientRecord } from "@/lib/clients";
-import { listServices } from "@/lib/services";
+import { displayName, listClients, listResearched } from "@/lib/clients";
+import { estimatedWorth } from "@/lib/services";
 import { money } from "@/lib/format";
 import { readJob } from "@/lib/agent-run";
 import { RESEARCH_JOB } from "@/lib/research";
@@ -8,15 +8,8 @@ import { FindLeadsPanel } from "./FindLeadsPanel";
 
 export const dynamic = "force-dynamic";
 
-/** Roughly what the work would be worth, from the service starting
-    prices. A floor, not a quote. */
-function worth(record: ClientRecord, prices: Map<string, number>): number {
-  return record.services.reduce((sum, s) => sum + (prices.get(s) ?? 0), 0);
-}
-
 export default function ProspectsPage() {
   const waiting = listResearched();
-  const prices = new Map(listServices().map((s) => [s.slug, s.startingPrice]));
   // Everything research has already turned up and been judged on
   const decided = listClients().filter(
     (c) => c.source === "outreach" && c.stage !== "researched"
@@ -33,7 +26,7 @@ export default function ProspectsPage() {
         </p>
       </div>
 
-      <FindLeadsPanel initialJob={readJob(RESEARCH_JOB)} />
+      <FindLeadsPanel initialJob={readJob(RESEARCH_JOB)} waiting={waiting.length} />
 
       <section className="card">
         <p className="border-b border-line px-4 py-2 text-xs font-semibold uppercase tracking-wide text-muted">
@@ -41,7 +34,7 @@ export default function ProspectsPage() {
         </p>
         <ul className="divide-y divide-line">
           {waiting.map((r) => {
-            const value = worth(r, prices);
+            const value = estimatedWorth(r.services);
             return (
               <li key={r.slug}>
                 <Link
