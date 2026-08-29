@@ -8,6 +8,7 @@ import { blogImageVersion, listCandidates } from "@/lib/images";
 import { getPost, postStatus, publishPaths, statusLabel } from "@/lib/posts";
 import { REPO_ROOT, siteInfo } from "@/lib/site";
 import { validatePost } from "@/lib/validate";
+import { MdxBodyEditor } from "@/components/MdxBodyEditor";
 import { IllustrationPanel } from "./IllustrationPanel";
 import { PublishPanel } from "./PublishPanel";
 
@@ -128,18 +129,7 @@ export default async function PostPage({
               defaultValue={post.date}
             />
           </div>
-          <div>
-            <label className="label" htmlFor="body">
-              The post
-            </label>
-            <textarea
-              id="body"
-              name="body"
-              rows={30}
-              className="field font-mono text-sm"
-              defaultValue={post.body}
-            />
-          </div>
+          <MdxBodyEditor initial={post.body} />
           <button type="submit" className="btn">
             {label.kind === "draft" ? "Save the draft" : "Save changes"}
           </button>

@@ -125,3 +125,40 @@ body {
     border-radius: 0.9rem;
   }
 }
+
+/* MDXEditor's editing surface.
+   Outside @layer on purpose: Tailwind's preflight resets headings and
+   lists to nothing, and inside a layer these rules lose to it. The
+   editor is the one place in this app that renders authored prose, so
+   it needs the elements to look like what they are. */
+.mdx-body h1,
+.mdx-body h2,
+.mdx-body h3 {
+  font-family: var(--font-serif, Georgia, serif);
+  color: var(--color-pine-dark);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 1.4em 0 0.5em;
+}
+.mdx-body h1 { font-size: 1.5rem; }
+.mdx-body h2 { font-size: 1.25rem; }
+.mdx-body h3 { font-size: 1.05rem; }
+.mdx-body p { margin: 0 0 0.9em; line-height: 1.65; }
+.mdx-body ul,
+.mdx-body ol { margin: 0 0 0.9em; padding-left: 1.4rem; }
+.mdx-body ul { list-style: disc; }
+.mdx-body ol { list-style: decimal; }
+.mdx-body li { margin: 0.2em 0; }
+.mdx-body blockquote {
+  border-left: 2px solid var(--color-line);
+  padding-left: 0.9rem;
+  color: var(--color-muted);
+  margin: 0 0 0.9em;
+}
+.mdx-body a { color: var(--color-pine); text-decoration: underline; }
+.mdx-body code {
+  background: var(--color-surface);
+  border-radius: 0.25rem;
+  padding: 0.05em 0.3em;
+  font-size: 0.9em;
+}
