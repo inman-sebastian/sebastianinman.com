@@ -36,6 +36,23 @@ platforms ~$30-200/mo); worth being upfront about in consults.
   niche), Nathan Neil (ops consulting). Portland-based remote providers
   claim the area but have no local presence.
 
+- **ashland.biz** (found Aug 2026 while verifying a lead): the first
+  competitor seen aiming at our exact target. "Local business pages,
+  done the clean way", one page per business on a memorable subdomain
+  (`flattop.ashland.biz`), hosted on Vercel, recruiting openly with a
+  "Request yours" button. Four businesses live: The Flat Top, Bento,
+  Rarity Ink, Lithia Park Shoes. The pages are good, and genuinely so:
+  responsive, fast, hours, price menu, photos, call and directions.
+  No pricing published and no operator named.
+
+  Worth watching rather than worrying about. It is a *cheaper, lighter*
+  product than a website, not the same one: the business does not own
+  the domain, cannot be found by their own name, and takes the page down
+  with the directory if it ever folds. That is a real distinction to be
+  able to draw, and it must be drawn without sneering at a page that is
+  better than a lot of small-business sites. It also means one of our
+  own leads (Flat Top) is effectively already served.
+
 ### Implications for "Best for" targeting
 Local AI/automation competitors chase B2B and professional-services
 verticals (law, CPA, medical, manufacturing). Our consumer-facing

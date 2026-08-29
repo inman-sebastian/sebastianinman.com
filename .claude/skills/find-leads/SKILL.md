@@ -17,6 +17,15 @@ click, not yours.
 - **Only businesses you actually looked at.** Every signal records what
   was seen and the URL it was seen on. If a claim can't be checked by
   opening a link, it doesn't go in the file.
+- **Open the site and click the thing.** A claim about a website is not
+  recorded until it has been loaded in a real browser and the specific
+  thing being claimed has been exercised: follow the booking link, open
+  the contact page, resize to a phone. Reading the copy a search index
+  returned is not checking a site. Of the first three records audited in
+  Aug 2026, two were wrong, both because the page's words were read and
+  nothing was clicked: one "dead" site was a bot wall, and one "no
+  booking link" was a page covered in booking buttons that all pointed
+  at the wrong place.
 - **A blocked check is not a broken site.** Cloudflare and friends
   answer automated requests with a 403 or a "Just a moment..." page,
   which reads exactly like a site that is down. Never record "their
