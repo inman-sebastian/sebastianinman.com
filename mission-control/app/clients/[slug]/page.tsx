@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { Markdown } from "@/components/Markdown";
 import { notFound } from "next/navigation";
 import {
   addTimelineAction,
@@ -175,9 +176,7 @@ export default async function ClientPage({
               <h2 className="font-serif text-lg font-semibold text-pine-dark">
                 Notes
               </h2>
-              <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed">
-                {client.notes}
-              </p>
+              <Markdown className="mt-2 text-sm">{client.notes}</Markdown>
             </section>
           )}
         </div>

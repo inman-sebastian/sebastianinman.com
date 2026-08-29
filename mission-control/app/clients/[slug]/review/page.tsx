@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Markdown } from "@/components/Markdown";
 import {
   passAction,
   pursueAction,
@@ -88,9 +89,13 @@ export default async function ReviewPage({
               Every line should have a link behind it. Open a couple and check
               before you write to anyone.
             </p>
-            <div className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
+            {/* Rendered rather than shown raw, because remark-gfm
+                autolinks the bare source URLs the research records
+                beside every claim, which is what makes the "open a
+                couple and check" instruction above actionable. */}
+            <Markdown className="mt-3 text-sm">
               {record.notes || "Nothing recorded."}
-            </div>
+            </Markdown>
           </section>
 
           {(record.platform || record.stack.length > 0) && (

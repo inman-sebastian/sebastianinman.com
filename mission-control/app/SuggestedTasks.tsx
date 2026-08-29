@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Markdown } from "@/components/Markdown";
 import { TaskList } from "./TaskList";
 import { RefreshBriefing } from "./RefreshBriefing";
 import type { Task } from "@/lib/tasks";
@@ -55,9 +56,9 @@ export function SuggestedTasks({ hasOwn }: { hasOwn: boolean }) {
   return (
     <>
       {data.summary && (
-        <p className="border-t border-line bg-pine-tint/30 px-4 py-3 text-sm leading-relaxed text-pine-dark">
-          {data.summary}
-        </p>
+        <div className="border-t border-line bg-pine-tint/30 px-4 py-3 text-sm text-pine-dark">
+          <Markdown>{data.summary}</Markdown>
+        </div>
       )}
       {data.tasks.length > 0 && <TaskList tasks={data.tasks} />}
       <Footer text={data.footer} />
