@@ -42,6 +42,34 @@ export async function repoState(): Promise<RepoState> {
   }
 }
 
+/**
+ * How many unpushed commits touch these files specifically.
+ *
+ * Not the same question as "is the branch ahead", and the difference is
+ * a bug this app shipped: every post read as "committed, not pushed"
+ * whenever anything else on main was waiting to go out, which for a
+ * repo that also holds this app is most of the time. A post's status
+ * has to be about the post.
+ *
+ * With no upstream nothing has ever been pushed, so any commit touching
+ * these files still counts as waiting.
+ */
+export async function unpushedFor(absPaths: string[]): Promise<number> {
+  const rels = absPaths.map((p) => path.relative(REPO_ROOT, p));
+  if (rels.length === 0) return 0;
+  const range = await git(["rev-parse", "--abbrev-ref", "@{u}"])
+    .then(() => "@{u}..HEAD")
+    .catch(() => "HEAD");
+  const out = await git([
+    "log",
+    range,
+    "--oneline",
+    "--",
+    ...rels,
+  ]).catch(() => "");
+  return out ? out.split("\n").filter(Boolean).length : 0;
+}
+
 export type FileState = "untracked" | "modified" | "clean" | "missing";
 
 export async function fileState(absPath: string): Promise<FileState> {

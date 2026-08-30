@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { REPO_ROOT } from "./site";
-import { fileState, type FileState, type RepoState } from "./git";
+import { fileState, unpushedFor, type FileState, type RepoState } from "./git";
 
 /**
  * Blog posts: content/blog/*.mdx on the public site.
@@ -34,6 +34,8 @@ export type PostStatus = {
   /** True when the illustration exists on disk */
   hasImage: boolean;
   imageFile: FileState | null;
+  /** Unpushed commits touching THIS post's files, not the branch's */
+  unpushed: number;
 };
 
 function asText(value: unknown): string {
@@ -101,6 +103,7 @@ export async function postStatus(post: BlogPost): Promise<PostStatus> {
     file: await fileState(postPath(post.slug)),
     hasImage: Boolean(img && fs.existsSync(img)),
     imageFile: img && fs.existsSync(img) ? await fileState(img) : null,
+    unpushed: await unpushedFor(publishPaths(post)),
   };
 }
 
@@ -143,11 +146,15 @@ export function statusLabel(
       live: false,
     };
   }
-  if (repo.ahead > 0) {
+  // This post's own commits, not the branch's. Asking whether the
+  // branch was ahead meant any unrelated work waiting to go out, which
+  // in a repo that also holds this app is most of the time, marked
+  // every post as unpushed while they sat live on the site.
+  if (status.unpushed > 0) {
     return {
       kind: "unpushed",
       label: "Committed, not pushed",
-      detail: `${repo.ahead} commit${repo.ahead === 1 ? "" : "s"} on ${repo.branch} waiting to go out.`,
+      detail: `${status.unpushed} commit${status.unpushed === 1 ? "" : "s"} to this post on ${repo.branch} waiting to go out.`,
       live: false,
     };
   }
