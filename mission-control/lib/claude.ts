@@ -99,8 +99,23 @@ export async function ask<T extends z.ZodType>(options: {
   system: string;
   prompt: string;
   schema: T;
+  /**
+   * Hash this instead of the prompt.
+   *
+   * Content addressing is right for a derived view: the answer lives
+   * exactly as long as the thing it described. It is wrong for a list
+   * somebody is meant to work through, because acting on the list
+   * changes the records the prompt was built from, so every completed
+   * item regenerated the ones he had not done yet. Callers in that
+   * position pin the answer to something stable instead, usually a
+   * date, and refresh it deliberately.
+   */
+  cacheKey?: string;
 }): Promise<Asked<z.infer<T>>> {
-  const file = cacheFile(options.kind, `${options.system}\n${options.prompt}`);
+  const file = cacheFile(
+    options.kind,
+    options.cacheKey ?? `${options.system}\n${options.prompt}`
+  );
   if (fs.existsSync(file)) {
     try {
       return {

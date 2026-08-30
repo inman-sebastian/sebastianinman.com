@@ -2,16 +2,21 @@
 
 import { revalidatePath } from "next/cache";
 import { forget } from "@/lib/claude";
+import { clearDone } from "@/lib/done";
 
 /**
  * Throw away a cached answer so the next render asks again.
  *
- * Answers are keyed by the question, so they refresh on their own when
- * the underlying records change. This is for the other case: the answer
- * was unhelpful and is worth another go at the same facts.
+ * The briefing is pinned to the day so it survives being worked
+ * through, which means this is now the only way to get a new one before
+ * tomorrow: the answer was unhelpful, or enough has changed that it is
+ * worth asking again.
  */
 export async function refreshBriefingAction() {
   forget("briefing");
+  // A new list has new ids, and yesterday's ticks would only be
+  // hiding items that no longer exist.
+  clearDone();
   revalidatePath("/");
 }
 

@@ -4,6 +4,7 @@ import { listClients } from "@/lib/clients";
 import { moneySummary, stripeReady } from "@/lib/stripe";
 import { analyticsReady, siteTraffic } from "@/lib/analytics";
 import { recordTasks, suggestedTasks } from "@/lib/tasks";
+import { doneToday } from "@/lib/done";
 
 /**
  * The suggestions, fetched by the browser after the page is up.
@@ -42,12 +43,17 @@ export async function GET() {
     const { value, cached, costUsd } = await briefing({ outstanding, overdue, visitors });
     // Anything already on his own list is the same job described twice
     const already = new Set(recordTasks(clients).map((t) => t.slug));
+    // The list is pinned to the day now, so anything ticked has to be
+    // remembered or it comes straight back.
+    const ticked = doneToday();
     return Response.json({
       summary: value.summary,
-      tasks: suggestedTasks(value.actions, clients).filter((t) => !already.has(t.slug)),
+      tasks: suggestedTasks(value.actions, clients).filter(
+        (t) => !already.has(t.slug) && !ticked.has(t.id)
+      ),
       footer: cached
-        ? "Suggestions held until something changes."
-        : `Suggestions cost about $${costUsd.toFixed(3)}.`,
+        ? "Today's list. It stays put while you work through it."
+        : `A fresh list, about $${costUsd.toFixed(3)}.`,
     }, { headers: { "cache-control": "no-store" } });
   } catch (err) {
     return Response.json({

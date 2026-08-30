@@ -100,7 +100,19 @@ export async function briefing(input: {
     `is that nothing needs doing, say so and return no actions.`,
   ].join("\n");
 
-  return ask({ kind: "briefing", system: VOICE, prompt, schema: BriefingSchema });
+  // Pinned to the day, NOT to the records. The prompt embeds every
+  // active record, so content addressing meant that acting on a
+  // suggestion rewrote the whole list: mark one prospect as lost and
+  // the other two things he had not done yet were replaced by three
+  // new ones. A day's list should survive being worked through.
+  // "Ask again" clears it; so does tomorrow.
+  return ask({
+    kind: "briefing",
+    system: VOICE,
+    prompt,
+    schema: BriefingSchema,
+    cacheKey: `briefing-${new Date().toISOString().slice(0, 10)}`,
+  });
 }
 
 const RankingSchema = z.object({

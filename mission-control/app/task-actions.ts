@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { appendTimeline, getClient, updateClient } from "@/lib/clients";
+import { markSuggestionDone } from "@/lib/done";
 import { isStage, stageInfo } from "@/lib/stages";
 
 /**
@@ -25,6 +26,9 @@ export async function completeTaskAction(
   const slug = String(formData.get("slug") ?? "").trim();
   const label = String(formData.get("label") ?? "").trim();
   const advancesTo = String(formData.get("advancesTo") ?? "").trim();
+  // Only suggestions carry one: a record's own task stops being
+  // generated once the record moves, so it needs no remembering.
+  const suggestionId = String(formData.get("suggestionId") ?? "").trim();
 
   const client = getClient(slug);
   if (!client) return { error: "That record is gone." };
@@ -49,6 +53,8 @@ export async function completeTaskAction(
     label || "Did the next step",
     moved ? `Ticked off. Moved to ${moved}.` : "Ticked off."
   );
+
+  if (suggestionId) markSuggestionDone(suggestionId);
 
   revalidatePath("/");
   revalidatePath(`/clients/${slug}`);

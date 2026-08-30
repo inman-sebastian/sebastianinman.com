@@ -56,6 +56,15 @@ function TaskRow({ task }: { task: Task }) {
         <input type="hidden" name="slug" value={task.slug} />
         <input type="hidden" name="label" value={task.label} />
         <input type="hidden" name="advancesTo" value={task.advancesTo ?? ""} />
+        {/* Only suggestions need remembering once ticked: the day's
+            list is pinned, so without this the item comes straight
+            back. A record's own task disappears on its own, because
+            the record it was derived from has moved. */}
+        <input
+          type="hidden"
+          name="suggestionId"
+          value={task.suggested ? task.id : ""}
+        />
         <button
           type="submit"
           disabled={pending || ticked}
