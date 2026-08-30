@@ -1,10 +1,10 @@
-import { claudeReady } from "@/lib/claude";
+import { claudeReady, forget } from "@/lib/claude";
 import { briefing } from "@/lib/insights";
 import { listClients } from "@/lib/clients";
 import { moneySummary, stripeReady } from "@/lib/stripe";
 import { analyticsReady, siteTraffic } from "@/lib/analytics";
-import { recordTasks, suggestedTasks } from "@/lib/tasks";
-import { doneToday } from "@/lib/done";
+import { recordTasks, suggestedTasks, type Task } from "@/lib/tasks";
+import { completedToday, doneIds } from "@/lib/done";
 
 /**
  * The suggestions, fetched by the browser after the page is up.
@@ -15,6 +15,44 @@ import { doneToday } from "@/lib/done";
  * meant a sixteen-second wait before the tick appeared. Off the render
  * path, the dashboard is instant and this arrives when it arrives.
  */
+/**
+ * Mark what has been ticked, and put back what ticking removed.
+ *
+ * Two different things end up struck through. A suggestion is frozen
+ * text, so it is still in the list and only needs flagging. A record's
+ * own task is derived from its stage and next step, so finishing one
+ * changes the record and the task stops being generated at all: there
+ * is nothing left to flag, and it has to be rebuilt from what was
+ * written down when it was ticked.
+ *
+ * Only today's, because the list is a day's work and the durable
+ * account of what happened lives on each record's timeline.
+ */
+function withCompleted(tasks: Task[], ticked: Set<string>): Task[] {
+  const marked = tasks.map((t) =>
+    ticked.has(t.id) ? { ...t, done: true } : t
+  );
+  const present = new Set(marked.map((t) => t.id));
+
+  const finished: Task[] = completedToday()
+    .filter((e) => !present.has(e.id))
+    .map((e) => ({
+      id: e.id,
+      slug: e.slug,
+      who: e.who,
+      label: e.label,
+      detail: "",
+      when: "",
+      urgent: false,
+      suggested: e.id.startsWith("claude-"),
+      advancesTo: null,
+      done: true,
+    }));
+
+  // Anything still to do first; the finished ones settle underneath.
+  return [...marked.filter((t) => !t.done), ...marked.filter((t) => t.done), ...finished];
+}
+
 export async function GET() {
   if (!claudeReady()) return Response.json({ tasks: [], summary: "", footer: "" });
 
@@ -40,19 +78,32 @@ export async function GET() {
   }
 
   try {
-    const { value, cached, costUsd } = await briefing({ outstanding, overdue, visitors });
+    let { value, cached, costUsd } = await briefing({ outstanding, overdue, visitors });
+
+    // The list rolls over until it is finished. Once it is, throw it
+    // away and ask for a new one rather than showing a page of things
+    // already crossed out. Ids are content-addressed, so a genuinely
+    // new suggestion cannot arrive already ticked.
+    const finished =
+      value.actions.length > 0 &&
+      suggestedTasks(value.actions, clients).every((t) => doneIds().has(t.id));
+    if (finished) {
+      forget("briefing");
+      ({ value, cached, costUsd } = await briefing({ outstanding, overdue, visitors }));
+    }
     // Anything already on his own list is the same job described twice
     const already = new Set(recordTasks(clients).map((t) => t.slug));
-    // The list is pinned to the day now, so anything ticked has to be
-    // remembered or it comes straight back.
-    const ticked = doneToday();
+    const ticked = doneIds();
     return Response.json({
       summary: value.summary,
-      tasks: suggestedTasks(value.actions, clients).filter(
-        (t) => !already.has(t.slug) && !ticked.has(t.id)
+      tasks: withCompleted(
+        suggestedTasks(value.actions, clients).filter(
+          (t) => !already.has(t.slug)
+        ),
+        ticked
       ),
       footer: cached
-        ? "Today's list. It stays put while you work through it."
+        ? "Your list. Anything left undone rolls over."
         : `A fresh list, about $${costUsd.toFixed(3)}.`,
     }, { headers: { "cache-control": "no-store" } });
   } catch (err) {

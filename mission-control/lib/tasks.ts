@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import {
   daysSinceTouched,
   displayName,
@@ -33,6 +34,8 @@ export type Task = {
   urgent: boolean;
   /** Claude proposed this rather than the record asking for it */
   suggested: boolean;
+  /** Ticked off today: still shown, struck through, not actionable */
+  done?: boolean;
   /**
    * Where the record lands when this is ticked, or null to stay put.
    * Only ever set for a record's own next step: Claude suggesting
@@ -76,17 +79,25 @@ export function recordTasks(clients: ClientRecord[]): Task[] {
   return [...due, ...quiet];
 }
 
+function shortHash(value: string): string {
+  return crypto.createHash("sha256").update(value).digest("hex").slice(0, 8);
+}
+
 /** Claude's suggestions, folded in beside the rest */
 export function suggestedTasks(
   actions: { slug: string; title: string; why: string }[],
   clients: ClientRecord[]
 ): Task[] {
   return actions
-    .map((a, i): Task | null => {
+    .map((a): Task | null => {
       const client = clients.find((c) => c.slug === a.slug);
       if (!client) return null;
       return {
-        id: `claude-${a.slug}-${i}`,
+        // Keyed by what it says, not where it sat in the list. An index
+        // makes the id move when the order does, and worse, lets a
+        // brand new suggestion inherit the id of one already ticked
+        // and arrive pre-completed.
+        id: `claude-${a.slug}-${shortHash(a.title)}`,
         slug: a.slug,
         who: displayName(client),
         label: a.title,

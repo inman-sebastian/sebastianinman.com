@@ -2,55 +2,85 @@ import fs from "node:fs";
 import path from "node:path";
 
 /**
- * Which of the day's suggestions have already been ticked.
+ * What has been ticked off, and enough about it to still show.
  *
- * Needed because the briefing is now pinned to the day rather than to
- * the records. That fixed the loop where doing one thing rewrote the
- * whole list, but it left the opposite problem: a pinned list would
- * hand back the item he just finished, for the rest of the day.
+ * Two jobs, and they need different windows.
  *
- * A record's own tasks do not need this. They come from its stage and
- * its next step, so completing one changes the record and the task
- * stops being generated. Only Claude's suggestions are frozen text with
- * nothing behind them, so only they need remembering.
+ * Showing: a ticked item stays on the list, struck through, for the
+ * rest of the day, because the point of a day's list is being able to
+ * look back at what you did. The record's own timeline is the durable
+ * account; this is just the day in front of you.
  *
- * Keyed by day, and old days are dropped on write, so this file cannot
- * grow into a thing anybody has to think about.
+ * Suppressing: a ticked suggestion must never come back, and that has
+ * to outlast the day, because suggestions now roll over rather than
+ * being regenerated every morning. So ids are remembered longer than
+ * the entries are displayed.
+ *
+ * It keeps the label and the name because a finished RECORD task stops
+ * being generated the moment the record moves. There is nothing left to
+ * render it from, so what is needed to show it has to be written down
+ * here at the moment it is ticked.
  */
 
-const FILE = path.join(process.cwd(), "data", "briefing-done.json");
+const FILE = path.join(process.cwd(), "data", "tasks-done.json");
+
+/** Long enough that a rolled-over suggestion cannot reappear, short
+    enough that this file never becomes something to think about. */
+const KEEP_DAYS = 30;
+
+export type DoneEntry = {
+  id: string;
+  slug: string;
+  who: string;
+  label: string;
+  /** ISO date it was ticked */
+  day: string;
+};
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
-type Store = { day: string; ids: string[] };
-
-function read(): Store {
+function read(): DoneEntry[] {
   try {
-    const parsed = JSON.parse(fs.readFileSync(FILE, "utf8")) as Store;
-    if (parsed?.day === today() && Array.isArray(parsed.ids)) return parsed;
+    const parsed = JSON.parse(fs.readFileSync(FILE, "utf8"));
+    return Array.isArray(parsed) ? (parsed as DoneEntry[]) : [];
   } catch {
-    // A missing or unreadable file just means nothing is done yet
+    return [];
   }
-  return { day: today(), ids: [] };
 }
 
-/** Suggestion ids already ticked today */
-export function doneToday(): Set<string> {
-  return new Set(read().ids);
-}
-
-export function markSuggestionDone(id: string): void {
-  if (!id) return;
-  const store = read();
-  if (store.ids.includes(id)) return;
-  store.ids.push(id);
+function write(entries: DoneEntry[]): void {
+  const cutoff = new Date(Date.now() - KEEP_DAYS * 86400_000)
+    .toISOString()
+    .slice(0, 10);
   fs.mkdirSync(path.dirname(FILE), { recursive: true });
-  fs.writeFileSync(FILE, JSON.stringify(store));
+  fs.writeFileSync(
+    FILE,
+    JSON.stringify(entries.filter((e) => e.day >= cutoff))
+  );
 }
 
-/** Start the day's list over, for "Ask again" */
+/** Every id ticked recently, for keeping finished suggestions away */
+export function doneIds(): Set<string> {
+  return new Set(read().map((e) => e.id));
+}
+
+/** Just today's, which is what still shows on the list */
+export function completedToday(): DoneEntry[] {
+  const day = today();
+  return read().filter((e) => e.day === day);
+}
+
+export function markDone(entry: Omit<DoneEntry, "day">): void {
+  if (!entry.id) return;
+  const entries = read();
+  if (entries.some((e) => e.id === entry.id && e.day === today())) return;
+  entries.push({ ...entry, day: today() });
+  write(entries);
+}
+
+/** Start over, for "Ask again": a new list has new ids anyway */
 export function clearDone(): void {
   fs.rmSync(FILE, { force: true });
 }

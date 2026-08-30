@@ -34,13 +34,19 @@ function TaskRow({ task }: { task: Task }) {
     if (state.error) setTicked(false);
   }, [state.error]);
 
-  if (state.done) {
+  // Either just ticked in this session, or ticked earlier and read
+  // back from disk. Same row either way.
+  if (state.done || task.done) {
     return (
       <li className="flex items-baseline gap-3 px-4 py-2.5 text-sm">
-        <span aria-hidden className="text-pine">
+        <span
+          aria-hidden
+          className="flex size-4 shrink-0 translate-y-0.5 items-center justify-center rounded border border-pine bg-pine text-[10px] font-bold text-background"
+        >
           ✓
         </span>
         <span className="text-muted line-through">{task.label}</span>
+        <span className="text-xs text-muted">{task.who}</span>
         {state.moved && (
           <span className="ml-auto text-xs font-semibold text-pine">
             moved to {state.moved}
@@ -56,15 +62,10 @@ function TaskRow({ task }: { task: Task }) {
         <input type="hidden" name="slug" value={task.slug} />
         <input type="hidden" name="label" value={task.label} />
         <input type="hidden" name="advancesTo" value={task.advancesTo ?? ""} />
-        {/* Only suggestions need remembering once ticked: the day's
-            list is pinned, so without this the item comes straight
-            back. A record's own task disappears on its own, because
-            the record it was derived from has moved. */}
-        <input
-          type="hidden"
-          name="suggestionId"
-          value={task.suggested ? task.id : ""}
-        />
+        {/* Every task, not just suggestions. Ticked items stay on the
+            list struck through, and a finished record task has nothing
+            left to rebuild itself from once the record has moved. */}
+        <input type="hidden" name="taskId" value={task.id} />
         <button
           type="submit"
           disabled={pending || ticked}

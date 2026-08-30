@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { appendTimeline, getClient, updateClient } from "@/lib/clients";
-import { markSuggestionDone } from "@/lib/done";
+import { appendTimeline, displayName, getClient, updateClient } from "@/lib/clients";
+import { markDone } from "@/lib/done";
 import { isStage, stageInfo } from "@/lib/stages";
 
 /**
@@ -26,9 +26,11 @@ export async function completeTaskAction(
   const slug = String(formData.get("slug") ?? "").trim();
   const label = String(formData.get("label") ?? "").trim();
   const advancesTo = String(formData.get("advancesTo") ?? "").trim();
-  // Only suggestions carry one: a record's own task stops being
-  // generated once the record moves, so it needs no remembering.
-  const suggestionId = String(formData.get("suggestionId") ?? "").trim();
+  // Every task carries one now, suggestions and record tasks alike, so
+  // a ticked item can stay on the list struck through instead of just
+  // vanishing. A finished record task has nothing left to render it
+  // from, so its label and name get written down here too.
+  const taskId = String(formData.get("taskId") ?? "").trim();
 
   const client = getClient(slug);
   if (!client) return { error: "That record is gone." };
@@ -54,7 +56,14 @@ export async function completeTaskAction(
     moved ? `Ticked off. Moved to ${moved}.` : "Ticked off."
   );
 
-  if (suggestionId) markSuggestionDone(suggestionId);
+  if (taskId) {
+    markDone({
+      id: taskId,
+      slug,
+      who: displayName(client),
+      label: label || "Did the next step",
+    });
+  }
 
   revalidatePath("/");
   revalidatePath(`/clients/${slug}`);
