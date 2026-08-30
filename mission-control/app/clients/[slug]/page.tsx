@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { ClientMap } from "@/components/ClientMap";
 import { Markdown } from "@/components/Markdown";
 import { notFound } from "next/navigation";
 import {
@@ -14,6 +15,7 @@ import { DocumentList, NewDocumentButtons } from "@/components/DocumentList";
 import { StageBadge } from "@/components/StageBadge";
 import { displayName, getClient } from "@/lib/clients";
 import { documentsForClient } from "@/lib/documents";
+import { mapboxToken } from "@/lib/geo";
 import { getEmailTemplate } from "@/lib/emails";
 import { longDate, money, telHref } from "@/lib/format";
 import { listServices, serviceTitles } from "@/lib/services";
@@ -201,6 +203,24 @@ export default async function ClientPage({
               </button>
             </form>
           </section>
+
+          {client.lat !== null && client.lng !== null && (
+            <section className="card p-5">
+              <h2 className="font-serif text-lg font-semibold text-pine-dark">
+                Where they are
+              </h2>
+              <div className="mt-3">
+                <ClientMap
+                  lat={client.lat}
+                  lng={client.lng}
+                  label={displayName(client)}
+                  city={client.city}
+                  address={client.address}
+                  token={mapboxToken()}
+                />
+              </div>
+            </section>
+          )}
 
           <section className="card p-5 text-sm">
             <h2 className="font-serif text-lg font-semibold text-pine-dark">
