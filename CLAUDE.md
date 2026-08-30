@@ -64,6 +64,16 @@ The reader is a busy small-business owner, **not** a technical person.
   saying where he lives). County or city names are fine ONLY as the
   geographic target of an SEO landing page (e.g. "AI for Jackson County
   small businesses" describes who is served, not where Sebastian lives).
+- **Never say where he is based when writing TO a local business.** The
+  location line earns its place on the website, where a visitor could
+  be anywhere and "based in Southern Oregon" is news. In a direct email
+  or call to a business that is itself in Southern Oregon it is news to
+  nobody, and it announces that the sentence was written for a list
+  rather than for them: it reads templated because it is. Being local
+  shows in knowing something true and checkable about their business,
+  which is the job the opening line already does. This applies to
+  outreach emails, call notes, and anything else addressed to a named
+  local business; the site's own copy keeps the line.
 
 ## Where everything lives
 

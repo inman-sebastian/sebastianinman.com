@@ -116,26 +116,42 @@ takes all of it down. Mission Control drafts this and blocks sending it.
 One at a time, never in bulk, and only to a business you would genuinely
 be glad to help. If they don't reply, that's the answer; no second email.
 
+**There is deliberately no fixed prose in this one.** Every sentence is
+written for the business it is going to. An earlier version carried two
+standing paragraphs, a stock introduction and a stock sign-off, and they
+did two kinds of damage: they read as a form letter sitting next to a
+researched opening line, and the introduction described the wrong
+problem about half the time. It talked about retyping information and
+missed calls to a salon whose actual trouble was a booking button
+pointing at the wrong page. If a sentence would be identical in every
+email, it is either wrong for most of them or not worth sending.
+
 **Subject:** {{SPECIFIC_THING}}
 
 Hi{{FIRST_NAME_IF_KNOWN}},
 
-{{OPENING_LINE: the true, specific thing you noticed about THIS business,
-from the research. "I was looking for a barber in Medford on my phone
-last week and yours was the one I couldn't find hours for." If this
-sentence could be sent to any business in town, don't send the email.}}
+{{OPENING_LINE: the true, specific thing noticed about THIS business,
+taken from the research and already checked against their actual site.
+"I went looking for your hours on my phone and ended up on a Facebook
+page from 2023." If it could be said to any business in town it is not
+specific enough, and the email should not go.}}
 
-I'm Sebastian, based in Southern Oregon. I build websites and set up
-small automations for local businesses, the kind of thing that stops you
-retyping the same information twice or missing a call you'd have liked
-to get.
+{{WHO_I_AM: one sentence, and only the part of what Sebastian does that
+bears on what was just described. A salon with a broken booking link
+does not need to hear about spreadsheets. Never a list of services and
+never a pitch: this is the sentence that answers "who is writing to
+me", nothing more. **Do not say where he is based.** They are in
+Southern Oregon too, so "I'm Sebastian, based in Southern Oregon" tells
+them nothing and announces that the sentence was written for everybody.
+Being local shows in knowing something true about their business, which
+the line above already did.}}
 
-{{THE_OFFER: something concrete and small, and honest about the fact
-that they may not need anything. "If it'd be useful, I'm happy to tell
-you the two things I'd change and roughly what they'd cost, whether or
-not you ever hire me."}}
-
-If this isn't something you're thinking about, no problem at all; just
-say so and I won't write again.
+{{THE_OFFER: something small and concrete he would actually do, honest
+that they may well not need it, ending in a way that makes ignoring
+this email completely fine. One thought, not an offer with a disclaimer
+bolted on the end. "Happy to tell you what I would change and roughly
+what it would cost, whether or not you ever hire me, and if it is not
+something you are thinking about just say so and I will leave you to
+it."}}
 
 Sebastian

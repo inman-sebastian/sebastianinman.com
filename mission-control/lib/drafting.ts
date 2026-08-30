@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ask, forget, type Asked } from "./claude";
 import { fillEmail, type EmailTemplate } from "./emails";
 import { siteInfo } from "./site";
+import { listServices, serviceTitles } from "./services";
 import { stageInfo } from "./stages";
 import type { ClientRecord } from "./clients";
 
@@ -89,7 +90,24 @@ a failing and must not be written as one. Do not compare them to bigger
 companies or mention competitors at all. Frame problems as things you
 noticed, not things they got wrong, and say plainly when something is
 free to fix or not worth paying for. Saying that is on brand; it is not
-a missed sale.`;
+a missed sale.
+
+Never tell a local business where Sebastian is based. They are in
+Southern Oregon too, so "I'm Sebastian, based in Southern Oregon" is
+news to nobody and announces that the sentence was written for a list
+rather than for them. Being local shows in knowing something true about
+their business, which the opening line already does.
+
+Nothing you write should be a sentence that would read identically in
+an email to a different business. If a line survives swapping the
+business name out, it is filler: cut it or make it specific.
+
+Never describe what something costs in vague words. "Not much", "cheap"
+and "affordable" set an expectation the real figure has to survive, and
+the starting prices are in the record. Either name the real starting
+figure or say nothing about price at all. Offering to tell them the
+number later is fine; promising in advance that they will like it is
+not.`;
 
 /** Everything about this client that could honestly inform an email */
 function recordContext(client: ClientRecord): string {
@@ -104,7 +122,14 @@ function recordContext(client: ClientRecord): string {
     client.website ? `Their website: ${client.website}` : "They have no website on file.",
     client.platform ? `Site platform: ${client.platform}` : "",
     client.stack.length ? `Tools on their site: ${client.stack.join(", ")}` : "",
-    client.services.length ? `Services in play: ${client.services.join(", ")}` : "",
+    client.services.length
+      ? `What they might need: ${serviceTitles(client.services)
+          .map((t) => {
+            const match = listServices().find((s) => s.title === t);
+            return match ? `${t} (from $${match.startingPrice})` : t;
+          })
+          .join(", ")}`
+      : "",
     client.value ? `Agreed or quoted price: $${client.value.toLocaleString("en-US")}` : "No price agreed yet.",
     client.fit ? `Research rated the fit: ${client.fit}` : "",
   ].filter(Boolean);
