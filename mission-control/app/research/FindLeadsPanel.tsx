@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import { notify } from "@/lib/notify";
 import { useRouter } from "next/navigation";
 import { clearResearchJobAction, startResearchAction } from "./actions";
 import type { Job } from "@/lib/agent-run";
@@ -53,7 +54,25 @@ export function FindLeadsPanel({
       const next = await fetch("/research/job", { cache: "no-store" })
         .then((r) => r.json() as Promise<Job>)
         .catch(() => null);
-      if (next) setJob(next);
+      if (!next) return;
+      setJob(next);
+      // The whole point of the notification: a research run takes
+      // minutes, so it is meant to be left alone. notify() stays quiet
+      // when this window is in front, where the panel already says so.
+      if (next.state !== "running") {
+        void notify(
+          next.state === "failed"
+            ? "Lead research failed"
+            : "Lead research finished",
+          {
+            body:
+              next.state === "failed"
+                ? "Open Research to see what went wrong."
+                : next.summary || "Open Research to review what it found.",
+            url: "/research",
+          }
+        );
+      }
     }, 4000);
     return () => clearInterval(timer);
   }, [job.state]);

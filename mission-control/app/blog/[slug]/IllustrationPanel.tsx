@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { notify } from "@/lib/notify";
 import {
   adoptCandidateAction,
   discardCandidateAction,
@@ -72,8 +73,23 @@ export function IllustrationPanel({
         .then((r) => r.json() as Promise<Job>)
         .catch(() => null);
       if (next) setJob(next);
-      // A finished run has usually just written the image
-      if (next && next.state !== "running") window.location.reload();
+      if (next && next.state !== "running") {
+        // Before the reload, or the page goes away mid-notification.
+        await notify(
+          next.state === "failed"
+            ? "Illustration failed"
+            : "Illustration ready",
+          {
+            body:
+              next.state === "failed"
+                ? "Open the post to see what went wrong."
+                : "Open the post to look it over before adopting it.",
+            url: `/blog/${slug}`,
+          }
+        );
+        // A finished run has usually just written the image
+        window.location.reload();
+      }
     }, 4000);
     return () => clearInterval(timer);
   }, [job.state, slug]);

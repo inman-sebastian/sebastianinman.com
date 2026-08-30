@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Fraunces, Outfit } from "next/font/google";
 import "./globals.css";
+import { NotificationSetup } from "@/components/NotificationSetup";
 
 const outfit = Outfit({ variable: "--font-body", subsets: ["latin"] });
 const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"] });
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
   title: "Mission Control",
   description: "Local control center for Sebastian Inman's business.",
   robots: { index: false, follow: false },
+  appleWebApp: { capable: true, title: "Mission Control" },
 };
+
+export const viewport: Viewport = { themeColor: "#234f3e" };
 
 const NAV = [
   { href: "/", label: "Dashboard" },
@@ -51,9 +55,12 @@ export default function RootLayout({
                 </Link>
               ))}
             </nav>
-            <p className="ml-auto rounded-full bg-terracotta-tint px-3 py-1 text-xs font-semibold uppercase tracking-wide text-terracotta-dark">
-              Local only · never deployed
-            </p>
+            <div className="ml-auto flex items-center gap-3">
+              <NotificationSetup />
+              <p className="rounded-full bg-terracotta-tint px-3 py-1 text-xs font-semibold uppercase tracking-wide text-terracotta-dark">
+                Local only · never deployed
+              </p>
+            </div>
           </div>
         </header>
         <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
