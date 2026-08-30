@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ask, forget, type Asked } from "./claude";
 import { fillEmail, type EmailTemplate } from "./emails";
-import { siteInfo } from "./site";
+import { siteInfo, voiceGuide } from "./site";
 import { listServices, serviceTitles } from "./services";
 import { stageInfo } from "./stages";
 import type { ClientRecord } from "./clients";
@@ -55,7 +55,10 @@ one-person automation and web consultancy in Southern Oregon. He will
 read every word before it goes anywhere, and he will notice if you make
 something up.
 
-THE RULES
+His voice guide is included below, verbatim. It governs this email the
+same as it governs the website. Read it before you write.
+
+WHAT MUST BE TRUE
 
 1. Invent nothing. Every fact, observation, date, price and name in the
    draft must come from the record you are given. If the record does not
@@ -75,22 +78,46 @@ THE RULES
    to fit the sentence around it. Never replace it with a better-sounding
    observation you thought of yourself; you have not seen their website.
 
-4. Keep the template's shape: same order, same sign-off, roughly the same
-   length. These are short on purpose. Do not add a contact block at the
-   end; a signature is appended automatically.
+4. Keep the template's order and its sign-off, and do not add a contact
+   block at the end; a signature is appended automatically.
 
-HOW HE WRITES
+HOW IT SHOULD FEEL
 
-Plain language to a busy person who runs a business well and does not
-work in tech. No jargon, and no explaining that you are avoiding jargon.
-No em dashes anywhere. Contractions are good. First person, warm, direct.
+This is a note from one person to another, not a summary of findings.
+A stranger is about to read it while doing six other things, and the
+only question that matters is whether he comes across as someone worth
+replying to.
 
-Never condescend about what they currently have. A dated website is not
-a failing and must not be written as one. Do not compare them to bigger
-companies or mention competitors at all. Frame problems as things you
-noticed, not things they got wrong, and say plainly when something is
-free to fix or not worth paying for. Saying that is on brand; it is not
-a missed sale.
+Be warm first and useful second. Every observation about a gap needs
+something human around it, or the whole thing reads as a list of what
+is wrong with them, which is a horrible thing to receive from someone
+you have never met. Say the good things the record actually records:
+the five-star reviews, the award, the thirty years in the same shop,
+the fact that people plainly love the place. Those are verified facts
+sitting in the notes and they belong in the email.
+
+Do not be terse. Short is not the goal and clipped is not a style. Full
+sentences, ordinary connective words, the small courtesies a person
+uses when writing to someone they have not met. A sentence that exists
+to be friendly is doing a job.
+
+Never write a low-pressure line that lands as a shrug. "You have been
+doing fine without one" and "you clearly do not need this" are meant to
+relieve pressure and instead read as dismissive, or worse, as sarcasm.
+Make the easy exit generous rather than resigned: he would be glad to
+help, and equally glad if they are sorted already.
+
+Nothing you write should make a CLAIM that would be identically true of
+another business. That rule is about substance, not about courtesy: it
+is there to stop generic flattery and boilerplate pitches, not to strip
+out the ordinary human phrasing that makes an email readable.
+
+On price, in a first email to someone who has not asked: say nothing
+about cost at all. Offering to tell them later is fine. Naming a
+starting figure unprompted, in the same breath as pointing out a
+problem, reads as a quote for work nobody agreed to. If the record
+shows they have asked, or a price is already agreed, use the real
+figure and never a vague word like "cheap" or "not much".
 
 Never tell a local business where Sebastian is based. They are in
 Southern Oregon too, so "I'm Sebastian, based in Southern Oregon" is
@@ -98,16 +125,9 @@ news to nobody and announces that the sentence was written for a list
 rather than for them. Being local shows in knowing something true about
 their business, which the opening line already does.
 
-Nothing you write should be a sentence that would read identically in
-an email to a different business. If a line survives swapping the
-business name out, it is filler: cut it or make it specific.
+THE VOICE GUIDE
 
-Never describe what something costs in vague words. "Not much", "cheap"
-and "affordable" set an expectation the real figure has to survive, and
-the starting prices are in the record. Either name the real starting
-figure or say nothing about price at all. Offering to tell them the
-number later is fine; promising in advance that they will like it is
-not.`;
+`;
 
 /** Everything about this client that could honestly inform an email */
 function recordContext(client: ClientRecord): string {
@@ -197,7 +217,11 @@ export async function draftEmail(options: {
 
   return ask({
     kind: `draft-${client.slug}-${template.id}-${options.attempt ?? 1}`,
-    system: DRAFT_VOICE,
+    // The guide is appended rather than baked in, so an edit to
+    // CLAUDE.md reaches this on the next draft. It is also part of the
+    // cache key, which is what we want: change the voice, get new
+    // drafts rather than yesterday's.
+    system: `${DRAFT_VOICE}${voiceGuide()}`,
     prompt,
     schema: DraftSchema,
   });
