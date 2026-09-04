@@ -5,6 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import type { z } from "zod";
 import { repoEnv } from "./env";
+import { askViaCli, cliReady } from "./claude-cli";
 
 /**
  * Asking Claude a question and getting a shape back.
@@ -17,6 +18,13 @@ import { repoEnv } from "./env";
  *
  * Every answer is structured, never free text. A panel that has to guess
  * at paragraphs is a panel that breaks the first time the wording moves.
+ *
+ * When the API account is out of credit, the same question goes to the
+ * Claude Code subscription instead (lib/claude-cli.ts). That is a
+ * separate thing already paid for, and an empty API balance is a billing
+ * state rather than a fault, so it should not empty the panels. Nothing
+ * else falls back: a wrong key or a bad request is a real problem and
+ * says so.
  *
  * What this sends: client records, including notes and timelines. That
  * is Sebastian's own data going to his own Anthropic account. It never
@@ -40,8 +48,9 @@ function workspaceId(): string {
   );
 }
 
+/** There is a way to ask, whether or not it is the fast one */
 export function claudeReady(): boolean {
-  return Boolean(apiKey());
+  return Boolean(apiKey()) || cliReady();
 }
 
 let client: Anthropic | null = null;
@@ -84,7 +93,17 @@ function cacheFile(kind: string, prompt: string): string {
   return path.join(CACHE_DIR, `${kind}-${key}.json`);
 }
 
-export type Asked<T> = { value: T; cached: boolean; costUsd: number };
+/** Which route answered. Worth showing, because one of them is metered
+    and the other is the subscription, and the cost figure only means
+    something for the first. */
+export type Source = "api" | "subscription";
+
+export type Asked<T> = {
+  value: T;
+  cached: boolean;
+  costUsd: number;
+  via: Source;
+};
 
 /**
  * One question, one structured answer.
@@ -116,48 +135,90 @@ export async function ask<T extends z.ZodType>(options: {
     options.kind,
     options.cacheKey ?? `${options.system}\n${options.prompt}`
   );
-  if (fs.existsSync(file)) {
+  const hit = readCache<z.infer<T>>(file);
+  if (hit) return { ...hit, cached: true, costUsd: 0 };
+
+  if (apiKey()) {
     try {
-      return {
-        value: JSON.parse(fs.readFileSync(file, "utf8")),
-        cached: true,
-        costUsd: 0,
-      };
-    } catch {
-      // A corrupt cache entry is not worth failing over; ask again
+      const response = await anthropic().messages.parse({
+        model: "claude-opus-5",
+        max_tokens: 16000,
+        thinking: { type: "adaptive" },
+        system: options.system,
+        messages: [{ role: "user", content: options.prompt }],
+        output_config: { format: zodOutputFormat(options.schema) },
+      });
+
+      const parsed = response.parsed_output;
+      if (!parsed) {
+        throw new Error("Claude answered in a shape that did not match the schema.");
+      }
+
+      // Opus 5 rates, for the note the panel shows. Not a bill, just the
+      // number worth watching if this ever gets asked on every page load.
+      const costUsd =
+        (response.usage.input_tokens / 1_000_000) * 5 +
+        (response.usage.output_tokens / 1_000_000) * 25;
+
+      writeCache(file, parsed, "api");
+      return { value: parsed as z.infer<T>, cached: false, costUsd, via: "api" };
+    } catch (err) {
+      // Out of credit is the one failure worth working around, because
+      // the subscription can answer the same question. Everything else
+      // is a real problem and should read like one.
+      if (!outOfCredit(err) || !cliReady()) throw new Error(explain(err));
     }
   }
 
-  let response;
-  try {
-    response = await anthropic().messages.parse({
-      model: "claude-opus-5",
-      max_tokens: 16000,
-      thinking: { type: "adaptive" },
-      system: options.system,
-      messages: [{ role: "user", content: options.prompt }],
-      output_config: { format: zodOutputFormat(options.schema) },
-    });
-  } catch (err) {
-    throw new Error(explain(err));
-  }
-
-  const parsed = response.parsed_output;
-  if (!parsed) {
+  if (!cliReady()) {
     throw new Error(
-      "Claude answered in a shape that did not match the schema.",
+      "No ANTHROPIC_API_KEY in the repo root's .env.local, and no Claude Code CLI to fall back on."
     );
   }
 
-  // Opus 5 rates, for the note the panel shows. Not a bill, just the
-  // number worth watching if this ever gets asked on every page load.
-  const costUsd =
-    (response.usage.input_tokens / 1_000_000) * 5 +
-    (response.usage.output_tokens / 1_000_000) * 25;
+  const value = await askViaCli({
+    system: options.system,
+    prompt: options.prompt,
+    schema: options.schema,
+  });
+  writeCache(file, value, "subscription");
+  return { value, cached: false, costUsd: 0, via: "subscription" };
+}
 
+/**
+ * The cache file, which now records which route wrote it.
+ *
+ * Entries written before it did are plain values, and every one of them
+ * came from the API, so reading them that way is a fact rather than a
+ * default.
+ */
+type Cached<T> = { v: 1; via: Source; value: T };
+
+function readCache<T>(file: string): { value: T; via: Source } | null {
+  if (!fs.existsSync(file)) return null;
+  try {
+    const parsed = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (parsed && typeof parsed === "object" && (parsed as Cached<T>).v === 1) {
+      const entry = parsed as Cached<T>;
+      return { value: entry.value, via: entry.via };
+    }
+    return { value: parsed as T, via: "api" };
+  } catch {
+    // A corrupt cache entry is not worth failing over; ask again
+    return null;
+  }
+}
+
+function writeCache<T>(file: string, value: T, via: Source) {
   fs.mkdirSync(CACHE_DIR, { recursive: true });
-  fs.writeFileSync(file, JSON.stringify(parsed));
-  return { value: parsed as z.infer<T>, cached: false, costUsd };
+  const entry: Cached<T> = { v: 1, via, value };
+  fs.writeFileSync(file, JSON.stringify(entry));
+}
+
+/** An empty balance, as opposed to a key or a request that is wrong */
+function outOfCredit(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  return /credit balance|Plans & Billing/i.test(message);
 }
 
 /** Throw away every cached answer of one kind, so the next ask is fresh */
@@ -182,7 +243,12 @@ function explain(err: unknown): string {
     return "Anthropic refused the key. Check ANTHROPIC_API_KEY in the repo root's .env.local.";
   }
   if (message.includes("credit balance") || message.includes("billing")) {
-    return "Anthropic says the account has no credit. Top it up in the Console and this comes back on its own.";
+    // Only reached when there is no CLI to fall back to, since that is
+    // checked first.
+    return (
+      "Anthropic says the account has no credit, and the Claude Code CLI is not on this machine " +
+      "to answer instead. Top the account up in the Console, or install the CLI, and this comes back on its own."
+    );
   }
   return message;
 }

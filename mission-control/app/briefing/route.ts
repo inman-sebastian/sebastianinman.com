@@ -78,7 +78,7 @@ export async function GET() {
   }
 
   try {
-    let { value, cached, costUsd } = await briefing({ outstanding, overdue, visitors });
+    let { value, cached, costUsd, via } = await briefing({ outstanding, overdue, visitors });
 
     // The list rolls over until it is finished. Once it is, throw it
     // away and ask for a new one rather than showing a page of things
@@ -89,7 +89,7 @@ export async function GET() {
       suggestedTasks(value.actions, clients).every((t) => doneIds().has(t.id));
     if (finished) {
       forget("briefing");
-      ({ value, cached, costUsd } = await briefing({ outstanding, overdue, visitors }));
+      ({ value, cached, costUsd, via } = await briefing({ outstanding, overdue, visitors }));
     }
     // Anything already on his own list is the same job described twice
     const already = new Set(recordTasks(clients).map((t) => t.slug));
@@ -104,7 +104,9 @@ export async function GET() {
       ),
       footer: cached
         ? "Your list. Anything left undone rolls over."
-        : `A fresh list, about $${costUsd.toFixed(3)}.`,
+        : via === "subscription"
+          ? "A fresh list, written through your Claude Code subscription: the API account is out of credit."
+          : `A fresh list, about $${costUsd.toFixed(3)}.`,
     }, { headers: { "cache-control": "no-store" } });
   } catch (err) {
     return Response.json({

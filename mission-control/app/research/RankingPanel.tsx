@@ -29,7 +29,7 @@ export async function RankingPanel() {
   }
   if (!result) return null;
 
-  const { value, cached, costUsd } = result;
+  const { value, cached, costUsd, via } = result;
 
   return (
     <Shell>
@@ -84,7 +84,9 @@ export async function RankingPanel() {
       <p className="border-t border-line px-4 py-2 text-xs text-muted">
         {cached
           ? "Held until the research changes."
-          : `Fresh. That cost about $${costUsd.toFixed(3)}.`}{" "}
+          : via === "subscription"
+            ? "Fresh, through your Claude Code subscription: the API account is out of credit."
+            : `Fresh. That cost about $${costUsd.toFixed(3)}.`}{" "}
         A guess from what the research found, not a verdict.
       </p>
     </Shell>

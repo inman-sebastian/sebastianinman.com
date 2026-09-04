@@ -536,10 +536,12 @@ Wix…) plus the tools already running on it (booking, ordering, payments,
 email, chat, analytics), marking any that appear in the `tools` list on
 `content/services/tool-integration.mdx`. It also reports a Google Maps
 link on the page, and pulls the exact pin coordinates out of the embed
-when there is one. Its `platform:` and `stack:`
-output goes into the record's frontmatter and shows on its review
-page. A non-200 reads nothing and says so; never record a block page as
-evidence about a business.
+when there is one, plus the business's own social profiles (Instagram,
+Facebook, LinkedIn…) as a `socials:` list, skipping the share buttons
+and trackers on those same hosts. Its `platform:`, `stack:` and
+`socials:` output goes into the record's frontmatter and shows on its
+review page. A non-200 reads nothing and says so; never record a block
+page as evidence about a business.
 
 **Outreach is drafted, never sent by the app.** Resend's acceptable use
 policy bans cold outreach, and that account also carries the contact form
@@ -568,6 +570,22 @@ Deliberately the API path (`lib/claude.ts`), NOT the headless
 few seconds rather than a background job with a log file. "Draft
 another" bumps an attempt counter, which is only there to miss the
 content-addressed cache.
+
+**When the API account runs out of credit, the same questions go to the
+Claude Code subscription instead** (`lib/claude-cli.ts`), so the ranking
+on /research, the day's list, and drafting keep working on an empty
+balance. It is a foreground `claude -p` with no tools, one turn, and no
+MCP, run outside the repo so CLAUDE.md is not loaded into a prompt that
+already carries its own voice guidance; the schema goes in as JSON
+Schema and the answer is validated here, since headless has no
+structured-output mode. Two things to keep straight: **only an empty
+balance falls back** (a wrong key or a bad request is a real fault and
+still says so), and the child is spawned with `ANTHROPIC_API_KEY`
+blanked, or the CLI would authenticate with the very key that just ran
+out. Cached answers record which route wrote them, and the panels say
+"through your Claude Code subscription" instead of quoting a cost that
+would not be a real one. Takes about 20 to 30 seconds versus a few for
+the API, which is why it is the fallback and not the default.
 
 Two rules do the work, and both are in the system prompt:
 

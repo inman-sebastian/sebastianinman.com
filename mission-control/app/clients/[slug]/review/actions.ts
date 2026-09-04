@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { appendTimeline, getClient, updateClient } from "@/lib/clients";
+import { parseSocials } from "@/lib/socials";
 import { stageInfo } from "@/lib/stages";
 
 /**
@@ -61,6 +62,7 @@ export async function saveReviewAction(formData: FormData) {
     email: text(formData, "email"),
     phone: text(formData, "phone"),
     website: text(formData, "website"),
+    socials: parseSocials(text(formData, "socials")),
     notes: text(formData, "body"),
   });
   revalidatePath("/research");

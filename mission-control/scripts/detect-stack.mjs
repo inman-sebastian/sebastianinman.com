@@ -102,6 +102,41 @@ const TOOLS = [
   ["Meta Pixel", "Analytics", [/connect\.facebook\.net/i]],
 ];
 
+/**
+ * Social profiles, by hostname. These are the business's own presence,
+ * often the main one for a consumer-facing shop, so they are worth
+ * recording beside the website. Order sets which name a shared host maps
+ * to (twitter.com and x.com both read as X). Detection copies these; the
+ * display names live in mission-control/lib/socials.ts.
+ */
+const SOCIALS = [
+  ["Instagram", /^(?:www\.)?instagram\.com$/i],
+  ["Facebook", /^(?:www\.|[a-z-]+\.)?facebook\.com$/i],
+  ["Facebook", /^(?:www\.)?fb\.com$/i],
+  ["LinkedIn", /^(?:www\.|[a-z]{2}\.)?linkedin\.com$/i],
+  ["X", /^(?:www\.)?(?:twitter|x)\.com$/i],
+  ["YouTube", /^(?:www\.|m\.)?youtube\.com$/i],
+  ["TikTok", /^(?:www\.)?tiktok\.com$/i],
+  ["Yelp", /^(?:www\.)?yelp\.com$/i],
+  ["Pinterest", /^(?:www\.)?pinterest\.com$/i],
+];
+
+/**
+ * Paths that are a share/follow widget or a tracker, not the business's
+ * own profile. A "share to Facebook" button links facebook.com/sharer;
+ * recording that as their page would be wrong.
+ */
+const NOT_A_PROFILE = [
+  /\/sharer\b/i,
+  /\/share\b/i,
+  /\/shareArticle\b/i,
+  /\/plugins?\//i,
+  /\/intent\//i,
+  /\/dialog\//i,
+  /^\/tr\/?$/i, // facebook.com/tr is the Meta Pixel beacon, not a page
+  /^\/?$/, // the bare homepage of the network, no handle
+];
+
 /** Tools Sebastian already lists as ones he connects */
 function knownTools() {
   const file = path.join(ROOT, "content", "services", "tool-integration.mdx");
@@ -152,6 +187,7 @@ export async function detect(url) {
     googleMapsLink: "",
     lat: null,
     lng: null,
+    socials: [],
     note: "",
   };
 
@@ -214,6 +250,27 @@ export async function detect(url) {
     out.lat = Number(coords[2]);
   }
 
+  // Their own social profiles: links out to Instagram, Facebook and the
+  // rest. Keep the first real profile URL per network, skipping the
+  // share/follow widgets and trackers that use the same hosts.
+  const byNetwork = new Map();
+  for (const m of html.matchAll(/https?:\/\/[^"'\s<>()]+/gi)) {
+    const raw = m[0].replace(/&amp;/g, "&").replace(/[.,)]+$/, "");
+    let parsed;
+    try {
+      parsed = new URL(raw);
+    } catch {
+      continue;
+    }
+    const hit = SOCIALS.find(([, re]) => re.test(parsed.hostname));
+    if (!hit) continue;
+    const [name] = hit;
+    if (byNetwork.has(name)) continue;
+    if (NOT_A_PROFILE.some((re) => re.test(parsed.pathname))) continue;
+    byNetwork.set(name, `${parsed.origin}${parsed.pathname}`.replace(/\/$/, ""));
+  }
+  out.socials = [...byNetwork.values()];
+
   out.mobileReady = /<meta[^>]+name=["']viewport["']/i.test(html);
   out.hasForm = /<form[\s>]/i.test(html);
   out.emails = [
@@ -258,6 +315,10 @@ function report(r) {
     lines.push(`  Pin on their own map: ${r.lat}, ${r.lng}`);
   }
   if (r.emails.length) lines.push(`  Published:  ${r.emails.join(", ")}`);
+  if (r.socials.length) {
+    lines.push("  Social:");
+    for (const url of r.socials) lines.push(`    - ${url}`);
+  }
 
   // Paste-ready for the prospect file
   lines.push("  ---");
@@ -272,6 +333,12 @@ function report(r) {
     for (const t of r.tools) lines.push(`    - ${t.name}`);
   } else {
     lines.push("  stack: []");
+  }
+  if (r.socials.length) {
+    lines.push("  socials:");
+    for (const url of r.socials) lines.push(`    - ${url}`);
+  } else {
+    lines.push("  socials: []");
   }
   return lines.join("\n");
 }

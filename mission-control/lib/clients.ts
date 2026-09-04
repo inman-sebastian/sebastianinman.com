@@ -48,6 +48,8 @@ export type ClientRecord = {
   platform: string;
   /** Tools already running on their site */
   stack: string[];
+  /** Their social profiles, as full URLs; network is worked out on show */
+  socials: string[];
   /** "strong" or "worth a look"; empty for inbound */
   fit: string;
   /** ISO date the research ran */
@@ -95,6 +97,7 @@ export type ClientInput = Partial<
     | "stripeCustomerId"
     | "platform"
     | "stack"
+    | "socials"
     | "fit"
     | "researched"
     | "stage"
@@ -227,6 +230,7 @@ function toRecord(slug: string, raw: string): ClientRecord {
     stripeCustomerId: asText(data.stripeCustomerId),
     platform: asText(data.platform),
     stack: Array.isArray(data.stack) ? data.stack.map((t: unknown) => String(t)) : [],
+    socials: Array.isArray(data.socials) ? data.socials.map((s: unknown) => String(s)) : [],
     fit: asText(data.fit),
     researched: asDate(data.researched),
     services,
@@ -260,6 +264,7 @@ function serialize(record: ClientRecord): string {
     stripeCustomerId: record.stripeCustomerId,
     platform: record.platform,
     stack: record.stack,
+    socials: record.socials,
     fit: record.fit,
     researched: record.researched,
     services: record.services,
@@ -327,6 +332,7 @@ export function createClient(input: ClientInput): ClientRecord {
     stripeCustomerId: input.stripeCustomerId ?? "",
     platform: input.platform ?? "",
     stack: input.stack ?? [],
+    socials: input.socials ?? [],
     fit: input.fit ?? "",
     researched: input.researched ?? "",
     services: input.services ?? [],

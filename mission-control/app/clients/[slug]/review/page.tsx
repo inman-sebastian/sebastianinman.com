@@ -10,6 +10,7 @@ import {
 import { displayName, getClient } from "@/lib/clients";
 import { isBlocked } from "@/lib/suppression";
 import { longDate, money, telHref } from "@/lib/format";
+import { socialLabel } from "@/lib/socials";
 import { integratedTools, listServices } from "@/lib/services";
 
 export const dynamic = "force-dynamic";
@@ -228,6 +229,24 @@ export default async function ReviewPage({
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
+                <dt className="text-muted">Social</dt>
+                <dd className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-right">
+                  {record.socials.length > 0
+                    ? record.socials.map((url) => (
+                        <a
+                          key={url}
+                          className="hover:underline"
+                          href={url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {socialLabel(url)}
+                        </a>
+                      ))
+                    : "None found"}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
                 <dt className="text-muted">Where</dt>
                 <dd className="text-right">
                   {record.address || record.city || "Not recorded"}
@@ -340,6 +359,22 @@ export default async function ReviewPage({
               className="field"
               defaultValue={record.website}
             />
+          </div>
+          <div>
+            <label className="label" htmlFor="socials">
+              Social profiles
+            </label>
+            <textarea
+              id="socials"
+              name="socials"
+              rows={3}
+              className="field font-mono text-sm"
+              placeholder="https://instagram.com/theirhandle"
+              defaultValue={record.socials.join("\n")}
+            />
+            <p className="mt-1 text-xs text-muted">
+              One full URL per line.
+            </p>
           </div>
           <div>
             <label className="label" htmlFor="body">

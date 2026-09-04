@@ -45,17 +45,27 @@ function claudeBin(): string {
   );
 }
 
-const CLAUDE_BIN = claudeBin();
+export const CLAUDE_BIN = claudeBin();
 
 function shellQuote(value: string): string {
   return `'${value.replace(/'/g, `'\\''`)}'`;
 }
 
-function claudeAvailable(): boolean {
-  const result = spawnSync("sh", ["-c", `command -v ${shellQuote(CLAUDE_BIN)}`], {
-    encoding: "utf8",
-  });
-  return result.status === 0;
+/** Memoized: this gets asked on every dashboard render now that the API
+    path falls back to the CLI, and the answer cannot change while the
+    server is up. */
+let installed: boolean | null = null;
+
+export function claudeAvailable(): boolean {
+  if (installed === null) {
+    const result = spawnSync(
+      "sh",
+      ["-c", `command -v ${shellQuote(CLAUDE_BIN)}`],
+      { encoding: "utf8" }
+    );
+    installed = result.status === 0;
+  }
+  return installed;
 }
 
 export type JobState = "none" | "running" | "done" | "failed";

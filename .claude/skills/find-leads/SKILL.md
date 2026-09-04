@@ -134,9 +134,16 @@ click, not yours.
    the script prints exact `lat:`/`lng:` and `googleProfile: yes`, which
    beats geocoding the middle of a town.
 
-   Copy the `platform:`, `stack:`, `googleProfile:`, `lat:` and `lng:`
-   lines it prints into the prospect's frontmatter. If it reports a non-200, it read nothing: say so in the
-   file and check by hand, rather than recording an absence as a fact.
+   It also reports the business's own social profiles (Instagram,
+   Facebook, LinkedIn, and the rest) as a `socials:` list, skipping the
+   share buttons and trackers that sit on the same hosts. For a
+   consumer-facing shop those profiles are often the main online
+   presence, so they are worth recording beside the website.
+
+   Copy the `platform:`, `stack:`, `socials:`, `googleProfile:`, `lat:`
+   and `lng:` lines it prints into the prospect's frontmatter. If it
+   reports a non-200, it read nothing: say so in the file and check by
+   hand, rather than recording an absence as a fact.
 
    What the stack means for the pitch:
    - A builder platform (Wix, Squarespace, GoDaddy) with no booking tool
@@ -208,6 +215,7 @@ googleProfile: yes            # yes | no | unknown
 googleProfileUrl: https://www.google.com/maps/place/...
 platform: ''
 stack: []
+socials: []                   # full profile URLs, from detect-stack
 fit: strong                   # strong | worth a look
 researched: '2026-08-28'
 services: [website-design, ai-assistants]

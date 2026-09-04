@@ -127,10 +127,12 @@ booking, ordering, payments, email, chat, analytics. Anything that also
 appears on the tool-integration service page is marked, because those
 are the ones already claimed as work. It also answers whether the page
 has a viewport tag (none usually means it is broken on phones), whether
-there is a form, and any published mailto address.
+there is a form, any published mailto address, and the business's own
+social profiles (Instagram, Facebook, LinkedIn…), skipping the share
+buttons and trackers that live on those same hosts.
 
-The `platform:` and `stack:` lines it prints go straight into a
-record's frontmatter, and its review page shows them. A non-200
+The `platform:`, `stack:` and `socials:` lines it prints go straight
+into a record's frontmatter, and its review page shows them. A non-200
 means it read nothing at all and says so, rather than reporting an
 absence as a fact; a Cloudflare challenge page is not evidence about
 anybody's website.

@@ -18,6 +18,7 @@ import { documentsForClient } from "@/lib/documents";
 import { mapboxToken } from "@/lib/geo";
 import { getEmailTemplate } from "@/lib/emails";
 import { longDate, money, telHref } from "@/lib/format";
+import { socialLabel } from "@/lib/socials";
 import { listServices, serviceTitles } from "@/lib/services";
 import { OUTREACH_SOURCE, sourceLabel, stageInfo, STAGES } from "@/lib/stages";
 
@@ -237,6 +238,24 @@ export default async function ClientPage({
                   {serviceTitles(client.services).join(", ") || "Not pinned down"}
                 </dd>
               </div>
+              {client.socials.length > 0 && (
+                <div className="flex justify-between gap-4">
+                  <dt className="text-muted">Social</dt>
+                  <dd className="flex flex-wrap justify-end gap-x-3 gap-y-1 text-right">
+                    {client.socials.map((url) => (
+                      <a
+                        key={url}
+                        className="hover:underline"
+                        href={url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {socialLabel(url)}
+                      </a>
+                    ))}
+                  </dd>
+                </div>
+              )}
               <div className="flex justify-between gap-4">
                 <dt className="text-muted">Last touched</dt>
                 <dd>{longDate(client.updated)}</dd>
