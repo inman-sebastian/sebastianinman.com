@@ -206,6 +206,7 @@ export const SOURCES = [
   { id: "booking", label: "Cal.com booking" },
   { id: "referral", label: "Referral" },
   { id: "outreach", label: "Research" },
+  { id: "email", label: "Email" },
   { id: "manual", label: "Somewhere else" },
 ] as const;
 

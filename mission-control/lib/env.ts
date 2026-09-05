@@ -61,3 +61,52 @@ export function geminiKey(): string {
 export function hunterKey(): string {
   return process.env.HUNTER_API_KEY || repoEnv().HUNTER_API_KEY || "";
 }
+
+/**
+ * Gmail read integration. The OAuth client id and secret live in the same
+ * repo-root .env.local; the refresh token is obtained at runtime and kept
+ * in data/gmail, never here. Same rule as above: never logged, never shown.
+ */
+export function googleClientId(): string {
+  return process.env.GOOGLE_CLIENT_ID || repoEnv().GOOGLE_CLIENT_ID || "";
+}
+
+export function googleClientSecret(): string {
+  return process.env.GOOGLE_CLIENT_SECRET || repoEnv().GOOGLE_CLIENT_SECRET || "";
+}
+
+/** Whether the Gmail OAuth app is set up at all (credentials present). The
+    separate question of whether it is connected (a token exists) lives in
+    lib/gmail.ts, which owns the token store. */
+export function gmailConfigured(): boolean {
+  return Boolean(googleClientId() && googleClientSecret());
+}
+
+/**
+ * Instagram OAuth (Business Login for Instagram). These are the
+ * Instagram-app credentials from "API setup with Instagram login". The
+ * redirect must be an HTTPS URL registered on the Meta app (Meta rejects a
+ * localhost redirect), so for local use it points at a tunnel. Same rule as
+ * every other secret here: never logged, never rendered.
+ */
+export function instagramAppId(): string {
+  return process.env.INSTAGRAM_APP_ID || repoEnv().INSTAGRAM_APP_ID || "";
+}
+
+export function instagramAppSecret(): string {
+  return process.env.INSTAGRAM_APP_SECRET || repoEnv().INSTAGRAM_APP_SECRET || "";
+}
+
+export function instagramRedirectUri(): string {
+  return (
+    process.env.INSTAGRAM_REDIRECT_URI || repoEnv().INSTAGRAM_REDIRECT_URI || ""
+  );
+}
+
+/** Whether the OAuth Connect flow can run (all three set). Paste-a-token
+    works without any of this. */
+export function instagramOauthReady(): boolean {
+  return Boolean(
+    instagramAppId() && instagramAppSecret() && instagramRedirectUri(),
+  );
+}

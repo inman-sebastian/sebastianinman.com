@@ -15,6 +15,7 @@ import { DocumentList, NewDocumentButtons } from "@/components/DocumentList";
 import { StageBadge } from "@/components/StageBadge";
 import { displayName, getClient } from "@/lib/clients";
 import { documentsForClient } from "@/lib/documents";
+import { messagesForClient } from "@/lib/messages";
 import { mapboxToken } from "@/lib/geo";
 import { getEmailTemplate } from "@/lib/emails";
 import { longDate, money, telHref } from "@/lib/format";
@@ -37,6 +38,7 @@ export default async function ClientPage({
   const stageEmail = stage.emailId ? getEmailTemplate(stage.emailId) : null;
   const services = listServices();
   const documents = documentsForClient(client.slug);
+  const messages = messagesForClient(client.slug);
   const newestFirst = [...client.timeline].reverse();
 
   return (
@@ -153,6 +155,54 @@ export default async function ClientPage({
               )}
             </ol>
           </section>
+
+          {messages.length > 0 && (
+            <section className="card p-5">
+              <h2 className="font-serif text-lg font-semibold text-pine-dark">
+                Conversations
+              </h2>
+              <p className="mt-1 text-xs text-muted">
+                Pulled from Gmail. Read only for now; replying from here comes
+                later.
+              </p>
+              <ul className="mt-4 space-y-3">
+                {messages.map((m) => (
+                  <li key={m.id} className="rounded-lg border border-line p-3">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-muted">
+                        {m.direction === "in" ? "Received" : "Sent"}
+                        {m.date && ` · ${longDate(m.date.slice(0, 10))}`}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm font-semibold text-pine-dark">
+                      {m.subject || "(no subject)"}
+                    </p>
+                    {m.snippet && (
+                      <p className="mt-1 text-sm text-muted">{m.snippet}</p>
+                    )}
+                    {m.body && (
+                      <details className="mt-2">
+                        <summary className="cursor-pointer text-xs font-semibold text-pine">
+                          Read it
+                        </summary>
+                        <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed">
+                          {m.body}
+                        </p>
+                      </details>
+                    )}
+                    {m.direction === "in" && (
+                      <Link
+                        href={`/clients/${client.slug}/email?reply=${m.id}`}
+                        className="mt-2 inline-block text-xs font-semibold text-pine hover:underline"
+                      >
+                        Reply
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           <section className="card p-5">
             <h2 className="font-serif text-lg font-semibold text-pine-dark">

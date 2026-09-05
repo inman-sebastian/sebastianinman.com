@@ -5,7 +5,11 @@ import { TrafficPanel, TrafficPanelSkeleton } from "./TrafficPanel";
 import { MoneyPanel, MoneyPanelSkeleton } from "./MoneyPanel";
 import { MoneyStats, Stat, StatPending, TrafficStat } from "./Stats";
 import { TodayPanel } from "./TodayPanel";
+import { MailAutoCheck } from "./MailAutoCheck";
 import { displayName, listClients } from "@/lib/clients";
+import { isConnected as gmailConnected } from "@/lib/gmail";
+import { isConnected as igConnected } from "@/lib/instagram";
+import { unmatchedCount } from "@/lib/messages";
 import { money } from "@/lib/format";
 import { mapboxToken, scatter } from "@/lib/geo";
 import { ACTIVE_STAGES, stageInfo } from "@/lib/stages";
@@ -60,10 +64,12 @@ export default function Dashboard() {
     (c) => c.stage !== "done" && c.stage !== "lost" && c.stage !== "researched",
   );
   const quoted = open.reduce((sum, c) => sum + (c.value ?? 0), 0);
+  const toSort = gmailConnected() || igConnected() ? unmatchedCount() : 0;
 
   if (clients.length === 0) {
     return (
       <section className="card mx-auto max-w-xl p-10 text-center">
+        <MailAutoCheck />
         <h1 className="text-3xl font-semibold text-pine-dark">
           Nobody in the pipeline yet
         </h1>
@@ -80,6 +86,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
+      <MailAutoCheck />
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-3xl font-semibold text-pine-dark">Pipeline</h1>
         <Link href="/clients/new" className="btn">
@@ -127,6 +134,18 @@ export default function Dashboard() {
             {researched.length === 1 ? "business" : "businesses"}
           </Link>{" "}
           waiting for you to judge.
+        </p>
+      )}
+
+      {toSort > 0 && (
+        <p className="text-sm text-muted">
+          <Link
+            href="/inbox"
+            className="font-semibold text-pine hover:underline"
+          >
+            {toSort} {toSort === 1 ? "message" : "messages"} to sort
+          </Link>{" "}
+          in the inbox, from people not yet on file.
         </p>
       )}
 

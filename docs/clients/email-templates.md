@@ -126,6 +126,14 @@ missed calls to a salon whose actual trouble was a booking button
 pointing at the wrong page. If a sentence would be identical in every
 email, it is either wrong for most of them or not worth sending.
 
+**A DM has no template here at all.** When a lead has no email but does
+have an Instagram or Facebook profile, the composer drafts a direct
+message instead. It is generated straight from the record for the same
+reason this email has no fixed prose, only shorter and plainer: no
+subject, no signature, two to four sentences built around the checked
+opening line. There is nothing to fill in below for that case; the rules
+live in `mission-control/lib/drafting.ts`.
+
 **Subject:** {{SPECIFIC_THING}}
 
 Hi{{FIRST_NAME_IF_KNOWN}},

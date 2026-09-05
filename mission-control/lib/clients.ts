@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { socialNetwork } from "./socials";
 import { isSource, isStage, type Source, type Stage } from "./stages";
 
 /**
@@ -295,6 +296,53 @@ export function getClient(slug: string): ClientRecord | null {
   const file = filePath(slug);
   if (!fs.existsSync(file)) return null;
   return toRecord(slug, fs.readFileSync(file, "utf8"));
+}
+
+/**
+ * The record whose email matches, or null. Used to attach inbound mail to
+ * a client. Case-insensitive; the first match wins, which is fine because
+ * an address should only ever sit on one record.
+ */
+export function findClientByEmail(email: string): ClientRecord | null {
+  const needle = email.trim().toLowerCase();
+  if (!needle) return null;
+  return (
+    listClients().find((c) => c.email.trim().toLowerCase() === needle) ?? null
+  );
+}
+
+/** The first path segment of a profile URL, lowercased, "@" stripped:
+    the handle to match a DM against. */
+function handleOf(url: string): string {
+  try {
+    const p = new URL(url).pathname.replace(/^\/+|\/+$/g, "");
+    return (p.split("/")[0] ?? "").replace(/^@/, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * The record whose socials include this handle on the given network, or
+ * null. Used to attach an inbound DM to a client, off the profile URLs the
+ * research already recorded.
+ */
+export function findClientBySocial(
+  handle: string,
+  network: "instagram" | "facebook",
+): ClientRecord | null {
+  const needle = handle.trim().replace(/^@/, "").toLowerCase();
+  if (!needle) return null;
+  return (
+    listClients().find((c) =>
+      c.socials.some((url) => {
+        const net = socialNetwork(url);
+        return (
+          net?.name.toLowerCase() === network && handleOf(url) === needle
+        );
+      }),
+    ) ?? null
+  );
 }
 
 /** Business name first (that is how he'll think of them), person second */

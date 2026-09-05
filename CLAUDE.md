@@ -553,6 +553,20 @@ first-contact email; the composer swaps Send for Copy on
 `mission-control/data/do-not-contact.md` is honoured by both the research
 and the composer.
 
+The first-contact composer is **channel-aware**, because not every lead
+has an email and some live on Instagram. `mission-control/lib/channels.ts`
+derives from the record which channels are open (email if there's an
+address, an Instagram or Facebook DM if the matching profile is in
+`socials`) and the composer shows a picker built from that. Email keeps
+Template 6 and `fillEmail`; a **DM has no template by design** (same
+reasoning as Template 6's "no fixed prose") and is generated from the
+record by `draftMessage()` in `lib/drafting.ts` under a DM-shaped voice
+(short, no subject, no signature, still reusing the checked opening line
+and inventing nothing). Every channel is copy-only: the app never sends a
+DM or a cold email, so a DM is always handed over to paste by hand, and
+`sendBlockReason()` stays the backstop. Channel is a per-message choice
+(a `?channel=` param), never a stored field.
+
 Money runs on Stripe (`mission-control/lib/stripe.ts`, live restricted
 key in the repo root `.env.local`). Invoices are drafted from a client's
 page (`InvoicePanel`), and the dashboard's money summary and the briefing
@@ -619,9 +633,86 @@ The trap worth knowing: a catch-all server accepts every address, so
 sebastianinman.com is itself catch-all, and `readVerdict()` checks
 `accept_all` BEFORE `deliverable` for that reason. Do not reorder it.
 
-Not built: Gmail. Nothing in this app can see hello@, so an inquiry does
-not exist here until Sebastian pastes the notification email into
-`/clients/new`, where `lib/parse-inquiry.ts` fills the form from it.
+**Gmail (read only).** `/inbox` pulls mail on
+`hello@sebastianinman.com` and files it against the client it is from.
+That address is a Google Workspace alias on the primary account
+`hello@sebastiancodes.com`, so `lib/gmail.ts` authenticates as the
+primary account and filters every read to the alias, keeping personal
+mail out. It is the second thing in the app that reaches off the machine
+after `lib/send.ts`, and it only ever READS: the scope is
+`gmail.readonly` and nothing here sends or replies (that is a later
+phase). The OAuth app is **Internal** to the Workspace, which is why the
+restricted scope needed no Google verification and the refresh token does
+not expire. `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` live in the repo
+root `.env.local` via `lib/env.ts`; the refresh token is obtained at
+Connect time and kept in git-ignored `data/gmail/`, never logged or shown.
+
+Fetch is an **incremental `historyId` sync** (`fetchNew()`), not a
+webhook: Gmail push needs a public endpoint and an always-running
+receiver, and a local-only app that is usually closed has nowhere for a
+push to land (the same wall as the Meta phase in the hub roadmap). So the
+app pulls instead of being pushed to: a small client widget
+(`MailAutoCheck`) checks once when the dashboard loads, and a **Check
+mail** button pulls on demand. Messages land in a single-writer store
+(`lib/messages.ts`, `data/messages/`), deduped by Gmail id so a re-sync
+never doubles up. `findClientByEmail` in `lib/clients.ts` attaches a
+message to a record and drops a compact timeline line the first time it
+is seen; anything from nobody on file waits in the inbox's "to sort"
+list. **A record is never created automatically** from inbound mail;
+"Make a record" is a deliberate press that reuses `lib/parse-inquiry.ts`
+for a contact-form notification or the From header for a plain email.
+
+The manual path still works: an inquiry can always be pasted into
+`/clients/new`, which is the fallback when Gmail is not connected.
+
+**Replying** closes the loop. A "Reply" link on an inbound message opens
+the composer in reply mode (`/clients/<slug>/email?reply=<id>`), which
+reuses the whole email send path: the two-screen confirm gate, the Send
+button that reaches Resend, and every guard (`sendBlockReason`,
+do-not-contact, placeholder count). It prefills the address and a `Re:`
+subject, threads via `In-Reply-To`/`References` set from the original's
+captured `Message-ID`, and hides the template and channel pickers. Since
+the app sends through Resend, not Gmail, the sent reply will not come back
+on a sync, so `recordOutbound()` in `lib/messages.ts` stores it in the
+conversation immediately; the outbound side of a thread lives in
+`data/messages/`, not in Gmail. Still no cold sending: outreach stays
+copy-only.
+
+**Instagram DMs (read).** `/inbox` also reads DMs for the business
+Instagram account (`lib/instagram.ts`, the third off-machine reach). Same
+polling model as Gmail and for the same reason: IG conversations are
+fetchable on demand over the Graph API, so no webhook and no public
+endpoint. Auth is deliberately not OAuth: Meta rejects a localhost
+redirect, so instead Sebastian generates a long-lived (60-day) token in
+the Meta App Dashboard and pastes it into the `/inbox` Instagram panel;
+the app verifies it, stores it in git-ignored `data/instagram/`, and keeps
+it alive with `graph.instagram.com/refresh_access_token` (token only, no
+app secret). Inbound DMs match a client by the Instagram **handle** in
+their `socials` (`findClientBySocial`), not by email; unmatched ones sit
+in the same "to sort" queue, and "Make a record" saves the handle to
+`socials` so the next DM matches. Every channel shares one store and shape
+(`lib/message-types.ts`, `MessageChannel`); `checkInboxAction` pulls all
+connected channels at once, and the dashboard's `MailAutoCheck` runs it on
+open plus a gentle interval. **Read only in this phase** (no reply), and
+never a cold DM. The messaging scope works against your own/tester
+accounts in the app's Development Mode; App Review is only needed to
+handle the general public.
+
+Two ways to connect, both ending in the same stored long-lived token: the
+everyday **paste-a-token** path, and a full **OAuth "Connect Instagram"**
+flow (`authUrl`/`exchangeCode` + `app/api/instagram/callback`) that appears
+when `INSTAGRAM_APP_ID/SECRET/REDIRECT_URI` are set. OAuth exists because
+App Review has to see the standard connect flow; Meta rejects a localhost
+redirect, so the redirect URI is a self-owned endpoint on the website,
+`https://www.sebastianinman.com/api/instagram-callback` (a route in the
+site repo). That page only shows Instagram's one-time code; Sebastian
+pastes it into the `/inbox` box and `exchangeCode()` finishes the token
+exchange locally, so the app secret and token never touch the website.
+On connect, `fetchProfile()` reads and stores the
+account's profile (picture, username, name, counts), shown as a card in the
+`/inbox` panel, which is the profile display the reviewer must see.
+`docs/instagram-app-review.md` holds the tunnel setup, screencast shot-list,
+and the reviewer description text.
 
 ## Deferred tasks (not yet done; check before assuming)
 
@@ -664,3 +755,23 @@ not exist here until Sebastian pastes the notification email into
       always "Southern Oregon" / "Rogue Valley")
 - [x] **Images** (Aug 2026): every slot has final art; `IMAGES.md` fully
       checked. New images go through `npm run optimize:images`
+- [~] **Communication hub** (Mission Control): a centralized place to read,
+      track, and eventually reply to client messages across channels.
+      Phase A (done): outreach drafting is channel-aware (email / Instagram
+      DM / Facebook DM), still copy-only. Phase B (done): Gmail read-only
+      inbox at `/inbox` (see the Gmail section above). Phase C (done):
+      replying to a client email thread from the composer, through the
+      existing Resend confirm gate (`?reply=<id>`), with the sent reply
+      stored in the conversation. Phase D1 (done): Instagram DM **read** at
+      `/inbox` (see the Instagram section above). Phase D2 (not built):
+      replying to an IG thread within Meta's 24-hour window. Phase D3 (not
+      built): Facebook Page Messenger. See
+      `docs/mission-control-messaging-feasibility.md`: reading DMs is
+      feasible by polling the Graph API (no public endpoint, no App Review,
+      reply-only within Meta's window), so the earlier "needs a public
+      webhook" framing only applies to real-time push. Historically the
+      concern was that they need a public webhook
+      endpoint plus Meta app review and, on the API, only allow replying
+      inside a 24-hour window (never cold DMs). True Gmail push (Pub/Sub) is
+      only worth it if the hub ever gains an always-on component; revisit
+      with the Meta endpoint decision.

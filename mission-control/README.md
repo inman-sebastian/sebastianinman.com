@@ -225,6 +225,16 @@ The composer (`/clients/<slug>/email`) opens the right template for the
 stage, filled with the facts it can resolve, with their generated PDFs
 ready to attach.
 
+For first contact it is **channel-aware**: not every lead has an email,
+and some live on Instagram. `lib/channels.ts` reads the record and offers
+a picker of the channels actually open (email, plus an Instagram or
+Facebook DM when that profile is in `socials`). Email keeps its template;
+a DM has none by design and is generated from the record by
+`draftMessage()` in `lib/drafting.ts`, short and subject-less and without
+a signature, still built around the checked opening line. A DM is always
+copy-only, the same handover as outreach email, since the app has no way
+to send one.
+
 **Sebastian sends everything.** Writing and sending are two separate
 screens on purpose. The second one shows the exact sender, recipient,
 subject, attachments, and message, and only the button on that screen
@@ -317,7 +327,67 @@ Nothing is duplicated by hand:
 Brand tokens in `app/globals.css` are a mirror of the website's, same
 as `paperwork-app/style.css`. Update all three when the palette moves.
 
+## Inbox (Gmail, read only)
+
+`/inbox` reads mail on `hello@sebastianinman.com` and files it against
+the client it is from. That address is a Workspace alias on
+`hello@sebastiancodes.com`, so `lib/gmail.ts` authenticates as the
+primary account and filters to the alias. Read only: the scope is
+`gmail.readonly` and nothing here sends. It is the second off-machine
+reach after `lib/send.ts`.
+
+No webhook. Gmail push needs a public, always-on endpoint, which a
+local-only app that is usually closed cannot offer. So the app pulls: an
+incremental `historyId` sync (`fetchNew()`) runs once on dashboard load
+(`MailAutoCheck`) and on the **Check mail** button. Messages go to a
+single-writer store (`lib/messages.ts`, `data/messages/`), deduped by
+Gmail id. Mail from someone on file attaches to their record and their
+timeline; mail from anyone else waits in "to sort", where **Make a
+record** creates one on purpose (never automatically).
+
+One-time setup: an Internal OAuth app in the sebastiancodes.com Workspace
+(no Google verification, permanent refresh token), gmail.readonly scope,
+a Web-application client with redirect
+`http://127.0.0.1:4848/api/gmail/callback`, and
+`GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` in the repo root `.env.local`.
+The refresh token lives in git-ignored `data/gmail/`. The `/inbox` page
+walks through this when the credentials are missing.
+
+The paste path (`/clients/new`) still works and is the fallback when
+Gmail is not connected.
+
+`/inbox` also reads **Instagram DMs** for the business account
+(`lib/instagram.ts`), the same polling model. Auth is a pasted long-lived
+token (Meta rejects a localhost OAuth redirect), generated once in the
+Meta App Dashboard and kept refreshed by the app. Inbound DMs match a
+client by the Instagram handle in their `socials`, not by email. Every
+channel shares one store and shape (`lib/message-types.ts`);
+`checkInboxAction` pulls all connected channels, and `MailAutoCheck` runs
+it on open plus a ~60s interval. Read only for now, and never a cold DM.
+
+Connecting works two ways, both ending in the same long-lived token: paste
+a dashboard token (everyday), or the OAuth **Connect Instagram** button
+that shows when `INSTAGRAM_APP_ID/SECRET/REDIRECT_URI` are set. OAuth needs
+an HTTPS redirect (Meta rejects localhost), so it points at a self-owned
+route on the website, `https://www.sebastianinman.com/api/instagram-callback`,
+which just shows Instagram's one-time code; you paste it back here and the
+token exchange finishes locally (secret and token never touch the website).
+It exists mainly so App Review can see the standard connect flow and the
+profile card. The submission kit (setup, screencast shot-list, reviewer
+text) is in `docs/instagram-app-review.md`. App Review + Business
+Verification are what unlock reading DMs from non-tester accounts.
+
+Replying closes the loop: a **Reply** link on an inbound message opens
+the composer in reply mode (`?reply=<id>`), which reuses the whole email
+send path (the confirm gate, the Resend send, every guard). It prefills
+the address and a `Re:` subject and threads via In-Reply-To/References
+from the original's Message-ID. The app sends through Resend, not Gmail,
+so the sent reply will not come back on a sync; `recordOutbound()` stores
+it in the conversation so the thread stays whole. The outbound side of a
+thread therefore lives in `data/messages/`, not Gmail.
+
 ## What it deliberately does not do
 
-No payment processor and no Gmail. The processor is undecided; ask
-Sebastian before wiring anything to money.
+No payment processor here beyond Stripe invoicing. Cold outreach never
+sends from the app (see Sending); the inbox reads and replies, but the
+next channels (Instagram, Facebook) are a later phase.

@@ -1,9 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { resolveChannel } from "@/lib/channels";
 import { appendTimeline, getClient, updateClient } from "@/lib/clients";
-import { draftEmail } from "@/lib/drafting";
+import { draftMessage } from "@/lib/drafting";
 import { getEmailTemplate, unfilled } from "@/lib/emails";
+import { recordOutbound } from "@/lib/messages";
 import { isBlocked } from "@/lib/suppression";
 import { sendBlockReason, sendClientEmail } from "@/lib/send";
 import { stageInfo } from "@/lib/stages";
@@ -36,15 +38,27 @@ export async function draftEmailAction(
   slug: string,
   templateId: number,
   attempt: number,
+  channelId?: string,
 ): Promise<DraftState> {
   const client = getClient(slug);
   if (!client) return { error: "That client record is gone." };
 
-  const template = getEmailTemplate(templateId);
-  if (!template) return { error: "That template is gone." };
+  const channel = resolveChannel(client, channelId);
+  if (!channel) return { error: "There's no way to message this one on file." };
+
+  // A DM has no template; email does.
+  const template = channel.kind === "email" ? getEmailTemplate(templateId) : null;
+  if (channel.kind === "email" && !template) {
+    return { error: "That template is gone." };
+  }
 
   try {
-    const { value, costUsd } = await draftEmail({ client, template, attempt });
+    const { value, costUsd } = await draftMessage({
+      client,
+      channel,
+      template,
+      attempt,
+    });
     return {
       subject: value.subject,
       body: value.body,
@@ -105,8 +119,27 @@ export async function sendEmailAction(
     };
   }
 
-  const result = await sendClientEmail({ to, subject, body, attachmentSlugs });
+  // Reply threading: when replying, the original's Message-ID goes on
+  // In-Reply-To/References so the recipient's client threads it, and the
+  // thread id groups the stored copy with the message it answers.
+  const replyToRfcId = text(formData, "replyToRfcId");
+  const threadId = text(formData, "threadId");
+  const headers = replyToRfcId
+    ? { "In-Reply-To": replyToRfcId, References: replyToRfcId }
+    : undefined;
+
+  const result = await sendClientEmail({
+    to,
+    subject,
+    body,
+    attachmentSlugs,
+    headers,
+  });
   if (!result.ok) return { error: result.message };
+
+  // Store what we just sent, so the conversation stays whole. Resend does
+  // not put it in the Gmail mailbox we sync, so this is the only copy.
+  recordOutbound(slug, { to, subject, body, threadId: threadId || undefined });
 
   appendTimeline(
     slug,
@@ -143,6 +176,8 @@ export async function markContactedAction(
 ): Promise<SendState> {
   const slug = text(formData, "slug");
   const subject = text(formData, "subject");
+  // The channel's label, e.g. "Instagram DM"; "Email" or empty otherwise
+  const channel = text(formData, "channel");
   const client = getClient(slug);
   if (!client) return { error: "That client record is gone." };
 
@@ -151,6 +186,7 @@ export async function markContactedAction(
   const due = new Date();
   due.setDate(due.getDate() + 7);
 
+  const isDm = channel && channel !== "Email";
   updateClient(slug, {
     stage: "contacted",
     nextStep: stageInfo("contacted").nextStep,
@@ -158,8 +194,13 @@ export async function markContactedAction(
   });
   appendTimeline(
     slug,
-    "First email sent by hand",
-    [subject && `Subject: ${subject}`, "Copied from the composer and sent from Sebastian's own inbox."]
+    isDm ? `First message sent by hand (${channel})` : "First email sent by hand",
+    [
+      subject && `Subject: ${subject}`,
+      isDm
+        ? `Copied from the composer and sent by hand as a ${channel}.`
+        : "Copied from the composer and sent from Sebastian's own inbox.",
+    ]
       .filter(Boolean)
       .join("\n")
   );

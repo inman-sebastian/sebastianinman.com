@@ -76,6 +76,9 @@ export async function sendClientEmail(input: {
   subject: string;
   body: string;
   attachmentSlugs: string[];
+  /** Extra RFC headers, e.g. In-Reply-To/References so a reply threads
+      under the original. Omitted for a fresh email. */
+  headers?: Record<string, string>;
 }): Promise<SendResult> {
   const { key, from } = mailConfig();
   if (!key || !from) {
@@ -106,6 +109,10 @@ export async function sendClientEmail(input: {
       text: emailText(input.body),
       html: emailHtml(input.body),
       attachments: attachments.length ? attachments : undefined,
+      headers:
+        input.headers && Object.keys(input.headers).length
+          ? input.headers
+          : undefined,
     });
     if (error) return { ok: false, message: error.message || String(error) };
     return { ok: true, message: `Sent. Resend id ${data?.id ?? "unknown"}.` };

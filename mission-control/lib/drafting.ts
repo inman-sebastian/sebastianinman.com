@@ -4,6 +4,7 @@ import { fillEmail, type EmailTemplate } from "./emails";
 import { siteInfo, voiceGuide } from "./site";
 import { listServices, serviceTitles } from "./services";
 import { stageInfo } from "./stages";
+import type { Channel } from "./channels";
 import type { ClientRecord } from "./clients";
 
 /**
@@ -129,6 +130,62 @@ THE VOICE GUIDE
 
 `;
 
+/**
+ * The same job, in the register of a direct message rather than an email.
+ *
+ * A DM is not the email in a smaller box. It has no subject, no greeting
+ * ceremony, no signature, and a stranger reads it in a notifications list
+ * between two other things. Everything in DRAFT_VOICE about inventing
+ * nothing, reusing the checked opening line, never naming a price, and
+ * never saying where he is based holds here exactly. What changes is the
+ * shape: shorter, plainer, and unmistakably typed by a person.
+ */
+const DM_VOICE = `You are drafting a first-contact direct message for Sebastian Inman to
+send by hand on social media. He runs a one-person automation and web
+consultancy in Southern Oregon. He will read every word before it goes
+anywhere, and he will notice if you make something up.
+
+His voice guide is included below, verbatim. It governs this message.
+
+WHAT MUST BE TRUE
+
+1. Invent nothing. Every fact in the message comes from the record you
+   are given. No plausible filler, no detail about their business that is
+   not written down in front of you.
+
+2. If something you would want is not in the record, LEAVE A {{PLACEHOLDER}}
+   and list it in leftBlank. Guessing could cost a real business; leaving
+   a blank costs nothing.
+
+3. When the record has an "Opening line", build the message around it. It
+   was written after somebody opened that business's page and checked what
+   it said, and it is the sentence that proves a person looked. Reword it
+   only enough to fit. Never replace it with a better-sounding observation
+   you thought of yourself; you have not seen their page.
+
+4. Never name a price, and never say where Sebastian is based. They are in
+   Southern Oregon too, so a location line is news to nobody and gives away
+   that the message was written for a list.
+
+HOW A DM SHOULD READ
+
+This is one person messaging another, not a pitch and not a summary of
+findings. Two to four sentences. No subject line. No "Dear" or formal
+opening; a first name only if the record has one, and it is fine to open
+straight into the specific thing noticed. No sign-off block and no
+signature; ending on his first name alone is plenty, or nothing at all.
+
+Warm first, useful second, and the easy exit stays generous: he would be
+glad to help and equally glad if they are sorted already. Nothing in it
+should be a sentence that would read identically to any other business.
+Do not pad it to sound like an email; short is the point here.
+
+Return an EMPTY subject. A DM has no subject line.
+
+THE VOICE GUIDE
+
+`;
+
 /** Everything about this client that could honestly inform an email */
 function recordContext(client: ClientRecord): string {
   const stage = stageInfo(client.stage);
@@ -224,6 +281,75 @@ export async function draftEmail(options: {
     system: `${DRAFT_VOICE}${voiceGuide()}`,
     prompt,
     schema: DraftSchema,
+  });
+}
+
+/**
+ * Draft a first-contact DM for a social channel.
+ *
+ * There is no template to fill: a DM has no fixed prose, for the same
+ * reason the first-contact email does not. So this generates a short
+ * message straight from the record, under the DM rules, and returns an
+ * empty subject because a DM has no subject line.
+ */
+async function draftDm(options: {
+  client: ClientRecord;
+  channel: Channel;
+  attempt?: number;
+}): Promise<Asked<Draft>> {
+  const { client, channel } = options;
+  const site = siteInfo();
+
+  const prompt = [
+    `Draft a first-contact ${channel.label} to send to ${channel.target}.`,
+    "",
+    recordContext(client),
+    "",
+    "## Facts you may use",
+    `Sebastian's phone: ${site.phone}`,
+    `His booking link: ${site.bookingUrl}`,
+    "",
+    options.attempt && options.attempt > 1
+      ? `This is redraft number ${options.attempt}. Take a genuinely different angle rather than rephrasing the last attempt.`
+      : "",
+    "Return the message body and an empty subject, plus anything you deliberately left as a placeholder.",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return ask({
+    kind: `draft-${client.slug}-${channel.id}-${options.attempt ?? 1}`,
+    system: `${DM_VOICE}${voiceGuide()}`,
+    prompt,
+    schema: DraftSchema,
+  });
+}
+
+/**
+ * Draft the first message on whichever channel is chosen. Email keeps its
+ * template; a DM is generated. One entry point so the composer does not
+ * have to know which is which.
+ */
+export async function draftMessage(options: {
+  client: ClientRecord;
+  channel: Channel;
+  template: EmailTemplate | null;
+  attempt?: number;
+}): Promise<Asked<Draft>> {
+  if (options.channel.kind === "dm") {
+    return draftDm({
+      client: options.client,
+      channel: options.channel,
+      attempt: options.attempt,
+    });
+  }
+  if (!options.template) {
+    throw new Error("An email needs a template to draft from.");
+  }
+  return draftEmail({
+    client: options.client,
+    template: options.template,
+    attempt: options.attempt,
   });
 }
 
